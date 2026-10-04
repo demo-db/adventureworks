@@ -1,0 +1,5881 @@
+{
+  "format": "ovdb-database/draft-1",
+  "id": "https://demodb.dev/adventureworks/",
+  "localId": "adventureworks",
+  "serverId": "https://demodb.dev/ovdb",
+  "serverDbBaseUrl": "https://demodb.dev/ovdb/db/adventureworks/",
+  "title": "AdventureWorks OLTP",
+  "description": "Microsoft AdventureWorks OLTP sample database with people, products, sales, purchasing, manufacturing, and inventory.",
+  "homepage": "https://adventureworks.demodb.dev/",
+  "apiUrl": "https://demodb.dev/ovdb/v1/databases/adventureworks",
+  "capabilities": {
+    "read": true,
+    "query": false,
+    "write": false
+  },
+  "deployment": {
+    "engine": "sqlite",
+    "url": "https://cloud.openvaultdb.com/ovdb/dbs/adventureworks",
+    "discovery": "https://demodb.dev/.well-known/openvaultdb"
+  },
+  "model": {
+    "id": "modelspec://github.com/demo-db/adventureworks/adventureworks",
+    "url": "https://adventureworks.demodb.dev/model/adventureworks.modelspec.json",
+    "hclUrl": "https://adventureworks.demodb.dev/model/adventureworks.modelspec.hcl"
+  },
+  "meaning": {
+    "id": "meaning://github.com/demo-db/adventureworks",
+    "url": "https://adventureworks.demodb.dev/model/adventureworks.meaning.yaml"
+  },
+  "publisher": {
+    "name": "DemoDB",
+    "url": "https://github.com/demo-db",
+    "repository": "https://github.com/demo-db/adventureworks"
+  },
+  "provenance": {
+    "repository": "https://github.com/microsoft/sql-server-samples",
+    "revision": "beaab06ef72831089ca80e5355d65e661fd19b26",
+    "path": "samples/databases/adventure-works/oltp-install-script/instawdb.sql",
+    "sha256": "e0f352f0e3a28ff15158130c237a91d58f1b60fffa7f30d2c412b92df4065dfd",
+    "license": "MIT",
+    "notes": "Pinned Microsoft SQL Server Samples AdventureWorks OLTP installer and companion source files from commit beaab06ef72831089ca80e5355d65e661fd19b26. The source AWBuildVersion.csv identifies the installer fixture as SQL Server 2025 build 17.0.1000.3; the README says the script adapts to the installed SQL Server version, so this is the pinned source fixture rather than a claim about every generated server build. The converter imports all 68 BULK INSERT inputs plus the one-row AWBuildVersion.csv, preserving 759,240 seeded rows across 71 physical tables, source primary and foreign keys, 93 explicit indexes, and the inline unique constraint on Production.Document.rowguid. DatabaseLog and ErrorLog remain empty because the installer creates them for runtime audit/error events and supplies no static CSV. All 20 original SQL Server view definitions are retained in metadata/native-objects.json. Eleven straightforward relational views are translated into SQLite and their query results are rebuilt and checked; nine views using SQL Server-only XML, APPLY, or PIVOT constructs remain source-only, with no fabricated rows. SQL Server XML is stored as text; geography and hierarchyid serializations are stored as opaque BLOBs. Computed-column source expressions are retained in native metadata while the pinned CSV snapshot values are stored as ordinary SQLite columns. GETDATE defaults are frozen to the pinned build timestamp; SQL Server NEWID defaults remain in native metadata but are omitted from the static SQLite schema because SQLite only permits constant defaults, and seeded GUID values are preserved. SQL Server-only setup, triggers, stored procedures, query store, and optimized-locking behavior are not implemented. Fixed-width character data is preserved including padding; checks translate SQL Server trailing-space comparison and the source one-character LIKE range to equivalent SQLite expressions. Decimal, numeric, and money source strings are parsed as Python binary floats and stored with SQLite NUMERIC affinity; exact decimal scale and precision are not guaranteed, and this fixture makes no fixed-point MONEY claim. SQL Server collation and numeric behavior can differ. The converter checks the pinned source-file hashes, compares complete logical SQLite schema and row contents across rebuilds, and compares regenerated native SQL Server table/view metadata to the checked-in metadata file. SQLite file bytes may vary across SQLite library versions. JSON and SQLite preserve NULL; CSV represents NULL as an empty field, indistinguishable from empty text. BLOB values in JSON and CSV are base64 encoded. The full SQLite fixture is 125276160 bytes; static export delivery must preserve the full source without truncation and may use deterministic compressed chunks. The sha256 identifies the decoded SQLite fixture; source.inputSha256 identifies the compressed dataFile bytes."
+  },
+  "licences": {
+    "data": "MIT",
+    "model": "MIT",
+    "meaning": "CC0-1.0"
+  },
+  "recordsets": [
+    {
+      "name": "dbo.DatabaseLog",
+      "kind": "table",
+      "description": "Audit table tracking all DDL changes made to the AdventureWorks database. Data is captured by the database trigger ddlDatabaseTriggerLog.",
+      "rowCount": 0,
+      "columns": [
+        {
+          "name": "DatabaseLogID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "PostTime",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "DatabaseUser",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Event",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Schema",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Object",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "TSQL",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "XmlEvent",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "DatabaseLogID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [],
+      "modelEntity": "dbo_DatabaseLog"
+    },
+    {
+      "name": "dbo.ErrorLog",
+      "kind": "table",
+      "description": "Audit table tracking errors in the the AdventureWorks database that are caught by the CATCH block of a TRY...CATCH construct. Data is inserted by stored procedure dbo.uspLogError when it is executed from inside the CATCH block of a TRY...CATCH construct.",
+      "rowCount": 0,
+      "columns": [
+        {
+          "name": "ErrorLogID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "ErrorTime",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        },
+        {
+          "name": "UserName",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ErrorNumber",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ErrorSeverity",
+          "type": "INTEGER",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ErrorState",
+          "type": "INTEGER",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ErrorProcedure",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ErrorLine",
+          "type": "INTEGER",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ErrorMessage",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "ErrorLogID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [],
+      "modelEntity": "dbo_ErrorLog"
+    },
+    {
+      "name": "Person.Address",
+      "kind": "table",
+      "description": "Street address information for customers, employees, and vendors.",
+      "rowCount": 19614,
+      "columns": [
+        {
+          "name": "AddressID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "AddressLine1",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "AddressLine2",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "City",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "StateProvinceID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "PostalCode",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "SpatialLocation",
+          "type": "BLOB",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "rowguid",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "AddressID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "StateProvinceID",
+          "table": "Person.StateProvince",
+          "referencedColumn": "StateProvinceID",
+          "constraint": 0,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Person_Address"
+    },
+    {
+      "name": "Person.AddressType",
+      "kind": "table",
+      "description": "Types of addresses stored in the Address table.",
+      "rowCount": 6,
+      "columns": [
+        {
+          "name": "AddressTypeID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "Name",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "rowguid",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "AddressTypeID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [],
+      "modelEntity": "Person_AddressType"
+    },
+    {
+      "name": "dbo.AWBuildVersion",
+      "kind": "table",
+      "description": "Current version number of the AdventureWorks 2025 sample database.",
+      "rowCount": 1,
+      "columns": [
+        {
+          "name": "SystemInformationID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "Database Version",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "VersionDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "SystemInformationID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [],
+      "modelEntity": "dbo_AWBuildVersion"
+    },
+    {
+      "name": "Production.BillOfMaterials",
+      "kind": "table",
+      "description": "Items required to make bicycles and bicycle subassemblies. It identifies the heirarchical relationship between a parent product and its components.",
+      "rowCount": 2679,
+      "columns": [
+        {
+          "name": "BillOfMaterialsID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "ProductAssemblyID",
+          "type": "INTEGER",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ComponentID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "StartDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        },
+        {
+          "name": "EndDate",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "UnitMeasureCode",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "BOMLevel",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "PerAssemblyQty",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "1.00"
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "BillOfMaterialsID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "UnitMeasureCode",
+          "table": "Production.UnitMeasure",
+          "referencedColumn": "UnitMeasureCode",
+          "constraint": 0,
+          "position": 0
+        },
+        {
+          "column": "ComponentID",
+          "table": "Production.Product",
+          "referencedColumn": "ProductID",
+          "constraint": 1,
+          "position": 0
+        },
+        {
+          "column": "ProductAssemblyID",
+          "table": "Production.Product",
+          "referencedColumn": "ProductID",
+          "constraint": 2,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Production_BillOfMaterials"
+    },
+    {
+      "name": "Person.BusinessEntity",
+      "kind": "table",
+      "description": "Source of the ID that connects vendors, customers, and employees with address and contact information.",
+      "rowCount": 20777,
+      "columns": [
+        {
+          "name": "BusinessEntityID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "rowguid",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "BusinessEntityID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [],
+      "modelEntity": "Person_BusinessEntity"
+    },
+    {
+      "name": "Person.BusinessEntityAddress",
+      "kind": "table",
+      "description": "Cross-reference table mapping customers, vendors, and employees to their addresses.",
+      "rowCount": 19614,
+      "columns": [
+        {
+          "name": "BusinessEntityID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "AddressID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 2,
+          "defaultValue": null
+        },
+        {
+          "name": "AddressTypeID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 3,
+          "defaultValue": null
+        },
+        {
+          "name": "rowguid",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "BusinessEntityID",
+          "position": 1
+        },
+        {
+          "column": "AddressID",
+          "position": 2
+        },
+        {
+          "column": "AddressTypeID",
+          "position": 3
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "BusinessEntityID",
+          "table": "Person.BusinessEntity",
+          "referencedColumn": "BusinessEntityID",
+          "constraint": 0,
+          "position": 0
+        },
+        {
+          "column": "AddressTypeID",
+          "table": "Person.AddressType",
+          "referencedColumn": "AddressTypeID",
+          "constraint": 1,
+          "position": 0
+        },
+        {
+          "column": "AddressID",
+          "table": "Person.Address",
+          "referencedColumn": "AddressID",
+          "constraint": 2,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Person_BusinessEntityAddress"
+    },
+    {
+      "name": "Person.BusinessEntityContact",
+      "kind": "table",
+      "description": "Cross-reference table mapping stores, vendors, and employees to people",
+      "rowCount": 909,
+      "columns": [
+        {
+          "name": "BusinessEntityID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "PersonID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 2,
+          "defaultValue": null
+        },
+        {
+          "name": "ContactTypeID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 3,
+          "defaultValue": null
+        },
+        {
+          "name": "rowguid",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "BusinessEntityID",
+          "position": 1
+        },
+        {
+          "column": "PersonID",
+          "position": 2
+        },
+        {
+          "column": "ContactTypeID",
+          "position": 3
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "BusinessEntityID",
+          "table": "Person.BusinessEntity",
+          "referencedColumn": "BusinessEntityID",
+          "constraint": 0,
+          "position": 0
+        },
+        {
+          "column": "ContactTypeID",
+          "table": "Person.ContactType",
+          "referencedColumn": "ContactTypeID",
+          "constraint": 1,
+          "position": 0
+        },
+        {
+          "column": "PersonID",
+          "table": "Person.Person",
+          "referencedColumn": "BusinessEntityID",
+          "constraint": 2,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Person_BusinessEntityContact"
+    },
+    {
+      "name": "Person.ContactType",
+      "kind": "table",
+      "description": "Lookup table containing the types of business entity contacts.",
+      "rowCount": 20,
+      "columns": [
+        {
+          "name": "ContactTypeID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "Name",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "ContactTypeID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [],
+      "modelEntity": "Person_ContactType"
+    },
+    {
+      "name": "Sales.CountryRegionCurrency",
+      "kind": "table",
+      "description": "Cross-reference table mapping ISO currency codes to a country or region.",
+      "rowCount": 109,
+      "columns": [
+        {
+          "name": "CountryRegionCode",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "CurrencyCode",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 2,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "CountryRegionCode",
+          "position": 1
+        },
+        {
+          "column": "CurrencyCode",
+          "position": 2
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "CurrencyCode",
+          "table": "Sales.Currency",
+          "referencedColumn": "CurrencyCode",
+          "constraint": 0,
+          "position": 0
+        },
+        {
+          "column": "CountryRegionCode",
+          "table": "Person.CountryRegion",
+          "referencedColumn": "CountryRegionCode",
+          "constraint": 1,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Sales_CountryRegionCurrency"
+    },
+    {
+      "name": "Person.CountryRegion",
+      "kind": "table",
+      "description": "Lookup table containing the ISO standard codes for countries and regions.",
+      "rowCount": 238,
+      "columns": [
+        {
+          "name": "CountryRegionCode",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "Name",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "CountryRegionCode",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [],
+      "modelEntity": "Person_CountryRegion"
+    },
+    {
+      "name": "Sales.CreditCard",
+      "kind": "table",
+      "description": "Customer credit card information.",
+      "rowCount": 19118,
+      "columns": [
+        {
+          "name": "CreditCardID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "CardType",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "CardNumber",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ExpMonth",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ExpYear",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "CreditCardID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [],
+      "modelEntity": "Sales_CreditCard"
+    },
+    {
+      "name": "Production.Culture",
+      "kind": "table",
+      "description": "Lookup table containing the languages in which some AdventureWorks data is stored.",
+      "rowCount": 8,
+      "columns": [
+        {
+          "name": "CultureID",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "Name",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "CultureID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [],
+      "modelEntity": "Production_Culture"
+    },
+    {
+      "name": "Sales.Currency",
+      "kind": "table",
+      "description": "Lookup table containing standard ISO currencies.",
+      "rowCount": 105,
+      "columns": [
+        {
+          "name": "CurrencyCode",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "Name",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "CurrencyCode",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [],
+      "modelEntity": "Sales_Currency"
+    },
+    {
+      "name": "Sales.CurrencyRate",
+      "kind": "table",
+      "description": "Currency exchange rates.",
+      "rowCount": 13532,
+      "columns": [
+        {
+          "name": "CurrencyRateID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "CurrencyRateDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "FromCurrencyCode",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ToCurrencyCode",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "AverageRate",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "EndOfDayRate",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "CurrencyRateID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "ToCurrencyCode",
+          "table": "Sales.Currency",
+          "referencedColumn": "CurrencyCode",
+          "constraint": 0,
+          "position": 0
+        },
+        {
+          "column": "FromCurrencyCode",
+          "table": "Sales.Currency",
+          "referencedColumn": "CurrencyCode",
+          "constraint": 1,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Sales_CurrencyRate"
+    },
+    {
+      "name": "Sales.Customer",
+      "kind": "table",
+      "description": "Current customer information. Also see the Person and Store tables.",
+      "rowCount": 19820,
+      "columns": [
+        {
+          "name": "CustomerID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "PersonID",
+          "type": "INTEGER",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "StoreID",
+          "type": "INTEGER",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "TerritoryID",
+          "type": "INTEGER",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "AccountNumber",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "rowguid",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "CustomerID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "TerritoryID",
+          "table": "Sales.SalesTerritory",
+          "referencedColumn": "TerritoryID",
+          "constraint": 0,
+          "position": 0
+        },
+        {
+          "column": "StoreID",
+          "table": "Sales.Store",
+          "referencedColumn": "BusinessEntityID",
+          "constraint": 1,
+          "position": 0
+        },
+        {
+          "column": "PersonID",
+          "table": "Person.Person",
+          "referencedColumn": "BusinessEntityID",
+          "constraint": 2,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Sales_Customer"
+    },
+    {
+      "name": "HumanResources.Department",
+      "kind": "table",
+      "description": "Lookup table containing the departments within the Adventure Works Cycles company.",
+      "rowCount": 16,
+      "columns": [
+        {
+          "name": "DepartmentID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "Name",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "GroupName",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "DepartmentID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [],
+      "modelEntity": "HumanResources_Department"
+    },
+    {
+      "name": "Production.Document",
+      "kind": "table",
+      "description": "Product maintenance documents.",
+      "rowCount": 12,
+      "columns": [
+        {
+          "name": "DocumentNode",
+          "type": "BLOB",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "DocumentLevel",
+          "type": "INTEGER",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Title",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Owner",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "FolderFlag",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0"
+        },
+        {
+          "name": "FileName",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "FileExtension",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Revision",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ChangeNumber",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0"
+        },
+        {
+          "name": "Status",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "DocumentSummary",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Document",
+          "type": "BLOB",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "rowguid",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "DocumentNode",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "Owner",
+          "table": "HumanResources.Employee",
+          "referencedColumn": "BusinessEntityID",
+          "constraint": 0,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Production_Document"
+    },
+    {
+      "name": "Person.EmailAddress",
+      "kind": "table",
+      "description": "Where to send a person email.",
+      "rowCount": 19972,
+      "columns": [
+        {
+          "name": "BusinessEntityID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "EmailAddressID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 2,
+          "defaultValue": null
+        },
+        {
+          "name": "EmailAddress",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "rowguid",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "BusinessEntityID",
+          "position": 1
+        },
+        {
+          "column": "EmailAddressID",
+          "position": 2
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "BusinessEntityID",
+          "table": "Person.Person",
+          "referencedColumn": "BusinessEntityID",
+          "constraint": 0,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Person_EmailAddress"
+    },
+    {
+      "name": "HumanResources.Employee",
+      "kind": "table",
+      "description": "Employee information such as salary, department, and title.",
+      "rowCount": 290,
+      "columns": [
+        {
+          "name": "BusinessEntityID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "NationalIDNumber",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "LoginID",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "OrganizationNode",
+          "type": "BLOB",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "OrganizationLevel",
+          "type": "INTEGER",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "JobTitle",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "BirthDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "MaritalStatus",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Gender",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "HireDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "SalariedFlag",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "1"
+        },
+        {
+          "name": "VacationHours",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0"
+        },
+        {
+          "name": "SickLeaveHours",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0"
+        },
+        {
+          "name": "CurrentFlag",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "1"
+        },
+        {
+          "name": "rowguid",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "BusinessEntityID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "BusinessEntityID",
+          "table": "Person.Person",
+          "referencedColumn": "BusinessEntityID",
+          "constraint": 0,
+          "position": 0
+        }
+      ],
+      "modelEntity": "HumanResources_Employee"
+    },
+    {
+      "name": "HumanResources.EmployeeDepartmentHistory",
+      "kind": "table",
+      "description": "Employee department transfers.",
+      "rowCount": 296,
+      "columns": [
+        {
+          "name": "BusinessEntityID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "DepartmentID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 3,
+          "defaultValue": null
+        },
+        {
+          "name": "ShiftID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 4,
+          "defaultValue": null
+        },
+        {
+          "name": "StartDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 2,
+          "defaultValue": null
+        },
+        {
+          "name": "EndDate",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "BusinessEntityID",
+          "position": 1
+        },
+        {
+          "column": "StartDate",
+          "position": 2
+        },
+        {
+          "column": "DepartmentID",
+          "position": 3
+        },
+        {
+          "column": "ShiftID",
+          "position": 4
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "ShiftID",
+          "table": "HumanResources.Shift",
+          "referencedColumn": "ShiftID",
+          "constraint": 0,
+          "position": 0
+        },
+        {
+          "column": "BusinessEntityID",
+          "table": "HumanResources.Employee",
+          "referencedColumn": "BusinessEntityID",
+          "constraint": 1,
+          "position": 0
+        },
+        {
+          "column": "DepartmentID",
+          "table": "HumanResources.Department",
+          "referencedColumn": "DepartmentID",
+          "constraint": 2,
+          "position": 0
+        }
+      ],
+      "modelEntity": "HumanResources_EmployeeDepartmentHistory"
+    },
+    {
+      "name": "HumanResources.EmployeePayHistory",
+      "kind": "table",
+      "description": "Employee pay history.",
+      "rowCount": 316,
+      "columns": [
+        {
+          "name": "BusinessEntityID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "RateChangeDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 2,
+          "defaultValue": null
+        },
+        {
+          "name": "Rate",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "PayFrequency",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "BusinessEntityID",
+          "position": 1
+        },
+        {
+          "column": "RateChangeDate",
+          "position": 2
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "BusinessEntityID",
+          "table": "HumanResources.Employee",
+          "referencedColumn": "BusinessEntityID",
+          "constraint": 0,
+          "position": 0
+        }
+      ],
+      "modelEntity": "HumanResources_EmployeePayHistory"
+    },
+    {
+      "name": "Production.Illustration",
+      "kind": "table",
+      "description": "Bicycle assembly diagrams.",
+      "rowCount": 5,
+      "columns": [
+        {
+          "name": "IllustrationID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "Diagram",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "IllustrationID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [],
+      "modelEntity": "Production_Illustration"
+    },
+    {
+      "name": "HumanResources.JobCandidate",
+      "kind": "table",
+      "description": "Résumés submitted to Human Resources by job applicants.",
+      "rowCount": 13,
+      "columns": [
+        {
+          "name": "JobCandidateID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "BusinessEntityID",
+          "type": "INTEGER",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Resume",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "JobCandidateID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "BusinessEntityID",
+          "table": "HumanResources.Employee",
+          "referencedColumn": "BusinessEntityID",
+          "constraint": 0,
+          "position": 0
+        }
+      ],
+      "modelEntity": "HumanResources_JobCandidate"
+    },
+    {
+      "name": "Production.Location",
+      "kind": "table",
+      "description": "Product inventory and manufacturing locations.",
+      "rowCount": 14,
+      "columns": [
+        {
+          "name": "LocationID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "Name",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "CostRate",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0.00"
+        },
+        {
+          "name": "Availability",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0.00"
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "LocationID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [],
+      "modelEntity": "Production_Location"
+    },
+    {
+      "name": "Person.Password",
+      "kind": "table",
+      "description": "One way hashed authentication information",
+      "rowCount": 19972,
+      "columns": [
+        {
+          "name": "BusinessEntityID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "PasswordHash",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "PasswordSalt",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "rowguid",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "BusinessEntityID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "BusinessEntityID",
+          "table": "Person.Person",
+          "referencedColumn": "BusinessEntityID",
+          "constraint": 0,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Person_Password"
+    },
+    {
+      "name": "Person.Person",
+      "kind": "table",
+      "description": "Human beings involved with AdventureWorks: employees, customer contacts, and vendor contacts.",
+      "rowCount": 19972,
+      "columns": [
+        {
+          "name": "BusinessEntityID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "PersonType",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "NameStyle",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0"
+        },
+        {
+          "name": "Title",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "FirstName",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "MiddleName",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "LastName",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Suffix",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "EmailPromotion",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0"
+        },
+        {
+          "name": "AdditionalContactInfo",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Demographics",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "rowguid",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "BusinessEntityID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "BusinessEntityID",
+          "table": "Person.BusinessEntity",
+          "referencedColumn": "BusinessEntityID",
+          "constraint": 0,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Person_Person"
+    },
+    {
+      "name": "Sales.PersonCreditCard",
+      "kind": "table",
+      "description": "Cross-reference table mapping people to their credit card information in the CreditCard table.",
+      "rowCount": 19118,
+      "columns": [
+        {
+          "name": "BusinessEntityID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "CreditCardID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 2,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "BusinessEntityID",
+          "position": 1
+        },
+        {
+          "column": "CreditCardID",
+          "position": 2
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "CreditCardID",
+          "table": "Sales.CreditCard",
+          "referencedColumn": "CreditCardID",
+          "constraint": 0,
+          "position": 0
+        },
+        {
+          "column": "BusinessEntityID",
+          "table": "Person.Person",
+          "referencedColumn": "BusinessEntityID",
+          "constraint": 1,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Sales_PersonCreditCard"
+    },
+    {
+      "name": "Person.PersonPhone",
+      "kind": "table",
+      "description": "Telephone number and type of a person.",
+      "rowCount": 19972,
+      "columns": [
+        {
+          "name": "BusinessEntityID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "PhoneNumber",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 2,
+          "defaultValue": null
+        },
+        {
+          "name": "PhoneNumberTypeID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 3,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "BusinessEntityID",
+          "position": 1
+        },
+        {
+          "column": "PhoneNumber",
+          "position": 2
+        },
+        {
+          "column": "PhoneNumberTypeID",
+          "position": 3
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "PhoneNumberTypeID",
+          "table": "Person.PhoneNumberType",
+          "referencedColumn": "PhoneNumberTypeID",
+          "constraint": 0,
+          "position": 0
+        },
+        {
+          "column": "BusinessEntityID",
+          "table": "Person.Person",
+          "referencedColumn": "BusinessEntityID",
+          "constraint": 1,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Person_PersonPhone"
+    },
+    {
+      "name": "Person.PhoneNumberType",
+      "kind": "table",
+      "description": "Type of phone number of a person.",
+      "rowCount": 3,
+      "columns": [
+        {
+          "name": "PhoneNumberTypeID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "Name",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "PhoneNumberTypeID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [],
+      "modelEntity": "Person_PhoneNumberType"
+    },
+    {
+      "name": "Production.Product",
+      "kind": "table",
+      "description": "Products sold or used in the manfacturing of sold products.",
+      "rowCount": 504,
+      "columns": [
+        {
+          "name": "ProductID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "Name",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ProductNumber",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "MakeFlag",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "1"
+        },
+        {
+          "name": "FinishedGoodsFlag",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "1"
+        },
+        {
+          "name": "Color",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "SafetyStockLevel",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ReorderPoint",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "StandardCost",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ListPrice",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Size",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "SizeUnitMeasureCode",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "WeightUnitMeasureCode",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Weight",
+          "type": "NUMERIC",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "DaysToManufacture",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ProductLine",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Class",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Style",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ProductSubcategoryID",
+          "type": "INTEGER",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ProductModelID",
+          "type": "INTEGER",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "SellStartDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "SellEndDate",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "DiscontinuedDate",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "rowguid",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "ProductID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "ProductSubcategoryID",
+          "table": "Production.ProductSubcategory",
+          "referencedColumn": "ProductSubcategoryID",
+          "constraint": 0,
+          "position": 0
+        },
+        {
+          "column": "ProductModelID",
+          "table": "Production.ProductModel",
+          "referencedColumn": "ProductModelID",
+          "constraint": 1,
+          "position": 0
+        },
+        {
+          "column": "WeightUnitMeasureCode",
+          "table": "Production.UnitMeasure",
+          "referencedColumn": "UnitMeasureCode",
+          "constraint": 2,
+          "position": 0
+        },
+        {
+          "column": "SizeUnitMeasureCode",
+          "table": "Production.UnitMeasure",
+          "referencedColumn": "UnitMeasureCode",
+          "constraint": 3,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Production_Product"
+    },
+    {
+      "name": "Production.ProductCategory",
+      "kind": "table",
+      "description": "High-level product categorization.",
+      "rowCount": 4,
+      "columns": [
+        {
+          "name": "ProductCategoryID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "Name",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "rowguid",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "ProductCategoryID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [],
+      "modelEntity": "Production_ProductCategory"
+    },
+    {
+      "name": "Production.ProductCostHistory",
+      "kind": "table",
+      "description": "Changes in the cost of a product over time.",
+      "rowCount": 395,
+      "columns": [
+        {
+          "name": "ProductID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "StartDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 2,
+          "defaultValue": null
+        },
+        {
+          "name": "EndDate",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "StandardCost",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "ProductID",
+          "position": 1
+        },
+        {
+          "column": "StartDate",
+          "position": 2
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "ProductID",
+          "table": "Production.Product",
+          "referencedColumn": "ProductID",
+          "constraint": 0,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Production_ProductCostHistory"
+    },
+    {
+      "name": "Production.ProductDescription",
+      "kind": "table",
+      "description": "Product descriptions in several languages.",
+      "rowCount": 762,
+      "columns": [
+        {
+          "name": "ProductDescriptionID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "Description",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "rowguid",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "ProductDescriptionID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [],
+      "modelEntity": "Production_ProductDescription"
+    },
+    {
+      "name": "Production.ProductDocument",
+      "kind": "table",
+      "description": "Cross-reference table mapping products to related product documents.",
+      "rowCount": 32,
+      "columns": [
+        {
+          "name": "ProductID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "DocumentNode",
+          "type": "BLOB",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 2,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "ProductID",
+          "position": 1
+        },
+        {
+          "column": "DocumentNode",
+          "position": 2
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "DocumentNode",
+          "table": "Production.Document",
+          "referencedColumn": "DocumentNode",
+          "constraint": 0,
+          "position": 0
+        },
+        {
+          "column": "ProductID",
+          "table": "Production.Product",
+          "referencedColumn": "ProductID",
+          "constraint": 1,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Production_ProductDocument"
+    },
+    {
+      "name": "Production.ProductInventory",
+      "kind": "table",
+      "description": "Product inventory information.",
+      "rowCount": 1069,
+      "columns": [
+        {
+          "name": "ProductID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "LocationID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 2,
+          "defaultValue": null
+        },
+        {
+          "name": "Shelf",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Bin",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Quantity",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0"
+        },
+        {
+          "name": "rowguid",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "ProductID",
+          "position": 1
+        },
+        {
+          "column": "LocationID",
+          "position": 2
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "ProductID",
+          "table": "Production.Product",
+          "referencedColumn": "ProductID",
+          "constraint": 0,
+          "position": 0
+        },
+        {
+          "column": "LocationID",
+          "table": "Production.Location",
+          "referencedColumn": "LocationID",
+          "constraint": 1,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Production_ProductInventory"
+    },
+    {
+      "name": "Production.ProductListPriceHistory",
+      "kind": "table",
+      "description": "Changes in the list price of a product over time.",
+      "rowCount": 395,
+      "columns": [
+        {
+          "name": "ProductID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "StartDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 2,
+          "defaultValue": null
+        },
+        {
+          "name": "EndDate",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ListPrice",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "ProductID",
+          "position": 1
+        },
+        {
+          "column": "StartDate",
+          "position": 2
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "ProductID",
+          "table": "Production.Product",
+          "referencedColumn": "ProductID",
+          "constraint": 0,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Production_ProductListPriceHistory"
+    },
+    {
+      "name": "Production.ProductModel",
+      "kind": "table",
+      "description": "Product model classification.",
+      "rowCount": 128,
+      "columns": [
+        {
+          "name": "ProductModelID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "Name",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "CatalogDescription",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Instructions",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "rowguid",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "ProductModelID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [],
+      "modelEntity": "Production_ProductModel"
+    },
+    {
+      "name": "Production.ProductModelIllustration",
+      "kind": "table",
+      "description": "Cross-reference table mapping product models and illustrations.",
+      "rowCount": 7,
+      "columns": [
+        {
+          "name": "ProductModelID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "IllustrationID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 2,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "ProductModelID",
+          "position": 1
+        },
+        {
+          "column": "IllustrationID",
+          "position": 2
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "IllustrationID",
+          "table": "Production.Illustration",
+          "referencedColumn": "IllustrationID",
+          "constraint": 0,
+          "position": 0
+        },
+        {
+          "column": "ProductModelID",
+          "table": "Production.ProductModel",
+          "referencedColumn": "ProductModelID",
+          "constraint": 1,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Production_ProductModelIllustration"
+    },
+    {
+      "name": "Production.ProductModelProductDescriptionCulture",
+      "kind": "table",
+      "description": "Cross-reference table mapping product descriptions and the language the description is written in.",
+      "rowCount": 762,
+      "columns": [
+        {
+          "name": "ProductModelID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "ProductDescriptionID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 2,
+          "defaultValue": null
+        },
+        {
+          "name": "CultureID",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 3,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "ProductModelID",
+          "position": 1
+        },
+        {
+          "column": "ProductDescriptionID",
+          "position": 2
+        },
+        {
+          "column": "CultureID",
+          "position": 3
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "ProductModelID",
+          "table": "Production.ProductModel",
+          "referencedColumn": "ProductModelID",
+          "constraint": 0,
+          "position": 0
+        },
+        {
+          "column": "CultureID",
+          "table": "Production.Culture",
+          "referencedColumn": "CultureID",
+          "constraint": 1,
+          "position": 0
+        },
+        {
+          "column": "ProductDescriptionID",
+          "table": "Production.ProductDescription",
+          "referencedColumn": "ProductDescriptionID",
+          "constraint": 2,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Production_ProductModelProductDescriptionCulture"
+    },
+    {
+      "name": "Production.ProductPhoto",
+      "kind": "table",
+      "description": "Product images.",
+      "rowCount": 101,
+      "columns": [
+        {
+          "name": "ProductPhotoID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "ThumbNailPhoto",
+          "type": "BLOB",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ThumbnailPhotoFileName",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "LargePhoto",
+          "type": "BLOB",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "LargePhotoFileName",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "ProductPhotoID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [],
+      "modelEntity": "Production_ProductPhoto"
+    },
+    {
+      "name": "Production.ProductProductPhoto",
+      "kind": "table",
+      "description": "Cross-reference table mapping products and product photos.",
+      "rowCount": 504,
+      "columns": [
+        {
+          "name": "ProductID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "ProductPhotoID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 2,
+          "defaultValue": null
+        },
+        {
+          "name": "Primary",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0"
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "ProductID",
+          "position": 1
+        },
+        {
+          "column": "ProductPhotoID",
+          "position": 2
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "ProductPhotoID",
+          "table": "Production.ProductPhoto",
+          "referencedColumn": "ProductPhotoID",
+          "constraint": 0,
+          "position": 0
+        },
+        {
+          "column": "ProductID",
+          "table": "Production.Product",
+          "referencedColumn": "ProductID",
+          "constraint": 1,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Production_ProductProductPhoto"
+    },
+    {
+      "name": "Production.ProductReview",
+      "kind": "table",
+      "description": "Customer reviews of products they have purchased.",
+      "rowCount": 4,
+      "columns": [
+        {
+          "name": "ProductReviewID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "ProductID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ReviewerName",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ReviewDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        },
+        {
+          "name": "EmailAddress",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Rating",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Comments",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "ProductReviewID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "ProductID",
+          "table": "Production.Product",
+          "referencedColumn": "ProductID",
+          "constraint": 0,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Production_ProductReview"
+    },
+    {
+      "name": "Production.ProductSubcategory",
+      "kind": "table",
+      "description": "Product subcategories. See ProductCategory table.",
+      "rowCount": 37,
+      "columns": [
+        {
+          "name": "ProductSubcategoryID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "ProductCategoryID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Name",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "rowguid",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "ProductSubcategoryID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "ProductCategoryID",
+          "table": "Production.ProductCategory",
+          "referencedColumn": "ProductCategoryID",
+          "constraint": 0,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Production_ProductSubcategory"
+    },
+    {
+      "name": "Purchasing.ProductVendor",
+      "kind": "table",
+      "description": "Cross-reference table mapping vendors with the products they supply.",
+      "rowCount": 460,
+      "columns": [
+        {
+          "name": "ProductID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "BusinessEntityID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 2,
+          "defaultValue": null
+        },
+        {
+          "name": "AverageLeadTime",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "StandardPrice",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "LastReceiptCost",
+          "type": "NUMERIC",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "LastReceiptDate",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "MinOrderQty",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "MaxOrderQty",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "OnOrderQty",
+          "type": "INTEGER",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "UnitMeasureCode",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "ProductID",
+          "position": 1
+        },
+        {
+          "column": "BusinessEntityID",
+          "position": 2
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "BusinessEntityID",
+          "table": "Purchasing.Vendor",
+          "referencedColumn": "BusinessEntityID",
+          "constraint": 0,
+          "position": 0
+        },
+        {
+          "column": "UnitMeasureCode",
+          "table": "Production.UnitMeasure",
+          "referencedColumn": "UnitMeasureCode",
+          "constraint": 1,
+          "position": 0
+        },
+        {
+          "column": "ProductID",
+          "table": "Production.Product",
+          "referencedColumn": "ProductID",
+          "constraint": 2,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Purchasing_ProductVendor"
+    },
+    {
+      "name": "Purchasing.PurchaseOrderDetail",
+      "kind": "table",
+      "description": "Individual products associated with a specific purchase order. See PurchaseOrderHeader.",
+      "rowCount": 8845,
+      "columns": [
+        {
+          "name": "PurchaseOrderID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "PurchaseOrderDetailID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 2,
+          "defaultValue": null
+        },
+        {
+          "name": "DueDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "OrderQty",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ProductID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "UnitPrice",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "LineTotal",
+          "type": "NUMERIC",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ReceivedQty",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "RejectedQty",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "StockedQty",
+          "type": "NUMERIC",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "PurchaseOrderID",
+          "position": 1
+        },
+        {
+          "column": "PurchaseOrderDetailID",
+          "position": 2
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "PurchaseOrderID",
+          "table": "Purchasing.PurchaseOrderHeader",
+          "referencedColumn": "PurchaseOrderID",
+          "constraint": 0,
+          "position": 0
+        },
+        {
+          "column": "ProductID",
+          "table": "Production.Product",
+          "referencedColumn": "ProductID",
+          "constraint": 1,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Purchasing_PurchaseOrderDetail"
+    },
+    {
+      "name": "Purchasing.PurchaseOrderHeader",
+      "kind": "table",
+      "description": "General purchase order information. See PurchaseOrderDetail.",
+      "rowCount": 4012,
+      "columns": [
+        {
+          "name": "PurchaseOrderID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "RevisionNumber",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0"
+        },
+        {
+          "name": "Status",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "1"
+        },
+        {
+          "name": "EmployeeID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "VendorID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ShipMethodID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "OrderDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        },
+        {
+          "name": "ShipDate",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "SubTotal",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0.00"
+        },
+        {
+          "name": "TaxAmt",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0.00"
+        },
+        {
+          "name": "Freight",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0.00"
+        },
+        {
+          "name": "TotalDue",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "PurchaseOrderID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "ShipMethodID",
+          "table": "Purchasing.ShipMethod",
+          "referencedColumn": "ShipMethodID",
+          "constraint": 0,
+          "position": 0
+        },
+        {
+          "column": "VendorID",
+          "table": "Purchasing.Vendor",
+          "referencedColumn": "BusinessEntityID",
+          "constraint": 1,
+          "position": 0
+        },
+        {
+          "column": "EmployeeID",
+          "table": "HumanResources.Employee",
+          "referencedColumn": "BusinessEntityID",
+          "constraint": 2,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Purchasing_PurchaseOrderHeader"
+    },
+    {
+      "name": "Sales.SalesOrderDetail",
+      "kind": "table",
+      "description": "Individual products associated with a specific sales order. See SalesOrderHeader.",
+      "rowCount": 121317,
+      "columns": [
+        {
+          "name": "SalesOrderID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "SalesOrderDetailID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 2,
+          "defaultValue": null
+        },
+        {
+          "name": "CarrierTrackingNumber",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "OrderQty",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ProductID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "SpecialOfferID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "UnitPrice",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "UnitPriceDiscount",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0.0"
+        },
+        {
+          "name": "LineTotal",
+          "type": "NUMERIC",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "rowguid",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "SalesOrderID",
+          "position": 1
+        },
+        {
+          "column": "SalesOrderDetailID",
+          "position": 2
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "SpecialOfferID",
+          "table": "Sales.SpecialOfferProduct",
+          "referencedColumn": "SpecialOfferID",
+          "constraint": 0,
+          "position": 0
+        },
+        {
+          "column": "ProductID",
+          "table": "Sales.SpecialOfferProduct",
+          "referencedColumn": "ProductID",
+          "constraint": 0,
+          "position": 1
+        },
+        {
+          "column": "SalesOrderID",
+          "table": "Sales.SalesOrderHeader",
+          "referencedColumn": "SalesOrderID",
+          "constraint": 1,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Sales_SalesOrderDetail"
+    },
+    {
+      "name": "Sales.SalesOrderHeader",
+      "kind": "table",
+      "description": "General sales order information.",
+      "rowCount": 31465,
+      "columns": [
+        {
+          "name": "SalesOrderID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "RevisionNumber",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0"
+        },
+        {
+          "name": "OrderDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        },
+        {
+          "name": "DueDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ShipDate",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Status",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "1"
+        },
+        {
+          "name": "OnlineOrderFlag",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "1"
+        },
+        {
+          "name": "SalesOrderNumber",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "PurchaseOrderNumber",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "AccountNumber",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "CustomerID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "SalesPersonID",
+          "type": "INTEGER",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "TerritoryID",
+          "type": "INTEGER",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "BillToAddressID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ShipToAddressID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ShipMethodID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "CreditCardID",
+          "type": "INTEGER",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "CreditCardApprovalCode",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "CurrencyRateID",
+          "type": "INTEGER",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "SubTotal",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0.00"
+        },
+        {
+          "name": "TaxAmt",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0.00"
+        },
+        {
+          "name": "Freight",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0.00"
+        },
+        {
+          "name": "TotalDue",
+          "type": "NUMERIC",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Comment",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "rowguid",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "SalesOrderID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "TerritoryID",
+          "table": "Sales.SalesTerritory",
+          "referencedColumn": "TerritoryID",
+          "constraint": 0,
+          "position": 0
+        },
+        {
+          "column": "ShipMethodID",
+          "table": "Purchasing.ShipMethod",
+          "referencedColumn": "ShipMethodID",
+          "constraint": 1,
+          "position": 0
+        },
+        {
+          "column": "SalesPersonID",
+          "table": "Sales.SalesPerson",
+          "referencedColumn": "BusinessEntityID",
+          "constraint": 2,
+          "position": 0
+        },
+        {
+          "column": "CustomerID",
+          "table": "Sales.Customer",
+          "referencedColumn": "CustomerID",
+          "constraint": 3,
+          "position": 0
+        },
+        {
+          "column": "CurrencyRateID",
+          "table": "Sales.CurrencyRate",
+          "referencedColumn": "CurrencyRateID",
+          "constraint": 4,
+          "position": 0
+        },
+        {
+          "column": "CreditCardID",
+          "table": "Sales.CreditCard",
+          "referencedColumn": "CreditCardID",
+          "constraint": 5,
+          "position": 0
+        },
+        {
+          "column": "ShipToAddressID",
+          "table": "Person.Address",
+          "referencedColumn": "AddressID",
+          "constraint": 6,
+          "position": 0
+        },
+        {
+          "column": "BillToAddressID",
+          "table": "Person.Address",
+          "referencedColumn": "AddressID",
+          "constraint": 7,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Sales_SalesOrderHeader"
+    },
+    {
+      "name": "Sales.SalesOrderHeaderSalesReason",
+      "kind": "table",
+      "description": "Cross-reference table mapping sales orders to sales reason codes.",
+      "rowCount": 27647,
+      "columns": [
+        {
+          "name": "SalesOrderID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "SalesReasonID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 2,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "SalesOrderID",
+          "position": 1
+        },
+        {
+          "column": "SalesReasonID",
+          "position": 2
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "SalesOrderID",
+          "table": "Sales.SalesOrderHeader",
+          "referencedColumn": "SalesOrderID",
+          "constraint": 0,
+          "position": 0
+        },
+        {
+          "column": "SalesReasonID",
+          "table": "Sales.SalesReason",
+          "referencedColumn": "SalesReasonID",
+          "constraint": 1,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Sales_SalesOrderHeaderSalesReason"
+    },
+    {
+      "name": "Sales.SalesPerson",
+      "kind": "table",
+      "description": "Sales representative current information.",
+      "rowCount": 17,
+      "columns": [
+        {
+          "name": "BusinessEntityID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "TerritoryID",
+          "type": "INTEGER",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "SalesQuota",
+          "type": "NUMERIC",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Bonus",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0.00"
+        },
+        {
+          "name": "CommissionPct",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0.00"
+        },
+        {
+          "name": "SalesYTD",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0.00"
+        },
+        {
+          "name": "SalesLastYear",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0.00"
+        },
+        {
+          "name": "rowguid",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "BusinessEntityID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "TerritoryID",
+          "table": "Sales.SalesTerritory",
+          "referencedColumn": "TerritoryID",
+          "constraint": 0,
+          "position": 0
+        },
+        {
+          "column": "BusinessEntityID",
+          "table": "HumanResources.Employee",
+          "referencedColumn": "BusinessEntityID",
+          "constraint": 1,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Sales_SalesPerson"
+    },
+    {
+      "name": "Sales.SalesPersonQuotaHistory",
+      "kind": "table",
+      "description": "Sales performance tracking.",
+      "rowCount": 163,
+      "columns": [
+        {
+          "name": "BusinessEntityID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "QuotaDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 2,
+          "defaultValue": null
+        },
+        {
+          "name": "SalesQuota",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "rowguid",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "BusinessEntityID",
+          "position": 1
+        },
+        {
+          "column": "QuotaDate",
+          "position": 2
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "BusinessEntityID",
+          "table": "Sales.SalesPerson",
+          "referencedColumn": "BusinessEntityID",
+          "constraint": 0,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Sales_SalesPersonQuotaHistory"
+    },
+    {
+      "name": "Sales.SalesReason",
+      "kind": "table",
+      "description": "Lookup table of customer purchase reasons.",
+      "rowCount": 10,
+      "columns": [
+        {
+          "name": "SalesReasonID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "Name",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ReasonType",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "SalesReasonID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [],
+      "modelEntity": "Sales_SalesReason"
+    },
+    {
+      "name": "Sales.SalesTaxRate",
+      "kind": "table",
+      "description": "Tax rate lookup table.",
+      "rowCount": 29,
+      "columns": [
+        {
+          "name": "SalesTaxRateID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "StateProvinceID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "TaxType",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "TaxRate",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0.00"
+        },
+        {
+          "name": "Name",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "rowguid",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "SalesTaxRateID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "StateProvinceID",
+          "table": "Person.StateProvince",
+          "referencedColumn": "StateProvinceID",
+          "constraint": 0,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Sales_SalesTaxRate"
+    },
+    {
+      "name": "Sales.SalesTerritory",
+      "kind": "table",
+      "description": "Sales territory lookup table.",
+      "rowCount": 10,
+      "columns": [
+        {
+          "name": "TerritoryID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "Name",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "CountryRegionCode",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Group",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "SalesYTD",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0.00"
+        },
+        {
+          "name": "SalesLastYear",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0.00"
+        },
+        {
+          "name": "CostYTD",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0.00"
+        },
+        {
+          "name": "CostLastYear",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0.00"
+        },
+        {
+          "name": "rowguid",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "TerritoryID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "CountryRegionCode",
+          "table": "Person.CountryRegion",
+          "referencedColumn": "CountryRegionCode",
+          "constraint": 0,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Sales_SalesTerritory"
+    },
+    {
+      "name": "Sales.SalesTerritoryHistory",
+      "kind": "table",
+      "description": "Sales representative transfers to other sales territories.",
+      "rowCount": 17,
+      "columns": [
+        {
+          "name": "BusinessEntityID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "TerritoryID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 3,
+          "defaultValue": null
+        },
+        {
+          "name": "StartDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 2,
+          "defaultValue": null
+        },
+        {
+          "name": "EndDate",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "rowguid",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "BusinessEntityID",
+          "position": 1
+        },
+        {
+          "column": "StartDate",
+          "position": 2
+        },
+        {
+          "column": "TerritoryID",
+          "position": 3
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "TerritoryID",
+          "table": "Sales.SalesTerritory",
+          "referencedColumn": "TerritoryID",
+          "constraint": 0,
+          "position": 0
+        },
+        {
+          "column": "BusinessEntityID",
+          "table": "Sales.SalesPerson",
+          "referencedColumn": "BusinessEntityID",
+          "constraint": 1,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Sales_SalesTerritoryHistory"
+    },
+    {
+      "name": "Production.ScrapReason",
+      "kind": "table",
+      "description": "Manufacturing failure reasons lookup table.",
+      "rowCount": 16,
+      "columns": [
+        {
+          "name": "ScrapReasonID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "Name",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "ScrapReasonID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [],
+      "modelEntity": "Production_ScrapReason"
+    },
+    {
+      "name": "HumanResources.Shift",
+      "kind": "table",
+      "description": "Work shift lookup table.",
+      "rowCount": 3,
+      "columns": [
+        {
+          "name": "ShiftID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "Name",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "StartTime",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "EndTime",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "ShiftID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [],
+      "modelEntity": "HumanResources_Shift"
+    },
+    {
+      "name": "Purchasing.ShipMethod",
+      "kind": "table",
+      "description": "Shipping company lookup table.",
+      "rowCount": 5,
+      "columns": [
+        {
+          "name": "ShipMethodID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "Name",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ShipBase",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0.00"
+        },
+        {
+          "name": "ShipRate",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0.00"
+        },
+        {
+          "name": "rowguid",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "ShipMethodID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [],
+      "modelEntity": "Purchasing_ShipMethod"
+    },
+    {
+      "name": "Sales.ShoppingCartItem",
+      "kind": "table",
+      "description": "Contains online customer orders until the order is submitted or cancelled.",
+      "rowCount": 3,
+      "columns": [
+        {
+          "name": "ShoppingCartItemID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "ShoppingCartID",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Quantity",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "1"
+        },
+        {
+          "name": "ProductID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "DateCreated",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "ShoppingCartItemID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "ProductID",
+          "table": "Production.Product",
+          "referencedColumn": "ProductID",
+          "constraint": 0,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Sales_ShoppingCartItem"
+    },
+    {
+      "name": "Sales.SpecialOffer",
+      "kind": "table",
+      "description": "Sale discounts lookup table.",
+      "rowCount": 16,
+      "columns": [
+        {
+          "name": "SpecialOfferID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "Description",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "DiscountPct",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0.00"
+        },
+        {
+          "name": "Type",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Category",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "StartDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "EndDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "MinQty",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0"
+        },
+        {
+          "name": "MaxQty",
+          "type": "INTEGER",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "rowguid",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "SpecialOfferID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [],
+      "modelEntity": "Sales_SpecialOffer"
+    },
+    {
+      "name": "Sales.SpecialOfferProduct",
+      "kind": "table",
+      "description": "Cross-reference table mapping products to special offer discounts.",
+      "rowCount": 538,
+      "columns": [
+        {
+          "name": "SpecialOfferID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "ProductID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 2,
+          "defaultValue": null
+        },
+        {
+          "name": "rowguid",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "SpecialOfferID",
+          "position": 1
+        },
+        {
+          "column": "ProductID",
+          "position": 2
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "SpecialOfferID",
+          "table": "Sales.SpecialOffer",
+          "referencedColumn": "SpecialOfferID",
+          "constraint": 0,
+          "position": 0
+        },
+        {
+          "column": "ProductID",
+          "table": "Production.Product",
+          "referencedColumn": "ProductID",
+          "constraint": 1,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Sales_SpecialOfferProduct"
+    },
+    {
+      "name": "Person.StateProvince",
+      "kind": "table",
+      "description": "State and province lookup table.",
+      "rowCount": 181,
+      "columns": [
+        {
+          "name": "StateProvinceID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "StateProvinceCode",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "CountryRegionCode",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "IsOnlyStateProvinceFlag",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "1"
+        },
+        {
+          "name": "Name",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "TerritoryID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "rowguid",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "StateProvinceID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "TerritoryID",
+          "table": "Sales.SalesTerritory",
+          "referencedColumn": "TerritoryID",
+          "constraint": 0,
+          "position": 0
+        },
+        {
+          "column": "CountryRegionCode",
+          "table": "Person.CountryRegion",
+          "referencedColumn": "CountryRegionCode",
+          "constraint": 1,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Person_StateProvince"
+    },
+    {
+      "name": "Sales.Store",
+      "kind": "table",
+      "description": "Customers (resellers) of Adventure Works products.",
+      "rowCount": 701,
+      "columns": [
+        {
+          "name": "BusinessEntityID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "Name",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "SalesPersonID",
+          "type": "INTEGER",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Demographics",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "rowguid",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "BusinessEntityID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "SalesPersonID",
+          "table": "Sales.SalesPerson",
+          "referencedColumn": "BusinessEntityID",
+          "constraint": 0,
+          "position": 0
+        },
+        {
+          "column": "BusinessEntityID",
+          "table": "Person.BusinessEntity",
+          "referencedColumn": "BusinessEntityID",
+          "constraint": 1,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Sales_Store"
+    },
+    {
+      "name": "Production.TransactionHistory",
+      "kind": "table",
+      "description": "Record of each purchase order, sales order, or work order transaction year to date.",
+      "rowCount": 113443,
+      "columns": [
+        {
+          "name": "TransactionID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "ProductID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ReferenceOrderID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ReferenceOrderLineID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0"
+        },
+        {
+          "name": "TransactionDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        },
+        {
+          "name": "TransactionType",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Quantity",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ActualCost",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "TransactionID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "ProductID",
+          "table": "Production.Product",
+          "referencedColumn": "ProductID",
+          "constraint": 0,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Production_TransactionHistory"
+    },
+    {
+      "name": "Production.TransactionHistoryArchive",
+      "kind": "table",
+      "description": "Transactions for previous years.",
+      "rowCount": 89253,
+      "columns": [
+        {
+          "name": "TransactionID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "ProductID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ReferenceOrderID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ReferenceOrderLineID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "0"
+        },
+        {
+          "name": "TransactionDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        },
+        {
+          "name": "TransactionType",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Quantity",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ActualCost",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "TransactionID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [],
+      "modelEntity": "Production_TransactionHistoryArchive"
+    },
+    {
+      "name": "Production.UnitMeasure",
+      "kind": "table",
+      "description": "Unit of measure lookup table.",
+      "rowCount": 38,
+      "columns": [
+        {
+          "name": "UnitMeasureCode",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "Name",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "UnitMeasureCode",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [],
+      "modelEntity": "Production_UnitMeasure"
+    },
+    {
+      "name": "Purchasing.Vendor",
+      "kind": "table",
+      "description": "Companies from whom Adventure Works Cycles purchases parts or other goods.",
+      "rowCount": 104,
+      "columns": [
+        {
+          "name": "BusinessEntityID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "AccountNumber",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "Name",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "CreditRating",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "PreferredVendorStatus",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "1"
+        },
+        {
+          "name": "ActiveFlag",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "1"
+        },
+        {
+          "name": "PurchasingWebServiceURL",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "BusinessEntityID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "BusinessEntityID",
+          "table": "Person.BusinessEntity",
+          "referencedColumn": "BusinessEntityID",
+          "constraint": 0,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Purchasing_Vendor"
+    },
+    {
+      "name": "Production.WorkOrder",
+      "kind": "table",
+      "description": "Manufacturing orders to produce specified products.",
+      "rowCount": 72591,
+      "columns": [
+        {
+          "name": "WorkOrderID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "ProductID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "OrderQty",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "StockedQty",
+          "type": "NUMERIC",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ScrappedQty",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "StartDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "EndDate",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "DueDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ScrapReasonID",
+          "type": "INTEGER",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "WorkOrderID",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "ScrapReasonID",
+          "table": "Production.ScrapReason",
+          "referencedColumn": "ScrapReasonID",
+          "constraint": 0,
+          "position": 0
+        },
+        {
+          "column": "ProductID",
+          "table": "Production.Product",
+          "referencedColumn": "ProductID",
+          "constraint": 1,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Production_WorkOrder"
+    },
+    {
+      "name": "Production.WorkOrderRouting",
+      "kind": "table",
+      "description": "Manufacturing routing operations and scheduling information for each work order.",
+      "rowCount": 67131,
+      "columns": [
+        {
+          "name": "WorkOrderID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "ProductID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 2,
+          "defaultValue": null
+        },
+        {
+          "name": "OperationSequence",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 3,
+          "defaultValue": null
+        },
+        {
+          "name": "LocationID",
+          "type": "INTEGER",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ScheduledStartDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ScheduledEndDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ActualStartDate",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ActualEndDate",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ActualResourceHrs",
+          "type": "NUMERIC",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "PlannedCost",
+          "type": "NUMERIC",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ActualCost",
+          "type": "NUMERIC",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "ModifiedDate",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": "'2025-11-14 12:13:16.797'"
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "WorkOrderID",
+          "position": 1
+        },
+        {
+          "column": "ProductID",
+          "position": 2
+        },
+        {
+          "column": "OperationSequence",
+          "position": 3
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "WorkOrderID",
+          "table": "Production.WorkOrder",
+          "referencedColumn": "WorkOrderID",
+          "constraint": 0,
+          "position": 0
+        },
+        {
+          "column": "LocationID",
+          "table": "Production.Location",
+          "referencedColumn": "LocationID",
+          "constraint": 1,
+          "position": 0
+        }
+      ],
+      "modelEntity": "Production_WorkOrderRouting"
+    }
+  ]
+}

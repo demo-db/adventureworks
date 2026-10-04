@@ -1,2 +1,9 @@
-# adventureworks
-Microsoft AdventureWorks OLTP sample, converted to a documented SQLite fixture
+# AdventureWorks OLTP for DemoDB
+
+This repository prepares Microsoft's AdventureWorks OLTP sample as a reproducible SQLite fixture. The pinned source is the AdventureWorks OLTP installer at Microsoft SQL Server Samples commit `beaab06ef72831089ca80e5355d65e661fd19b26`, with the matching 2025 build row `17.0.1000.3`. It preserves 71 physical tables, 759,240 seeded rows, the source primary and foreign keys, and 93 explicit indexes plus the source inline uniqueness constraint.
+
+Eleven source views have compatible relational definitions that are translated to SQLite. The other nine SQL Server views use XML methods, `APPLY`, or `PIVOT`; their original definitions remain in both the pinned native-object metadata and the generated `metadata/schema.json` `sourceViews` list, marked as unavailable in SQLite. The executable view list remains distinct from these retained source definitions. `DatabaseLog` and `ErrorLog` are empty because the installer populates them only with runtime audit and error events. No rows are fabricated for these tables or views.
+
+The source and conversion details are documented in [`data-source/README.md`](data-source/README.md). Microsoft's MIT license is included in [`LICENSE`](LICENSE). SQL Server `GETDATE()` defaults are frozen to the pinned build timestamp. Native `NEWID()` defaults remain documented in source metadata but are omitted from static SQLite DDL; source-seeded GUID values are preserved. The public OVDB query capability remains disabled until a live backend mount is verified.
+
+The pinned installer and CSV inputs are kept byte-for-byte, and generated CSV exports retain source text values exactly. A few such files contain CRLF or trailing tabs/spaces, so `.gitattributes` scopes Git's diff-whitespace exceptions to only those source and generated data files; code, metadata, and documentation remain covered by the normal whitespace checks. Source hashes and logical rebuild checks protect those preserved bytes and values.

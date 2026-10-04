@@ -1,0 +1,16 @@
+[
+  {"LocationID": 1,"Name": "Tool Crib","CostRate": 0,"Availability": 0,"ModifiedDate": "2019-04-30 00:00:00.000"},
+  {"LocationID": 2,"Name": "Sheet Metal Racks","CostRate": 0,"Availability": 0,"ModifiedDate": "2019-04-30 00:00:00.000"},
+  {"LocationID": 3,"Name": "Paint Shop","CostRate": 0,"Availability": 0,"ModifiedDate": "2019-04-30 00:00:00.000"},
+  {"LocationID": 4,"Name": "Paint Storage","CostRate": 0,"Availability": 0,"ModifiedDate": "2019-04-30 00:00:00.000"},
+  {"LocationID": 5,"Name": "Metal Storage","CostRate": 0,"Availability": 0,"ModifiedDate": "2019-04-30 00:00:00.000"},
+  {"LocationID": 6,"Name": "Miscellaneous Storage","CostRate": 0,"Availability": 0,"ModifiedDate": "2019-04-30 00:00:00.000"},
+  {"LocationID": 7,"Name": "Finished Goods Storage","CostRate": 0,"Availability": 0,"ModifiedDate": "2019-04-30 00:00:00.000"},
+  {"LocationID": 10,"Name": "Frame Forming","CostRate": 22.5,"Availability": 96,"ModifiedDate": "2019-04-30 00:00:00.000"},
+  {"LocationID": 20,"Name": "Frame Welding","CostRate": 25,"Availability": 108,"ModifiedDate": "2019-04-30 00:00:00.000"},
+  {"LocationID": 30,"Name": "Debur and Polish","CostRate": 14.5,"Availability": 120,"ModifiedDate": "2019-04-30 00:00:00.000"},
+  {"LocationID": 40,"Name": "Paint","CostRate": 15.75,"Availability": 120,"ModifiedDate": "2019-04-30 00:00:00.000"},
+  {"LocationID": 45,"Name": "Specialized Paint","CostRate": 18,"Availability": 80,"ModifiedDate": "2019-04-30 00:00:00.000"},
+  {"LocationID": 50,"Name": "Subassembly","CostRate": 12.25,"Availability": 120,"ModifiedDate": "2019-04-30 00:00:00.000"},
+  {"LocationID": 60,"Name": "Final Assembly","CostRate": 12.25,"Availability": 120,"ModifiedDate": "2019-04-30 00:00:00.000"}
+]

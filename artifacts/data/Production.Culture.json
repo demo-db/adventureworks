@@ -1,0 +1,10 @@
+[
+  {"CultureID": "      ","Name": "Invariant Language (Invariant Country)","ModifiedDate": "2019-04-30 00:00:00.000"},
+  {"CultureID": "ar    ","Name": "Arabic","ModifiedDate": "2019-04-30 00:00:00.000"},
+  {"CultureID": "en    ","Name": "English","ModifiedDate": "2019-04-30 00:00:00.000"},
+  {"CultureID": "es    ","Name": "Spanish","ModifiedDate": "2019-04-30 00:00:00.000"},
+  {"CultureID": "fr    ","Name": "French","ModifiedDate": "2019-04-30 00:00:00.000"},
+  {"CultureID": "he    ","Name": "Hebrew","ModifiedDate": "2019-04-30 00:00:00.000"},
+  {"CultureID": "th    ","Name": "Thai","ModifiedDate": "2019-04-30 00:00:00.000"},
+  {"CultureID": "zh-cht","Name": "Chinese","ModifiedDate": "2019-04-30 00:00:00.000"}
+]

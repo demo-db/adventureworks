@@ -1,0 +1,8 @@
+# Preserve the pinned upstream source and its data values byte-for-byte. Some
+# SQL files use CRLF, and the CSV fixture intentionally retains source text
+# with trailing tab/space bytes. Conversion checks validate hashes and logical
+# data, so diff whitespace checks are unnecessary only for these data paths.
+data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/*.csv whitespace=-blank-at-eol,-cr-at-eol,-space-before-tab
+data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/instawdb.sql whitespace=-blank-at-eol,-cr-at-eol,-space-before-tab
+artifacts/data/*.csv whitespace=-blank-at-eol,-cr-at-eol,-space-before-tab
+artifacts/adventureworks.sql whitespace=-blank-at-eol,-cr-at-eol,-space-before-tab

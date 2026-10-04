@@ -1,0 +1,1393 @@
+{
+  "contractVersion": 1,
+  "id": "adventureworks",
+  "name": "AdventureWorks OLTP",
+  "description": "Microsoft AdventureWorks OLTP sample database with people, products, sales, purchasing, manufacturing, and inventory.",
+  "domain": "Sales, purchasing, manufacturing, and inventory",
+  "siteHost": "adventureworks.demodb.dev",
+  "aliases": [],
+  "source": {
+    "repository": "https://github.com/microsoft/sql-server-samples",
+    "version": "SQL Server 2025 sample build 17.0.1000.3",
+    "revision": "beaab06ef72831089ca80e5355d65e661fd19b26",
+    "path": "samples/databases/adventure-works/oltp-install-script/instawdb.sql",
+    "license": "MIT",
+    "licenseFile": "data-source/microsoft-sql-server-samples/LICENSE.txt",
+    "notes": "Pinned Microsoft SQL Server Samples AdventureWorks OLTP installer and companion source files from commit beaab06ef72831089ca80e5355d65e661fd19b26. The source AWBuildVersion.csv identifies the installer fixture as SQL Server 2025 build 17.0.1000.3; the README says the script adapts to the installed SQL Server version, so this is the pinned source fixture rather than a claim about every generated server build. The converter imports all 68 BULK INSERT inputs plus the one-row AWBuildVersion.csv, preserving 759,240 seeded rows across 71 physical tables, source primary and foreign keys, 93 explicit indexes, and the inline unique constraint on Production.Document.rowguid. DatabaseLog and ErrorLog remain empty because the installer creates them for runtime audit/error events and supplies no static CSV. All 20 original SQL Server view definitions are retained in metadata/native-objects.json. Eleven straightforward relational views are translated into SQLite and their query results are rebuilt and checked; nine views using SQL Server-only XML, APPLY, or PIVOT constructs remain source-only, with no fabricated rows. SQL Server XML is stored as text; geography and hierarchyid serializations are stored as opaque BLOBs. Computed-column source expressions are retained in native metadata while the pinned CSV snapshot values are stored as ordinary SQLite columns. GETDATE defaults are frozen to the pinned build timestamp; SQL Server NEWID defaults remain in native metadata but are omitted from the static SQLite schema because SQLite only permits constant defaults, and seeded GUID values are preserved. SQL Server-only setup, triggers, stored procedures, query store, and optimized-locking behavior are not implemented. Fixed-width character data is preserved including padding; checks translate SQL Server trailing-space comparison and the source one-character LIKE range to equivalent SQLite expressions. Decimal, numeric, and money source strings are parsed as Python binary floats and stored with SQLite NUMERIC affinity; exact decimal scale and precision are not guaranteed, and this fixture makes no fixed-point MONEY claim. SQL Server collation and numeric behavior can differ. The converter checks the pinned source-file hashes, compares complete logical SQLite schema and row contents across rebuilds, and compares regenerated native SQL Server table/view metadata to the checked-in metadata file. SQLite file bytes may vary across SQLite library versions. JSON and SQLite preserve NULL; CSV represents NULL as an empty field, indistinguishable from empty text. BLOB values in JSON and CSV are base64 encoded. The full SQLite fixture is 125276160 bytes; static export delivery must preserve the full source without truncation and may use deterministic compressed chunks.",
+    "recipe": [
+      {
+        "path": "data-source/microsoft-sql-server-samples/LICENSE.txt",
+        "sha256": "201f3705979e932c92cd3c6ddbddf4dc3c71dcc5a82089a1e4018227cfe1cf09"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/README.md",
+        "sha256": "39fdff5a42a005388d150d5897be4dab67929c6b0b2ec8f9f2e5e964541e3d20"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/AWBuildVersion.csv",
+        "sha256": "fefe50c2d2b017f9b8cb170b09cf2c43d4645f10227903329a720fd3e9bbb687"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/Address.csv",
+        "sha256": "f0b9b426bd894734a2a27d5f895be18de5b530b34c5de57070b7a745043e8311"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/AddressType.csv",
+        "sha256": "f9e98fff8a2cebf3cb9ec8b5b3d73b49c698325bb44ae42b3cb2fd9c784ed464"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/BillOfMaterials.csv",
+        "sha256": "a27765426bd4ee19ffb62150d087de88d2a199fddb55ffad55c2479079844c71"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/BusinessEntity.csv",
+        "sha256": "d83ea67608e786021cf926296c563ca847364d3dec570afb128b0e5f1345aed8"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/BusinessEntityAddress.csv",
+        "sha256": "7d48dcfe3c132bdd49641150abf3744fef06239360e634fcf2ec885ff0c77581"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/BusinessEntityContact.csv",
+        "sha256": "dfba07e37a7b2d089bb291b00d90b3cea8dec7d22e594cc17f5c14cbc32adf25"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/ContactType.csv",
+        "sha256": "9ef31e8889a742918795235378ce50cfd9faa4c0aea0c3f22d5fa1aacf02f568"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/CountryRegion.csv",
+        "sha256": "115acaf67fe0d1679cf07a623d1e9567ee373e5890c77610373bab59c3ecbb88"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/CountryRegionCurrency.csv",
+        "sha256": "043e337d66c3d48eb2a667fc74a940c0058e8e24f31c4876c9897f4c029b1f1f"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/CreditCard.csv",
+        "sha256": "e03870f68640b6207bc400fd8e88de1e7d9fa033d8c53d21562cff7672018881"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/Culture.csv",
+        "sha256": "3a2ddfc1e321497dabf75a6886d0e53b260bbe16e77b69385712da2618873960"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/Currency.csv",
+        "sha256": "a266ef03e632563631914eac28da547dc326a97f3ba8fb3e41c9b7a9fa1b1030"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/CurrencyRate.csv",
+        "sha256": "705a2c949948804e448fbf7529f13e536ef56731205fcde1c85b275a888a54a5"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/Customer.csv",
+        "sha256": "4704aa5b46aed326599014524c821aca50e938587e6a1133c0f6d9aae5c5efc6"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/Department.csv",
+        "sha256": "ea23f5c516f7d843a2d4abe583346a9c8cda9670179ecfb63707641189d61934"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/Document.csv",
+        "sha256": "7857ee09a69ee9f5c2acf667483f0f03f47309cf8f14c9db66ca42290166983d"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/EmailAddress.csv",
+        "sha256": "a52e57aa1842f59479a0bf6fd8189d78b8f14ee121c9da8eacd7f9793dc3d19a"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/Employee.csv",
+        "sha256": "111b1ba4a51bf982c7f8841cdb14c14374fc4552a22e7ba067ef728e7ae72258"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/EmployeeDepartmentHistory.csv",
+        "sha256": "6b090ae6cd83bd6673cd2ecc6a1db80f869e6e955d57ba4dfbe6c27c482f6a53"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/EmployeePayHistory.csv",
+        "sha256": "8fa54b480741017069ca6ae73b51635b2b0538f76e06345b0505e69374f09076"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/Illustration.csv",
+        "sha256": "ded16862561cdbb93ac2c202980f76a01de9086a64b2e1c4f3493f997e77f6f1"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/JobCandidate.csv",
+        "sha256": "b50843c857b37759d8ee20c96547a53e9ea3c6726d40a396349910f1a40872cc"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/Location.csv",
+        "sha256": "7bb94b3313fa91dcf451b5a4f43f31bc2b5061a1c9370849a0ba1234ba5a0d47"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/Password.csv",
+        "sha256": "b14d9bc0f6a1a109912541beeebe213c9c9b02d73314faf5ead65e59c43127fd"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/Person.csv",
+        "sha256": "e22b399865b5f322eda6b34c4c4532165a1ee62cb2362d3f6bb8c1eebbecd896"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/PersonCreditCard.csv",
+        "sha256": "4eab683fa3431c317cda2672baa6502379f0244055f98c7f9541c0307ebdeed9"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/PersonPhone.csv",
+        "sha256": "e6eb7108020cef4fa070240c6c5f069dff4695fc7678421e30801de7e7814740"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/PhoneNumberType.csv",
+        "sha256": "6ee0b3024b1dceca61db9a2efb352b60c8e5e830b834583a62feee7870f578ab"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/Product.csv",
+        "sha256": "df0379a7cba8b11b97ea5d104cf1313ef9f683137b6426f2fac6bb8c74c2a2ea"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/ProductCategory.csv",
+        "sha256": "d86dde135e023960633ed1d6a2fb72f56b74aa2f7d07af983b6bff5e33dfceb2"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/ProductCostHistory.csv",
+        "sha256": "afed7eb09583840258462cfbf003c4705cc4dc7a565dec50919fc1aa68f8160f"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/ProductDescription.csv",
+        "sha256": "9247fbef2e84309e58c513ea08e455b197fb81686f8c3e1b44ec77a88cde5f72"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/ProductDocument.csv",
+        "sha256": "405c1fbc7e65714887fd0e2b57d48d3b07a3e44a9cdc0df89ff5cef4ffc05d2a"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/ProductInventory.csv",
+        "sha256": "0eb400b3a9f0abea533ca91746950ac18ec01788ace01fd1b5cfa729904c2e86"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/ProductListPriceHistory.csv",
+        "sha256": "3169d0e0dcfab88706da0c5691a8cd7d89d0029e36c6dad10f69d781912edcff"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/ProductModel.csv",
+        "sha256": "f5acbcad41dd11b231bfa672116d58d1a59f660d4d49ee998ffc10c545bd031d"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/ProductModelIllustration.csv",
+        "sha256": "91988678859bac232e9d99736243f78bf5d4d428dca2d3b81dd7141361e065a7"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/ProductModelProductDescriptionCulture.csv",
+        "sha256": "f5b01f39001105027c98ca11ff11cc6fa78b0cc3c61baab09f024937b85f2291"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/ProductPhoto.csv",
+        "sha256": "d68e305400c93b6fcc01a56330c62952f27bea45073af9fef48f83f96f13f3d0"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/ProductProductPhoto.csv",
+        "sha256": "bd92dbdcd71db4fa610dff9ac8860e4612b6df8454c2b59d62311211cb99cf11"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/ProductReview.csv",
+        "sha256": "deb3d29f57c7b23c79592b14104fc8166cdb901cbf3ba2eb92a1da3b904ed7c1"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/ProductSubcategory.csv",
+        "sha256": "a90dce80f310044b99a920790cbf60b83982079af421a5935fda7bc7ab69bc75"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/ProductVendor.csv",
+        "sha256": "d66c695e30deeb206f3b329a922fea905b42078ef9cbf546c421b49789bcc6fe"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/PurchaseOrderDetail.csv",
+        "sha256": "4e2e27e7a165bf1aa7e7675a7eebcb25c22a1c7bd0e2e3d7ce0f8ff53060c2d9"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/PurchaseOrderHeader.csv",
+        "sha256": "fd3b6d356238c5adc938e427fd5c523ee9e405fba1343852dfba85a0a888113c"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/SalesOrderDetail.csv",
+        "sha256": "220129977aa63e34fa4a1d66c2604bd2184373151efb09c98b343371ba77ab8a"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/SalesOrderHeader.csv",
+        "sha256": "cf637c7d58006ebbc13daf0b8ed6cf7f738165d298ae0b5479a59237429c1882"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/SalesOrderHeaderSalesReason.csv",
+        "sha256": "4675b60e58c944b8ae4b3ede5cb5354f32811064c056c50d5804b32673c5733d"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/SalesPerson.csv",
+        "sha256": "92ed21c0e22bf0060a746d53c1f8f0ed68a1ece4b0d5b9c60dbc233d52499206"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/SalesPersonQuotaHistory.csv",
+        "sha256": "769cfb3d44c1f422dd23eb24bc0d310f82739eb6f49598520a3eb47e68161064"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/SalesReason.csv",
+        "sha256": "2892957b83459fa4049db26d7b3b20e3b5ef18e8a5ae97cb2f4fc5c22869da1b"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/SalesTaxRate.csv",
+        "sha256": "8036743e10b5549ef017a5f9623adf3a5a296b00d4056ec0b2cf7d2ef14722c4"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/SalesTerritory.csv",
+        "sha256": "cb087c101765605e848635f6127123b1a0814397635ce5faebe52f516ccfc861"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/SalesTerritoryHistory.csv",
+        "sha256": "d2041f0ec32495d9ef0659209c47d2004029d8c3cd4ff0455a952c836873fcd4"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/ScrapReason.csv",
+        "sha256": "cc0cab5472e4f94922500329286677c6209fe77114e1d6edcf713d1cf5919e8f"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/Shift.csv",
+        "sha256": "e5e19d3cc25920a387932c3fc474a0e6496f27d55254510676b6eb8023393437"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/ShipMethod.csv",
+        "sha256": "e366e56c63165a300a314fcba1237f54f2d0b94b4a3eb88bd15fb0437c2a37cb"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/ShoppingCartItem.csv",
+        "sha256": "d0d4011bae618e3015e29033ec6648d9b20a888731a885531e0ab661ca34e445"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/SpecialOffer.csv",
+        "sha256": "728ac866bdd0751a6814249c1afe017aae34203a47b1911974fd12c1f52b22fc"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/SpecialOfferProduct.csv",
+        "sha256": "27774a589070aa97e7995ce56f34ba5df0e09d94eef699d07a362eac9aa33e08"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/StateProvince.csv",
+        "sha256": "031d414a4b70889c0fca55d2c6081e0b22a5d8bf0ca5fe6d61dbe57cc1cd2823"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/Store.csv",
+        "sha256": "5f9d31ef5c8a4dfa2243c861654d9962a7e151ed0a5f0f7834d55184952b0520"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/TransactionHistory.csv",
+        "sha256": "af17e234f9640d3b1d76e3ad46a09df2bb14eae865fea0aca7fae0822f9cd91a"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/TransactionHistoryArchive.csv",
+        "sha256": "6e7acf788b311e0977599463489ff119b6efeac3884ece64897bb9462e22efb9"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/UnitMeasure.csv",
+        "sha256": "6e4d07534b6900f035c3b5200880a9b54190e3db63c13280e1e98788178fdeb7"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/Vendor.csv",
+        "sha256": "075c70b53fc860bf4a562b56df027b961ac4051f0fd0b75faaa106b5dae110e3"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/WorkOrder.csv",
+        "sha256": "e6618bf291defe9fa645d795b1a951ecdfc04bc88746b12b196337485b2289b1"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/WorkOrderRouting.csv",
+        "sha256": "1e15eed408d37ca355167e505b4b1e65cfabf4909f92abe54839b158453f9000"
+      },
+      {
+        "path": "data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/instawdb.sql",
+        "sha256": "d979f036750f9c7b4fb7be3d58cdbb596a74f864a6325998501b3a96c6ad53f9"
+      }
+    ],
+    "databaseSha256": "e0f352f0e3a28ff15158130c237a91d58f1b60fffa7f30d2c412b92df4065dfd",
+    "inputCompression": "gzip",
+    "inputSha256": "533165298eb696d330be6a2fc648ba56d985be491d511ca581d7ea64736e1a28"
+  },
+  "dataFile": "data-source/source.sqlite.gz",
+  "semantics": {
+    "tableConcepts": {
+      "Person.Person": [
+        "natural-person"
+      ],
+      "HumanResources.Employee": [
+        "employee"
+      ],
+      "Sales.Customer": [
+        "sales-customer"
+      ],
+      "Purchasing.Vendor": [
+        "supplier"
+      ],
+      "Sales.SalesOrderHeader": [
+        "sales-order"
+      ],
+      "Sales.SalesOrderDetail": [
+        "sales-order-line"
+      ],
+      "Purchasing.PurchaseOrderHeader": [
+        "purchase-order"
+      ],
+      "Purchasing.PurchaseOrderDetail": [
+        "purchase-order-line"
+      ],
+      "Production.Product": [
+        "product"
+      ],
+      "Production.ProductCategory": [
+        "product-category"
+      ],
+      "Person.CountryRegion": [
+        "country-region"
+      ]
+    }
+  },
+  "tableDescriptions": {
+    "dbo.DatabaseLog": "Audit table tracking all DDL changes made to the AdventureWorks database. Data is captured by the database trigger ddlDatabaseTriggerLog.",
+    "dbo.ErrorLog": "Audit table tracking errors in the the AdventureWorks database that are caught by the CATCH block of a TRY...CATCH construct. Data is inserted by stored procedure dbo.uspLogError when it is executed from inside the CATCH block of a TRY...CATCH construct.",
+    "Person.Address": "Street address information for customers, employees, and vendors.",
+    "Person.AddressType": "Types of addresses stored in the Address table.",
+    "dbo.AWBuildVersion": "Current version number of the AdventureWorks 2025 sample database.",
+    "Production.BillOfMaterials": "Items required to make bicycles and bicycle subassemblies. It identifies the heirarchical relationship between a parent product and its components.",
+    "Person.BusinessEntity": "Source of the ID that connects vendors, customers, and employees with address and contact information.",
+    "Person.BusinessEntityAddress": "Cross-reference table mapping customers, vendors, and employees to their addresses.",
+    "Person.BusinessEntityContact": "Cross-reference table mapping stores, vendors, and employees to people",
+    "Person.ContactType": "Lookup table containing the types of business entity contacts.",
+    "Sales.CountryRegionCurrency": "Cross-reference table mapping ISO currency codes to a country or region.",
+    "Person.CountryRegion": "Lookup table containing the ISO standard codes for countries and regions.",
+    "Sales.CreditCard": "Customer credit card information.",
+    "Production.Culture": "Lookup table containing the languages in which some AdventureWorks data is stored.",
+    "Sales.Currency": "Lookup table containing standard ISO currencies.",
+    "Sales.CurrencyRate": "Currency exchange rates.",
+    "Sales.Customer": "Current customer information. Also see the Person and Store tables.",
+    "HumanResources.Department": "Lookup table containing the departments within the Adventure Works Cycles company.",
+    "Production.Document": "Product maintenance documents.",
+    "Person.EmailAddress": "Where to send a person email.",
+    "HumanResources.Employee": "Employee information such as salary, department, and title.",
+    "HumanResources.EmployeeDepartmentHistory": "Employee department transfers.",
+    "HumanResources.EmployeePayHistory": "Employee pay history.",
+    "Production.Illustration": "Bicycle assembly diagrams.",
+    "HumanResources.JobCandidate": "Résumés submitted to Human Resources by job applicants.",
+    "Production.Location": "Product inventory and manufacturing locations.",
+    "Person.Password": "One way hashed authentication information",
+    "Person.Person": "Human beings involved with AdventureWorks: employees, customer contacts, and vendor contacts.",
+    "Sales.PersonCreditCard": "Cross-reference table mapping people to their credit card information in the CreditCard table.",
+    "Person.PersonPhone": "Telephone number and type of a person.",
+    "Person.PhoneNumberType": "Type of phone number of a person.",
+    "Production.Product": "Products sold or used in the manfacturing of sold products.",
+    "Production.ProductCategory": "High-level product categorization.",
+    "Production.ProductCostHistory": "Changes in the cost of a product over time.",
+    "Production.ProductDescription": "Product descriptions in several languages.",
+    "Production.ProductDocument": "Cross-reference table mapping products to related product documents.",
+    "Production.ProductInventory": "Product inventory information.",
+    "Production.ProductListPriceHistory": "Changes in the list price of a product over time.",
+    "Production.ProductModel": "Product model classification.",
+    "Production.ProductModelIllustration": "Cross-reference table mapping product models and illustrations.",
+    "Production.ProductModelProductDescriptionCulture": "Cross-reference table mapping product descriptions and the language the description is written in.",
+    "Production.ProductPhoto": "Product images.",
+    "Production.ProductProductPhoto": "Cross-reference table mapping products and product photos.",
+    "Production.ProductReview": "Customer reviews of products they have purchased.",
+    "Production.ProductSubcategory": "Product subcategories. See ProductCategory table.",
+    "Purchasing.ProductVendor": "Cross-reference table mapping vendors with the products they supply.",
+    "Purchasing.PurchaseOrderDetail": "Individual products associated with a specific purchase order. See PurchaseOrderHeader.",
+    "Purchasing.PurchaseOrderHeader": "General purchase order information. See PurchaseOrderDetail.",
+    "Sales.SalesOrderDetail": "Individual products associated with a specific sales order. See SalesOrderHeader.",
+    "Sales.SalesOrderHeader": "General sales order information.",
+    "Sales.SalesOrderHeaderSalesReason": "Cross-reference table mapping sales orders to sales reason codes.",
+    "Sales.SalesPerson": "Sales representative current information.",
+    "Sales.SalesPersonQuotaHistory": "Sales performance tracking.",
+    "Sales.SalesReason": "Lookup table of customer purchase reasons.",
+    "Sales.SalesTaxRate": "Tax rate lookup table.",
+    "Sales.SalesTerritory": "Sales territory lookup table.",
+    "Sales.SalesTerritoryHistory": "Sales representative transfers to other sales territories.",
+    "Production.ScrapReason": "Manufacturing failure reasons lookup table.",
+    "HumanResources.Shift": "Work shift lookup table.",
+    "Purchasing.ShipMethod": "Shipping company lookup table.",
+    "Sales.ShoppingCartItem": "Contains online customer orders until the order is submitted or cancelled.",
+    "Sales.SpecialOffer": "Sale discounts lookup table.",
+    "Sales.SpecialOfferProduct": "Cross-reference table mapping products to special offer discounts.",
+    "Person.StateProvince": "State and province lookup table.",
+    "Sales.Store": "Customers (resellers) of Adventure Works products.",
+    "Production.TransactionHistory": "Record of each purchase order, sales order, or work order transaction year to date.",
+    "Production.TransactionHistoryArchive": "Transactions for previous years.",
+    "Production.UnitMeasure": "Unit of measure lookup table.",
+    "Purchasing.Vendor": "Companies from whom Adventure Works Cycles purchases parts or other goods.",
+    "Production.WorkOrder": "Manufacturing orders to produce specified products.",
+    "Production.WorkOrderRouting": "Manufacturing routing operations and scheduling information for each work order."
+  },
+  "columnDescriptions": {
+    "dbo.DatabaseLog": {
+      "DatabaseLogID": "Primary key for DatabaseLog records.",
+      "PostTime": "The date and time the DDL change occurred.",
+      "DatabaseUser": "The user who implemented the DDL change.",
+      "Event": "The type of DDL statement that was executed.",
+      "Schema": "The schema to which the changed object belongs.",
+      "Object": "The object that was changed by the DDL statment.",
+      "TSQL": "The exact Transact-SQL statement that was executed.",
+      "XmlEvent": "SQL Server XML value retained as text in the SQLite snapshot; SQL Server XML methods are not available."
+    },
+    "dbo.ErrorLog": {
+      "ErrorLogID": "Primary key for ErrorLog records.",
+      "ErrorTime": "The date and time at which the error occurred.",
+      "UserName": "The user who executed the batch in which the error occurred.",
+      "ErrorNumber": "The error number of the error that occurred.",
+      "ErrorSeverity": "The severity of the error that occurred.",
+      "ErrorState": "The state number of the error that occurred.",
+      "ErrorProcedure": "The name of the stored procedure or trigger where the error occurred.",
+      "ErrorLine": "The line number at which the error occurred.",
+      "ErrorMessage": "The message text of the error that occurred."
+    },
+    "Person.Address": {
+      "AddressID": "Primary key for Address records.",
+      "AddressLine1": "First street address line.",
+      "AddressLine2": "Second street address line.",
+      "City": "Name of the city.",
+      "StateProvinceID": "Unique identification number for the state or province. Foreign key to StateProvince table.",
+      "PostalCode": "Postal code for the street address.",
+      "SpatialLocation": "SQL Server geography serialization retained as opaque bytes; spatial operations are not implemented by the SQLite fixture.",
+      "rowguid": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Person.AddressType": {
+      "AddressTypeID": "Primary key for AddressType records.",
+      "Name": "Address type description. For example, Billing, Home, or Shipping.",
+      "rowguid": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "dbo.AWBuildVersion": {
+      "SystemInformationID": "Primary key for AWBuildVersion records.",
+      "Database Version": "Version number of the database in 9.yy.mm.dd.00 format.",
+      "VersionDate": "Date and time the record was last updated.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Production.BillOfMaterials": {
+      "BillOfMaterialsID": "Primary key for BillOfMaterials records.",
+      "ProductAssemblyID": "Parent product identification number. Foreign key to Product.ProductID.",
+      "ComponentID": "Component identification number. Foreign key to Product.ProductID.",
+      "StartDate": "Date the component started being used in the assembly item.",
+      "EndDate": "Date the component stopped being used in the assembly item.",
+      "UnitMeasureCode": "Standard code identifying the unit of measure for the quantity.",
+      "BOMLevel": "Indicates the depth the component is from its parent (AssemblyID).",
+      "PerAssemblyQty": "Quantity of the component needed to create the assembly.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Person.BusinessEntity": {
+      "BusinessEntityID": "Primary key for all customers, vendors, and employees.",
+      "rowguid": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Person.BusinessEntityAddress": {
+      "BusinessEntityID": "Primary key. Foreign key to BusinessEntity.BusinessEntityID.",
+      "AddressID": "Primary key. Foreign key to Address.AddressID.",
+      "AddressTypeID": "Primary key. Foreign key to AddressType.AddressTypeID.",
+      "rowguid": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Person.BusinessEntityContact": {
+      "BusinessEntityID": "Primary key. Foreign key to BusinessEntity.BusinessEntityID.",
+      "PersonID": "Primary key. Foreign key to Person.BusinessEntityID.",
+      "ContactTypeID": "Primary key.  Foreign key to ContactType.ContactTypeID.",
+      "rowguid": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Person.ContactType": {
+      "ContactTypeID": "Primary key for ContactType records.",
+      "Name": "Contact type description.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Sales.CountryRegionCurrency": {
+      "CountryRegionCode": "ISO code for countries and regions. Foreign key to CountryRegion.CountryRegionCode.",
+      "CurrencyCode": "ISO standard currency code. Foreign key to Currency.CurrencyCode.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Person.CountryRegion": {
+      "CountryRegionCode": "Two-letter source country/region code. The pinned sample contains historical values, so codes are not reconciled to a current ISO release.",
+      "Name": "Country or region name.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Sales.CreditCard": {
+      "CreditCardID": "Primary key for CreditCard records.",
+      "CardType": "Credit card name.",
+      "CardNumber": "Credit card number.",
+      "ExpMonth": "Credit card expiration month.",
+      "ExpYear": "Credit card expiration year.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Production.Culture": {
+      "CultureID": "Primary key for Culture records.",
+      "Name": "Culture description.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Sales.Currency": {
+      "CurrencyCode": "The ISO code for the Currency.",
+      "Name": "Currency name.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Sales.CurrencyRate": {
+      "CurrencyRateID": "Primary key for CurrencyRate records.",
+      "CurrencyRateDate": "Date and time the exchange rate was obtained.",
+      "FromCurrencyCode": "Exchange rate was converted from this currency code.",
+      "ToCurrencyCode": "Exchange rate was converted to this currency code.",
+      "AverageRate": "Average exchange rate for the day.",
+      "EndOfDayRate": "Final exchange rate for the day.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Sales.Customer": {
+      "CustomerID": "Primary key.",
+      "PersonID": "Foreign key to Person.BusinessEntityID",
+      "StoreID": "Foreign key to Store.BusinessEntityID",
+      "TerritoryID": "ID of the territory in which the customer is located. Foreign key to SalesTerritory.SalesTerritoryID.",
+      "AccountNumber": "Unique number identifying the customer assigned by the accounting system. Source computed-column expression is retained in source metadata; the seeded value is stored as imported data in SQLite.",
+      "rowguid": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "HumanResources.Department": {
+      "DepartmentID": "Primary key for Department records.",
+      "Name": "Name of the department.",
+      "GroupName": "Name of the group to which the department belongs.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Production.Document": {
+      "DocumentNode": "SQL Server hierarchyid serialization retained as opaque bytes; hierarchy methods are not implemented by the SQLite fixture.",
+      "DocumentLevel": "Derived from the SQL Server hierarchyid GetLevel() method in the pinned CSV and stored as a snapshot value.",
+      "Title": "Title of the document.",
+      "Owner": "Employee who controls the document.  Foreign key to Employee.BusinessEntityID",
+      "FolderFlag": "0 = This is a folder, 1 = This is a document.",
+      "FileName": "File name of the document",
+      "FileExtension": "File extension indicating the document type. For example, .doc or .txt.",
+      "Revision": "Revision number of the document.",
+      "ChangeNumber": "Engineering change approval number.",
+      "Status": "1 = Pending approval, 2 = Approved, 3 = Obsolete",
+      "DocumentSummary": "Document abstract.",
+      "Document": "SQL Server varbinary serialization retained as opaque bytes; spatial or hierarchy operations are not implemented by the SQLite fixture.",
+      "rowguid": "ROWGUIDCOL number uniquely identifying the record. Required for FileStream.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Person.EmailAddress": {
+      "BusinessEntityID": "Primary key. Person associated with this email address.  Foreign key to Person.BusinessEntityID",
+      "EmailAddressID": "Primary key. ID of this email address.",
+      "EmailAddress": "E-mail address for the person.",
+      "rowguid": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "HumanResources.Employee": {
+      "BusinessEntityID": "Primary key for Employee records.  Foreign key to BusinessEntity.BusinessEntityID.",
+      "NationalIDNumber": "Unique national identification number such as a social security number.",
+      "LoginID": "Network login.",
+      "OrganizationNode": "SQL Server hierarchyid serialization retained as opaque bytes; hierarchy methods are not implemented by the SQLite fixture.",
+      "OrganizationLevel": "Derived from the SQL Server hierarchyid GetLevel() method in the pinned CSV and stored as a snapshot value.",
+      "JobTitle": "Work title such as Buyer or Sales Representative.",
+      "BirthDate": "Date of birth.",
+      "MaritalStatus": "M = Married, S = Single",
+      "Gender": "M = Male, F = Female",
+      "HireDate": "Employee hired on this date.",
+      "SalariedFlag": "Job classification. 0 = Hourly, not exempt from collective bargaining. 1 = Salaried, exempt from collective bargaining.",
+      "VacationHours": "Number of available vacation hours.",
+      "SickLeaveHours": "Number of available sick leave hours.",
+      "CurrentFlag": "0 = Inactive, 1 = Active",
+      "rowguid": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "HumanResources.EmployeeDepartmentHistory": {
+      "BusinessEntityID": "Employee identification number. Foreign key to Employee.BusinessEntityID.",
+      "DepartmentID": "Department in which the employee worked including currently. Foreign key to Department.DepartmentID.",
+      "ShiftID": "Identifies which 8-hour shift the employee works. Foreign key to Shift.Shift.ID.",
+      "StartDate": "Date the employee started work in the department.",
+      "EndDate": "Date the employee left the department. NULL = Current department.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "HumanResources.EmployeePayHistory": {
+      "BusinessEntityID": "Employee identification number. Foreign key to Employee.BusinessEntityID.",
+      "RateChangeDate": "Date the change in pay is effective",
+      "Rate": "Salary hourly rate.",
+      "PayFrequency": "1 = Salary received monthly, 2 = Salary received biweekly",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Production.Illustration": {
+      "IllustrationID": "Primary key for Illustration records.",
+      "Diagram": "SQL Server XML value retained as text in the SQLite snapshot; SQL Server XML methods are not available.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "HumanResources.JobCandidate": {
+      "JobCandidateID": "Primary key for JobCandidate records.",
+      "BusinessEntityID": "Employee identification number if applicant was hired. Foreign key to Employee.BusinessEntityID.",
+      "Resume": "SQL Server XML value retained as text in the SQLite snapshot; SQL Server XML methods are not available.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Production.Location": {
+      "LocationID": "Primary key for Location records.",
+      "Name": "Location description.",
+      "CostRate": "Standard hourly cost of the manufacturing location.",
+      "Availability": "Work capacity (in hours) of the manufacturing location.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Person.Password": {
+      "PasswordHash": "Password for the e-mail account.",
+      "PasswordSalt": "Random value concatenated with the password string before the password is hashed.",
+      "rowguid": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Person.Person": {
+      "BusinessEntityID": "Primary key for Person records.",
+      "PersonType": "Primary type of person: SC = Store Contact, IN = Individual (retail) customer, SP = Sales person, EM = Employee (non-sales), VC = Vendor contact, GC = General contact",
+      "NameStyle": "0 = The data in FirstName and LastName are stored in western style (first name, last name) order.  1 = Eastern style (last name, first name) order.",
+      "Title": "A courtesy title. For example, Mr. or Ms.",
+      "FirstName": "First name of the person.",
+      "MiddleName": "Middle name or middle initial of the person.",
+      "LastName": "Last name of the person.",
+      "Suffix": "Surname suffix. For example, Sr. or Jr.",
+      "EmailPromotion": "0 = Contact does not wish to receive e-mail promotions, 1 = Contact does wish to receive e-mail promotions from AdventureWorks, 2 = Contact does wish to receive e-mail promotions from AdventureWorks and selected partners.",
+      "AdditionalContactInfo": "SQL Server XML value retained as text in the SQLite snapshot; SQL Server XML methods are not available.",
+      "Demographics": "SQL Server XML value retained as text in the SQLite snapshot; SQL Server XML methods are not available.",
+      "rowguid": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Sales.PersonCreditCard": {
+      "BusinessEntityID": "Business entity identification number. Foreign key to Person.BusinessEntityID.",
+      "CreditCardID": "Credit card identification number. Foreign key to CreditCard.CreditCardID.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Person.PersonPhone": {
+      "BusinessEntityID": "Business entity identification number. Foreign key to Person.BusinessEntityID.",
+      "PhoneNumber": "Telephone number identification number.",
+      "PhoneNumberTypeID": "Kind of phone number. Foreign key to PhoneNumberType.PhoneNumberTypeID.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Person.PhoneNumberType": {
+      "PhoneNumberTypeID": "Primary key for telephone number type records.",
+      "Name": "Name of the telephone number type",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Production.Product": {
+      "ProductID": "Primary key for Product records.",
+      "Name": "Name of the product.",
+      "ProductNumber": "Unique product identification number.",
+      "MakeFlag": "0 = Product is purchased, 1 = Product is manufactured in-house.",
+      "FinishedGoodsFlag": "0 = Product is not a salable item. 1 = Product is salable.",
+      "Color": "Product color.",
+      "SafetyStockLevel": "Minimum inventory quantity.",
+      "ReorderPoint": "Inventory level that triggers a purchase order or work order.",
+      "StandardCost": "Standard cost of the product.",
+      "ListPrice": "Selling price.",
+      "Size": "Product size.",
+      "SizeUnitMeasureCode": "Unit of measure for Size column.",
+      "WeightUnitMeasureCode": "Unit of measure for Weight column.",
+      "Weight": "Product weight.",
+      "DaysToManufacture": "Number of days required to manufacture the product.",
+      "ProductLine": "R = Road, M = Mountain, T = Touring, S = Standard",
+      "Class": "H = High, M = Medium, L = Low",
+      "Style": "W = Womens, M = Mens, U = Universal",
+      "ProductSubcategoryID": "Product is a member of this product subcategory. Foreign key to ProductSubCategory.ProductSubCategoryID.",
+      "ProductModelID": "Product is a member of this product model. Foreign key to ProductModel.ProductModelID.",
+      "SellStartDate": "Date the product was available for sale.",
+      "SellEndDate": "Date the product was no longer available for sale.",
+      "DiscontinuedDate": "Date the product was discontinued.",
+      "rowguid": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Production.ProductCategory": {
+      "ProductCategoryID": "Primary key for ProductCategory records.",
+      "Name": "Category description.",
+      "rowguid": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Production.ProductCostHistory": {
+      "ProductID": "Product identification number. Foreign key to Product.ProductID",
+      "StartDate": "Product cost start date.",
+      "EndDate": "Product cost end date.",
+      "StandardCost": "Standard cost of the product.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Production.ProductDescription": {
+      "ProductDescriptionID": "Primary key for ProductDescription records.",
+      "Description": "Description of the product.",
+      "rowguid": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Production.ProductDocument": {
+      "ProductID": "Product identification number. Foreign key to Product.ProductID.",
+      "DocumentNode": "SQL Server hierarchyid serialization retained as opaque bytes; hierarchy methods are not implemented by the SQLite fixture.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Production.ProductInventory": {
+      "ProductID": "Product identification number. Foreign key to Product.ProductID.",
+      "LocationID": "Inventory location identification number. Foreign key to Location.LocationID.",
+      "Shelf": "Storage compartment within an inventory location.",
+      "Bin": "Storage container on a shelf in an inventory location.",
+      "Quantity": "Quantity of products in the inventory location.",
+      "rowguid": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Production.ProductListPriceHistory": {
+      "ProductID": "Product identification number. Foreign key to Product.ProductID",
+      "StartDate": "List price start date.",
+      "EndDate": "List price end date",
+      "ListPrice": "Product list price.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Production.ProductModel": {
+      "ProductModelID": "Primary key for ProductModel records.",
+      "Name": "Product model description.",
+      "CatalogDescription": "SQL Server XML value retained as text in the SQLite snapshot; SQL Server XML methods are not available.",
+      "Instructions": "SQL Server XML value retained as text in the SQLite snapshot; SQL Server XML methods are not available.",
+      "rowguid": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Production.ProductModelIllustration": {
+      "ProductModelID": "Primary key. Foreign key to ProductModel.ProductModelID.",
+      "IllustrationID": "Primary key. Foreign key to Illustration.IllustrationID.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Production.ProductModelProductDescriptionCulture": {
+      "ProductModelID": "Primary key. Foreign key to ProductModel.ProductModelID.",
+      "ProductDescriptionID": "Primary key. Foreign key to ProductDescription.ProductDescriptionID.",
+      "CultureID": "Culture identification number. Foreign key to Culture.CultureID.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Production.ProductPhoto": {
+      "ProductPhotoID": "Primary key for ProductPhoto records.",
+      "ThumbNailPhoto": "SQL Server varbinary serialization retained as opaque bytes; spatial or hierarchy operations are not implemented by the SQLite fixture.",
+      "ThumbnailPhotoFileName": "Small image file name.",
+      "LargePhoto": "SQL Server varbinary serialization retained as opaque bytes; spatial or hierarchy operations are not implemented by the SQLite fixture.",
+      "LargePhotoFileName": "Large image file name.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Production.ProductProductPhoto": {
+      "ProductID": "Product identification number. Foreign key to Product.ProductID.",
+      "ProductPhotoID": "Product photo identification number. Foreign key to ProductPhoto.ProductPhotoID.",
+      "Primary": "0 = Photo is not the principal image. 1 = Photo is the principal image.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Production.ProductReview": {
+      "ProductReviewID": "Primary key for ProductReview records.",
+      "ProductID": "Product identification number. Foreign key to Product.ProductID.",
+      "ReviewerName": "Name of the reviewer.",
+      "ReviewDate": "Date review was submitted.",
+      "EmailAddress": "Reviewer's e-mail address.",
+      "Rating": "Product rating given by the reviewer. Scale is 1 to 5 with 5 as the highest rating.",
+      "Comments": "Reviewer's comments",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Production.ProductSubcategory": {
+      "ProductSubcategoryID": "Primary key for ProductSubcategory records.",
+      "ProductCategoryID": "Product category identification number. Foreign key to ProductCategory.ProductCategoryID.",
+      "Name": "Subcategory description.",
+      "rowguid": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Purchasing.ProductVendor": {
+      "ProductID": "Primary key. Foreign key to Product.ProductID.",
+      "BusinessEntityID": "Primary key. Foreign key to Vendor.BusinessEntityID.",
+      "AverageLeadTime": "The average span of time (in days) between placing an order with the vendor and receiving the purchased product.",
+      "StandardPrice": "The vendor's usual selling price.",
+      "LastReceiptCost": "The selling price when last purchased.",
+      "LastReceiptDate": "Date the product was last received by the vendor.",
+      "MinOrderQty": "The maximum quantity that should be ordered.",
+      "MaxOrderQty": "The minimum quantity that should be ordered.",
+      "OnOrderQty": "The quantity currently on order.",
+      "UnitMeasureCode": "The product's unit of measure.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Purchasing.PurchaseOrderDetail": {
+      "PurchaseOrderID": "Primary key. Foreign key to PurchaseOrderHeader.PurchaseOrderID.",
+      "PurchaseOrderDetailID": "Primary key. One line number per purchased product.",
+      "DueDate": "Date the product is expected to be received.",
+      "OrderQty": "Quantity ordered.",
+      "ProductID": "Product identification number. Foreign key to Product.ProductID.",
+      "UnitPrice": "Vendor's selling price of a single product.",
+      "LineTotal": "Per product subtotal. Computed as OrderQty * UnitPrice. Source computed-column expression is retained in source metadata; the seeded value is stored as imported data in SQLite.",
+      "ReceivedQty": "Quantity actually received from the vendor.",
+      "RejectedQty": "Quantity rejected during inspection.",
+      "StockedQty": "Quantity accepted into inventory. Computed as ReceivedQty - RejectedQty. Source computed-column expression is retained in source metadata; the seeded value is stored as imported data in SQLite.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Purchasing.PurchaseOrderHeader": {
+      "PurchaseOrderID": "Primary key.",
+      "RevisionNumber": "Incremental number to track changes to the purchase order over time.",
+      "Status": "Order current status. 1 = Pending; 2 = Approved; 3 = Rejected; 4 = Complete",
+      "EmployeeID": "Employee who created the purchase order. Foreign key to Employee.BusinessEntityID.",
+      "VendorID": "Vendor with whom the purchase order is placed. Foreign key to Vendor.BusinessEntityID.",
+      "ShipMethodID": "Shipping method. Foreign key to ShipMethod.ShipMethodID.",
+      "OrderDate": "Purchase order creation date.",
+      "ShipDate": "Estimated shipment date from the vendor.",
+      "SubTotal": "Purchase order subtotal. Computed as SUM(PurchaseOrderDetail.LineTotal)for the appropriate PurchaseOrderID.",
+      "TaxAmt": "Tax amount.",
+      "Freight": "Shipping cost.",
+      "TotalDue": "Total due to vendor. Computed as Subtotal + TaxAmt + Freight. Source computed-column expression is retained in source metadata; the seeded value is stored as imported data in SQLite.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Sales.SalesOrderDetail": {
+      "SalesOrderID": "Primary key. Foreign key to SalesOrderHeader.SalesOrderID.",
+      "SalesOrderDetailID": "Primary key. One incremental unique number per product sold.",
+      "CarrierTrackingNumber": "Shipment tracking number supplied by the shipper.",
+      "OrderQty": "Quantity ordered per product.",
+      "ProductID": "Product sold to customer. Foreign key to Product.ProductID.",
+      "SpecialOfferID": "Promotional code. Foreign key to SpecialOffer.SpecialOfferID.",
+      "UnitPrice": "Selling price of a single product.",
+      "UnitPriceDiscount": "Discount amount.",
+      "LineTotal": "Per product subtotal. Computed as UnitPrice * (1 - UnitPriceDiscount) * OrderQty. Source computed-column expression is retained in source metadata; the seeded value is stored as imported data in SQLite.",
+      "rowguid": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Sales.SalesOrderHeader": {
+      "SalesOrderID": "Primary key.",
+      "RevisionNumber": "Incremental number to track changes to the sales order over time.",
+      "OrderDate": "Dates the sales order was created.",
+      "DueDate": "Date the order is due to the customer.",
+      "ShipDate": "Date the order was shipped to the customer.",
+      "Status": "Order current status. 1 = In process; 2 = Approved; 3 = Backordered; 4 = Rejected; 5 = Shipped; 6 = Cancelled",
+      "OnlineOrderFlag": "0 = Order placed by sales person. 1 = Order placed online by customer.",
+      "SalesOrderNumber": "Unique sales order identification number. Source computed-column expression is retained in source metadata; the seeded value is stored as imported data in SQLite.",
+      "PurchaseOrderNumber": "Customer purchase order number reference.",
+      "AccountNumber": "Financial accounting number reference.",
+      "CustomerID": "Customer identification number. Foreign key to Customer.BusinessEntityID.",
+      "SalesPersonID": "Sales person who created the sales order. Foreign key to SalesPerson.BusinessEntityID.",
+      "TerritoryID": "Territory in which the sale was made. Foreign key to SalesTerritory.SalesTerritoryID.",
+      "BillToAddressID": "Customer billing address. Foreign key to Address.AddressID.",
+      "ShipToAddressID": "Customer shipping address. Foreign key to Address.AddressID.",
+      "ShipMethodID": "Shipping method. Foreign key to ShipMethod.ShipMethodID.",
+      "CreditCardID": "Credit card identification number. Foreign key to CreditCard.CreditCardID.",
+      "CreditCardApprovalCode": "Approval code provided by the credit card company.",
+      "CurrencyRateID": "Currency exchange rate used. Foreign key to CurrencyRate.CurrencyRateID.",
+      "SubTotal": "Sales subtotal. Computed as SUM(SalesOrderDetail.LineTotal)for the appropriate SalesOrderID.",
+      "TaxAmt": "Tax amount.",
+      "Freight": "Shipping cost.",
+      "TotalDue": "Total due from customer. Computed as Subtotal + TaxAmt + Freight. Source computed-column expression is retained in source metadata; the seeded value is stored as imported data in SQLite.",
+      "Comment": "Sales representative comments.",
+      "rowguid": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Sales.SalesOrderHeaderSalesReason": {
+      "SalesOrderID": "Primary key. Foreign key to SalesOrderHeader.SalesOrderID.",
+      "SalesReasonID": "Primary key. Foreign key to SalesReason.SalesReasonID.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Sales.SalesPerson": {
+      "BusinessEntityID": "Primary key for SalesPerson records. Foreign key to Employee.BusinessEntityID",
+      "TerritoryID": "Territory currently assigned to. Foreign key to SalesTerritory.SalesTerritoryID.",
+      "SalesQuota": "Projected yearly sales.",
+      "Bonus": "Bonus due if quota is met.",
+      "CommissionPct": "Commision percent received per sale.",
+      "SalesYTD": "Sales total year to date.",
+      "SalesLastYear": "Sales total of previous year.",
+      "rowguid": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Sales.SalesPersonQuotaHistory": {
+      "BusinessEntityID": "Sales person identification number. Foreign key to SalesPerson.BusinessEntityID.",
+      "QuotaDate": "Sales quota date.",
+      "SalesQuota": "Sales quota amount.",
+      "rowguid": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Sales.SalesReason": {
+      "SalesReasonID": "Primary key for SalesReason records.",
+      "Name": "Sales reason description.",
+      "ReasonType": "Category the sales reason belongs to.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Sales.SalesTaxRate": {
+      "SalesTaxRateID": "Primary key for SalesTaxRate records.",
+      "StateProvinceID": "State, province, or country/region the sales tax applies to.",
+      "TaxType": "1 = Tax applied to retail transactions, 2 = Tax applied to wholesale transactions, 3 = Tax applied to all sales (retail and wholesale) transactions.",
+      "TaxRate": "Tax rate amount.",
+      "Name": "Tax rate description.",
+      "rowguid": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Sales.SalesTerritoryHistory": {
+      "BusinessEntityID": "Primary key. The sales rep.  Foreign key to SalesPerson.BusinessEntityID.",
+      "TerritoryID": "Primary key. Territory identification number. Foreign key to SalesTerritory.SalesTerritoryID.",
+      "StartDate": "Primary key. Date the sales representive started work in the territory.",
+      "EndDate": "Date the sales representative left work in the territory.",
+      "rowguid": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Production.ScrapReason": {
+      "ScrapReasonID": "Primary key for ScrapReason records.",
+      "Name": "Failure description.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "HumanResources.Shift": {
+      "ShiftID": "Primary key for Shift records.",
+      "Name": "Shift description.",
+      "StartTime": "Shift start time.",
+      "EndTime": "Shift end time.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Purchasing.ShipMethod": {
+      "ShipMethodID": "Primary key for ShipMethod records.",
+      "Name": "Shipping company name.",
+      "ShipBase": "Minimum shipping charge.",
+      "ShipRate": "Shipping charge per pound.",
+      "rowguid": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Sales.ShoppingCartItem": {
+      "ShoppingCartItemID": "Primary key for ShoppingCartItem records.",
+      "ShoppingCartID": "Shopping cart identification number.",
+      "Quantity": "Product quantity ordered.",
+      "ProductID": "Product ordered. Foreign key to Product.ProductID.",
+      "DateCreated": "Date the time the record was created.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Sales.SpecialOffer": {
+      "SpecialOfferID": "Primary key for SpecialOffer records.",
+      "Description": "Discount description.",
+      "DiscountPct": "Discount precentage.",
+      "Type": "Discount type category.",
+      "Category": "Group the discount applies to such as Reseller or Customer.",
+      "StartDate": "Discount start date.",
+      "EndDate": "Discount end date.",
+      "MinQty": "Minimum discount percent allowed.",
+      "MaxQty": "Maximum discount percent allowed.",
+      "rowguid": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Sales.SpecialOfferProduct": {
+      "SpecialOfferID": "Primary key for SpecialOfferProduct records.",
+      "ProductID": "Product identification number. Foreign key to Product.ProductID.",
+      "rowguid": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Person.StateProvince": {
+      "StateProvinceID": "Primary key for StateProvince records.",
+      "StateProvinceCode": "ISO standard state or province code.",
+      "CountryRegionCode": "ISO standard country or region code. Foreign key to CountryRegion.CountryRegionCode.",
+      "IsOnlyStateProvinceFlag": "0 = StateProvinceCode exists. 1 = StateProvinceCode unavailable, using CountryRegionCode.",
+      "Name": "State or province description.",
+      "TerritoryID": "ID of the territory in which the state or province is located. Foreign key to SalesTerritory.SalesTerritoryID.",
+      "rowguid": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Sales.Store": {
+      "BusinessEntityID": "Primary key. Foreign key to Customer.BusinessEntityID.",
+      "Name": "Name of the store.",
+      "SalesPersonID": "ID of the sales person assigned to the customer. Foreign key to SalesPerson.BusinessEntityID.",
+      "Demographics": "SQL Server XML value retained as text in the SQLite snapshot; SQL Server XML methods are not available.",
+      "rowguid": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Production.TransactionHistory": {
+      "TransactionID": "Primary key for TransactionHistory records.",
+      "ProductID": "Product identification number. Foreign key to Product.ProductID.",
+      "ReferenceOrderID": "Purchase order, sales order, or work order identification number.",
+      "ReferenceOrderLineID": "Line number associated with the purchase order, sales order, or work order.",
+      "TransactionDate": "Date and time of the transaction.",
+      "TransactionType": "W = WorkOrder, S = SalesOrder, P = PurchaseOrder",
+      "Quantity": "Product quantity.",
+      "ActualCost": "Product cost.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Production.TransactionHistoryArchive": {
+      "TransactionID": "Primary key for TransactionHistoryArchive records.",
+      "ProductID": "Product identification number. Foreign key to Product.ProductID.",
+      "ReferenceOrderID": "Purchase order, sales order, or work order identification number.",
+      "ReferenceOrderLineID": "Line number associated with the purchase order, sales order, or work order.",
+      "TransactionDate": "Date and time of the transaction.",
+      "TransactionType": "W = Work Order, S = Sales Order, P = Purchase Order",
+      "Quantity": "Product quantity.",
+      "ActualCost": "Product cost.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Production.UnitMeasure": {
+      "UnitMeasureCode": "Primary key.",
+      "Name": "Unit of measure description.",
+      "ModifiedDate": "Date and time the record was last updated."
+    },
+    "Purchasing.Vendor": {
+      "BusinessEntityID": "Primary key for Vendor records.  Foreign key to BusinessEntity.BusinessEntityID",
+      "AccountNumber": "Vendor account (identification) number.",
+      "Name": "Company name.",
+      "CreditRating": "1 = Superior, 2 = Excellent, 3 = Above average, 4 = Average, 5 = Below average",
+      "PreferredVendorStatus": "0 = Do not use if another vendor is available. 1 = Preferred over other vendors supplying the same product.",
+      "ActiveFlag": "0 = Vendor no longer used. 1 = Vendor is actively used."
+    },
+    "Production.WorkOrder": {
+      "StockedQty": "Source computed-column expression is retained in source metadata; the seeded value is stored as imported data in SQLite."
+    },
+    "Production.WorkOrderRouting": {}
+  },
+  "capabilities": {
+    "exports": [
+      "sqlite",
+      "csv",
+      "json",
+      "sql"
+    ],
+    "ovdb": {
+      "available": false,
+      "canonicalUrl": "https://demodb.dev/adventureworks/",
+      "serverId": "https://demodb.dev/ovdb",
+      "serverDbBaseUrl": "https://demodb.dev/ovdb/db/adventureworks/",
+      "connection": "https://demodb.dev/ovdb/v1/databases/adventureworks",
+      "query": false,
+      "readOnly": true,
+      "deploymentVerified": false
+    },
+    "datatug": {
+      "available": true,
+      "mode": "static-json"
+    }
+  },
+  "queries": [
+    {
+      "title": "Orders by customer",
+      "description": "List sales orders with the account they belong to and their totals.",
+      "sql": "SELECT h.\"SalesOrderNumber\", c.\"CustomerID\", h.\"OrderDate\", h.\"TotalDue\" FROM \"Sales.SalesOrderHeader\" AS h JOIN \"Sales.Customer\" AS c USING (\"CustomerID\") ORDER BY h.\"OrderDate\" DESC LIMIT 20;"
+    },
+    {
+      "title": "Products on sales orders",
+      "description": "Show products, ordered quantities, unit prices, and stored line totals.",
+      "sql": "SELECT p.\"Name\", d.\"OrderQty\", d.\"UnitPrice\", d.\"LineTotal\" FROM \"Sales.SalesOrderDetail\" AS d JOIN \"Production.Product\" AS p USING (\"ProductID\") ORDER BY d.\"SalesOrderID\", d.\"SalesOrderDetailID\" LIMIT 20;"
+    },
+    {
+      "title": "Purchase orders by vendor",
+      "description": "Summarize purchase orders with vendor names and recorded amounts.",
+      "sql": "SELECT v.\"Name\", h.\"PurchaseOrderID\", h.\"OrderDate\", h.\"TotalDue\" FROM \"Purchasing.PurchaseOrderHeader\" AS h JOIN \"Purchasing.Vendor\" AS v ON v.\"BusinessEntityID\" = h.\"VendorID\" ORDER BY h.\"OrderDate\" DESC LIMIT 20;"
+    },
+    {
+      "title": "Inventory by location",
+      "description": "List current product inventory by production location.",
+      "sql": "SELECT p.\"Name\", l.\"Name\" AS \"Location\", i.\"Quantity\" FROM \"Production.ProductInventory\" AS i JOIN \"Production.Product\" AS p USING (\"ProductID\") JOIN \"Production.Location\" AS l USING (\"LocationID\") ORDER BY p.\"Name\", l.\"Name\" LIMIT 20;"
+    }
+  ],
+  "generator": {
+    "publisher": {
+      "name": "DemoDB",
+      "url": "https://github.com/demo-db",
+      "repository": "https://github.com/demo-db/adventureworks"
+    },
+    "licences": {
+      "model": "MIT",
+      "meaning": "CC0-1.0"
+    },
+    "model": {
+      "address": "modelspec://github.com/demo-db/adventureworks/adventureworks",
+      "moduleId": "github.com/demo-db/adventureworks/adventureworks",
+      "name": "adventureworks",
+      "version": "0.1.0"
+    },
+    "ovdb": {
+      "query": false,
+      "deployment": {
+        "engine": "sqlite",
+        "url": "https://cloud.openvaultdb.com/ovdb/dbs/adventureworks",
+        "discovery": "https://demodb.dev/.well-known/openvaultdb"
+      },
+      "recordsets": [
+        "dbo.DatabaseLog",
+        "dbo.ErrorLog",
+        "Person.Address",
+        "Person.AddressType",
+        "dbo.AWBuildVersion",
+        "Production.BillOfMaterials",
+        "Person.BusinessEntity",
+        "Person.BusinessEntityAddress",
+        "Person.BusinessEntityContact",
+        "Person.ContactType",
+        "Sales.CountryRegionCurrency",
+        "Person.CountryRegion",
+        "Sales.CreditCard",
+        "Production.Culture",
+        "Sales.Currency",
+        "Sales.CurrencyRate",
+        "Sales.Customer",
+        "HumanResources.Department",
+        "Production.Document",
+        "Person.EmailAddress",
+        "HumanResources.Employee",
+        "HumanResources.EmployeeDepartmentHistory",
+        "HumanResources.EmployeePayHistory",
+        "Production.Illustration",
+        "HumanResources.JobCandidate",
+        "Production.Location",
+        "Person.Password",
+        "Person.Person",
+        "Sales.PersonCreditCard",
+        "Person.PersonPhone",
+        "Person.PhoneNumberType",
+        "Production.Product",
+        "Production.ProductCategory",
+        "Production.ProductCostHistory",
+        "Production.ProductDescription",
+        "Production.ProductDocument",
+        "Production.ProductInventory",
+        "Production.ProductListPriceHistory",
+        "Production.ProductModel",
+        "Production.ProductModelIllustration",
+        "Production.ProductModelProductDescriptionCulture",
+        "Production.ProductPhoto",
+        "Production.ProductProductPhoto",
+        "Production.ProductReview",
+        "Production.ProductSubcategory",
+        "Purchasing.ProductVendor",
+        "Purchasing.PurchaseOrderDetail",
+        "Purchasing.PurchaseOrderHeader",
+        "Sales.SalesOrderDetail",
+        "Sales.SalesOrderHeader",
+        "Sales.SalesOrderHeaderSalesReason",
+        "Sales.SalesPerson",
+        "Sales.SalesPersonQuotaHistory",
+        "Sales.SalesReason",
+        "Sales.SalesTaxRate",
+        "Sales.SalesTerritory",
+        "Sales.SalesTerritoryHistory",
+        "Production.ScrapReason",
+        "HumanResources.Shift",
+        "Purchasing.ShipMethod",
+        "Sales.ShoppingCartItem",
+        "Sales.SpecialOffer",
+        "Sales.SpecialOfferProduct",
+        "Person.StateProvince",
+        "Sales.Store",
+        "Production.TransactionHistory",
+        "Production.TransactionHistoryArchive",
+        "Production.UnitMeasure",
+        "Purchasing.Vendor",
+        "Production.WorkOrder",
+        "Production.WorkOrderRouting"
+      ]
+    },
+    "meaning": {
+      "id": "adventureworks",
+      "address": "meaning://github.com/demo-db/adventureworks",
+      "name": "AdventureWorks OLTP",
+      "description": "People, products, sales orders, purchase orders, manufacturing, and inventory in Microsoft AdventureWorks OLTP.",
+      "license": "CC0-1.0",
+      "core": {
+        "address": "meaning://github.com/meaninggraph/core",
+        "revision": "982916d73f0a35ff2558b0062f58aa3ac4f24d97"
+      },
+      "concepts": [
+        {
+          "id": "natural-person",
+          "kind": "entity",
+          "label": "Person",
+          "description": "People represented by AdventureWorks person records.",
+          "bindings": [
+            {
+              "recordset": "Person.Person",
+              "role": "entity"
+            }
+          ],
+          "extends": "meaning://github.com/meaninggraph/core/person?ref=982916d73f0a35ff2558b0062f58aa3ac4f24d97"
+        },
+        {
+          "id": "employee",
+          "kind": "entity",
+          "label": "Employee",
+          "description": "People employed in the AdventureWorks organization.",
+          "bindings": [
+            {
+              "recordset": "HumanResources.Employee",
+              "role": "entity"
+            }
+          ],
+          "extends": "meaning://github.com/meaninggraph/core/employee?ref=982916d73f0a35ff2558b0062f58aa3ac4f24d97"
+        },
+        {
+          "id": "sales-customer",
+          "kind": "entity",
+          "label": "Sales customer",
+          "description": "Customers recorded for AdventureWorks sales.",
+          "bindings": [
+            {
+              "recordset": "Sales.Customer",
+              "role": "entity"
+            }
+          ],
+          "extends": "customer"
+        },
+        {
+          "id": "supplier",
+          "kind": "entity",
+          "label": "Supplier",
+          "description": "Vendors that supply products to AdventureWorks.",
+          "bindings": [
+            {
+              "recordset": "Purchasing.Vendor",
+              "role": "entity"
+            }
+          ],
+          "extends": "organization"
+        },
+        {
+          "id": "sales-order",
+          "kind": "entity",
+          "label": "Sales order",
+          "description": "A request to supply goods to a customer, as recorded in a sales order header.",
+          "bindings": [
+            {
+              "recordset": "Sales.SalesOrderHeader",
+              "role": "entity"
+            }
+          ],
+          "extends": "order"
+        },
+        {
+          "id": "sales-order-line",
+          "kind": "entity",
+          "label": "Sales order line",
+          "description": "One product entry on an AdventureWorks sales order.",
+          "bindings": [
+            {
+              "recordset": "Sales.SalesOrderDetail",
+              "role": "entity"
+            }
+          ],
+          "extends": "order-line"
+        },
+        {
+          "id": "purchase-order",
+          "kind": "entity",
+          "label": "Purchase order",
+          "description": "A request to purchase goods from a vendor.",
+          "bindings": [
+            {
+              "recordset": "Purchasing.PurchaseOrderHeader",
+              "role": "entity"
+            }
+          ],
+          "extends": "order"
+        },
+        {
+          "id": "purchase-order-line",
+          "kind": "entity",
+          "label": "Purchase order line",
+          "description": "One product entry on a purchase order.",
+          "bindings": [
+            {
+              "recordset": "Purchasing.PurchaseOrderDetail",
+              "role": "entity"
+            }
+          ],
+          "extends": "commercial-line-item",
+          "of": "purchase-order"
+        },
+        {
+          "id": "product",
+          "kind": "entity",
+          "label": "Product",
+          "description": "Products and components represented in the AdventureWorks catalog.",
+          "bindings": [
+            {
+              "recordset": "Production.Product",
+              "role": "entity"
+            }
+          ]
+        },
+        {
+          "id": "product-category",
+          "kind": "entity",
+          "label": "Product category",
+          "description": "Product categories used in the manufacturing catalog.",
+          "bindings": [
+            {
+              "recordset": "Production.ProductCategory",
+              "role": "entity"
+            }
+          ]
+        },
+        {
+          "id": "sales-order-quantity",
+          "kind": "attribute",
+          "label": "Sales order quantity",
+          "description": "Number of product units requested on a sales order line.",
+          "bindings": [
+            {
+              "recordset": "Sales.SalesOrderDetail",
+              "property": "OrderQty",
+              "role": "value"
+            }
+          ],
+          "extends": "quantity",
+          "of": "sales-order-line"
+        },
+        {
+          "id": "sales-order-unit-price",
+          "kind": "attribute",
+          "label": "Sales order unit price",
+          "description": "The unit price recorded on a sales order line.",
+          "bindings": [
+            {
+              "recordset": "Sales.SalesOrderDetail",
+              "property": "UnitPrice",
+              "role": "value"
+            }
+          ],
+          "extends": "price",
+          "of": "sales-order-line"
+        },
+        {
+          "id": "product-list-price",
+          "kind": "attribute",
+          "label": "Product list price",
+          "description": "The catalog list price recorded for a product.",
+          "bindings": [
+            {
+              "recordset": "Production.Product",
+              "property": "ListPrice",
+              "role": "value"
+            }
+          ],
+          "extends": "price",
+          "of": "product"
+        },
+        {
+          "id": "purchase-order-quantity",
+          "kind": "attribute",
+          "label": "Purchase order quantity",
+          "description": "Number of product units requested on a purchase order line.",
+          "bindings": [
+            {
+              "recordset": "Purchasing.PurchaseOrderDetail",
+              "property": "OrderQty",
+              "role": "value"
+            }
+          ],
+          "extends": "quantity",
+          "of": "purchase-order-line"
+        },
+        {
+          "id": "purchase-order-unit-price",
+          "kind": "attribute",
+          "label": "Purchase order unit price",
+          "description": "The unit cost recorded for a purchase order line.",
+          "bindings": [
+            {
+              "recordset": "Purchasing.PurchaseOrderDetail",
+              "property": "UnitPrice",
+              "role": "value"
+            }
+          ],
+          "extends": "price",
+          "of": "purchase-order-line"
+        },
+        {
+          "id": "country-region",
+          "kind": "entity",
+          "label": "Country or region",
+          "description": "Country and region names with the source two-letter CountryRegionCode values; codes are not reconciled to a current ISO release.",
+          "bindings": [
+            {
+              "recordset": "Person.CountryRegion",
+              "role": "entity"
+            },
+            {
+              "recordset": "Person.CountryRegion",
+              "property": "CountryRegionCode",
+              "role": "identifier"
+            }
+          ],
+          "extends": "country"
+        }
+      ]
+    },
+    "nativeObjectsFile": "metadata/native-objects.json"
+  }
+}

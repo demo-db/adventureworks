@@ -1,0 +1,266 @@
+{
+  "format": "meaning/draft-1",
+  "id": "adventureworks",
+  "name": "AdventureWorks OLTP",
+  "description": "People, products, sales orders, purchase orders, manufacturing, and inventory in Microsoft AdventureWorks OLTP.",
+  "license": "CC0-1.0",
+  "models": {
+    "adventureworks": "adventureworks.modelspec.hcl"
+  },
+  "concepts": [
+    {
+      "id": "natural-person",
+      "kind": "entity",
+      "description": "People represented by AdventureWorks person records.",
+      "labels": {
+        "en": "Person"
+      },
+      "extends": "meaning://github.com/meaninggraph/core/person?ref=982916d73f0a35ff2558b0062f58aa3ac4f24d97",
+      "bindings": [
+        {
+          "model": "modelspec:///adventureworks.Person_Person",
+          "role": "entity"
+        }
+      ]
+    },
+    {
+      "id": "employee",
+      "kind": "entity",
+      "description": "People employed in the AdventureWorks organization.",
+      "labels": {
+        "en": "Employee"
+      },
+      "extends": "meaning://github.com/meaninggraph/core/employee?ref=982916d73f0a35ff2558b0062f58aa3ac4f24d97",
+      "bindings": [
+        {
+          "model": "modelspec:///adventureworks.HumanResources_Employee",
+          "role": "entity"
+        }
+      ]
+    },
+    {
+      "id": "sales-customer",
+      "kind": "entity",
+      "description": "Customers recorded for AdventureWorks sales.",
+      "labels": {
+        "en": "Sales customer"
+      },
+      "extends": "meaning://github.com/meaninggraph/core/customer?ref=982916d73f0a35ff2558b0062f58aa3ac4f24d97",
+      "bindings": [
+        {
+          "model": "modelspec:///adventureworks.Sales_Customer",
+          "role": "entity"
+        }
+      ]
+    },
+    {
+      "id": "supplier",
+      "kind": "entity",
+      "description": "Vendors that supply products to AdventureWorks.",
+      "labels": {
+        "en": "Supplier"
+      },
+      "extends": "meaning://github.com/meaninggraph/core/organization?ref=982916d73f0a35ff2558b0062f58aa3ac4f24d97",
+      "bindings": [
+        {
+          "model": "modelspec:///adventureworks.Purchasing_Vendor",
+          "role": "entity"
+        }
+      ]
+    },
+    {
+      "id": "sales-order",
+      "kind": "entity",
+      "description": "A request to supply goods to a customer, as recorded in a sales order header.",
+      "labels": {
+        "en": "Sales order"
+      },
+      "extends": "meaning://github.com/meaninggraph/core/order?ref=982916d73f0a35ff2558b0062f58aa3ac4f24d97",
+      "bindings": [
+        {
+          "model": "modelspec:///adventureworks.Sales_SalesOrderHeader",
+          "role": "entity"
+        }
+      ]
+    },
+    {
+      "id": "sales-order-line",
+      "kind": "entity",
+      "description": "One product entry on an AdventureWorks sales order.",
+      "labels": {
+        "en": "Sales order line"
+      },
+      "extends": "meaning://github.com/meaninggraph/core/order-line?ref=982916d73f0a35ff2558b0062f58aa3ac4f24d97",
+      "bindings": [
+        {
+          "model": "modelspec:///adventureworks.Sales_SalesOrderDetail",
+          "role": "entity"
+        }
+      ]
+    },
+    {
+      "id": "purchase-order",
+      "kind": "entity",
+      "description": "A request to purchase goods from a vendor.",
+      "labels": {
+        "en": "Purchase order"
+      },
+      "extends": "meaning://github.com/meaninggraph/core/order?ref=982916d73f0a35ff2558b0062f58aa3ac4f24d97",
+      "bindings": [
+        {
+          "model": "modelspec:///adventureworks.Purchasing_PurchaseOrderHeader",
+          "role": "entity"
+        }
+      ]
+    },
+    {
+      "id": "purchase-order-line",
+      "kind": "entity",
+      "description": "One product entry on a purchase order.",
+      "labels": {
+        "en": "Purchase order line"
+      },
+      "extends": "meaning://github.com/meaninggraph/core/commercial-line-item?ref=982916d73f0a35ff2558b0062f58aa3ac4f24d97",
+      "of": "purchase-order",
+      "bindings": [
+        {
+          "model": "modelspec:///adventureworks.Purchasing_PurchaseOrderDetail",
+          "role": "entity"
+        }
+      ]
+    },
+    {
+      "id": "product",
+      "kind": "entity",
+      "description": "Products and components represented in the AdventureWorks catalog.",
+      "labels": {
+        "en": "Product"
+      },
+      "bindings": [
+        {
+          "model": "modelspec:///adventureworks.Production_Product",
+          "role": "entity"
+        }
+      ]
+    },
+    {
+      "id": "product-category",
+      "kind": "entity",
+      "description": "Product categories used in the manufacturing catalog.",
+      "labels": {
+        "en": "Product category"
+      },
+      "bindings": [
+        {
+          "model": "modelspec:///adventureworks.Production_ProductCategory",
+          "role": "entity"
+        }
+      ]
+    },
+    {
+      "id": "sales-order-quantity",
+      "kind": "attribute",
+      "description": "Number of product units requested on a sales order line.",
+      "labels": {
+        "en": "Sales order quantity"
+      },
+      "extends": "meaning://github.com/meaninggraph/core/quantity?ref=982916d73f0a35ff2558b0062f58aa3ac4f24d97",
+      "of": "sales-order-line",
+      "bindings": [
+        {
+          "model": "modelspec:///adventureworks.Sales_SalesOrderDetail",
+          "role": "value",
+          "property": "OrderQty"
+        }
+      ]
+    },
+    {
+      "id": "sales-order-unit-price",
+      "kind": "attribute",
+      "description": "The unit price recorded on a sales order line.",
+      "labels": {
+        "en": "Sales order unit price"
+      },
+      "extends": "meaning://github.com/meaninggraph/core/price?ref=982916d73f0a35ff2558b0062f58aa3ac4f24d97",
+      "of": "sales-order-line",
+      "bindings": [
+        {
+          "model": "modelspec:///adventureworks.Sales_SalesOrderDetail",
+          "role": "value",
+          "property": "UnitPrice"
+        }
+      ]
+    },
+    {
+      "id": "product-list-price",
+      "kind": "attribute",
+      "description": "The catalog list price recorded for a product.",
+      "labels": {
+        "en": "Product list price"
+      },
+      "extends": "meaning://github.com/meaninggraph/core/price?ref=982916d73f0a35ff2558b0062f58aa3ac4f24d97",
+      "of": "product",
+      "bindings": [
+        {
+          "model": "modelspec:///adventureworks.Production_Product",
+          "role": "value",
+          "property": "ListPrice"
+        }
+      ]
+    },
+    {
+      "id": "purchase-order-quantity",
+      "kind": "attribute",
+      "description": "Number of product units requested on a purchase order line.",
+      "labels": {
+        "en": "Purchase order quantity"
+      },
+      "extends": "meaning://github.com/meaninggraph/core/quantity?ref=982916d73f0a35ff2558b0062f58aa3ac4f24d97",
+      "of": "purchase-order-line",
+      "bindings": [
+        {
+          "model": "modelspec:///adventureworks.Purchasing_PurchaseOrderDetail",
+          "role": "value",
+          "property": "OrderQty"
+        }
+      ]
+    },
+    {
+      "id": "purchase-order-unit-price",
+      "kind": "attribute",
+      "description": "The unit cost recorded for a purchase order line.",
+      "labels": {
+        "en": "Purchase order unit price"
+      },
+      "extends": "meaning://github.com/meaninggraph/core/price?ref=982916d73f0a35ff2558b0062f58aa3ac4f24d97",
+      "of": "purchase-order-line",
+      "bindings": [
+        {
+          "model": "modelspec:///adventureworks.Purchasing_PurchaseOrderDetail",
+          "role": "value",
+          "property": "UnitPrice"
+        }
+      ]
+    },
+    {
+      "id": "country-region",
+      "kind": "entity",
+      "description": "Country and region names with the source two-letter CountryRegionCode values; codes are not reconciled to a current ISO release.",
+      "labels": {
+        "en": "Country or region"
+      },
+      "extends": "meaning://github.com/meaninggraph/core/country?ref=982916d73f0a35ff2558b0062f58aa3ac4f24d97",
+      "bindings": [
+        {
+          "model": "modelspec:///adventureworks.Person_CountryRegion",
+          "role": "entity"
+        },
+        {
+          "model": "modelspec:///adventureworks.Person_CountryRegion",
+          "role": "identifier",
+          "property": "CountryRegionCode"
+        }
+      ]
+    }
+  ]
+}

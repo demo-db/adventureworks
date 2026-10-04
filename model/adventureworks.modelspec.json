@@ -1,0 +1,2399 @@
+{
+  "modelspec": "1.0-draft",
+  "module": {
+    "id": "github.com/demo-db/adventureworks/adventureworks",
+    "name": "adventureworks",
+    "version": "0.1.0"
+  },
+  "entities": {
+    "HumanResources_Department": {
+      "key": [
+        "DepartmentID"
+      ],
+      "properties": {
+        "DepartmentID": {
+          "required": true,
+          "type": "int"
+        },
+        "Name": {
+          "required": true,
+          "type": "string"
+        },
+        "GroupName": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "HumanResources_Employee": {
+      "key": [
+        "BusinessEntityID"
+      ],
+      "properties": {
+        "BusinessEntityID": {
+          "required": true,
+          "entity": "Person_Person"
+        },
+        "NationalIDNumber": {
+          "required": true,
+          "type": "string"
+        },
+        "LoginID": {
+          "required": true,
+          "type": "string"
+        },
+        "OrganizationNode": {
+          "type": "document"
+        },
+        "OrganizationLevel": {
+          "type": "int"
+        },
+        "JobTitle": {
+          "required": true,
+          "type": "string"
+        },
+        "BirthDate": {
+          "required": true,
+          "type": "string"
+        },
+        "MaritalStatus": {
+          "required": true,
+          "type": "string"
+        },
+        "Gender": {
+          "required": true,
+          "type": "string"
+        },
+        "HireDate": {
+          "required": true,
+          "type": "string"
+        },
+        "SalariedFlag": {
+          "required": true,
+          "type": "int"
+        },
+        "VacationHours": {
+          "required": true,
+          "type": "int"
+        },
+        "SickLeaveHours": {
+          "required": true,
+          "type": "int"
+        },
+        "CurrentFlag": {
+          "required": true,
+          "type": "int"
+        },
+        "rowguid": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "HumanResources_EmployeeDepartmentHistory": {
+      "key": [
+        "BusinessEntityID",
+        "StartDate",
+        "DepartmentID",
+        "ShiftID"
+      ],
+      "properties": {
+        "BusinessEntityID": {
+          "required": true,
+          "entity": "HumanResources_Employee"
+        },
+        "DepartmentID": {
+          "required": true,
+          "entity": "HumanResources_Department"
+        },
+        "ShiftID": {
+          "required": true,
+          "entity": "HumanResources_Shift"
+        },
+        "StartDate": {
+          "required": true,
+          "type": "string"
+        },
+        "EndDate": {
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "HumanResources_EmployeePayHistory": {
+      "key": [
+        "BusinessEntityID",
+        "RateChangeDate"
+      ],
+      "properties": {
+        "BusinessEntityID": {
+          "required": true,
+          "entity": "HumanResources_Employee"
+        },
+        "RateChangeDate": {
+          "required": true,
+          "type": "string"
+        },
+        "Rate": {
+          "required": true,
+          "type": "decimal"
+        },
+        "PayFrequency": {
+          "required": true,
+          "type": "int"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "HumanResources_JobCandidate": {
+      "key": [
+        "JobCandidateID"
+      ],
+      "properties": {
+        "JobCandidateID": {
+          "required": true,
+          "type": "int"
+        },
+        "BusinessEntityID": {
+          "entity": "HumanResources_Employee"
+        },
+        "Resume": {
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "HumanResources_Shift": {
+      "key": [
+        "ShiftID"
+      ],
+      "properties": {
+        "ShiftID": {
+          "required": true,
+          "type": "int"
+        },
+        "Name": {
+          "required": true,
+          "type": "string"
+        },
+        "StartTime": {
+          "required": true,
+          "type": "string"
+        },
+        "EndTime": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Person_Address": {
+      "key": [
+        "AddressID"
+      ],
+      "properties": {
+        "AddressID": {
+          "required": true,
+          "type": "int"
+        },
+        "AddressLine1": {
+          "required": true,
+          "type": "string"
+        },
+        "AddressLine2": {
+          "type": "string"
+        },
+        "City": {
+          "required": true,
+          "type": "string"
+        },
+        "StateProvinceID": {
+          "required": true,
+          "entity": "Person_StateProvince"
+        },
+        "PostalCode": {
+          "required": true,
+          "type": "string"
+        },
+        "SpatialLocation": {
+          "type": "document"
+        },
+        "rowguid": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Person_AddressType": {
+      "key": [
+        "AddressTypeID"
+      ],
+      "properties": {
+        "AddressTypeID": {
+          "required": true,
+          "type": "int"
+        },
+        "Name": {
+          "required": true,
+          "type": "string"
+        },
+        "rowguid": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Person_BusinessEntity": {
+      "key": [
+        "BusinessEntityID"
+      ],
+      "properties": {
+        "BusinessEntityID": {
+          "required": true,
+          "type": "int"
+        },
+        "rowguid": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Person_BusinessEntityAddress": {
+      "key": [
+        "BusinessEntityID",
+        "AddressID",
+        "AddressTypeID"
+      ],
+      "properties": {
+        "BusinessEntityID": {
+          "required": true,
+          "entity": "Person_BusinessEntity"
+        },
+        "AddressID": {
+          "required": true,
+          "entity": "Person_Address"
+        },
+        "AddressTypeID": {
+          "required": true,
+          "entity": "Person_AddressType"
+        },
+        "rowguid": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Person_BusinessEntityContact": {
+      "key": [
+        "BusinessEntityID",
+        "PersonID",
+        "ContactTypeID"
+      ],
+      "properties": {
+        "BusinessEntityID": {
+          "required": true,
+          "entity": "Person_BusinessEntity"
+        },
+        "PersonID": {
+          "required": true,
+          "entity": "Person_Person"
+        },
+        "ContactTypeID": {
+          "required": true,
+          "entity": "Person_ContactType"
+        },
+        "rowguid": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Person_ContactType": {
+      "key": [
+        "ContactTypeID"
+      ],
+      "properties": {
+        "ContactTypeID": {
+          "required": true,
+          "type": "int"
+        },
+        "Name": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Person_CountryRegion": {
+      "key": [
+        "CountryRegionCode"
+      ],
+      "properties": {
+        "CountryRegionCode": {
+          "required": true,
+          "type": "string"
+        },
+        "Name": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Person_EmailAddress": {
+      "key": [
+        "BusinessEntityID",
+        "EmailAddressID"
+      ],
+      "properties": {
+        "BusinessEntityID": {
+          "required": true,
+          "entity": "Person_Person"
+        },
+        "EmailAddressID": {
+          "required": true,
+          "type": "int"
+        },
+        "EmailAddress": {
+          "type": "string"
+        },
+        "rowguid": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Person_Password": {
+      "key": [
+        "BusinessEntityID"
+      ],
+      "properties": {
+        "BusinessEntityID": {
+          "required": true,
+          "entity": "Person_Person"
+        },
+        "PasswordHash": {
+          "required": true,
+          "type": "string"
+        },
+        "PasswordSalt": {
+          "required": true,
+          "type": "string"
+        },
+        "rowguid": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Person_Person": {
+      "key": [
+        "BusinessEntityID"
+      ],
+      "properties": {
+        "BusinessEntityID": {
+          "required": true,
+          "entity": "Person_BusinessEntity"
+        },
+        "PersonType": {
+          "required": true,
+          "type": "string"
+        },
+        "NameStyle": {
+          "required": true,
+          "type": "int"
+        },
+        "Title": {
+          "type": "string"
+        },
+        "FirstName": {
+          "required": true,
+          "type": "string"
+        },
+        "MiddleName": {
+          "type": "string"
+        },
+        "LastName": {
+          "required": true,
+          "type": "string"
+        },
+        "Suffix": {
+          "type": "string"
+        },
+        "EmailPromotion": {
+          "required": true,
+          "type": "int"
+        },
+        "AdditionalContactInfo": {
+          "type": "string"
+        },
+        "Demographics": {
+          "type": "string"
+        },
+        "rowguid": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Person_PersonPhone": {
+      "key": [
+        "BusinessEntityID",
+        "PhoneNumber",
+        "PhoneNumberTypeID"
+      ],
+      "properties": {
+        "BusinessEntityID": {
+          "required": true,
+          "entity": "Person_Person"
+        },
+        "PhoneNumber": {
+          "required": true,
+          "type": "string"
+        },
+        "PhoneNumberTypeID": {
+          "required": true,
+          "entity": "Person_PhoneNumberType"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Person_PhoneNumberType": {
+      "key": [
+        "PhoneNumberTypeID"
+      ],
+      "properties": {
+        "PhoneNumberTypeID": {
+          "required": true,
+          "type": "int"
+        },
+        "Name": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Person_StateProvince": {
+      "key": [
+        "StateProvinceID"
+      ],
+      "properties": {
+        "StateProvinceID": {
+          "required": true,
+          "type": "int"
+        },
+        "StateProvinceCode": {
+          "required": true,
+          "type": "string"
+        },
+        "CountryRegionCode": {
+          "required": true,
+          "entity": "Person_CountryRegion"
+        },
+        "IsOnlyStateProvinceFlag": {
+          "required": true,
+          "type": "int"
+        },
+        "Name": {
+          "required": true,
+          "type": "string"
+        },
+        "TerritoryID": {
+          "required": true,
+          "entity": "Sales_SalesTerritory"
+        },
+        "rowguid": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Production_BillOfMaterials": {
+      "key": [
+        "BillOfMaterialsID"
+      ],
+      "properties": {
+        "BillOfMaterialsID": {
+          "required": true,
+          "type": "int"
+        },
+        "ProductAssemblyID": {
+          "entity": "Production_Product"
+        },
+        "ComponentID": {
+          "required": true,
+          "entity": "Production_Product"
+        },
+        "StartDate": {
+          "required": true,
+          "type": "string"
+        },
+        "EndDate": {
+          "type": "string"
+        },
+        "UnitMeasureCode": {
+          "required": true,
+          "entity": "Production_UnitMeasure"
+        },
+        "BOMLevel": {
+          "required": true,
+          "type": "int"
+        },
+        "PerAssemblyQty": {
+          "required": true,
+          "type": "decimal"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Production_Culture": {
+      "key": [
+        "CultureID"
+      ],
+      "properties": {
+        "CultureID": {
+          "required": true,
+          "type": "string"
+        },
+        "Name": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Production_Document": {
+      "key": [
+        "DocumentNode"
+      ],
+      "properties": {
+        "DocumentNode": {
+          "required": true,
+          "type": "document"
+        },
+        "DocumentLevel": {
+          "type": "int"
+        },
+        "Title": {
+          "required": true,
+          "type": "string"
+        },
+        "Owner": {
+          "required": true,
+          "entity": "HumanResources_Employee"
+        },
+        "FolderFlag": {
+          "required": true,
+          "type": "int"
+        },
+        "FileName": {
+          "required": true,
+          "type": "string"
+        },
+        "FileExtension": {
+          "required": true,
+          "type": "string"
+        },
+        "Revision": {
+          "required": true,
+          "type": "string"
+        },
+        "ChangeNumber": {
+          "required": true,
+          "type": "int"
+        },
+        "Status": {
+          "required": true,
+          "type": "int"
+        },
+        "DocumentSummary": {
+          "type": "string"
+        },
+        "Document": {
+          "type": "document"
+        },
+        "rowguid": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Production_Illustration": {
+      "key": [
+        "IllustrationID"
+      ],
+      "properties": {
+        "IllustrationID": {
+          "required": true,
+          "type": "int"
+        },
+        "Diagram": {
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Production_Location": {
+      "key": [
+        "LocationID"
+      ],
+      "properties": {
+        "LocationID": {
+          "required": true,
+          "type": "int"
+        },
+        "Name": {
+          "required": true,
+          "type": "string"
+        },
+        "CostRate": {
+          "required": true,
+          "type": "decimal"
+        },
+        "Availability": {
+          "required": true,
+          "type": "decimal"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Production_Product": {
+      "key": [
+        "ProductID"
+      ],
+      "properties": {
+        "ProductID": {
+          "required": true,
+          "type": "int"
+        },
+        "Name": {
+          "required": true,
+          "type": "string"
+        },
+        "ProductNumber": {
+          "required": true,
+          "type": "string"
+        },
+        "MakeFlag": {
+          "required": true,
+          "type": "int"
+        },
+        "FinishedGoodsFlag": {
+          "required": true,
+          "type": "int"
+        },
+        "Color": {
+          "type": "string"
+        },
+        "SafetyStockLevel": {
+          "required": true,
+          "type": "int"
+        },
+        "ReorderPoint": {
+          "required": true,
+          "type": "int"
+        },
+        "StandardCost": {
+          "required": true,
+          "type": "decimal"
+        },
+        "ListPrice": {
+          "required": true,
+          "type": "decimal"
+        },
+        "Size": {
+          "type": "string"
+        },
+        "SizeUnitMeasureCode": {
+          "entity": "Production_UnitMeasure"
+        },
+        "WeightUnitMeasureCode": {
+          "entity": "Production_UnitMeasure"
+        },
+        "Weight": {
+          "type": "decimal"
+        },
+        "DaysToManufacture": {
+          "required": true,
+          "type": "int"
+        },
+        "ProductLine": {
+          "type": "string"
+        },
+        "Class": {
+          "type": "string"
+        },
+        "Style": {
+          "type": "string"
+        },
+        "ProductSubcategoryID": {
+          "entity": "Production_ProductSubcategory"
+        },
+        "ProductModelID": {
+          "entity": "Production_ProductModel"
+        },
+        "SellStartDate": {
+          "required": true,
+          "type": "string"
+        },
+        "SellEndDate": {
+          "type": "string"
+        },
+        "DiscontinuedDate": {
+          "type": "string"
+        },
+        "rowguid": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Production_ProductCategory": {
+      "key": [
+        "ProductCategoryID"
+      ],
+      "properties": {
+        "ProductCategoryID": {
+          "required": true,
+          "type": "int"
+        },
+        "Name": {
+          "required": true,
+          "type": "string"
+        },
+        "rowguid": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Production_ProductCostHistory": {
+      "key": [
+        "ProductID",
+        "StartDate"
+      ],
+      "properties": {
+        "ProductID": {
+          "required": true,
+          "entity": "Production_Product"
+        },
+        "StartDate": {
+          "required": true,
+          "type": "string"
+        },
+        "EndDate": {
+          "type": "string"
+        },
+        "StandardCost": {
+          "required": true,
+          "type": "decimal"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Production_ProductDescription": {
+      "key": [
+        "ProductDescriptionID"
+      ],
+      "properties": {
+        "ProductDescriptionID": {
+          "required": true,
+          "type": "int"
+        },
+        "Description": {
+          "required": true,
+          "type": "string"
+        },
+        "rowguid": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Production_ProductDocument": {
+      "key": [
+        "ProductID",
+        "DocumentNode"
+      ],
+      "properties": {
+        "ProductID": {
+          "required": true,
+          "entity": "Production_Product"
+        },
+        "DocumentNode": {
+          "required": true,
+          "entity": "Production_Document"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Production_ProductInventory": {
+      "key": [
+        "ProductID",
+        "LocationID"
+      ],
+      "properties": {
+        "ProductID": {
+          "required": true,
+          "entity": "Production_Product"
+        },
+        "LocationID": {
+          "required": true,
+          "entity": "Production_Location"
+        },
+        "Shelf": {
+          "required": true,
+          "type": "string"
+        },
+        "Bin": {
+          "required": true,
+          "type": "int"
+        },
+        "Quantity": {
+          "required": true,
+          "type": "int"
+        },
+        "rowguid": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Production_ProductListPriceHistory": {
+      "key": [
+        "ProductID",
+        "StartDate"
+      ],
+      "properties": {
+        "ProductID": {
+          "required": true,
+          "entity": "Production_Product"
+        },
+        "StartDate": {
+          "required": true,
+          "type": "string"
+        },
+        "EndDate": {
+          "type": "string"
+        },
+        "ListPrice": {
+          "required": true,
+          "type": "decimal"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Production_ProductModel": {
+      "key": [
+        "ProductModelID"
+      ],
+      "properties": {
+        "ProductModelID": {
+          "required": true,
+          "type": "int"
+        },
+        "Name": {
+          "required": true,
+          "type": "string"
+        },
+        "CatalogDescription": {
+          "type": "string"
+        },
+        "Instructions": {
+          "type": "string"
+        },
+        "rowguid": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Production_ProductModelIllustration": {
+      "key": [
+        "ProductModelID",
+        "IllustrationID"
+      ],
+      "properties": {
+        "ProductModelID": {
+          "required": true,
+          "entity": "Production_ProductModel"
+        },
+        "IllustrationID": {
+          "required": true,
+          "entity": "Production_Illustration"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Production_ProductModelProductDescriptionCulture": {
+      "key": [
+        "ProductModelID",
+        "ProductDescriptionID",
+        "CultureID"
+      ],
+      "properties": {
+        "ProductModelID": {
+          "required": true,
+          "entity": "Production_ProductModel"
+        },
+        "ProductDescriptionID": {
+          "required": true,
+          "entity": "Production_ProductDescription"
+        },
+        "CultureID": {
+          "required": true,
+          "entity": "Production_Culture"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Production_ProductPhoto": {
+      "key": [
+        "ProductPhotoID"
+      ],
+      "properties": {
+        "ProductPhotoID": {
+          "required": true,
+          "type": "int"
+        },
+        "ThumbNailPhoto": {
+          "type": "document"
+        },
+        "ThumbnailPhotoFileName": {
+          "type": "string"
+        },
+        "LargePhoto": {
+          "type": "document"
+        },
+        "LargePhotoFileName": {
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Production_ProductProductPhoto": {
+      "key": [
+        "ProductID",
+        "ProductPhotoID"
+      ],
+      "properties": {
+        "ProductID": {
+          "required": true,
+          "entity": "Production_Product"
+        },
+        "ProductPhotoID": {
+          "required": true,
+          "entity": "Production_ProductPhoto"
+        },
+        "Primary": {
+          "required": true,
+          "type": "int"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Production_ProductReview": {
+      "key": [
+        "ProductReviewID"
+      ],
+      "properties": {
+        "ProductReviewID": {
+          "required": true,
+          "type": "int"
+        },
+        "ProductID": {
+          "required": true,
+          "entity": "Production_Product"
+        },
+        "ReviewerName": {
+          "required": true,
+          "type": "string"
+        },
+        "ReviewDate": {
+          "required": true,
+          "type": "string"
+        },
+        "EmailAddress": {
+          "required": true,
+          "type": "string"
+        },
+        "Rating": {
+          "required": true,
+          "type": "int"
+        },
+        "Comments": {
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Production_ProductSubcategory": {
+      "key": [
+        "ProductSubcategoryID"
+      ],
+      "properties": {
+        "ProductSubcategoryID": {
+          "required": true,
+          "type": "int"
+        },
+        "ProductCategoryID": {
+          "required": true,
+          "entity": "Production_ProductCategory"
+        },
+        "Name": {
+          "required": true,
+          "type": "string"
+        },
+        "rowguid": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Production_ScrapReason": {
+      "key": [
+        "ScrapReasonID"
+      ],
+      "properties": {
+        "ScrapReasonID": {
+          "required": true,
+          "type": "int"
+        },
+        "Name": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Production_TransactionHistory": {
+      "key": [
+        "TransactionID"
+      ],
+      "properties": {
+        "TransactionID": {
+          "required": true,
+          "type": "int"
+        },
+        "ProductID": {
+          "required": true,
+          "entity": "Production_Product"
+        },
+        "ReferenceOrderID": {
+          "required": true,
+          "type": "int"
+        },
+        "ReferenceOrderLineID": {
+          "required": true,
+          "type": "int"
+        },
+        "TransactionDate": {
+          "required": true,
+          "type": "string"
+        },
+        "TransactionType": {
+          "required": true,
+          "type": "string"
+        },
+        "Quantity": {
+          "required": true,
+          "type": "int"
+        },
+        "ActualCost": {
+          "required": true,
+          "type": "decimal"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Production_TransactionHistoryArchive": {
+      "key": [
+        "TransactionID"
+      ],
+      "properties": {
+        "TransactionID": {
+          "required": true,
+          "type": "int"
+        },
+        "ProductID": {
+          "required": true,
+          "type": "int"
+        },
+        "ReferenceOrderID": {
+          "required": true,
+          "type": "int"
+        },
+        "ReferenceOrderLineID": {
+          "required": true,
+          "type": "int"
+        },
+        "TransactionDate": {
+          "required": true,
+          "type": "string"
+        },
+        "TransactionType": {
+          "required": true,
+          "type": "string"
+        },
+        "Quantity": {
+          "required": true,
+          "type": "int"
+        },
+        "ActualCost": {
+          "required": true,
+          "type": "decimal"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Production_UnitMeasure": {
+      "key": [
+        "UnitMeasureCode"
+      ],
+      "properties": {
+        "UnitMeasureCode": {
+          "required": true,
+          "type": "string"
+        },
+        "Name": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Production_WorkOrder": {
+      "key": [
+        "WorkOrderID"
+      ],
+      "properties": {
+        "WorkOrderID": {
+          "required": true,
+          "type": "int"
+        },
+        "ProductID": {
+          "required": true,
+          "entity": "Production_Product"
+        },
+        "OrderQty": {
+          "required": true,
+          "type": "int"
+        },
+        "StockedQty": {
+          "type": "decimal"
+        },
+        "ScrappedQty": {
+          "required": true,
+          "type": "int"
+        },
+        "StartDate": {
+          "required": true,
+          "type": "string"
+        },
+        "EndDate": {
+          "type": "string"
+        },
+        "DueDate": {
+          "required": true,
+          "type": "string"
+        },
+        "ScrapReasonID": {
+          "entity": "Production_ScrapReason"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Production_WorkOrderRouting": {
+      "key": [
+        "WorkOrderID",
+        "ProductID",
+        "OperationSequence"
+      ],
+      "properties": {
+        "WorkOrderID": {
+          "required": true,
+          "entity": "Production_WorkOrder"
+        },
+        "ProductID": {
+          "required": true,
+          "type": "int"
+        },
+        "OperationSequence": {
+          "required": true,
+          "type": "int"
+        },
+        "LocationID": {
+          "required": true,
+          "entity": "Production_Location"
+        },
+        "ScheduledStartDate": {
+          "required": true,
+          "type": "string"
+        },
+        "ScheduledEndDate": {
+          "required": true,
+          "type": "string"
+        },
+        "ActualStartDate": {
+          "type": "string"
+        },
+        "ActualEndDate": {
+          "type": "string"
+        },
+        "ActualResourceHrs": {
+          "type": "decimal"
+        },
+        "PlannedCost": {
+          "required": true,
+          "type": "decimal"
+        },
+        "ActualCost": {
+          "type": "decimal"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Purchasing_ProductVendor": {
+      "key": [
+        "ProductID",
+        "BusinessEntityID"
+      ],
+      "properties": {
+        "ProductID": {
+          "required": true,
+          "entity": "Production_Product"
+        },
+        "BusinessEntityID": {
+          "required": true,
+          "entity": "Purchasing_Vendor"
+        },
+        "AverageLeadTime": {
+          "required": true,
+          "type": "int"
+        },
+        "StandardPrice": {
+          "required": true,
+          "type": "decimal"
+        },
+        "LastReceiptCost": {
+          "type": "decimal"
+        },
+        "LastReceiptDate": {
+          "type": "string"
+        },
+        "MinOrderQty": {
+          "required": true,
+          "type": "int"
+        },
+        "MaxOrderQty": {
+          "required": true,
+          "type": "int"
+        },
+        "OnOrderQty": {
+          "type": "int"
+        },
+        "UnitMeasureCode": {
+          "required": true,
+          "entity": "Production_UnitMeasure"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Purchasing_PurchaseOrderDetail": {
+      "key": [
+        "PurchaseOrderID",
+        "PurchaseOrderDetailID"
+      ],
+      "properties": {
+        "PurchaseOrderID": {
+          "required": true,
+          "entity": "Purchasing_PurchaseOrderHeader"
+        },
+        "PurchaseOrderDetailID": {
+          "required": true,
+          "type": "int"
+        },
+        "DueDate": {
+          "required": true,
+          "type": "string"
+        },
+        "OrderQty": {
+          "required": true,
+          "type": "int"
+        },
+        "ProductID": {
+          "required": true,
+          "entity": "Production_Product"
+        },
+        "UnitPrice": {
+          "required": true,
+          "type": "decimal"
+        },
+        "LineTotal": {
+          "type": "decimal"
+        },
+        "ReceivedQty": {
+          "required": true,
+          "type": "decimal"
+        },
+        "RejectedQty": {
+          "required": true,
+          "type": "decimal"
+        },
+        "StockedQty": {
+          "type": "decimal"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Purchasing_PurchaseOrderHeader": {
+      "key": [
+        "PurchaseOrderID"
+      ],
+      "properties": {
+        "PurchaseOrderID": {
+          "required": true,
+          "type": "int"
+        },
+        "RevisionNumber": {
+          "required": true,
+          "type": "int"
+        },
+        "Status": {
+          "required": true,
+          "type": "int"
+        },
+        "EmployeeID": {
+          "required": true,
+          "entity": "HumanResources_Employee"
+        },
+        "VendorID": {
+          "required": true,
+          "entity": "Purchasing_Vendor"
+        },
+        "ShipMethodID": {
+          "required": true,
+          "entity": "Purchasing_ShipMethod"
+        },
+        "OrderDate": {
+          "required": true,
+          "type": "string"
+        },
+        "ShipDate": {
+          "type": "string"
+        },
+        "SubTotal": {
+          "required": true,
+          "type": "decimal"
+        },
+        "TaxAmt": {
+          "required": true,
+          "type": "decimal"
+        },
+        "Freight": {
+          "required": true,
+          "type": "decimal"
+        },
+        "TotalDue": {
+          "required": true,
+          "type": "decimal"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Purchasing_ShipMethod": {
+      "key": [
+        "ShipMethodID"
+      ],
+      "properties": {
+        "ShipMethodID": {
+          "required": true,
+          "type": "int"
+        },
+        "Name": {
+          "required": true,
+          "type": "string"
+        },
+        "ShipBase": {
+          "required": true,
+          "type": "decimal"
+        },
+        "ShipRate": {
+          "required": true,
+          "type": "decimal"
+        },
+        "rowguid": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Purchasing_Vendor": {
+      "key": [
+        "BusinessEntityID"
+      ],
+      "properties": {
+        "BusinessEntityID": {
+          "required": true,
+          "entity": "Person_BusinessEntity"
+        },
+        "AccountNumber": {
+          "required": true,
+          "type": "string"
+        },
+        "Name": {
+          "required": true,
+          "type": "string"
+        },
+        "CreditRating": {
+          "required": true,
+          "type": "int"
+        },
+        "PreferredVendorStatus": {
+          "required": true,
+          "type": "int"
+        },
+        "ActiveFlag": {
+          "required": true,
+          "type": "int"
+        },
+        "PurchasingWebServiceURL": {
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Sales_CountryRegionCurrency": {
+      "key": [
+        "CountryRegionCode",
+        "CurrencyCode"
+      ],
+      "properties": {
+        "CountryRegionCode": {
+          "required": true,
+          "entity": "Person_CountryRegion"
+        },
+        "CurrencyCode": {
+          "required": true,
+          "entity": "Sales_Currency"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Sales_CreditCard": {
+      "key": [
+        "CreditCardID"
+      ],
+      "properties": {
+        "CreditCardID": {
+          "required": true,
+          "type": "int"
+        },
+        "CardType": {
+          "required": true,
+          "type": "string"
+        },
+        "CardNumber": {
+          "required": true,
+          "type": "string"
+        },
+        "ExpMonth": {
+          "required": true,
+          "type": "int"
+        },
+        "ExpYear": {
+          "required": true,
+          "type": "int"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Sales_Currency": {
+      "key": [
+        "CurrencyCode"
+      ],
+      "properties": {
+        "CurrencyCode": {
+          "required": true,
+          "type": "string"
+        },
+        "Name": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Sales_CurrencyRate": {
+      "key": [
+        "CurrencyRateID"
+      ],
+      "properties": {
+        "CurrencyRateID": {
+          "required": true,
+          "type": "int"
+        },
+        "CurrencyRateDate": {
+          "required": true,
+          "type": "string"
+        },
+        "FromCurrencyCode": {
+          "required": true,
+          "entity": "Sales_Currency"
+        },
+        "ToCurrencyCode": {
+          "required": true,
+          "entity": "Sales_Currency"
+        },
+        "AverageRate": {
+          "required": true,
+          "type": "decimal"
+        },
+        "EndOfDayRate": {
+          "required": true,
+          "type": "decimal"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Sales_Customer": {
+      "key": [
+        "CustomerID"
+      ],
+      "properties": {
+        "CustomerID": {
+          "required": true,
+          "type": "int"
+        },
+        "PersonID": {
+          "entity": "Person_Person"
+        },
+        "StoreID": {
+          "entity": "Sales_Store"
+        },
+        "TerritoryID": {
+          "entity": "Sales_SalesTerritory"
+        },
+        "AccountNumber": {
+          "type": "string"
+        },
+        "rowguid": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Sales_PersonCreditCard": {
+      "key": [
+        "BusinessEntityID",
+        "CreditCardID"
+      ],
+      "properties": {
+        "BusinessEntityID": {
+          "required": true,
+          "entity": "Person_Person"
+        },
+        "CreditCardID": {
+          "required": true,
+          "entity": "Sales_CreditCard"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Sales_SalesOrderDetail": {
+      "key": [
+        "SalesOrderID",
+        "SalesOrderDetailID"
+      ],
+      "properties": {
+        "SalesOrderID": {
+          "required": true,
+          "entity": "Sales_SalesOrderHeader"
+        },
+        "SalesOrderDetailID": {
+          "required": true,
+          "type": "int"
+        },
+        "CarrierTrackingNumber": {
+          "type": "string"
+        },
+        "OrderQty": {
+          "required": true,
+          "type": "int"
+        },
+        "ProductID": {
+          "required": true,
+          "entity": "Sales_SpecialOfferProduct"
+        },
+        "SpecialOfferID": {
+          "required": true,
+          "entity": "Sales_SpecialOfferProduct"
+        },
+        "UnitPrice": {
+          "required": true,
+          "type": "decimal"
+        },
+        "UnitPriceDiscount": {
+          "required": true,
+          "type": "decimal"
+        },
+        "LineTotal": {
+          "type": "decimal"
+        },
+        "rowguid": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Sales_SalesOrderHeader": {
+      "key": [
+        "SalesOrderID"
+      ],
+      "properties": {
+        "SalesOrderID": {
+          "required": true,
+          "type": "int"
+        },
+        "RevisionNumber": {
+          "required": true,
+          "type": "int"
+        },
+        "OrderDate": {
+          "required": true,
+          "type": "string"
+        },
+        "DueDate": {
+          "required": true,
+          "type": "string"
+        },
+        "ShipDate": {
+          "type": "string"
+        },
+        "Status": {
+          "required": true,
+          "type": "int"
+        },
+        "OnlineOrderFlag": {
+          "required": true,
+          "type": "int"
+        },
+        "SalesOrderNumber": {
+          "type": "string"
+        },
+        "PurchaseOrderNumber": {
+          "type": "string"
+        },
+        "AccountNumber": {
+          "type": "string"
+        },
+        "CustomerID": {
+          "required": true,
+          "entity": "Sales_Customer"
+        },
+        "SalesPersonID": {
+          "entity": "Sales_SalesPerson"
+        },
+        "TerritoryID": {
+          "entity": "Sales_SalesTerritory"
+        },
+        "BillToAddressID": {
+          "required": true,
+          "entity": "Person_Address"
+        },
+        "ShipToAddressID": {
+          "required": true,
+          "entity": "Person_Address"
+        },
+        "ShipMethodID": {
+          "required": true,
+          "entity": "Purchasing_ShipMethod"
+        },
+        "CreditCardID": {
+          "entity": "Sales_CreditCard"
+        },
+        "CreditCardApprovalCode": {
+          "type": "string"
+        },
+        "CurrencyRateID": {
+          "entity": "Sales_CurrencyRate"
+        },
+        "SubTotal": {
+          "required": true,
+          "type": "decimal"
+        },
+        "TaxAmt": {
+          "required": true,
+          "type": "decimal"
+        },
+        "Freight": {
+          "required": true,
+          "type": "decimal"
+        },
+        "TotalDue": {
+          "type": "decimal"
+        },
+        "Comment": {
+          "type": "string"
+        },
+        "rowguid": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Sales_SalesOrderHeaderSalesReason": {
+      "key": [
+        "SalesOrderID",
+        "SalesReasonID"
+      ],
+      "properties": {
+        "SalesOrderID": {
+          "required": true,
+          "entity": "Sales_SalesOrderHeader"
+        },
+        "SalesReasonID": {
+          "required": true,
+          "entity": "Sales_SalesReason"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Sales_SalesPerson": {
+      "key": [
+        "BusinessEntityID"
+      ],
+      "properties": {
+        "BusinessEntityID": {
+          "required": true,
+          "entity": "HumanResources_Employee"
+        },
+        "TerritoryID": {
+          "entity": "Sales_SalesTerritory"
+        },
+        "SalesQuota": {
+          "type": "decimal"
+        },
+        "Bonus": {
+          "required": true,
+          "type": "decimal"
+        },
+        "CommissionPct": {
+          "required": true,
+          "type": "decimal"
+        },
+        "SalesYTD": {
+          "required": true,
+          "type": "decimal"
+        },
+        "SalesLastYear": {
+          "required": true,
+          "type": "decimal"
+        },
+        "rowguid": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Sales_SalesPersonQuotaHistory": {
+      "key": [
+        "BusinessEntityID",
+        "QuotaDate"
+      ],
+      "properties": {
+        "BusinessEntityID": {
+          "required": true,
+          "entity": "Sales_SalesPerson"
+        },
+        "QuotaDate": {
+          "required": true,
+          "type": "string"
+        },
+        "SalesQuota": {
+          "required": true,
+          "type": "decimal"
+        },
+        "rowguid": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Sales_SalesReason": {
+      "key": [
+        "SalesReasonID"
+      ],
+      "properties": {
+        "SalesReasonID": {
+          "required": true,
+          "type": "int"
+        },
+        "Name": {
+          "required": true,
+          "type": "string"
+        },
+        "ReasonType": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Sales_SalesTaxRate": {
+      "key": [
+        "SalesTaxRateID"
+      ],
+      "properties": {
+        "SalesTaxRateID": {
+          "required": true,
+          "type": "int"
+        },
+        "StateProvinceID": {
+          "required": true,
+          "entity": "Person_StateProvince"
+        },
+        "TaxType": {
+          "required": true,
+          "type": "int"
+        },
+        "TaxRate": {
+          "required": true,
+          "type": "decimal"
+        },
+        "Name": {
+          "required": true,
+          "type": "string"
+        },
+        "rowguid": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Sales_SalesTerritory": {
+      "key": [
+        "TerritoryID"
+      ],
+      "properties": {
+        "TerritoryID": {
+          "required": true,
+          "type": "int"
+        },
+        "Name": {
+          "required": true,
+          "type": "string"
+        },
+        "CountryRegionCode": {
+          "required": true,
+          "entity": "Person_CountryRegion"
+        },
+        "Group": {
+          "required": true,
+          "type": "string"
+        },
+        "SalesYTD": {
+          "required": true,
+          "type": "decimal"
+        },
+        "SalesLastYear": {
+          "required": true,
+          "type": "decimal"
+        },
+        "CostYTD": {
+          "required": true,
+          "type": "decimal"
+        },
+        "CostLastYear": {
+          "required": true,
+          "type": "decimal"
+        },
+        "rowguid": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Sales_SalesTerritoryHistory": {
+      "key": [
+        "BusinessEntityID",
+        "StartDate",
+        "TerritoryID"
+      ],
+      "properties": {
+        "BusinessEntityID": {
+          "required": true,
+          "entity": "Sales_SalesPerson"
+        },
+        "TerritoryID": {
+          "required": true,
+          "entity": "Sales_SalesTerritory"
+        },
+        "StartDate": {
+          "required": true,
+          "type": "string"
+        },
+        "EndDate": {
+          "type": "string"
+        },
+        "rowguid": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Sales_ShoppingCartItem": {
+      "key": [
+        "ShoppingCartItemID"
+      ],
+      "properties": {
+        "ShoppingCartItemID": {
+          "required": true,
+          "type": "int"
+        },
+        "ShoppingCartID": {
+          "required": true,
+          "type": "string"
+        },
+        "Quantity": {
+          "required": true,
+          "type": "int"
+        },
+        "ProductID": {
+          "required": true,
+          "entity": "Production_Product"
+        },
+        "DateCreated": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Sales_SpecialOffer": {
+      "key": [
+        "SpecialOfferID"
+      ],
+      "properties": {
+        "SpecialOfferID": {
+          "required": true,
+          "type": "int"
+        },
+        "Description": {
+          "required": true,
+          "type": "string"
+        },
+        "DiscountPct": {
+          "required": true,
+          "type": "decimal"
+        },
+        "Type": {
+          "required": true,
+          "type": "string"
+        },
+        "Category": {
+          "required": true,
+          "type": "string"
+        },
+        "StartDate": {
+          "required": true,
+          "type": "string"
+        },
+        "EndDate": {
+          "required": true,
+          "type": "string"
+        },
+        "MinQty": {
+          "required": true,
+          "type": "int"
+        },
+        "MaxQty": {
+          "type": "int"
+        },
+        "rowguid": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Sales_SpecialOfferProduct": {
+      "key": [
+        "SpecialOfferID",
+        "ProductID"
+      ],
+      "properties": {
+        "SpecialOfferID": {
+          "required": true,
+          "entity": "Sales_SpecialOffer"
+        },
+        "ProductID": {
+          "required": true,
+          "entity": "Production_Product"
+        },
+        "rowguid": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "Sales_Store": {
+      "key": [
+        "BusinessEntityID"
+      ],
+      "properties": {
+        "BusinessEntityID": {
+          "required": true,
+          "entity": "Person_BusinessEntity"
+        },
+        "Name": {
+          "required": true,
+          "type": "string"
+        },
+        "SalesPersonID": {
+          "entity": "Sales_SalesPerson"
+        },
+        "Demographics": {
+          "type": "string"
+        },
+        "rowguid": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "dbo_AWBuildVersion": {
+      "key": [
+        "SystemInformationID"
+      ],
+      "properties": {
+        "SystemInformationID": {
+          "required": true,
+          "type": "int"
+        },
+        "Database_Version": {
+          "required": true,
+          "type": "string"
+        },
+        "VersionDate": {
+          "required": true,
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "dbo_DatabaseLog": {
+      "key": [
+        "DatabaseLogID"
+      ],
+      "properties": {
+        "DatabaseLogID": {
+          "required": true,
+          "type": "int"
+        },
+        "PostTime": {
+          "required": true,
+          "type": "string"
+        },
+        "DatabaseUser": {
+          "required": true,
+          "type": "string"
+        },
+        "Event": {
+          "required": true,
+          "type": "string"
+        },
+        "Schema": {
+          "type": "string"
+        },
+        "Object": {
+          "type": "string"
+        },
+        "TSQL": {
+          "required": true,
+          "type": "string"
+        },
+        "XmlEvent": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "dbo_ErrorLog": {
+      "key": [
+        "ErrorLogID"
+      ],
+      "properties": {
+        "ErrorLogID": {
+          "required": true,
+          "type": "int"
+        },
+        "ErrorTime": {
+          "required": true,
+          "type": "string"
+        },
+        "UserName": {
+          "required": true,
+          "type": "string"
+        },
+        "ErrorNumber": {
+          "required": true,
+          "type": "int"
+        },
+        "ErrorSeverity": {
+          "type": "int"
+        },
+        "ErrorState": {
+          "type": "int"
+        },
+        "ErrorProcedure": {
+          "type": "string"
+        },
+        "ErrorLine": {
+          "type": "int"
+        },
+        "ErrorMessage": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    }
+  }
+}
