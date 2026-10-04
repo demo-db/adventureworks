@@ -1,0 +1,634 @@
+{
+  "contractVersion": 1,
+  "files": {
+    "artifacts/adventureworks.sql.gz": {
+      "sha256": "7351fbd8bfa3c50e33f28cb43e403293078942107b1ee52cd9c01b5a94f4f041",
+      "bytes": 19191245,
+      "compression": "gzip",
+      "decodedBytes": 134756217,
+      "decodedSha256": "e5d5b8797319ccf06a5e26e32502da21e400a083e4654c2b666593fad7b317b9"
+    },
+    "artifacts/adventureworks.sqlite.gz.part-0001": {
+      "sha256": "3c59d3812fbc29d8a3070da9bef2306b25cff219fa08bb3fd82e5838f92d080a",
+      "bytes": 26214400
+    },
+    "artifacts/adventureworks.sqlite.gz.part-0002": {
+      "sha256": "80b1a2c58648469aebe5b47b9dfaef3b3c84d14e141b5297e6f5f94953ef28a7",
+      "bytes": 9075051
+    },
+    "artifacts/data/HumanResources.Department.csv": {
+      "sha256": "0453a956051a67f98ddf298d062e7deb80f4c31ee3d79f97281eaba08d7ba7f7",
+      "bytes": 1116
+    },
+    "artifacts/data/HumanResources.Department.json": {
+      "sha256": "743bf5adfd9e56e2ac72f8177db0d173966cac7e757bd30a11c00d7b96792f5c",
+      "bytes": 2102
+    },
+    "artifacts/data/HumanResources.Employee.csv": {
+      "sha256": "692f61dee2186ddbf09742ade06c902deca24c6cadbca8653177567b4faf9229",
+      "bytes": 48735
+    },
+    "artifacts/data/HumanResources.Employee.json": {
+      "sha256": "dca5abdc76a5bba677ba62b17d14394df94d20bdfeaa0a207cbf24f1fe38e061",
+      "bytes": 128293
+    },
+    "artifacts/data/HumanResources.EmployeeDepartmentHistory.csv": {
+      "sha256": "7dfca6ba265b96840592b86bcc9ecb838eea77557ed5cae569525d6a43bbb3d6",
+      "bytes": 13090
+    },
+    "artifacts/data/HumanResources.EmployeeDepartmentHistory.json": {
+      "sha256": "4dc159469d6c34dc6b8f29f2d2e29456d4c2f06911964d18c52bc50cc938cf24",
+      "bytes": 42612
+    },
+    "artifacts/data/HumanResources.EmployeePayHistory.csv": {
+      "sha256": "f2533d5773819052c4bd2516f68bf14c206cfeca86cab8377fe232ce0e74cf2d",
+      "bytes": 18604
+    },
+    "artifacts/data/HumanResources.EmployeePayHistory.json": {
+      "sha256": "26cbb991791f236b3e3d7e8b345903b0652378cb5cc392f895c00aa307dc44d4",
+      "bytes": 46036
+    },
+    "artifacts/data/HumanResources.JobCandidate.csv": {
+      "sha256": "0f2c90dbbf16c5966436c009ba33b317ac8b9174d8858de5221637cd10571477",
+      "bytes": 64046
+    },
+    "artifacts/data/HumanResources.JobCandidate.json": {
+      "sha256": "3b3a4c2b53e1e3a621f242e6077fd5c36a1017dc7aa8b8a666a01667c2f51eaa",
+      "bytes": 65051
+    },
+    "artifacts/data/HumanResources.Shift.csv": {
+      "sha256": "5b030aa73c44ff3c2b828d9d9dda0f41981a935853f849bba82637742fdcb316",
+      "bytes": 242
+    },
+    "artifacts/data/HumanResources.Shift.json": {
+      "sha256": "e94143a953deeb96de2f056162c4de1b909e317fa4095e1d8ee4151079fb3f78",
+      "bytes": 417
+    },
+    "artifacts/data/Person.Address.csv": {
+      "sha256": "6d81d2ad6c6784015877e98d2dc34639018439bd8452d89cba237025de253ccc",
+      "bytes": 2710961
+    },
+    "artifacts/data/Person.Address.json": {
+      "sha256": "c998b61e8dcc22b6d5e6c142b7f9559834e206ff07e4396d6332aa17de7fa25c",
+      "bytes": 5707371
+    },
+    "artifacts/data/Person.AddressType.csv": {
+      "sha256": "8652bd04c7ecb61e66c8ea0d6ab83a4139df0fe7694178463fb02f62078de6b1",
+      "bytes": 468
+    },
+    "artifacts/data/Person.AddressType.json": {
+      "sha256": "6af6d1ac1a573b55a62337ea029da2284726c2a41d91bced15183b5d300ae172",
+      "bytes": 809
+    },
+    "artifacts/data/Person.BusinessEntity.csv": {
+      "sha256": "cd97f87f77b6308566261b237b7e61eac599a99c29cda4ffa1d83f9b2be953a6",
+      "bytes": 1380991
+    },
+    "artifacts/data/Person.BusinessEntity.json": {
+      "sha256": "f96179662ff4fb17dcf02d88b95d2895d43830b9a64e1ac7cce810a6b5e463e2",
+      "bytes": 2544468
+    },
+    "artifacts/data/Person.BusinessEntityAddress.csv": {
+      "sha256": "ac9cd29a26fc28076cd936deeb5926b3d5dac5b09b97717c12a4b393d883c697",
+      "bytes": 1459321
+    },
+    "artifacts/data/Person.BusinessEntityAddress.json": {
+      "sha256": "eb91a36a32448d811f6dc72983702d42725745561c809f229dcb60921963268d",
+      "bytes": 3146066
+    },
+    "artifacts/data/Person.BusinessEntityContact.csv": {
+      "sha256": "46736c06b2939d77f2d0243f4dbf59158805341c76b410db4529a17ecd1497f0",
+      "bytes": 66579
+    },
+    "artifacts/data/Person.BusinessEntityContact.json": {
+      "sha256": "60f6ff014e98dc20ef04ff56c9fbcc54cafa52520aba423f5e0e4bdbe6816998",
+      "bytes": 143786
+    },
+    "artifacts/data/Person.ContactType.csv": {
+      "sha256": "67657d00b348e1ce64ac4712fad3c3962432c83391ad0da819ff2aece081eb46",
+      "bytes": 978
+    },
+    "artifacts/data/Person.ContactType.json": {
+      "sha256": "5f23b30ebcb505c671b083ade6173c75927d9e9c529278d90416b8930b5a0da0",
+      "bytes": 1949
+    },
+    "artifacts/data/Person.CountryRegion.csv": {
+      "sha256": "234cc4cf9a29eb8fc7d72996724a4eeb59004bd4d71a8f2b35f9902b7851ac9a",
+      "bytes": 9112
+    },
+    "artifacts/data/Person.CountryRegion.json": {
+      "sha256": "ad2f13436ff8b19e348eedf89ecc321c138b32f3b99c4727d7dcb9002a284511",
+      "bytes": 22397
+    },
+    "artifacts/data/Person.EmailAddress.csv": {
+      "sha256": "1f858b24ec513617c2140b463a6a583ac829664b6135533521ace7a4763b6cc0",
+      "bytes": 2007824
+    },
+    "artifacts/data/Person.EmailAddress.json": {
+      "sha256": "07a09176457caa7ab592e3299be0ae40f46106de6248bd721624b4dcc39d729e",
+      "bytes": 3845185
+    },
+    "artifacts/data/Person.Password.csv": {
+      "sha256": "bf9d62aa8986913b41e43b65eeda70ca0527c9d728e494a2a21410369ef81317",
+      "bytes": 2406729
+    },
+    "artifacts/data/Person.Password.json": {
+      "sha256": "963a98be5f9eceaa6a1ee8d9ff5fbe357b093274d2d24a83e33d14ec33af2872",
+      "bytes": 4244092
+    },
+    "artifacts/data/Person.Person.csv": {
+      "sha256": "0af8d19f9a9c1775272c7c866795f23beb422dabdc59e1f49796019e5cebf39f",
+      "bytes": 13365560
+    },
+    "artifacts/data/Person.Person.json": {
+      "sha256": "62b09e887038d30a4ef9280bba61d1be2f5c4d74a9813edbd753720937884b84",
+      "bytes": 17774085
+    },
+    "artifacts/data/Person.PersonPhone.csv": {
+      "sha256": "097e9498b4aa04b68e771d86e71fff129c26690324e0148c96ebf99c3b6338d2",
+      "bytes": 953162
+    },
+    "artifacts/data/Person.PersonPhone.json": {
+      "sha256": "2d52f123f1c7bfffc3507fe389aeba78a1ae199a5a30f05aa2c303a9afad9745",
+      "bytes": 2570837
+    },
+    "artifacts/data/Person.PhoneNumberType.csv": {
+      "sha256": "05cfbef465e8b96004a3138751e8e92a78a635573beebd7487c626d70e0cac9e",
+      "bytes": 129
+    },
+    "artifacts/data/Person.PhoneNumberType.json": {
+      "sha256": "fd4b2c74ea33b0a94ee455dcd9faa4d74210d3ac477fe42b2382493a44f5fbc6",
+      "bytes": 258
+    },
+    "artifacts/data/Person.StateProvince.csv": {
+      "sha256": "9cda6e80a753a07192762d76c50b276c231827cd48e512ea3adba7bc8e2174a9",
+      "bytes": 15675
+    },
+    "artifacts/data/Person.StateProvince.json": {
+      "sha256": "306d491829bce2c7cdd5115186445ba52bc33b4add9b1bd384c12b13fddeed52",
+      "bytes": 43257
+    },
+    "artifacts/data/Production.BillOfMaterials.csv": {
+      "sha256": "107d6ba00aed33ff9bcb77cc8342526429ea1c1738f6f04a27fc6e8827ba5696",
+      "bytes": 191005
+    },
+    "artifacts/data/Production.BillOfMaterials.json": {
+      "sha256": "e8b8d9239c19ca5795dc850df42ea63c80144f5ffda92cdabfe7106208002fac",
+      "bytes": 622222
+    },
+    "artifacts/data/Production.Culture.csv": {
+      "sha256": "7877c2a43f5f203497dd13b3ec3c9920d8ca265c3db593c371bee56409df153b",
+      "bytes": 365
+    },
+    "artifacts/data/Production.Culture.json": {
+      "sha256": "634d30ff53cb79b983ac005dd081e30ed2ec37b396d2b88394808fec878aa579",
+      "bytes": 724
+    },
+    "artifacts/data/Production.Document.csv": {
+      "sha256": "35010fd2463561084471988a91ab4f698b3948c0eaf666fef251e9d0b466ec82",
+      "bytes": 348699
+    },
+    "artifacts/data/Production.Document.json": {
+      "sha256": "c6637a8a6b54d9b96a95a3011c11445ef31e7534942238eed1a3dbddbfa06203",
+      "bytes": 351158
+    },
+    "artifacts/data/Production.Illustration.csv": {
+      "sha256": "210d48a190b82d38ae492b7e2ca8835bc9ebef8c83adb88166cd5112d6121790",
+      "bytes": 123198
+    },
+    "artifacts/data/Production.Illustration.json": {
+      "sha256": "176a0e2ec4d9979c1a3bb379142aded3d9260ee77e007ba49eb2ddf157510890",
+      "bytes": 123425
+    },
+    "artifacts/data/Production.Location.csv": {
+      "sha256": "047cc80a75b2ed5e8ba956e0f785aed175ed321a7ea49c0ad1b727ef122e991d",
+      "bytes": 718
+    },
+    "artifacts/data/Production.Location.json": {
+      "sha256": "6d9a2dfb3a9f266f5049dd54e0af69cb43f4468e0d5f248ca032e0c40651b79e",
+      "bytes": 1720
+    },
+    "artifacts/data/Production.Product.csv": {
+      "sha256": "8b9cebb541ccc3e39ad01ca7e0af9c64255946cb4ee80fb52c6c1222054e414e",
+      "bytes": 86843
+    },
+    "artifacts/data/Production.Product.json": {
+      "sha256": "cb46498940af99eddfbbe056819ff56bec7b783bb2361fa4bf6f6a71e2122965",
+      "bytes": 305859
+    },
+    "artifacts/data/Production.ProductCategory.csv": {
+      "sha256": "7e999150740026dd666bf3dcb48a8671d3b1fcc43b2aee6142d0e4bf803a4636",
+      "bytes": 334
+    },
+    "artifacts/data/Production.ProductCategory.json": {
+      "sha256": "d2359a27fde21b8bc34cf09e4b592996db08f0b296c23fd4ae521dc21748bf35",
+      "bytes": 561
+    },
+    "artifacts/data/Production.ProductCostHistory.csv": {
+      "sha256": "14e05069c1bcb6f252c52932f1f39b39102363696451bd5ae7663c852593ec02",
+      "bytes": 28994
+    },
+    "artifacts/data/Production.ProductCostHistory.json": {
+      "sha256": "c0e7a9d30705d03f940caf0db8502075c572e98699ef8d8b39c623a2beb42d2c",
+      "bytes": 60933
+    },
+    "artifacts/data/Production.ProductDescription.csv": {
+      "sha256": "89b6e9e194717edef20ae1f8c6c2cb68cb75e5ace5bdc4659ae5476e44db06bf",
+      "bytes": 143116
+    },
+    "artifacts/data/Production.ProductDescription.json": {
+      "sha256": "1b57d236c24fab34e81835b7becd7c55a327f80d1c187c11cbeba718c108a0b9",
+      "bytes": 201529
+    },
+    "artifacts/data/Production.ProductDocument.csv": {
+      "sha256": "42c919311939f0aa04a1a029478c7fd44279598f9f8f9da1957e19b8210c5b93",
+      "bytes": 1092
+    },
+    "artifacts/data/Production.ProductDocument.json": {
+      "sha256": "470b0d44b1b2376db3513b71b6c13cb5c5fe495614f723f107ba6046e2b9b1fd",
+      "bytes": 2787
+    },
+    "artifacts/data/Production.ProductInventory.csv": {
+      "sha256": "d9d61278b55463f3e2dde83e9207514b25df3517372736c7af4ff04e65a15e83",
+      "bytes": 81446
+    },
+    "artifacts/data/Production.ProductInventory.json": {
+      "sha256": "07d50dd54810c072af58a1a8a1c5fa7961c30e6642ff0441d299496f6dcb3271",
+      "bytes": 180805
+    },
+    "artifacts/data/Production.ProductListPriceHistory.csv": {
+      "sha256": "8140946c5323bb30633c2071e2e451547ae4e3249b53d72ab1c532dd6074dcf8",
+      "bytes": 28520
+    },
+    "artifacts/data/Production.ProductListPriceHistory.json": {
+      "sha256": "f9768d696dce27e3b0a6fb1da4650d2db24e2a9daf326c44c1ffaad38ff3a9b3",
+      "bytes": 59277
+    },
+    "artifacts/data/Production.ProductModel.csv": {
+      "sha256": "c0be5593533b74b8cb9be59eec39f29cb0b9f1205c65efed9a14f1834fecb84a",
+      "bytes": 53032
+    },
+    "artifacts/data/Production.ProductModel.json": {
+      "sha256": "bc8f8bc6e7cb5fc71516ffc9f4f7343fe05c236344c090296f91448a2d358ed0",
+      "bytes": 67266
+    },
+    "artifacts/data/Production.ProductModelIllustration.csv": {
+      "sha256": "a4e275aad47f8d8b0bb7f567c94d6d1efb7248ec16a49f7c029d8404e867e853",
+      "bytes": 245
+    },
+    "artifacts/data/Production.ProductModelIllustration.json": {
+      "sha256": "154f4618c10cf91e83a5fc5094851216cd6621dc97566b61fc48f30f07be0ac7",
+      "bytes": 618
+    },
+    "artifacts/data/Production.ProductModelProductDescriptionCulture.csv": {
+      "sha256": "26b25e663a8388ca2453d811988248a4510d3e2e3a6abf246335ddf1264e4591",
+      "bytes": 29793
+    },
+    "artifacts/data/Production.ProductModelProductDescriptionCulture.json": {
+      "sha256": "18862c009749cf70bfecc850019fc8756318dd519a0d42a06cd6ec7aee3c2b65",
+      "bytes": 90697
+    },
+    "artifacts/data/Production.ProductPhoto.csv": {
+      "sha256": "4e01d00392174f01fc1be7c42fe9bfc1428827690ca1852128cf086590c7f060",
+      "bytes": 2683898
+    },
+    "artifacts/data/Production.ProductPhoto.json": {
+      "sha256": "1aeab8352fb57708e00e213c30285cc35e77723bfaceb700e90763ad6995b8aa",
+      "bytes": 2696834
+    },
+    "artifacts/data/Production.ProductProductPhoto.csv": {
+      "sha256": "49804c4b5482d4d0bcf2c76a9fa574dc920959f97cfe138d491643933cf383e8",
+      "bytes": 16446
+    },
+    "artifacts/data/Production.ProductProductPhoto.json": {
+      "sha256": "48b97e9fecdfbf3a81470a087abb2d15e7531fe513a98db6146356ecb5e19aaf",
+      "bytes": 49163
+    },
+    "artifacts/data/Production.ProductReview.csv": {
+      "sha256": "3f77c877b3117be4fde88aa62653da594ab90f4939abe9f3eb378f1b490189b7",
+      "bytes": 5344
+    },
+    "artifacts/data/Production.ProductReview.json": {
+      "sha256": "c7c9fcbc040c157f823406d94fc1c58b9ac41b64a8ed408fe8ea43025c6dd519",
+      "bytes": 5801
+    },
+    "artifacts/data/Production.ProductSubcategory.csv": {
+      "sha256": "fefedc95b9eb385b0d0031e2e993929e07e7c50aa101409b778ffc5a1991a86a",
+      "bytes": 2864
+    },
+    "artifacts/data/Production.ProductSubcategory.json": {
+      "sha256": "00170b073b2f4794f584beb3dae3ff5d0911a3dd822e091f2d3593df37bee645",
+      "bytes": 6169
+    },
+    "artifacts/data/Production.ScrapReason.csv": {
+      "sha256": "85f8c14b47d88778f05fef6e01fa245df1d2794b5a23ae7a60ab7fa88ed10e6e",
+      "bytes": 812
+    },
+    "artifacts/data/Production.ScrapReason.json": {
+      "sha256": "c433a8f9858d031dcfd2336bb60b74a541cc311c7f7d916bb4352ae731d0fba4",
+      "bytes": 1583
+    },
+    "artifacts/data/Production.TransactionHistory.csv": {
+      "sha256": "219c18f1ef47abf980e0028d0806375468f592d80dc132566045f5a5ee65a1a4",
+      "bytes": 8694808
+    },
+    "artifacts/data/Production.TransactionHistory.json.gz": {
+      "sha256": "39725866f12943c3370e07266bcb0bc38c75f6b6da607b4b043d7004f6218b69",
+      "bytes": 1180061,
+      "compression": "gzip",
+      "decodedBytes": 27412779,
+      "decodedSha256": "3b5ffa37ac448939a82e6e13f8430eff21522d76f99c737094fcb85f22ddefcd"
+    },
+    "artifacts/data/Production.TransactionHistoryArchive.csv": {
+      "sha256": "cbd7a7d2dd808ecae3081e950c814de6d0f1f1d8e22c5828bf388875b5b4a9a6",
+      "bytes": 6737742
+    },
+    "artifacts/data/Production.TransactionHistoryArchive.json": {
+      "sha256": "22139cef25100569114033768f34d293bacd5ae373827feaace226c465637cb7",
+      "bytes": 21464363
+    },
+    "artifacts/data/Production.UnitMeasure.csv": {
+      "sha256": "b4654c59d140728f17002f1923508fb0bab9937f80cc45985a13053b66f6e63d",
+      "bytes": 1460
+    },
+    "artifacts/data/Production.UnitMeasure.json": {
+      "sha256": "e1084686e0fa0c8ff238f71be49f9645149c5810e64a0d22eee57ccebf921b7c",
+      "bytes": 3479
+    },
+    "artifacts/data/Production.WorkOrder.csv": {
+      "sha256": "6c3825cc894aca2fa3ecb8d326cb4194f00d4d0ebbf79d861fa58934f1c2e05e",
+      "bytes": 8240001
+    },
+    "artifacts/data/Production.WorkOrder.json": {
+      "sha256": "738b5d3d85258a2b7ea8e71b33acb67cbb931d6928a5450acd46b32c8bf083e2",
+      "bytes": 19415995
+    },
+    "artifacts/data/Production.WorkOrderRouting.csv": {
+      "sha256": "78ec371f0abc046c12452a989b52c2f149aec99b0eb6e41da683587707fb2ddb",
+      "bytes": 9893575
+    },
+    "artifacts/data/Production.WorkOrderRouting.json": {
+      "sha256": "007f081368ff98188f96d4c7c9fe8ef6180f452778c5c4b2c16d042930382002",
+      "bytes": 24796489
+    },
+    "artifacts/data/Purchasing.ProductVendor.csv": {
+      "sha256": "931adf40d571201d896cea88572c8aa21374d4fa08ce642c2bebad51a6a2527f",
+      "bytes": 39097
+    },
+    "artifacts/data/Purchasing.ProductVendor.json": {
+      "sha256": "d750d703c9d37909294b76374052395d5c23f843badd5acc48317c124058b369",
+      "bytes": 130787
+    },
+    "artifacts/data/Purchasing.PurchaseOrderDetail.csv": {
+      "sha256": "318f7d5b97c2077b596a822e7500d08ccd9b96503080c1568fffe06be2699c03",
+      "bytes": 785630
+    },
+    "artifacts/data/Purchasing.PurchaseOrderDetail.json": {
+      "sha256": "bdfd431b635029d5a661b666560183834320e0cc385654cba9136431c439f7ba",
+      "bytes": 2333375
+    },
+    "artifacts/data/Purchasing.PurchaseOrderHeader.csv": {
+      "sha256": "62dba19254608897ca2ea4ca86352c7b7dd8d2217f92eac4f9f3132064bb21ad",
+      "bytes": 508176
+    },
+    "artifacts/data/Purchasing.PurchaseOrderHeader.json": {
+      "sha256": "06d4eabe716a3916d19bea97643145e86fd37141b4b0cef734e3044cddbb9e30",
+      "bytes": 1254275
+    },
+    "artifacts/data/Purchasing.ShipMethod.csv": {
+      "sha256": "db17c043c660613a72c98d15f5571d69886f5571548d03b85442f5e990121d4a",
+      "bytes": 509
+    },
+    "artifacts/data/Purchasing.ShipMethod.json": {
+      "sha256": "6f5c670578fe0c35c8a67126a467f1f48bec82b2f65dedb87f370f3f5923ad92",
+      "bytes": 885
+    },
+    "artifacts/data/Purchasing.Vendor.csv": {
+      "sha256": "3587cce8721256b3bb1c3d6be697366f73d5c169e35df73d05ad3b271d30a5a8",
+      "bytes": 7300
+    },
+    "artifacts/data/Purchasing.Vendor.json": {
+      "sha256": "e3fc717ad15a1e9c59f3e91c02dab9ae85bf40ead2111f54cbb8ccde528be742",
+      "bytes": 23584
+    },
+    "artifacts/data/Sales.CountryRegionCurrency.csv": {
+      "sha256": "d90d8833e1bb23091c57fdd37e71674110a49ef2d30abddfdaafa96d06476d56",
+      "bytes": 3423
+    },
+    "artifacts/data/Sales.CountryRegionCurrency.json": {
+      "sha256": "27f9e9232f1a320acf53c18737524dd363ccc096dd5b294f4ce40feefac01d21",
+      "bytes": 10358
+    },
+    "artifacts/data/Sales.CreditCard.csv": {
+      "sha256": "c0fd05bc6ff79e2169274a698083be21d7a60c8a9e8a0b950841f164ecda239d",
+      "bytes": 1203736
+    },
+    "artifacts/data/Sales.CreditCard.json": {
+      "sha256": "c4583a14ef400e42c5b41bb59825db4a042a0248a4f6646668984e0e235afcfb",
+      "bytes": 2962532
+    },
+    "artifacts/data/Sales.Currency.csv": {
+      "sha256": "8161e87aca6276ee63c6cb2bfc3a2ff843c6df202f6d7feeda08de7c34d5d2ab",
+      "bytes": 4343
+    },
+    "artifacts/data/Sales.Currency.json": {
+      "sha256": "01c09de16acab523b604ccd66a7517fe18673f86f23b5f6b314ba43fdbce47b9",
+      "bytes": 9670
+    },
+    "artifacts/data/Sales.CurrencyRate.csv": {
+      "sha256": "15883b773be50927ecb3c804a0ec95eefb63742b24c1a7142b6ced501d2c7b9a",
+      "bytes": 1003558
+    },
+    "artifacts/data/Sales.CurrencyRate.json": {
+      "sha256": "e4b081d24916a9f5ffa4bb39d5eb25dbcfb60b5d5449d1711a19292f2af8c4df",
+      "bytes": 2843811
+    },
+    "artifacts/data/Sales.Customer.csv": {
+      "sha256": "44afd292e9e1cc577b735f6d7c047ebf7e2fcd2ba8c096d7f1bb4967dde70660",
+      "bytes": 1717399
+    },
+    "artifacts/data/Sales.Customer.json": {
+      "sha256": "54997db173590fd43c1fc0672887228e4b79af4a0e77d83487973049863c6de8",
+      "bytes": 3914807
+    },
+    "artifacts/data/Sales.PersonCreditCard.csv": {
+      "sha256": "dd99ef62e7449358b0f15b11f2bc801177f541fe42ae3e409008cdbf5322651c",
+      "bytes": 668525
+    },
+    "artifacts/data/Sales.PersonCreditCard.json": {
+      "sha256": "64108488495aa80e110e6362f2dbbbacf20e15743bf1af5d700c17e85245746e",
+      "bytes": 1796447
+    },
+    "artifacts/data/Sales.SalesOrderDetail.csv": {
+      "sha256": "8a105e13513ba804e74b6db5f9f7c324447ed6369ca8df24cf1c7c0f86685d73",
+      "bytes": 12647795
+    },
+    "artifacts/data/Sales.SalesOrderDetail.json.gz": {
+      "sha256": "54c3d63d8972cdef50fa598aa274b3c0328646ea9131a13b1495a685290ea624",
+      "bytes": 4141867,
+      "compression": "gzip",
+      "decodedBytes": 35939994,
+      "decodedSha256": "11212a8d71c1c20ff2d9233ee83e22ca10c9f532050ed18f72fd3cd87c3d6797"
+    },
+    "artifacts/data/Sales.SalesOrderHeader.csv": {
+      "sha256": "e60e4b6b1cbd68931a2d27ecd3ce02de2ff2748b7ca1fcec3f28fce1ae39296c",
+      "bytes": 7840360
+    },
+    "artifacts/data/Sales.SalesOrderHeader.json": {
+      "sha256": "47cdec94bbf4d666e42baf42d7b6e4484104ee4e2ce671f65ec10d54be2916dd",
+      "bytes": 21581220
+    },
+    "artifacts/data/Sales.SalesOrderHeaderSalesReason.csv": {
+      "sha256": "dece69e9ec8b5102e8a3b1efb644dd76f6bced30a2879b261c75c849e772db9e",
+      "bytes": 886139
+    },
+    "artifacts/data/Sales.SalesOrderHeaderSalesReason.json": {
+      "sha256": "09f86bc7e23655cd0eece2cf2f0115eacf18ee0b321b3b359e839852f9b02bf8",
+      "bytes": 2434334
+    },
+    "artifacts/data/Sales.SalesPerson.csv": {
+      "sha256": "e872cd8d7fc1c6677dcffdb4761c72544d5d533593d149df8add0a481dbe259b",
+      "bytes": 1891
+    },
+    "artifacts/data/Sales.SalesPerson.json": {
+      "sha256": "a5c7076855b6e864649cb310ba317f4cf2f6b163ad35a9b1db3933c0006149dd",
+      "bytes": 4194
+    },
+    "artifacts/data/Sales.SalesPersonQuotaHistory.csv": {
+      "sha256": "f6c6de6f409240505d65a6468d92d68073bfe02f7fb7ea10c42b4a2c949a6d3d",
+      "bytes": 15716
+    },
+    "artifacts/data/Sales.SalesPersonQuotaHistory.json": {
+      "sha256": "2cb5af963188a515138c01035181720b7618f7416c6719223d481377fc2192ce",
+      "bytes": 29515
+    },
+    "artifacts/data/Sales.SalesReason.csv": {
+      "sha256": "28f433a09179dc6d725542bbbc90073506456c2fdd1b36b754d11986c89fa4b0",
+      "bytes": 509
+    },
+    "artifacts/data/Sales.SalesReason.json": {
+      "sha256": "965c9f56668d66fd89f02905684df387138635f908f4db28f62ab10b21988597",
+      "bytes": 1129
+    },
+    "artifacts/data/Sales.SalesTaxRate.csv": {
+      "sha256": "6b7ca6960cc58007999b6940560457f05937ddefe8e80b9a7666d5536691713c",
+      "bytes": 2754
+    },
+    "artifacts/data/Sales.SalesTaxRate.json": {
+      "sha256": "3e190d99ec38a1ad4093dd217577fb88e3424aa0556d031c51eff493e91e16ab",
+      "bytes": 5729
+    },
+    "artifacts/data/Sales.SalesTerritory.csv": {
+      "sha256": "10e7c5c733970193e1b3a8e4b614a6651da76d7a01e22267ec73b2fe9b5e42c7",
+      "bytes": 1273
+    },
+    "artifacts/data/Sales.SalesTerritory.json": {
+      "sha256": "ed558041147dd2b18617fd305972787860ab4db77782670420cf084bca0171b2",
+      "bytes": 2680
+    },
+    "artifacts/data/Sales.SalesTerritoryHistory.csv": {
+      "sha256": "923fbd6299f98d11252120797b57d03e7eb4adf4f810e378b1081236d9051249",
+      "bytes": 1725
+    },
+    "artifacts/data/Sales.SalesTerritoryHistory.json": {
+      "sha256": "669123d0e492bb73c203e5f8aa18d65dcb9e575879cb663e6688d9281895ccfa",
+      "bytes": 3369
+    },
+    "artifacts/data/Sales.ShoppingCartItem.csv": {
+      "sha256": "ed8fe1065262b567333448fac82dd946fb63e2a68dd78aa9684210e3f96e75df",
+      "bytes": 264
+    },
+    "artifacts/data/Sales.ShoppingCartItem.json": {
+      "sha256": "6fc2734d32803a72cccad33f681a5337f258f692367c27990e83a976a1c04dc9",
+      "bytes": 510
+    },
+    "artifacts/data/Sales.SpecialOffer.csv": {
+      "sha256": "df459f42099eb032eeecdfd95fabc6ad315fbe505d1336f82a92ef88add3bd31",
+      "bytes": 2807
+    },
+    "artifacts/data/Sales.SpecialOffer.json": {
+      "sha256": "c8e22b1369063fdc6f6c0f8460404c27661e96014cea0f8d841dfeccd477688a",
+      "bytes": 5280
+    },
+    "artifacts/data/Sales.SpecialOfferProduct.csv": {
+      "sha256": "898ad54428377cfa352d8f0dd65ec4ffb59dd1e840429be96714f9627546c911",
+      "bytes": 36138
+    },
+    "artifacts/data/Sales.SpecialOfferProduct.json": {
+      "sha256": "be6bd8c12384f0b61e503413353056ff2f9ee6c213d9aec05722bb7310716db7",
+      "bytes": 72141
+    },
+    "artifacts/data/Sales.Store.csv": {
+      "sha256": "b3409032ebc5b03b827f9d4d02749d3051452edb4e332868bd00d7f50c859ab6",
+      "bytes": 360153
+    },
+    "artifacts/data/Sales.Store.json": {
+      "sha256": "de01db942aacabd5a73a2a58ce9a8bff22935e83b30a3dce219e0bb729ca75e7",
+      "bytes": 429475
+    },
+    "artifacts/data/dbo.AWBuildVersion.csv": {
+      "sha256": "d5041b8ec1957e817ce096a1cb0bfb1b225c31563a01effe02d9e5ce6e45226f",
+      "bytes": 124
+    },
+    "artifacts/data/dbo.AWBuildVersion.json": {
+      "sha256": "f49aabe702eed65c9240c358a7c74010c6b3599ac25038bebc62d89db7945538",
+      "bytes": 150
+    },
+    "artifacts/data/dbo.DatabaseLog.csv": {
+      "sha256": "a85fdb596cf8a741bc9ce43aa43367eabd01a872eeb526c15fad7b9c0b4e198b",
+      "bytes": 70
+    },
+    "artifacts/data/dbo.DatabaseLog.json": {
+      "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d",
+      "bytes": 5
+    },
+    "artifacts/data/dbo.ErrorLog.csv": {
+      "sha256": "5b858bb95564bf98cb75482b2c53e06282d3c2aecddc279455579a7149333a14",
+      "bytes": 105
+    },
+    "artifacts/data/dbo.ErrorLog.json": {
+      "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d",
+      "bytes": 5
+    },
+    "manifest.json": {
+      "sha256": "4f6189574f821ea439ac46af7e229995aed713af79739bbcb42ba435e60acc10",
+      "bytes": 78260
+    },
+    "metadata/contract.json": {
+      "sha256": "462d32735cb3fb85868af977741a83cdb3add508809503934ef7a08daa36d682",
+      "bytes": 1783624
+    },
+    "metadata/native-objects.json": {
+      "sha256": "2a33b6bbb4e55a2b1e310ecfb3d484b757ec54db6ea23f43ef062af281e21935",
+      "bytes": 383161
+    },
+    "metadata/schema.json": {
+      "sha256": "706c5bf85ebf8671e21a8fb506bed180885794fa0973d1719df07d137d1892c5",
+      "bytes": 1637646
+    },
+    "model/adventureworks.meaning.yaml": {
+      "sha256": "2a251546e4d525d2c53bd5fe9b54988dcfe002c0def61b6891517e1f931ce45f",
+      "bytes": 8182
+    },
+    "model/adventureworks.modelspec.hcl": {
+      "sha256": "f5492447a3749572d4c877a2b2afd8aa9b80cfdf2d0e3c53e4e5c7635abd47ee",
+      "bytes": 39730
+    },
+    "model/adventureworks.modelspec.json": {
+      "sha256": "0ee66302e280572c5b1fe8598e2063755a5563504befe35b0d6ebfa34da25ca8",
+      "bytes": 52388
+    },
+    "ovdb-database.json": {
+      "sha256": "16209363a4a214a1cc3df0858d1a7c982b07614a2cea8873080cdd18d3e45c34",
+      "bytes": 157161
+    },
+    "ovdb.yaml": {
+      "sha256": "a62796fe1c7288a846b68a7bbd164736aed270d6d1782252978362bc9f06546b",
+      "bytes": 7531
+    },
+    "schemas/ovdb-database-draft-1.schema.json": {
+      "sha256": "2424ef00acd462ab5a8abc546fe2d1fffbbb5397e312332aedc77b3e73109488",
+      "bytes": 5371
+    }
+  }
+}

@@ -1,0 +1,12 @@
+[
+  {"SalesReasonID": 1,"Name": "Price","ReasonType": "Other","ModifiedDate": "2019-04-30 00:00:00.000"},
+  {"SalesReasonID": 2,"Name": "On Promotion","ReasonType": "Promotion","ModifiedDate": "2019-04-30 00:00:00.000"},
+  {"SalesReasonID": 3,"Name": "Magazine Advertisement","ReasonType": "Marketing","ModifiedDate": "2019-04-30 00:00:00.000"},
+  {"SalesReasonID": 4,"Name": "Television  Advertisement","ReasonType": "Marketing","ModifiedDate": "2019-04-30 00:00:00.000"},
+  {"SalesReasonID": 5,"Name": "Manufacturer","ReasonType": "Other","ModifiedDate": "2019-04-30 00:00:00.000"},
+  {"SalesReasonID": 6,"Name": "Review","ReasonType": "Other","ModifiedDate": "2019-04-30 00:00:00.000"},
+  {"SalesReasonID": 7,"Name": "Demo Event","ReasonType": "Marketing","ModifiedDate": "2019-04-30 00:00:00.000"},
+  {"SalesReasonID": 8,"Name": "Sponsorship","ReasonType": "Marketing","ModifiedDate": "2019-04-30 00:00:00.000"},
+  {"SalesReasonID": 9,"Name": "Quality","ReasonType": "Other","ModifiedDate": "2019-04-30 00:00:00.000"},
+  {"SalesReasonID": 10,"Name": "Other","ReasonType": "Other","ModifiedDate": "2019-04-30 00:00:00.000"}
+]
