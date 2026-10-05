@@ -2401,7 +2401,9 @@
       "recordset": "dbo.DatabaseLog",
       "rowCount": 0,
       "schema": "dbo",
+      "sourceChecks": [],
       "sourceDefinition": "CREATE TABLE [dbo].[DatabaseLog](\r\n    [DatabaseLogID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [PostTime] [datetime] NOT NULL,\r\n    [DatabaseUser] [sysname] NOT NULL,\r\n    [Event] [sysname] NOT NULL,\r\n    [Schema] [sysname] NULL,\r\n    [Object] [sysname] NULL,\r\n    [TSQL] [nvarchar](max) NOT NULL,\r\n    [XmlEvent] [xml] NOT NULL\r\n)",
+      "sourceOnlyChecks": [],
       "staticSeed": false
     },
     {
@@ -2515,7 +2517,9 @@
       "recordset": "dbo.ErrorLog",
       "rowCount": 0,
       "schema": "dbo",
+      "sourceChecks": [],
       "sourceDefinition": "CREATE TABLE [dbo].[ErrorLog](\r\n    [ErrorLogID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [ErrorTime] [datetime] NOT NULL CONSTRAINT [DF_ErrorLog_ErrorTime] DEFAULT (GETDATE()),\r\n    [UserName] [sysname] NOT NULL,\r\n    [ErrorNumber] [int] NOT NULL,\r\n    [ErrorSeverity] [int] NULL,\r\n    [ErrorState] [int] NULL,\r\n    [ErrorProcedure] [nvarchar](126) NULL,\r\n    [ErrorLine] [int] NULL,\r\n    [ErrorMessage] [nvarchar](4000) NOT NULL\r\n)",
+      "sourceOnlyChecks": [],
       "staticSeed": false
     },
     {
@@ -2629,7 +2633,9 @@
       "recordset": "Person.Address",
       "rowCount": 19614,
       "schema": "Person",
-      "sourceDefinition": "CREATE TABLE [Person].[Address](\r\n    [AddressID] [int] IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,\r\n    [AddressLine1] [nvarchar](60) NOT NULL,\r\n    [AddressLine2] [nvarchar](60) NULL,\r\n    [City] [nvarchar](30) NOT NULL,\r\n    [StateProvinceID] [int] NOT NULL,\r\n    [PostalCode] [nvarchar](15) NOT NULL,\r\n\t[SpatialLocation] [geography] NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_Address_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_Address_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Person].[Address](\r\n    [AddressID] [int] IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,\r\n    [AddressLine1] [nvarchar](60) NOT NULL,\r\n    [AddressLine2] [nvarchar](60) NULL,\r\n    [City] [nvarchar](30) NOT NULL,\r\n    [StateProvinceID] [int] NOT NULL,\r\n    [PostalCode] [nvarchar](15) NOT NULL,\r\n\t[SpatialLocation] [geography] NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_Address_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_Address_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [],
@@ -2687,7 +2693,9 @@
       "recordset": "Person.AddressType",
       "rowCount": 6,
       "schema": "Person",
-      "sourceDefinition": "CREATE TABLE [Person].[AddressType](\r\n    [AddressTypeID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_AddressType_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_AddressType_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Person].[AddressType](\r\n    [AddressTypeID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_AddressType_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_AddressType_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [],
@@ -2745,14 +2753,14 @@
       "recordset": "dbo.AWBuildVersion",
       "rowCount": 1,
       "schema": "dbo",
-      "sourceDefinition": "CREATE TABLE [dbo].[AWBuildVersion](\r\n    [SystemInformationID] [tinyint] IDENTITY (1, 1) NOT NULL,\r\n    [Database Version] [nvarchar](25) NOT NULL,\r\n    [VersionDate] [datetime] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_AWBuildVersion_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [dbo].[AWBuildVersion](\r\n    [SystemInformationID] [tinyint] IDENTITY (1, 1) NOT NULL,\r\n    [Database Version] [nvarchar](25) NOT NULL,\r\n    [VersionDate] [datetime] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_AWBuildVersion_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [
         "(\"EndDate\" > \"StartDate\") OR (\"EndDate\" IS NULL)",
-        "\"ProductAssemblyID\" <> \"ComponentID\"",
-        "((\"ProductAssemblyID\" IS NULL)\r\n        AND (\"BOMLevel\" = 0) AND (\"PerAssemblyQty\" = 1.00))\r\n        OR ((\"ProductAssemblyID\" IS NOT NULL) AND (\"BOMLevel\" >= 1))",
-        "\"PerAssemblyQty\" >= 1.00"
+        "\"ProductAssemblyID\" <> \"ComponentID\""
       ],
       "columns": [
         {
@@ -2837,10 +2845,14 @@
           "defaultExpression": "1.00",
           "description": "Quantity of the component needed to create the assembly.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "PerAssemblyQty",
           "nullable": false,
+          "precision": 8,
+          "scale": 2,
           "sourceDefinition": "[PerAssemblyQty] [decimal](8, 2) NOT NULL CONSTRAINT [DF_BillOfMaterials_PerAssemblyQty] DEFAULT (1.00)",
           "sourceType": "decimal",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -2863,7 +2875,18 @@
       "recordset": "Production.BillOfMaterials",
       "rowCount": 2679,
       "schema": "Production",
-      "sourceDefinition": "CREATE TABLE [Production].[BillOfMaterials](\r\n    [BillOfMaterialsID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [ProductAssemblyID] [int] NULL,\r\n    [ComponentID] [int] NOT NULL,\r\n    [StartDate] [datetime] NOT NULL CONSTRAINT [DF_BillOfMaterials_StartDate] DEFAULT (GETDATE()),\r\n    [EndDate] [datetime] NULL,\r\n    [UnitMeasureCode] [nchar](3) NOT NULL,\r\n    [BOMLevel] [smallint] NOT NULL,\r\n    [PerAssemblyQty] [decimal](8, 2) NOT NULL CONSTRAINT [DF_BillOfMaterials_PerAssemblyQty] DEFAULT (1.00),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_BillOfMaterials_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_BillOfMaterials_EndDate] CHECK (([EndDate] > [StartDate]) OR ([EndDate] IS NULL)),\r\n    CONSTRAINT [CK_BillOfMaterials_ProductAssemblyID] CHECK ([ProductAssemblyID] <> [ComponentID]),\r\n    CONSTRAINT [CK_BillOfMaterials_BOMLevel] CHECK ((([ProductAssemblyID] IS NULL)\r\n        AND ([BOMLevel] = 0) AND ([PerAssemblyQty] = 1.00))\r\n        OR (([ProductAssemblyID] IS NOT NULL) AND ([BOMLevel] >= 1))),\r\n    CONSTRAINT [CK_BillOfMaterials_PerAssemblyQty] CHECK ([PerAssemblyQty] >= 1.00)\r\n)"
+      "sourceChecks": [
+        "(\"EndDate\" > \"StartDate\") OR (\"EndDate\" IS NULL)",
+        "\"ProductAssemblyID\" <> \"ComponentID\"",
+        "((\"ProductAssemblyID\" IS NULL)\r\n        AND (\"BOMLevel\" = 0) AND (\"PerAssemblyQty\" = 1.00))\r\n        OR ((\"ProductAssemblyID\" IS NOT NULL) AND (\"BOMLevel\" >= 1))",
+        "\"PerAssemblyQty\" >= 1.00"
+      ],
+      "sourceDefinition": "CREATE TABLE [Production].[BillOfMaterials](\r\n    [BillOfMaterialsID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [ProductAssemblyID] [int] NULL,\r\n    [ComponentID] [int] NOT NULL,\r\n    [StartDate] [datetime] NOT NULL CONSTRAINT [DF_BillOfMaterials_StartDate] DEFAULT (GETDATE()),\r\n    [EndDate] [datetime] NULL,\r\n    [UnitMeasureCode] [nchar](3) NOT NULL,\r\n    [BOMLevel] [smallint] NOT NULL,\r\n    [PerAssemblyQty] [decimal](8, 2) NOT NULL CONSTRAINT [DF_BillOfMaterials_PerAssemblyQty] DEFAULT (1.00),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_BillOfMaterials_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_BillOfMaterials_EndDate] CHECK (([EndDate] > [StartDate]) OR ([EndDate] IS NULL)),\r\n    CONSTRAINT [CK_BillOfMaterials_ProductAssemblyID] CHECK ([ProductAssemblyID] <> [ComponentID]),\r\n    CONSTRAINT [CK_BillOfMaterials_BOMLevel] CHECK ((([ProductAssemblyID] IS NULL)\r\n        AND ([BOMLevel] = 0) AND ([PerAssemblyQty] = 1.00))\r\n        OR (([ProductAssemblyID] IS NOT NULL) AND ([BOMLevel] >= 1))),\r\n    CONSTRAINT [CK_BillOfMaterials_PerAssemblyQty] CHECK ([PerAssemblyQty] >= 1.00)\r\n)",
+      "sourceOnlyChecks": [
+        "((\"ProductAssemblyID\" IS NULL)\r\n        AND (\"BOMLevel\" = 0) AND (\"PerAssemblyQty\" = 1.00))\r\n        OR ((\"ProductAssemblyID\" IS NOT NULL) AND (\"BOMLevel\" >= 1))",
+        "\"PerAssemblyQty\" >= 1.00"
+      ],
+      "sourceOnlyChecksValidated": true
     },
     {
       "checks": [],
@@ -2910,7 +2933,9 @@
       "recordset": "Person.BusinessEntity",
       "rowCount": 20777,
       "schema": "Person",
-      "sourceDefinition": "CREATE TABLE [Person].[BusinessEntity](\r\n\t[BusinessEntityID] [int] IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_BusinessEntity_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_BusinessEntity_ModifiedDate] DEFAULT (GETDATE())\t\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Person].[BusinessEntity](\r\n\t[BusinessEntityID] [int] IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_BusinessEntity_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_BusinessEntity_ModifiedDate] DEFAULT (GETDATE())\t\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [],
@@ -2981,7 +3006,9 @@
       "recordset": "Person.BusinessEntityAddress",
       "rowCount": 19614,
       "schema": "Person",
-      "sourceDefinition": "CREATE TABLE [Person].[BusinessEntityAddress](\r\n\t[BusinessEntityID] [int] NOT NULL,\r\n    [AddressID] [int] NOT NULL,\r\n    [AddressTypeID] [int] NOT NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_BusinessEntityAddress_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_BusinessEntityAddress_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Person].[BusinessEntityAddress](\r\n\t[BusinessEntityID] [int] NOT NULL,\r\n    [AddressID] [int] NOT NULL,\r\n    [AddressTypeID] [int] NOT NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_BusinessEntityAddress_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_BusinessEntityAddress_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [],
@@ -3052,7 +3079,9 @@
       "recordset": "Person.BusinessEntityContact",
       "rowCount": 909,
       "schema": "Person",
-      "sourceDefinition": "CREATE TABLE [Person].[BusinessEntityContact](\r\n\t[BusinessEntityID] [int] NOT NULL,\r\n    [PersonID] [int] NOT NULL,\r\n    [ContactTypeID] [int] NOT NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_BusinessEntityContact_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_BusinessEntityContact_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Person].[BusinessEntityContact](\r\n\t[BusinessEntityID] [int] NOT NULL,\r\n    [PersonID] [int] NOT NULL,\r\n    [ContactTypeID] [int] NOT NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_BusinessEntityContact_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_BusinessEntityContact_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [],
@@ -3099,7 +3128,9 @@
       "recordset": "Person.ContactType",
       "rowCount": 20,
       "schema": "Person",
-      "sourceDefinition": "CREATE TABLE [Person].[ContactType](\r\n    [ContactTypeID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ContactType_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Person].[ContactType](\r\n    [ContactTypeID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ContactType_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [],
@@ -3147,7 +3178,9 @@
       "recordset": "Sales.CountryRegionCurrency",
       "rowCount": 109,
       "schema": "Sales",
-      "sourceDefinition": "CREATE TABLE [Sales].[CountryRegionCurrency](\r\n    [CountryRegionCode] [nvarchar](3) NOT NULL,\r\n    [CurrencyCode] [nchar](3) NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_CountryRegionCurrency_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Sales].[CountryRegionCurrency](\r\n    [CountryRegionCode] [nvarchar](3) NOT NULL,\r\n    [CurrencyCode] [nchar](3) NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_CountryRegionCurrency_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [],
@@ -3194,7 +3227,9 @@
       "recordset": "Person.CountryRegion",
       "rowCount": 238,
       "schema": "Person",
-      "sourceDefinition": "CREATE TABLE [Person].[CountryRegion](\r\n    [CountryRegionCode] [nvarchar](3) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_CountryRegion_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Person].[CountryRegion](\r\n    [CountryRegionCode] [nvarchar](3) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_CountryRegion_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [],
@@ -3274,7 +3309,9 @@
       "recordset": "Sales.CreditCard",
       "rowCount": 19118,
       "schema": "Sales",
-      "sourceDefinition": "CREATE TABLE [Sales].[CreditCard](\r\n    [CreditCardID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [CardType] [nvarchar](50) NOT NULL,\r\n    [CardNumber] [nvarchar](25) NOT NULL,\r\n    [ExpMonth] [tinyint] NOT NULL,\r\n    [ExpYear] [smallint] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_CreditCard_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Sales].[CreditCard](\r\n    [CreditCardID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [CardType] [nvarchar](50) NOT NULL,\r\n    [CardNumber] [nvarchar](25) NOT NULL,\r\n    [ExpMonth] [tinyint] NOT NULL,\r\n    [ExpYear] [smallint] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_CreditCard_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [],
@@ -3321,7 +3358,9 @@
       "recordset": "Production.Culture",
       "rowCount": 8,
       "schema": "Production",
-      "sourceDefinition": "CREATE TABLE [Production].[Culture](\r\n    [CultureID] [nchar](6) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_Culture_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Production].[Culture](\r\n    [CultureID] [nchar](6) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_Culture_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [],
@@ -3368,7 +3407,9 @@
       "recordset": "Sales.Currency",
       "rowCount": 105,
       "schema": "Sales",
-      "sourceDefinition": "CREATE TABLE [Sales].[Currency](\r\n    [CurrencyCode] [nchar](3) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_Currency_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Sales].[Currency](\r\n    [CurrencyCode] [nchar](3) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_Currency_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [],
@@ -3422,10 +3463,14 @@
           "defaultExpression": null,
           "description": "Average exchange rate for the day.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "AverageRate",
           "nullable": false,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[AverageRate] [money] NOT NULL",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -3433,10 +3478,14 @@
           "defaultExpression": null,
           "description": "Final exchange rate for the day.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "EndOfDayRate",
           "nullable": false,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[EndOfDayRate] [money] NOT NULL",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -3459,7 +3508,9 @@
       "recordset": "Sales.CurrencyRate",
       "rowCount": 13532,
       "schema": "Sales",
-      "sourceDefinition": "CREATE TABLE [Sales].[CurrencyRate](\r\n    [CurrencyRateID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [CurrencyRateDate] [datetime] NOT NULL,   \r\n    [FromCurrencyCode] [nchar](3) NOT NULL,\r\n    [ToCurrencyCode] [nchar](3) NOT NULL,\r\n    [AverageRate] [money] NOT NULL,\r\n    [EndOfDayRate] [money] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_CurrencyRate_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Sales].[CurrencyRate](\r\n    [CurrencyRateID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [CurrencyRateDate] [datetime] NOT NULL,   \r\n    [FromCurrencyCode] [nchar](3) NOT NULL,\r\n    [ToCurrencyCode] [nchar](3) NOT NULL,\r\n    [AverageRate] [money] NOT NULL,\r\n    [EndOfDayRate] [money] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_CurrencyRate_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [],
@@ -3550,7 +3601,9 @@
       "recordset": "Sales.Customer",
       "rowCount": 19820,
       "schema": "Sales",
-      "sourceDefinition": "CREATE TABLE [Sales].[Customer](\r\n\t[CustomerID] [int] IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,\r\n\t\n\t[PersonID] [int] NULL, \n    [StoreID] [int] NULL,  \n    [TerritoryID] [int] NULL,\r\n    [AccountNumber] AS ISNULL('AW' + [dbo].[ufnLeadingZeros](CustomerID), ''),\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_Customer_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_Customer_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Sales].[Customer](\r\n\t[CustomerID] [int] IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,\r\n\t\n\t[PersonID] [int] NULL, \n    [StoreID] [int] NULL,  \n    [TerritoryID] [int] NULL,\r\n    [AccountNumber] AS ISNULL('AW' + [dbo].[ufnLeadingZeros](CustomerID), ''),\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_Customer_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_Customer_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [],
@@ -3608,7 +3661,9 @@
       "recordset": "HumanResources.Department",
       "rowCount": 16,
       "schema": "HumanResources",
-      "sourceDefinition": "CREATE TABLE [HumanResources].[Department](\r\n    [DepartmentID] [smallint] IDENTITY (1, 1) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [GroupName] [Name] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_Department_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [HumanResources].[Department](\r\n    [DepartmentID] [smallint] IDENTITY (1, 1) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [GroupName] [Name] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_Department_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [
@@ -3778,7 +3833,11 @@
       "recordset": "Production.Document",
       "rowCount": 12,
       "schema": "Production",
-      "sourceDefinition": "CREATE TABLE [Production].[Document](\r\n    [DocumentNode] [hierarchyid] NOT NULL,\r\n\t[DocumentLevel] AS DocumentNode.GetLevel(),\r\n    [Title] [nvarchar](50) NOT NULL,\r\n\t[Owner] [int] NOT NULL,\r\n\t[FolderFlag] [bit] NOT NULL CONSTRAINT [DF_Document_FolderFlag] DEFAULT (0),\r\n    [FileName] [nvarchar](400) NOT NULL,\r\n    [FileExtension] nvarchar(8) NOT NULL,\r\n    [Revision] [nchar](5) NOT NULL,\r\n    [ChangeNumber] [int] NOT NULL CONSTRAINT [DF_Document_ChangeNumber] DEFAULT (0),\r\n    [Status] [tinyint] NOT NULL,\r\n    [DocumentSummary] [nvarchar](max) NULL,\r\n    [Document] [varbinary](max)  NULL, \r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL UNIQUE CONSTRAINT [DF_Document_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_Document_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_Document_Status] CHECK ([Status] BETWEEN 1 AND 3)\r\n)"
+      "sourceChecks": [
+        "\"Status\" BETWEEN 1 AND 3"
+      ],
+      "sourceDefinition": "CREATE TABLE [Production].[Document](\r\n    [DocumentNode] [hierarchyid] NOT NULL,\r\n\t[DocumentLevel] AS DocumentNode.GetLevel(),\r\n    [Title] [nvarchar](50) NOT NULL,\r\n\t[Owner] [int] NOT NULL,\r\n\t[FolderFlag] [bit] NOT NULL CONSTRAINT [DF_Document_FolderFlag] DEFAULT (0),\r\n    [FileName] [nvarchar](400) NOT NULL,\r\n    [FileExtension] nvarchar(8) NOT NULL,\r\n    [Revision] [nchar](5) NOT NULL,\r\n    [ChangeNumber] [int] NOT NULL CONSTRAINT [DF_Document_ChangeNumber] DEFAULT (0),\r\n    [Status] [tinyint] NOT NULL,\r\n    [DocumentSummary] [nvarchar](max) NULL,\r\n    [Document] [varbinary](max)  NULL, \r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL UNIQUE CONSTRAINT [DF_Document_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_Document_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_Document_Status] CHECK ([Status] BETWEEN 1 AND 3)\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [],
@@ -3848,7 +3907,9 @@
       "recordset": "Person.EmailAddress",
       "rowCount": 19972,
       "schema": "Person",
-      "sourceDefinition": "CREATE TABLE [Person].[EmailAddress](\r\n\t[BusinessEntityID] [int] NOT NULL,\r\n\t[EmailAddressID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [EmailAddress] [nvarchar](50) NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_EmailAddress_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_EmailAddress_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Person].[EmailAddress](\r\n\t[BusinessEntityID] [int] NOT NULL,\r\n\t[EmailAddressID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [EmailAddress] [nvarchar](50) NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_EmailAddress_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_EmailAddress_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [
@@ -4045,7 +4106,16 @@
       "recordset": "HumanResources.Employee",
       "rowCount": 290,
       "schema": "HumanResources",
-      "sourceDefinition": "CREATE TABLE [HumanResources].[Employee](\r\n    [BusinessEntityID] [int] NOT NULL,\r\n    [NationalIDNumber] [nvarchar](15) NOT NULL,\r\n    [LoginID] [nvarchar](256) NOT NULL,    \r\n    [OrganizationNode] [hierarchyid] NULL,\r\n\t[OrganizationLevel] AS OrganizationNode.GetLevel(),\r\n    [JobTitle] [nvarchar](50) NOT NULL,\r\n    [BirthDate] [date] NOT NULL,\r\n    [MaritalStatus] [nchar](1) NOT NULL,\r\n    [Gender] [nchar](1) NOT NULL,\r\n    [HireDate] [date] NOT NULL,\r\n    [SalariedFlag] [Flag] NOT NULL CONSTRAINT [DF_Employee_SalariedFlag] DEFAULT (1),\r\n    [VacationHours] [smallint] NOT NULL CONSTRAINT [DF_Employee_VacationHours] DEFAULT (0),\r\n    [SickLeaveHours] [smallint] NOT NULL CONSTRAINT [DF_Employee_SickLeaveHours] DEFAULT (0),\r\n    [CurrentFlag] [Flag] NOT NULL CONSTRAINT [DF_Employee_CurrentFlag] DEFAULT (1),\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_Employee_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_Employee_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_Employee_BirthDate] CHECK ([BirthDate] BETWEEN '1930-01-01' AND DATEADD(YEAR, -18, GETDATE())),\r\n    CONSTRAINT [CK_Employee_MaritalStatus] CHECK (UPPER([MaritalStatus]) IN ('M', 'S')), \n    CONSTRAINT [CK_Employee_HireDate] CHECK ([HireDate] BETWEEN '1996-07-01' AND DATEADD(DAY, 1, GETDATE())),\r\n    CONSTRAINT [CK_Employee_Gender] CHECK (UPPER([Gender]) IN ('M', 'F')), \n    CONSTRAINT [CK_Employee_VacationHours] CHECK ([VacationHours] BETWEEN -40 AND 240),\r\n    CONSTRAINT [CK_Employee_SickLeaveHours] CHECK ([SickLeaveHours] BETWEEN 0 AND 120)\r\n)"
+      "sourceChecks": [
+        "\"BirthDate\" BETWEEN '1930-01-01' AND '2007-11-14 12:13:16.797'",
+        "UPPER(RTRIM(\"MaritalStatus\")) IN ('M', 'S')",
+        "\"HireDate\" BETWEEN '1996-07-01' AND '2025-11-15 12:13:16.797'",
+        "UPPER(RTRIM(\"Gender\")) IN ('M', 'F')",
+        "\"VacationHours\" BETWEEN -40 AND 240",
+        "\"SickLeaveHours\" BETWEEN 0 AND 120"
+      ],
+      "sourceDefinition": "CREATE TABLE [HumanResources].[Employee](\r\n    [BusinessEntityID] [int] NOT NULL,\r\n    [NationalIDNumber] [nvarchar](15) NOT NULL,\r\n    [LoginID] [nvarchar](256) NOT NULL,    \r\n    [OrganizationNode] [hierarchyid] NULL,\r\n\t[OrganizationLevel] AS OrganizationNode.GetLevel(),\r\n    [JobTitle] [nvarchar](50) NOT NULL,\r\n    [BirthDate] [date] NOT NULL,\r\n    [MaritalStatus] [nchar](1) NOT NULL,\r\n    [Gender] [nchar](1) NOT NULL,\r\n    [HireDate] [date] NOT NULL,\r\n    [SalariedFlag] [Flag] NOT NULL CONSTRAINT [DF_Employee_SalariedFlag] DEFAULT (1),\r\n    [VacationHours] [smallint] NOT NULL CONSTRAINT [DF_Employee_VacationHours] DEFAULT (0),\r\n    [SickLeaveHours] [smallint] NOT NULL CONSTRAINT [DF_Employee_SickLeaveHours] DEFAULT (0),\r\n    [CurrentFlag] [Flag] NOT NULL CONSTRAINT [DF_Employee_CurrentFlag] DEFAULT (1),\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_Employee_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_Employee_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_Employee_BirthDate] CHECK ([BirthDate] BETWEEN '1930-01-01' AND DATEADD(YEAR, -18, GETDATE())),\r\n    CONSTRAINT [CK_Employee_MaritalStatus] CHECK (UPPER([MaritalStatus]) IN ('M', 'S')), \n    CONSTRAINT [CK_Employee_HireDate] CHECK ([HireDate] BETWEEN '1996-07-01' AND DATEADD(DAY, 1, GETDATE())),\r\n    CONSTRAINT [CK_Employee_Gender] CHECK (UPPER([Gender]) IN ('M', 'F')), \n    CONSTRAINT [CK_Employee_VacationHours] CHECK ([VacationHours] BETWEEN -40 AND 240),\r\n    CONSTRAINT [CK_Employee_SickLeaveHours] CHECK ([SickLeaveHours] BETWEEN 0 AND 120)\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [
@@ -4130,12 +4200,15 @@
       "recordset": "HumanResources.EmployeeDepartmentHistory",
       "rowCount": 296,
       "schema": "HumanResources",
-      "sourceDefinition": "CREATE TABLE [HumanResources].[EmployeeDepartmentHistory](\r\n    [BusinessEntityID] [int] NOT NULL,\r\n    [DepartmentID] [smallint] NOT NULL,\r\n    [ShiftID] [tinyint] NOT NULL,\r\n    [StartDate] [date] NOT NULL,\r\n    [EndDate] [date] NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_EmployeeDepartmentHistory_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_EmployeeDepartmentHistory_EndDate] CHECK (([EndDate] >= [StartDate]) OR ([EndDate] IS NULL)),\r\n)"
+      "sourceChecks": [
+        "(\"EndDate\" >= \"StartDate\") OR (\"EndDate\" IS NULL)"
+      ],
+      "sourceDefinition": "CREATE TABLE [HumanResources].[EmployeeDepartmentHistory](\r\n    [BusinessEntityID] [int] NOT NULL,\r\n    [DepartmentID] [smallint] NOT NULL,\r\n    [ShiftID] [tinyint] NOT NULL,\r\n    [StartDate] [date] NOT NULL,\r\n    [EndDate] [date] NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_EmployeeDepartmentHistory_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_EmployeeDepartmentHistory_EndDate] CHECK (([EndDate] >= [StartDate]) OR ([EndDate] IS NULL)),\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [
-        "\"PayFrequency\" IN (1, 2)",
-        "\"Rate\" BETWEEN 6.50 AND 200.00"
+        "\"PayFrequency\" IN (1, 2)"
       ],
       "columns": [
         {
@@ -4165,10 +4238,14 @@
           "defaultExpression": null,
           "description": "Salary hourly rate.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "Rate",
           "nullable": false,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[Rate] [money] NOT NULL",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -4203,7 +4280,15 @@
       "recordset": "HumanResources.EmployeePayHistory",
       "rowCount": 316,
       "schema": "HumanResources",
-      "sourceDefinition": "CREATE TABLE [HumanResources].[EmployeePayHistory](\r\n    [BusinessEntityID] [int] NOT NULL,\r\n    [RateChangeDate] [datetime] NOT NULL,\r\n    [Rate] [money] NOT NULL,\r\n    [PayFrequency] [tinyint] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_EmployeePayHistory_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_EmployeePayHistory_PayFrequency] CHECK ([PayFrequency] IN (1, 2)), \n    CONSTRAINT [CK_EmployeePayHistory_Rate] CHECK ([Rate] BETWEEN 6.50 AND 200.00)\r\n)"
+      "sourceChecks": [
+        "\"PayFrequency\" IN (1, 2)",
+        "\"Rate\" BETWEEN 6.50 AND 200.00"
+      ],
+      "sourceDefinition": "CREATE TABLE [HumanResources].[EmployeePayHistory](\r\n    [BusinessEntityID] [int] NOT NULL,\r\n    [RateChangeDate] [datetime] NOT NULL,\r\n    [Rate] [money] NOT NULL,\r\n    [PayFrequency] [tinyint] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_EmployeePayHistory_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_EmployeePayHistory_PayFrequency] CHECK ([PayFrequency] IN (1, 2)), \n    CONSTRAINT [CK_EmployeePayHistory_Rate] CHECK ([Rate] BETWEEN 6.50 AND 200.00)\r\n)",
+      "sourceOnlyChecks": [
+        "\"Rate\" BETWEEN 6.50 AND 200.00"
+      ],
+      "sourceOnlyChecksValidated": true
     },
     {
       "checks": [],
@@ -4250,7 +4335,9 @@
       "recordset": "Production.Illustration",
       "rowCount": 5,
       "schema": "Production",
-      "sourceDefinition": "CREATE TABLE [Production].[Illustration](\r\n    [IllustrationID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [Diagram] [XML] NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_Illustration_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Production].[Illustration](\r\n    [IllustrationID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [Diagram] [XML] NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_Illustration_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [],
@@ -4308,13 +4395,12 @@
       "recordset": "HumanResources.JobCandidate",
       "rowCount": 13,
       "schema": "HumanResources",
-      "sourceDefinition": "CREATE TABLE [HumanResources].[JobCandidate](\r\n    [JobCandidateID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [BusinessEntityID] [int] NULL,\r\n    [Resume] [XML]([HumanResources].[HRResumeSchemaCollection]) NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_JobCandidate_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [HumanResources].[JobCandidate](\r\n    [JobCandidateID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [BusinessEntityID] [int] NULL,\r\n    [Resume] [XML]([HumanResources].[HRResumeSchemaCollection]) NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_JobCandidate_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
-      "checks": [
-        "\"CostRate\" >= 0.00",
-        "\"Availability\" >= 0.00"
-      ],
+      "checks": [],
       "columns": [
         {
           "computedExpression": null,
@@ -4343,10 +4429,14 @@
           "defaultExpression": "0.00",
           "description": "Standard hourly cost of the manufacturing location.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "CostRate",
           "nullable": false,
+          "precision": 10,
+          "scale": 4,
           "sourceDefinition": "[CostRate] [smallmoney] NOT NULL CONSTRAINT [DF_Location_CostRate] DEFAULT (0.00)",
           "sourceType": "smallmoney",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -4354,10 +4444,14 @@
           "defaultExpression": "0.00",
           "description": "Work capacity (in hours) of the manufacturing location.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "Availability",
           "nullable": false,
+          "precision": 8,
+          "scale": 2,
           "sourceDefinition": "[Availability] [decimal](8, 2) NOT NULL CONSTRAINT [DF_Location_Availability] DEFAULT (0.00)",
           "sourceType": "decimal",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -4380,7 +4474,16 @@
       "recordset": "Production.Location",
       "rowCount": 14,
       "schema": "Production",
-      "sourceDefinition": "CREATE TABLE [Production].[Location](\r\n    [LocationID] [smallint] IDENTITY (1, 1) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [CostRate] [smallmoney] NOT NULL CONSTRAINT [DF_Location_CostRate] DEFAULT (0.00),\r\n    [Availability] [decimal](8, 2) NOT NULL CONSTRAINT [DF_Location_Availability] DEFAULT (0.00),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_Location_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_Location_CostRate] CHECK ([CostRate] >= 0.00),\r\n    CONSTRAINT [CK_Location_Availability] CHECK ([Availability] >= 0.00)\r\n)"
+      "sourceChecks": [
+        "\"CostRate\" >= 0.00",
+        "\"Availability\" >= 0.00"
+      ],
+      "sourceDefinition": "CREATE TABLE [Production].[Location](\r\n    [LocationID] [smallint] IDENTITY (1, 1) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [CostRate] [smallmoney] NOT NULL CONSTRAINT [DF_Location_CostRate] DEFAULT (0.00),\r\n    [Availability] [decimal](8, 2) NOT NULL CONSTRAINT [DF_Location_Availability] DEFAULT (0.00),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_Location_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_Location_CostRate] CHECK ([CostRate] >= 0.00),\r\n    CONSTRAINT [CK_Location_Availability] CHECK ([Availability] >= 0.00)\r\n)",
+      "sourceOnlyChecks": [
+        "\"CostRate\" >= 0.00",
+        "\"Availability\" >= 0.00"
+      ],
+      "sourceOnlyChecksValidated": true
     },
     {
       "checks": [],
@@ -4449,7 +4552,9 @@
       "recordset": "Person.Password",
       "rowCount": 19972,
       "schema": "Person",
-      "sourceDefinition": "CREATE TABLE [Person].[Password](\r\n\t[BusinessEntityID] [int] NOT NULL,\r\n    [PasswordHash] [varchar](128) NOT NULL,\r\n    [PasswordSalt] [varchar](10) NOT NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_Password_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_Password_ModifiedDate] DEFAULT (GETDATE())\r\n\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Person].[Password](\r\n\t[BusinessEntityID] [int] NOT NULL,\r\n    [PasswordHash] [varchar](128) NOT NULL,\r\n    [PasswordSalt] [varchar](10) NOT NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_Password_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_Password_ModifiedDate] DEFAULT (GETDATE())\r\n\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [
@@ -4609,7 +4714,12 @@
       "recordset": "Person.Person",
       "rowCount": 19972,
       "schema": "Person",
-      "sourceDefinition": "CREATE TABLE [Person].[Person](\r\n    [BusinessEntityID] [int] NOT NULL,\r\n\t[PersonType] [nchar](2) NOT NULL,\r\n    [NameStyle] [NameStyle] NOT NULL CONSTRAINT [DF_Person_NameStyle] DEFAULT (0),\r\n    [Title] [nvarchar](8) NULL,\r\n    [FirstName] [Name] NOT NULL,\r\n    [MiddleName] [Name] NULL,\r\n    [LastName] [Name] NOT NULL,\r\n    [Suffix] [nvarchar](10) NULL,\r\n    [EmailPromotion] [int] NOT NULL CONSTRAINT [DF_Person_EmailPromotion] DEFAULT (0),\r\n    [AdditionalContactInfo] [XML]([Person].[AdditionalContactInfoSchemaCollection]) NULL,\r\n    [Demographics] [XML]([Person].[IndividualSurveySchemaCollection]) NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_Person_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_Person_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_Person_EmailPromotion] CHECK ([EmailPromotion] BETWEEN 0 AND 2),\r\n    CONSTRAINT [CK_Person_PersonType] CHECK ([PersonType] IS NULL OR UPPER([PersonType]) IN ('SC', 'VC', 'IN', 'EM', 'SP', 'GC'))\r\n)"
+      "sourceChecks": [
+        "\"EmailPromotion\" BETWEEN 0 AND 2",
+        "\"PersonType\" IS NULL OR UPPER(RTRIM(\"PersonType\")) IN ('SC', 'VC', 'IN', 'EM', 'SP', 'GC')"
+      ],
+      "sourceDefinition": "CREATE TABLE [Person].[Person](\r\n    [BusinessEntityID] [int] NOT NULL,\r\n\t[PersonType] [nchar](2) NOT NULL,\r\n    [NameStyle] [NameStyle] NOT NULL CONSTRAINT [DF_Person_NameStyle] DEFAULT (0),\r\n    [Title] [nvarchar](8) NULL,\r\n    [FirstName] [Name] NOT NULL,\r\n    [MiddleName] [Name] NULL,\r\n    [LastName] [Name] NOT NULL,\r\n    [Suffix] [nvarchar](10) NULL,\r\n    [EmailPromotion] [int] NOT NULL CONSTRAINT [DF_Person_EmailPromotion] DEFAULT (0),\r\n    [AdditionalContactInfo] [XML]([Person].[AdditionalContactInfoSchemaCollection]) NULL,\r\n    [Demographics] [XML]([Person].[IndividualSurveySchemaCollection]) NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_Person_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_Person_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_Person_EmailPromotion] CHECK ([EmailPromotion] BETWEEN 0 AND 2),\r\n    CONSTRAINT [CK_Person_PersonType] CHECK ([PersonType] IS NULL OR UPPER([PersonType]) IN ('SC', 'VC', 'IN', 'EM', 'SP', 'GC'))\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [],
@@ -4657,7 +4767,9 @@
       "recordset": "Sales.PersonCreditCard",
       "rowCount": 19118,
       "schema": "Sales",
-      "sourceDefinition": "CREATE TABLE [Sales].[PersonCreditCard](\r\n    [BusinessEntityID] [int] NOT NULL,\r\n    [CreditCardID] [int] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_PersonCreditCard_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Sales].[PersonCreditCard](\r\n    [BusinessEntityID] [int] NOT NULL,\r\n    [CreditCardID] [int] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_PersonCreditCard_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [],
@@ -4717,7 +4829,9 @@
       "recordset": "Person.PersonPhone",
       "rowCount": 19972,
       "schema": "Person",
-      "sourceDefinition": "CREATE TABLE [Person].[PersonPhone](\r\n    [BusinessEntityID] [int] NOT NULL,\r\n\t[PhoneNumber] [Phone] NOT NULL,\r\n\t[PhoneNumberTypeID] [int] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_PersonPhone_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Person].[PersonPhone](\r\n    [BusinessEntityID] [int] NOT NULL,\r\n\t[PhoneNumber] [Phone] NOT NULL,\r\n\t[PhoneNumberTypeID] [int] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_PersonPhone_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [],
@@ -4764,15 +4878,14 @@
       "recordset": "Person.PhoneNumberType",
       "rowCount": 3,
       "schema": "Person",
-      "sourceDefinition": "CREATE TABLE [Person].[PhoneNumberType](\r\n\t[PhoneNumberTypeID] [int] IDENTITY (1, 1) NOT NULL,\r\n\t[Name] [Name] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_PhoneNumberType_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Person].[PhoneNumberType](\r\n\t[PhoneNumberTypeID] [int] IDENTITY (1, 1) NOT NULL,\r\n\t[Name] [Name] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_PhoneNumberType_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [
         "\"SafetyStockLevel\" > 0",
         "\"ReorderPoint\" > 0",
-        "\"StandardCost\" >= 0.00",
-        "\"ListPrice\" >= 0.00",
-        "\"Weight\" > 0.00",
         "\"DaysToManufacture\" >= 0",
         "UPPER(RTRIM(\"ProductLine\")) IN ('S', 'T', 'M', 'R') OR \"ProductLine\" IS NULL",
         "UPPER(RTRIM(\"Class\")) IN ('L', 'M', 'H') OR \"Class\" IS NULL",
@@ -4873,10 +4986,14 @@
           "defaultExpression": null,
           "description": "Standard cost of the product.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "StandardCost",
           "nullable": false,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[StandardCost] [money] NOT NULL",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -4884,10 +5001,14 @@
           "defaultExpression": null,
           "description": "Selling price.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "ListPrice",
           "nullable": false,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[ListPrice] [money] NOT NULL",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -4928,10 +5049,14 @@
           "defaultExpression": null,
           "description": "Product weight.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "Weight",
           "nullable": true,
+          "precision": 8,
+          "scale": 2,
           "sourceDefinition": "[Weight] [decimal](8, 2) NULL",
           "sourceType": "decimal",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -5064,7 +5189,25 @@
       "recordset": "Production.Product",
       "rowCount": 504,
       "schema": "Production",
-      "sourceDefinition": "CREATE TABLE [Production].[Product](\r\n    [ProductID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [ProductNumber] [nvarchar](25) NOT NULL,\r\n    [MakeFlag] [Flag] NOT NULL CONSTRAINT [DF_Product_MakeFlag] DEFAULT (1),\r\n    [FinishedGoodsFlag] [Flag] NOT NULL CONSTRAINT [DF_Product_FinishedGoodsFlag] DEFAULT (1),\r\n    [Color] [nvarchar](15) NULL,\r\n    [SafetyStockLevel] [smallint] NOT NULL,\r\n    [ReorderPoint] [smallint] NOT NULL,\r\n    [StandardCost] [money] NOT NULL,\r\n    [ListPrice] [money] NOT NULL,\r\n    [Size] [nvarchar](5) NULL,\r\n    [SizeUnitMeasureCode] [nchar](3) NULL,\r\n    [WeightUnitMeasureCode] [nchar](3) NULL,\r\n    [Weight] [decimal](8, 2) NULL,\r\n    [DaysToManufacture] [int] NOT NULL,\r\n    [ProductLine] [nchar](2) NULL,\r\n    [Class] [nchar](2) NULL,\r\n    [Style] [nchar](2) NULL,\r\n    [ProductSubcategoryID] [int] NULL,\r\n    [ProductModelID] [int] NULL,\r\n    [SellStartDate] [datetime] NOT NULL,\r\n    [SellEndDate] [datetime] NULL,\r\n    [DiscontinuedDate] [datetime] NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_Product_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_Product_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_Product_SafetyStockLevel] CHECK ([SafetyStockLevel] > 0),\r\n    CONSTRAINT [CK_Product_ReorderPoint] CHECK ([ReorderPoint] > 0),\r\n    CONSTRAINT [CK_Product_StandardCost] CHECK ([StandardCost] >= 0.00),\r\n    CONSTRAINT [CK_Product_ListPrice] CHECK ([ListPrice] >= 0.00),\r\n    CONSTRAINT [CK_Product_Weight] CHECK ([Weight] > 0.00),\r\n    CONSTRAINT [CK_Product_DaysToManufacture] CHECK ([DaysToManufacture] >= 0),\r\n    CONSTRAINT [CK_Product_ProductLine] CHECK (UPPER([ProductLine]) IN ('S', 'T', 'M', 'R') OR [ProductLine] IS NULL),\r\n    CONSTRAINT [CK_Product_Class] CHECK (UPPER([Class]) IN ('L', 'M', 'H') OR [Class] IS NULL),\r\n    CONSTRAINT [CK_Product_Style] CHECK (UPPER([Style]) IN ('W', 'M', 'U') OR [Style] IS NULL),\r\n    CONSTRAINT [CK_Product_SellEndDate] CHECK (([SellEndDate] >= [SellStartDate]) OR ([SellEndDate] IS NULL)),\r\n)"
+      "sourceChecks": [
+        "\"SafetyStockLevel\" > 0",
+        "\"ReorderPoint\" > 0",
+        "\"StandardCost\" >= 0.00",
+        "\"ListPrice\" >= 0.00",
+        "\"Weight\" > 0.00",
+        "\"DaysToManufacture\" >= 0",
+        "UPPER(RTRIM(\"ProductLine\")) IN ('S', 'T', 'M', 'R') OR \"ProductLine\" IS NULL",
+        "UPPER(RTRIM(\"Class\")) IN ('L', 'M', 'H') OR \"Class\" IS NULL",
+        "UPPER(RTRIM(\"Style\")) IN ('W', 'M', 'U') OR \"Style\" IS NULL",
+        "(\"SellEndDate\" >= \"SellStartDate\") OR (\"SellEndDate\" IS NULL)"
+      ],
+      "sourceDefinition": "CREATE TABLE [Production].[Product](\r\n    [ProductID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [ProductNumber] [nvarchar](25) NOT NULL,\r\n    [MakeFlag] [Flag] NOT NULL CONSTRAINT [DF_Product_MakeFlag] DEFAULT (1),\r\n    [FinishedGoodsFlag] [Flag] NOT NULL CONSTRAINT [DF_Product_FinishedGoodsFlag] DEFAULT (1),\r\n    [Color] [nvarchar](15) NULL,\r\n    [SafetyStockLevel] [smallint] NOT NULL,\r\n    [ReorderPoint] [smallint] NOT NULL,\r\n    [StandardCost] [money] NOT NULL,\r\n    [ListPrice] [money] NOT NULL,\r\n    [Size] [nvarchar](5) NULL,\r\n    [SizeUnitMeasureCode] [nchar](3) NULL,\r\n    [WeightUnitMeasureCode] [nchar](3) NULL,\r\n    [Weight] [decimal](8, 2) NULL,\r\n    [DaysToManufacture] [int] NOT NULL,\r\n    [ProductLine] [nchar](2) NULL,\r\n    [Class] [nchar](2) NULL,\r\n    [Style] [nchar](2) NULL,\r\n    [ProductSubcategoryID] [int] NULL,\r\n    [ProductModelID] [int] NULL,\r\n    [SellStartDate] [datetime] NOT NULL,\r\n    [SellEndDate] [datetime] NULL,\r\n    [DiscontinuedDate] [datetime] NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_Product_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_Product_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_Product_SafetyStockLevel] CHECK ([SafetyStockLevel] > 0),\r\n    CONSTRAINT [CK_Product_ReorderPoint] CHECK ([ReorderPoint] > 0),\r\n    CONSTRAINT [CK_Product_StandardCost] CHECK ([StandardCost] >= 0.00),\r\n    CONSTRAINT [CK_Product_ListPrice] CHECK ([ListPrice] >= 0.00),\r\n    CONSTRAINT [CK_Product_Weight] CHECK ([Weight] > 0.00),\r\n    CONSTRAINT [CK_Product_DaysToManufacture] CHECK ([DaysToManufacture] >= 0),\r\n    CONSTRAINT [CK_Product_ProductLine] CHECK (UPPER([ProductLine]) IN ('S', 'T', 'M', 'R') OR [ProductLine] IS NULL),\r\n    CONSTRAINT [CK_Product_Class] CHECK (UPPER([Class]) IN ('L', 'M', 'H') OR [Class] IS NULL),\r\n    CONSTRAINT [CK_Product_Style] CHECK (UPPER([Style]) IN ('W', 'M', 'U') OR [Style] IS NULL),\r\n    CONSTRAINT [CK_Product_SellEndDate] CHECK (([SellEndDate] >= [SellStartDate]) OR ([SellEndDate] IS NULL)),\r\n)",
+      "sourceOnlyChecks": [
+        "\"StandardCost\" >= 0.00",
+        "\"ListPrice\" >= 0.00",
+        "\"Weight\" > 0.00"
+      ],
+      "sourceOnlyChecksValidated": true
     },
     {
       "checks": [],
@@ -5122,12 +5265,13 @@
       "recordset": "Production.ProductCategory",
       "rowCount": 4,
       "schema": "Production",
-      "sourceDefinition": "CREATE TABLE [Production].[ProductCategory](\r\n    [ProductCategoryID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_ProductCategory_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ProductCategory_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Production].[ProductCategory](\r\n    [ProductCategoryID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_ProductCategory_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ProductCategory_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [
-        "(\"EndDate\" >= \"StartDate\") OR (\"EndDate\" IS NULL)",
-        "\"StandardCost\" >= 0.00"
+        "(\"EndDate\" >= \"StartDate\") OR (\"EndDate\" IS NULL)"
       ],
       "columns": [
         {
@@ -5168,10 +5312,14 @@
           "defaultExpression": null,
           "description": "Standard cost of the product.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "StandardCost",
           "nullable": false,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[StandardCost] [money] NOT NULL",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -5195,7 +5343,15 @@
       "recordset": "Production.ProductCostHistory",
       "rowCount": 395,
       "schema": "Production",
-      "sourceDefinition": "CREATE TABLE [Production].[ProductCostHistory](\r\n    [ProductID] [int] NOT NULL,\r\n    [StartDate] [datetime] NOT NULL,\r\n    [EndDate] [datetime] NULL,\r\n    [StandardCost] [money] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ProductCostHistory_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_ProductCostHistory_EndDate] CHECK (([EndDate] >= [StartDate]) OR ([EndDate] IS NULL)),\r\n    CONSTRAINT [CK_ProductCostHistory_StandardCost] CHECK ([StandardCost] >= 0.00)\r\n)"
+      "sourceChecks": [
+        "(\"EndDate\" >= \"StartDate\") OR (\"EndDate\" IS NULL)",
+        "\"StandardCost\" >= 0.00"
+      ],
+      "sourceDefinition": "CREATE TABLE [Production].[ProductCostHistory](\r\n    [ProductID] [int] NOT NULL,\r\n    [StartDate] [datetime] NOT NULL,\r\n    [EndDate] [datetime] NULL,\r\n    [StandardCost] [money] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ProductCostHistory_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_ProductCostHistory_EndDate] CHECK (([EndDate] >= [StartDate]) OR ([EndDate] IS NULL)),\r\n    CONSTRAINT [CK_ProductCostHistory_StandardCost] CHECK ([StandardCost] >= 0.00)\r\n)",
+      "sourceOnlyChecks": [
+        "\"StandardCost\" >= 0.00"
+      ],
+      "sourceOnlyChecksValidated": true
     },
     {
       "checks": [],
@@ -5253,7 +5409,9 @@
       "recordset": "Production.ProductDescription",
       "rowCount": 762,
       "schema": "Production",
-      "sourceDefinition": "CREATE TABLE [Production].[ProductDescription](\r\n    [ProductDescriptionID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [Description] [nvarchar](400) NOT NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_ProductDescription_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ProductDescription_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Production].[ProductDescription](\r\n    [ProductDescriptionID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [Description] [nvarchar](400) NOT NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_ProductDescription_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ProductDescription_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [],
@@ -5301,7 +5459,9 @@
       "recordset": "Production.ProductDocument",
       "rowCount": 32,
       "schema": "Production",
-      "sourceDefinition": "CREATE TABLE [Production].[ProductDocument](\r\n    [ProductID] [int] NOT NULL,\r\n    [DocumentNode] [hierarchyid] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ProductDocument_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Production].[ProductDocument](\r\n    [ProductID] [int] NOT NULL,\r\n    [DocumentNode] [hierarchyid] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ProductDocument_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [
@@ -5396,12 +5556,16 @@
       "recordset": "Production.ProductInventory",
       "rowCount": 1069,
       "schema": "Production",
-      "sourceDefinition": "CREATE TABLE [Production].[ProductInventory](\r\n    [ProductID] [int] NOT NULL,\r\n    [LocationID] [smallint] NOT NULL,\r\n    [Shelf] [nvarchar](10) NOT NULL,\r\n    [Bin] [tinyint] NOT NULL,\r\n    [Quantity] [smallint] NOT NULL CONSTRAINT [DF_ProductInventory_Quantity] DEFAULT (0),\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_ProductInventory_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ProductInventory_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_ProductInventory_Shelf] CHECK (([Shelf] LIKE '[A-Za-z]') OR ([Shelf] = 'N/A')),\r\n    CONSTRAINT [CK_ProductInventory_Bin] CHECK ([Bin] BETWEEN 0 AND 100)\r\n)"
+      "sourceChecks": [
+        "(\"Shelf\" GLOB '[A-Za-z]') OR (\"Shelf\" = 'N/A')",
+        "\"Bin\" BETWEEN 0 AND 100"
+      ],
+      "sourceDefinition": "CREATE TABLE [Production].[ProductInventory](\r\n    [ProductID] [int] NOT NULL,\r\n    [LocationID] [smallint] NOT NULL,\r\n    [Shelf] [nvarchar](10) NOT NULL,\r\n    [Bin] [tinyint] NOT NULL,\r\n    [Quantity] [smallint] NOT NULL CONSTRAINT [DF_ProductInventory_Quantity] DEFAULT (0),\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_ProductInventory_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ProductInventory_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_ProductInventory_Shelf] CHECK (([Shelf] LIKE '[A-Za-z]') OR ([Shelf] = 'N/A')),\r\n    CONSTRAINT [CK_ProductInventory_Bin] CHECK ([Bin] BETWEEN 0 AND 100)\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [
-        "(\"EndDate\" >= \"StartDate\") OR (\"EndDate\" IS NULL)",
-        "\"ListPrice\" > 0.00"
+        "(\"EndDate\" >= \"StartDate\") OR (\"EndDate\" IS NULL)"
       ],
       "columns": [
         {
@@ -5442,10 +5606,14 @@
           "defaultExpression": null,
           "description": "Product list price.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "ListPrice",
           "nullable": false,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[ListPrice] [money] NOT NULL",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -5469,7 +5637,15 @@
       "recordset": "Production.ProductListPriceHistory",
       "rowCount": 395,
       "schema": "Production",
-      "sourceDefinition": "CREATE TABLE [Production].[ProductListPriceHistory](\r\n    [ProductID] [int] NOT NULL,\r\n    [StartDate] [datetime] NOT NULL,\r\n    [EndDate] [datetime] NULL,\r\n    [ListPrice] [money] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ProductListPriceHistory_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_ProductListPriceHistory_EndDate] CHECK (([EndDate] >= [StartDate]) OR ([EndDate] IS NULL)),\r\n    CONSTRAINT [CK_ProductListPriceHistory_ListPrice] CHECK ([ListPrice] > 0.00)\r\n)"
+      "sourceChecks": [
+        "(\"EndDate\" >= \"StartDate\") OR (\"EndDate\" IS NULL)",
+        "\"ListPrice\" > 0.00"
+      ],
+      "sourceDefinition": "CREATE TABLE [Production].[ProductListPriceHistory](\r\n    [ProductID] [int] NOT NULL,\r\n    [StartDate] [datetime] NOT NULL,\r\n    [EndDate] [datetime] NULL,\r\n    [ListPrice] [money] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ProductListPriceHistory_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_ProductListPriceHistory_EndDate] CHECK (([EndDate] >= [StartDate]) OR ([EndDate] IS NULL)),\r\n    CONSTRAINT [CK_ProductListPriceHistory_ListPrice] CHECK ([ListPrice] > 0.00)\r\n)",
+      "sourceOnlyChecks": [
+        "\"ListPrice\" > 0.00"
+      ],
+      "sourceOnlyChecksValidated": true
     },
     {
       "checks": [],
@@ -5549,7 +5725,9 @@
       "recordset": "Production.ProductModel",
       "rowCount": 128,
       "schema": "Production",
-      "sourceDefinition": "CREATE TABLE [Production].[ProductModel](\r\n    [ProductModelID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [CatalogDescription] [XML]([Production].[ProductDescriptionSchemaCollection]) NULL,\r\n    [Instructions] [XML]([Production].[ManuInstructionsSchemaCollection]) NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_ProductModel_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ProductModel_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Production].[ProductModel](\r\n    [ProductModelID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [CatalogDescription] [XML]([Production].[ProductDescriptionSchemaCollection]) NULL,\r\n    [Instructions] [XML]([Production].[ManuInstructionsSchemaCollection]) NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_ProductModel_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ProductModel_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [],
@@ -5597,7 +5775,9 @@
       "recordset": "Production.ProductModelIllustration",
       "rowCount": 7,
       "schema": "Production",
-      "sourceDefinition": "CREATE TABLE [Production].[ProductModelIllustration](\r\n    [ProductModelID] [int] NOT NULL,\r\n    [IllustrationID] [int] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ProductModelIllustration_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Production].[ProductModelIllustration](\r\n    [ProductModelID] [int] NOT NULL,\r\n    [IllustrationID] [int] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ProductModelIllustration_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [],
@@ -5657,7 +5837,9 @@
       "recordset": "Production.ProductModelProductDescriptionCulture",
       "rowCount": 762,
       "schema": "Production",
-      "sourceDefinition": "CREATE TABLE [Production].[ProductModelProductDescriptionCulture](\r\n    [ProductModelID] [int] NOT NULL,\r\n    [ProductDescriptionID] [int] NOT NULL,\r\n    [CultureID] [nchar](6) NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ProductModelProductDescriptionCulture_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Production].[ProductModelProductDescriptionCulture](\r\n    [ProductModelID] [int] NOT NULL,\r\n    [ProductDescriptionID] [int] NOT NULL,\r\n    [CultureID] [nchar](6) NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ProductModelProductDescriptionCulture_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [],
@@ -5737,7 +5919,9 @@
       "recordset": "Production.ProductPhoto",
       "rowCount": 101,
       "schema": "Production",
-      "sourceDefinition": "CREATE TABLE [Production].[ProductPhoto](\r\n    [ProductPhotoID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [ThumbNailPhoto] [varbinary](max) NULL,\r\n    [ThumbnailPhotoFileName] [nvarchar](50) NULL,\r\n    [LargePhoto] [varbinary](max) NULL,\r\n    [LargePhotoFileName] [nvarchar](50) NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ProductPhoto_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Production].[ProductPhoto](\r\n    [ProductPhotoID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [ThumbNailPhoto] [varbinary](max) NULL,\r\n    [ThumbnailPhotoFileName] [nvarchar](50) NULL,\r\n    [LargePhoto] [varbinary](max) NULL,\r\n    [LargePhotoFileName] [nvarchar](50) NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ProductPhoto_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [],
@@ -5796,7 +5980,9 @@
       "recordset": "Production.ProductProductPhoto",
       "rowCount": 504,
       "schema": "Production",
-      "sourceDefinition": "CREATE TABLE [Production].[ProductProductPhoto](\r\n    [ProductID] [int] NOT NULL,\r\n    [ProductPhotoID] [int] NOT NULL,\r\n    [Primary] [Flag] NOT NULL CONSTRAINT [DF_ProductProductPhoto_Primary] DEFAULT (0),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ProductProductPhoto_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Production].[ProductProductPhoto](\r\n    [ProductID] [int] NOT NULL,\r\n    [ProductPhotoID] [int] NOT NULL,\r\n    [Primary] [Flag] NOT NULL CONSTRAINT [DF_ProductProductPhoto_Primary] DEFAULT (0),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ProductProductPhoto_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [
@@ -5900,7 +6086,11 @@
       "recordset": "Production.ProductReview",
       "rowCount": 4,
       "schema": "Production",
-      "sourceDefinition": "CREATE TABLE [Production].[ProductReview](\r\n    [ProductReviewID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [ProductID] [int] NOT NULL,\r\n    [ReviewerName] [Name] NOT NULL,\r\n    [ReviewDate] [datetime] NOT NULL CONSTRAINT [DF_ProductReview_ReviewDate] DEFAULT (GETDATE()),\r\n    [EmailAddress] [nvarchar](50) NOT NULL,\r\n    [Rating] [int] NOT NULL,\r\n    [Comments] [nvarchar](3850),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ProductReview_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_ProductReview_Rating] CHECK ([Rating] BETWEEN 1 AND 5),\r\n)"
+      "sourceChecks": [
+        "\"Rating\" BETWEEN 1 AND 5"
+      ],
+      "sourceDefinition": "CREATE TABLE [Production].[ProductReview](\r\n    [ProductReviewID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [ProductID] [int] NOT NULL,\r\n    [ReviewerName] [Name] NOT NULL,\r\n    [ReviewDate] [datetime] NOT NULL CONSTRAINT [DF_ProductReview_ReviewDate] DEFAULT (GETDATE()),\r\n    [EmailAddress] [nvarchar](50) NOT NULL,\r\n    [Rating] [int] NOT NULL,\r\n    [Comments] [nvarchar](3850),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ProductReview_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_ProductReview_Rating] CHECK ([Rating] BETWEEN 1 AND 5),\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [],
@@ -5969,13 +6159,13 @@
       "recordset": "Production.ProductSubcategory",
       "rowCount": 37,
       "schema": "Production",
-      "sourceDefinition": "CREATE TABLE [Production].[ProductSubcategory](\r\n    [ProductSubcategoryID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [ProductCategoryID] [int] NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_ProductSubcategory_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ProductSubcategory_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Production].[ProductSubcategory](\r\n    [ProductSubcategoryID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [ProductCategoryID] [int] NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_ProductSubcategory_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ProductSubcategory_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [
         "\"AverageLeadTime\" >= 1",
-        "\"StandardPrice\" > 0.00",
-        "\"LastReceiptCost\" > 0.00",
         "\"MinOrderQty\" >= 1",
         "\"MaxOrderQty\" >= 1",
         "\"OnOrderQty\" >= 0"
@@ -6019,10 +6209,14 @@
           "defaultExpression": null,
           "description": "The vendor's usual selling price.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "StandardPrice",
           "nullable": false,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[StandardPrice] [money] NOT NULL",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -6030,10 +6224,14 @@
           "defaultExpression": null,
           "description": "The selling price when last purchased.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "LastReceiptCost",
           "nullable": true,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[LastReceiptCost] [money] NULL",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -6112,14 +6310,24 @@
       "recordset": "Purchasing.ProductVendor",
       "rowCount": 460,
       "schema": "Purchasing",
-      "sourceDefinition": "CREATE TABLE [Purchasing].[ProductVendor](\r\n    [ProductID] [int] NOT NULL,\r\n    [BusinessEntityID] [int] NOT NULL,\r\n    [AverageLeadTime] [int] NOT NULL,\r\n    [StandardPrice] [money] NOT NULL,\r\n    [LastReceiptCost] [money] NULL,\r\n    [LastReceiptDate] [datetime] NULL,\r\n    [MinOrderQty] [int] NOT NULL,\r\n    [MaxOrderQty] [int] NOT NULL,\r\n    [OnOrderQty] [int] NULL,\r\n    [UnitMeasureCode] [nchar](3) NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ProductVendor_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_ProductVendor_AverageLeadTime] CHECK ([AverageLeadTime] >= 1),\r\n    CONSTRAINT [CK_ProductVendor_StandardPrice] CHECK ([StandardPrice] > 0.00),\r\n    CONSTRAINT [CK_ProductVendor_LastReceiptCost] CHECK ([LastReceiptCost] > 0.00),\r\n    CONSTRAINT [CK_ProductVendor_MinOrderQty] CHECK ([MinOrderQty] >= 1),\r\n    CONSTRAINT [CK_ProductVendor_MaxOrderQty] CHECK ([MaxOrderQty] >= 1),\r\n    CONSTRAINT [CK_ProductVendor_OnOrderQty] CHECK ([OnOrderQty] >= 0)\r\n)"
+      "sourceChecks": [
+        "\"AverageLeadTime\" >= 1",
+        "\"StandardPrice\" > 0.00",
+        "\"LastReceiptCost\" > 0.00",
+        "\"MinOrderQty\" >= 1",
+        "\"MaxOrderQty\" >= 1",
+        "\"OnOrderQty\" >= 0"
+      ],
+      "sourceDefinition": "CREATE TABLE [Purchasing].[ProductVendor](\r\n    [ProductID] [int] NOT NULL,\r\n    [BusinessEntityID] [int] NOT NULL,\r\n    [AverageLeadTime] [int] NOT NULL,\r\n    [StandardPrice] [money] NOT NULL,\r\n    [LastReceiptCost] [money] NULL,\r\n    [LastReceiptDate] [datetime] NULL,\r\n    [MinOrderQty] [int] NOT NULL,\r\n    [MaxOrderQty] [int] NOT NULL,\r\n    [OnOrderQty] [int] NULL,\r\n    [UnitMeasureCode] [nchar](3) NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ProductVendor_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_ProductVendor_AverageLeadTime] CHECK ([AverageLeadTime] >= 1),\r\n    CONSTRAINT [CK_ProductVendor_StandardPrice] CHECK ([StandardPrice] > 0.00),\r\n    CONSTRAINT [CK_ProductVendor_LastReceiptCost] CHECK ([LastReceiptCost] > 0.00),\r\n    CONSTRAINT [CK_ProductVendor_MinOrderQty] CHECK ([MinOrderQty] >= 1),\r\n    CONSTRAINT [CK_ProductVendor_MaxOrderQty] CHECK ([MaxOrderQty] >= 1),\r\n    CONSTRAINT [CK_ProductVendor_OnOrderQty] CHECK ([OnOrderQty] >= 0)\r\n)",
+      "sourceOnlyChecks": [
+        "\"StandardPrice\" > 0.00",
+        "\"LastReceiptCost\" > 0.00"
+      ],
+      "sourceOnlyChecksValidated": true
     },
     {
       "checks": [
-        "\"OrderQty\" > 0",
-        "\"UnitPrice\" >= 0.00",
-        "\"ReceivedQty\" >= 0.00",
-        "\"RejectedQty\" >= 0.00"
+        "\"OrderQty\" > 0"
       ],
       "columns": [
         {
@@ -6182,10 +6390,14 @@
           "defaultExpression": null,
           "description": "Vendor's selling price of a single product.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "UnitPrice",
           "nullable": false,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[UnitPrice] [money] NOT NULL",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -6193,10 +6405,15 @@
           "defaultExpression": null,
           "description": "Per product subtotal. Computed as OrderQty * UnitPrice.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "LineTotal",
           "nullable": true,
+          "precision": 38,
+          "precisionScaleProvenance": "computed snapshot scale; not SQL Server type inference",
+          "scale": 4,
           "sourceDefinition": "[LineTotal] AS ISNULL([OrderQty] * [UnitPrice], 0.00)",
           "sourceType": "ISNULL([OrderQty] * [UnitPrice], 0.00)",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -6204,10 +6421,14 @@
           "defaultExpression": null,
           "description": "Quantity actually received from the vendor.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "ReceivedQty",
           "nullable": false,
+          "precision": 8,
+          "scale": 2,
           "sourceDefinition": "[ReceivedQty] [decimal](8, 2) NOT NULL",
           "sourceType": "decimal",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -6215,10 +6436,14 @@
           "defaultExpression": null,
           "description": "Quantity rejected during inspection.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "RejectedQty",
           "nullable": false,
+          "precision": 8,
+          "scale": 2,
           "sourceDefinition": "[RejectedQty] [decimal](8, 2) NOT NULL",
           "sourceType": "decimal",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -6226,10 +6451,15 @@
           "defaultExpression": null,
           "description": "Quantity accepted into inventory. Computed as ReceivedQty - RejectedQty.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "StockedQty",
           "nullable": true,
+          "precision": 38,
+          "precisionScaleProvenance": "computed snapshot scale; not SQL Server type inference",
+          "scale": 2,
           "sourceDefinition": "[StockedQty] AS ISNULL([ReceivedQty] - [RejectedQty], 0.00)",
           "sourceType": "ISNULL([ReceivedQty] - [RejectedQty], 0.00)",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -6253,15 +6483,24 @@
       "recordset": "Purchasing.PurchaseOrderDetail",
       "rowCount": 8845,
       "schema": "Purchasing",
-      "sourceDefinition": "CREATE TABLE [Purchasing].[PurchaseOrderDetail](\r\n    [PurchaseOrderID] [int] NOT NULL,\r\n    [PurchaseOrderDetailID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [DueDate] [datetime] NOT NULL,\r\n    [OrderQty] [smallint] NOT NULL,\r\n    [ProductID] [int] NOT NULL,\r\n    [UnitPrice] [money] NOT NULL,\r\n    [LineTotal] AS ISNULL([OrderQty] * [UnitPrice], 0.00),\r\n    [ReceivedQty] [decimal](8, 2) NOT NULL,\r\n    [RejectedQty] [decimal](8, 2) NOT NULL,\r\n    [StockedQty] AS ISNULL([ReceivedQty] - [RejectedQty], 0.00),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_PurchaseOrderDetail_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_PurchaseOrderDetail_OrderQty] CHECK ([OrderQty] > 0),\r\n    CONSTRAINT [CK_PurchaseOrderDetail_UnitPrice] CHECK ([UnitPrice] >= 0.00),\r\n    CONSTRAINT [CK_PurchaseOrderDetail_ReceivedQty] CHECK ([ReceivedQty] >= 0.00),\r\n    CONSTRAINT [CK_PurchaseOrderDetail_RejectedQty] CHECK ([RejectedQty] >= 0.00)\r\n)"
+      "sourceChecks": [
+        "\"OrderQty\" > 0",
+        "\"UnitPrice\" >= 0.00",
+        "\"ReceivedQty\" >= 0.00",
+        "\"RejectedQty\" >= 0.00"
+      ],
+      "sourceDefinition": "CREATE TABLE [Purchasing].[PurchaseOrderDetail](\r\n    [PurchaseOrderID] [int] NOT NULL,\r\n    [PurchaseOrderDetailID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [DueDate] [datetime] NOT NULL,\r\n    [OrderQty] [smallint] NOT NULL,\r\n    [ProductID] [int] NOT NULL,\r\n    [UnitPrice] [money] NOT NULL,\r\n    [LineTotal] AS ISNULL([OrderQty] * [UnitPrice], 0.00),\r\n    [ReceivedQty] [decimal](8, 2) NOT NULL,\r\n    [RejectedQty] [decimal](8, 2) NOT NULL,\r\n    [StockedQty] AS ISNULL([ReceivedQty] - [RejectedQty], 0.00),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_PurchaseOrderDetail_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_PurchaseOrderDetail_OrderQty] CHECK ([OrderQty] > 0),\r\n    CONSTRAINT [CK_PurchaseOrderDetail_UnitPrice] CHECK ([UnitPrice] >= 0.00),\r\n    CONSTRAINT [CK_PurchaseOrderDetail_ReceivedQty] CHECK ([ReceivedQty] >= 0.00),\r\n    CONSTRAINT [CK_PurchaseOrderDetail_RejectedQty] CHECK ([RejectedQty] >= 0.00)\r\n)",
+      "sourceOnlyChecks": [
+        "\"UnitPrice\" >= 0.00",
+        "\"ReceivedQty\" >= 0.00",
+        "\"RejectedQty\" >= 0.00"
+      ],
+      "sourceOnlyChecksValidated": true
     },
     {
       "checks": [
         "\"Status\" BETWEEN 1 AND 4",
-        "(\"ShipDate\" >= \"OrderDate\") OR (\"ShipDate\" IS NULL)",
-        "\"SubTotal\" >= 0.00",
-        "\"TaxAmt\" >= 0.00",
-        "\"Freight\" >= 0.00"
+        "(\"ShipDate\" >= \"OrderDate\") OR (\"ShipDate\" IS NULL)"
       ],
       "columns": [
         {
@@ -6357,10 +6596,14 @@
           "defaultExpression": "0.00",
           "description": "Purchase order subtotal. Computed as SUM(PurchaseOrderDetail.LineTotal)for the appropriate PurchaseOrderID.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "SubTotal",
           "nullable": false,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[SubTotal] [money] NOT NULL CONSTRAINT [DF_PurchaseOrderHeader_SubTotal] DEFAULT (0.00)",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -6368,10 +6611,14 @@
           "defaultExpression": "0.00",
           "description": "Tax amount.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "TaxAmt",
           "nullable": false,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[TaxAmt] [money] NOT NULL CONSTRAINT [DF_PurchaseOrderHeader_TaxAmt] DEFAULT (0.00)",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -6379,10 +6626,14 @@
           "defaultExpression": "0.00",
           "description": "Shipping cost.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "Freight",
           "nullable": false,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[Freight] [money] NOT NULL CONSTRAINT [DF_PurchaseOrderHeader_Freight] DEFAULT (0.00)",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -6390,10 +6641,15 @@
           "defaultExpression": null,
           "description": "Total due to vendor. Computed as Subtotal + TaxAmt + Freight.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "TotalDue",
           "nullable": false,
+          "precision": 38,
+          "precisionScaleProvenance": "computed snapshot scale; not SQL Server type inference",
+          "scale": 4,
           "sourceDefinition": "[TotalDue] AS ISNULL([SubTotal] + [TaxAmt] + [Freight], 0) PERSISTED NOT NULL",
           "sourceType": "ISNULL([SubTotal] + [TaxAmt] + [Freight], 0)",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -6416,13 +6672,24 @@
       "recordset": "Purchasing.PurchaseOrderHeader",
       "rowCount": 4012,
       "schema": "Purchasing",
-      "sourceDefinition": "CREATE TABLE [Purchasing].[PurchaseOrderHeader](\r\n    [PurchaseOrderID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [RevisionNumber] [tinyint] NOT NULL CONSTRAINT [DF_PurchaseOrderHeader_RevisionNumber] DEFAULT (0),\r\n    [Status] [tinyint] NOT NULL CONSTRAINT [DF_PurchaseOrderHeader_Status] DEFAULT (1),\r\n    [EmployeeID] [int] NOT NULL,\r\n    [VendorID] [int] NOT NULL,\r\n    [ShipMethodID] [int] NOT NULL,\r\n    [OrderDate] [datetime] NOT NULL CONSTRAINT [DF_PurchaseOrderHeader_OrderDate] DEFAULT (GETDATE()),\r\n    [ShipDate] [datetime] NULL,\r\n    [SubTotal] [money] NOT NULL CONSTRAINT [DF_PurchaseOrderHeader_SubTotal] DEFAULT (0.00),\r\n    [TaxAmt] [money] NOT NULL CONSTRAINT [DF_PurchaseOrderHeader_TaxAmt] DEFAULT (0.00),\r\n    [Freight] [money] NOT NULL CONSTRAINT [DF_PurchaseOrderHeader_Freight] DEFAULT (0.00),\r\n    [TotalDue] AS ISNULL([SubTotal] + [TaxAmt] + [Freight], 0) PERSISTED NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_PurchaseOrderHeader_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_PurchaseOrderHeader_Status] CHECK ([Status] BETWEEN 1 AND 4), \n    CONSTRAINT [CK_PurchaseOrderHeader_ShipDate] CHECK (([ShipDate] >= [OrderDate]) OR ([ShipDate] IS NULL)),\r\n    CONSTRAINT [CK_PurchaseOrderHeader_SubTotal] CHECK ([SubTotal] >= 0.00),\r\n    CONSTRAINT [CK_PurchaseOrderHeader_TaxAmt] CHECK ([TaxAmt] >= 0.00),\r\n    CONSTRAINT [CK_PurchaseOrderHeader_Freight] CHECK ([Freight] >= 0.00)\r\n)"
+      "sourceChecks": [
+        "\"Status\" BETWEEN 1 AND 4",
+        "(\"ShipDate\" >= \"OrderDate\") OR (\"ShipDate\" IS NULL)",
+        "\"SubTotal\" >= 0.00",
+        "\"TaxAmt\" >= 0.00",
+        "\"Freight\" >= 0.00"
+      ],
+      "sourceDefinition": "CREATE TABLE [Purchasing].[PurchaseOrderHeader](\r\n    [PurchaseOrderID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [RevisionNumber] [tinyint] NOT NULL CONSTRAINT [DF_PurchaseOrderHeader_RevisionNumber] DEFAULT (0),\r\n    [Status] [tinyint] NOT NULL CONSTRAINT [DF_PurchaseOrderHeader_Status] DEFAULT (1),\r\n    [EmployeeID] [int] NOT NULL,\r\n    [VendorID] [int] NOT NULL,\r\n    [ShipMethodID] [int] NOT NULL,\r\n    [OrderDate] [datetime] NOT NULL CONSTRAINT [DF_PurchaseOrderHeader_OrderDate] DEFAULT (GETDATE()),\r\n    [ShipDate] [datetime] NULL,\r\n    [SubTotal] [money] NOT NULL CONSTRAINT [DF_PurchaseOrderHeader_SubTotal] DEFAULT (0.00),\r\n    [TaxAmt] [money] NOT NULL CONSTRAINT [DF_PurchaseOrderHeader_TaxAmt] DEFAULT (0.00),\r\n    [Freight] [money] NOT NULL CONSTRAINT [DF_PurchaseOrderHeader_Freight] DEFAULT (0.00),\r\n    [TotalDue] AS ISNULL([SubTotal] + [TaxAmt] + [Freight], 0) PERSISTED NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_PurchaseOrderHeader_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_PurchaseOrderHeader_Status] CHECK ([Status] BETWEEN 1 AND 4), \n    CONSTRAINT [CK_PurchaseOrderHeader_ShipDate] CHECK (([ShipDate] >= [OrderDate]) OR ([ShipDate] IS NULL)),\r\n    CONSTRAINT [CK_PurchaseOrderHeader_SubTotal] CHECK ([SubTotal] >= 0.00),\r\n    CONSTRAINT [CK_PurchaseOrderHeader_TaxAmt] CHECK ([TaxAmt] >= 0.00),\r\n    CONSTRAINT [CK_PurchaseOrderHeader_Freight] CHECK ([Freight] >= 0.00)\r\n)",
+      "sourceOnlyChecks": [
+        "\"SubTotal\" >= 0.00",
+        "\"TaxAmt\" >= 0.00",
+        "\"Freight\" >= 0.00"
+      ],
+      "sourceOnlyChecksValidated": true
     },
     {
       "checks": [
-        "\"OrderQty\" > 0",
-        "\"UnitPrice\" >= 0.00",
-        "\"UnitPriceDiscount\" >= 0.00"
+        "\"OrderQty\" > 0"
       ],
       "columns": [
         {
@@ -6496,10 +6763,14 @@
           "defaultExpression": null,
           "description": "Selling price of a single product.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "UnitPrice",
           "nullable": false,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[UnitPrice] [money] NOT NULL",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -6507,10 +6778,14 @@
           "defaultExpression": "0.0",
           "description": "Discount amount.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "UnitPriceDiscount",
           "nullable": false,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[UnitPriceDiscount] [money] NOT NULL CONSTRAINT [DF_SalesOrderDetail_UnitPriceDiscount] DEFAULT (0.0)",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -6518,10 +6793,15 @@
           "defaultExpression": null,
           "description": "Per product subtotal. Computed as UnitPrice * (1 - UnitPriceDiscount) * OrderQty.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "LineTotal",
           "nullable": true,
+          "precision": 38,
+          "precisionScaleProvenance": "computed snapshot scale; not SQL Server type inference",
+          "scale": 6,
           "sourceDefinition": "[LineTotal] AS ISNULL([UnitPrice] * (1.0 - [UnitPriceDiscount]) * [OrderQty], 0.0)",
           "sourceType": "ISNULL([UnitPrice] * (1.0 - [UnitPriceDiscount]) * [OrderQty], 0.0)",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -6556,16 +6836,23 @@
       "recordset": "Sales.SalesOrderDetail",
       "rowCount": 121317,
       "schema": "Sales",
-      "sourceDefinition": "CREATE TABLE [Sales].[SalesOrderDetail](\r\n    [SalesOrderID] [int] NOT NULL,\r\n    [SalesOrderDetailID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [CarrierTrackingNumber] [nvarchar](25) NULL,\r\n    [OrderQty] [smallint] NOT NULL,\r\n    [ProductID] [int] NOT NULL,\r\n    [SpecialOfferID] [int] NOT NULL,\r\n    [UnitPrice] [money] NOT NULL,\r\n    [UnitPriceDiscount] [money] NOT NULL CONSTRAINT [DF_SalesOrderDetail_UnitPriceDiscount] DEFAULT (0.0),\r\n    [LineTotal] AS ISNULL([UnitPrice] * (1.0 - [UnitPriceDiscount]) * [OrderQty], 0.0),\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_SalesOrderDetail_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_SalesOrderDetail_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_SalesOrderDetail_OrderQty] CHECK ([OrderQty] > 0),\r\n    CONSTRAINT [CK_SalesOrderDetail_UnitPrice] CHECK ([UnitPrice] >= 0.00),\r\n    CONSTRAINT [CK_SalesOrderDetail_UnitPriceDiscount] CHECK ([UnitPriceDiscount] >= 0.00)\r\n)"
+      "sourceChecks": [
+        "\"OrderQty\" > 0",
+        "\"UnitPrice\" >= 0.00",
+        "\"UnitPriceDiscount\" >= 0.00"
+      ],
+      "sourceDefinition": "CREATE TABLE [Sales].[SalesOrderDetail](\r\n    [SalesOrderID] [int] NOT NULL,\r\n    [SalesOrderDetailID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [CarrierTrackingNumber] [nvarchar](25) NULL,\r\n    [OrderQty] [smallint] NOT NULL,\r\n    [ProductID] [int] NOT NULL,\r\n    [SpecialOfferID] [int] NOT NULL,\r\n    [UnitPrice] [money] NOT NULL,\r\n    [UnitPriceDiscount] [money] NOT NULL CONSTRAINT [DF_SalesOrderDetail_UnitPriceDiscount] DEFAULT (0.0),\r\n    [LineTotal] AS ISNULL([UnitPrice] * (1.0 - [UnitPriceDiscount]) * [OrderQty], 0.0),\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_SalesOrderDetail_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_SalesOrderDetail_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_SalesOrderDetail_OrderQty] CHECK ([OrderQty] > 0),\r\n    CONSTRAINT [CK_SalesOrderDetail_UnitPrice] CHECK ([UnitPrice] >= 0.00),\r\n    CONSTRAINT [CK_SalesOrderDetail_UnitPriceDiscount] CHECK ([UnitPriceDiscount] >= 0.00)\r\n)",
+      "sourceOnlyChecks": [
+        "\"UnitPrice\" >= 0.00",
+        "\"UnitPriceDiscount\" >= 0.00"
+      ],
+      "sourceOnlyChecksValidated": true
     },
     {
       "checks": [
         "\"Status\" BETWEEN 0 AND 8",
         "\"DueDate\" >= \"OrderDate\"",
-        "(\"ShipDate\" >= \"OrderDate\") OR (\"ShipDate\" IS NULL)",
-        "\"SubTotal\" >= 0.00",
-        "\"TaxAmt\" >= 0.00",
-        "\"Freight\" >= 0.00"
+        "(\"ShipDate\" >= \"OrderDate\") OR (\"ShipDate\" IS NULL)"
       ],
       "columns": [
         {
@@ -6782,10 +7069,14 @@
           "defaultExpression": "0.00",
           "description": "Sales subtotal. Computed as SUM(SalesOrderDetail.LineTotal)for the appropriate SalesOrderID.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "SubTotal",
           "nullable": false,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[SubTotal] [money] NOT NULL CONSTRAINT [DF_SalesOrderHeader_SubTotal] DEFAULT (0.00)",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -6793,10 +7084,14 @@
           "defaultExpression": "0.00",
           "description": "Tax amount.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "TaxAmt",
           "nullable": false,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[TaxAmt] [money] NOT NULL CONSTRAINT [DF_SalesOrderHeader_TaxAmt] DEFAULT (0.00)",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -6804,10 +7099,14 @@
           "defaultExpression": "0.00",
           "description": "Shipping cost.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "Freight",
           "nullable": false,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[Freight] [money] NOT NULL CONSTRAINT [DF_SalesOrderHeader_Freight] DEFAULT (0.00)",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -6815,10 +7114,15 @@
           "defaultExpression": null,
           "description": "Total due from customer. Computed as Subtotal + TaxAmt + Freight.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "TotalDue",
           "nullable": true,
+          "precision": 38,
+          "precisionScaleProvenance": "computed snapshot scale; not SQL Server type inference",
+          "scale": 4,
           "sourceDefinition": "[TotalDue] AS ISNULL([SubTotal] + [TaxAmt] + [Freight], 0)",
           "sourceType": "ISNULL([SubTotal] + [TaxAmt] + [Freight], 0)",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -6863,7 +7167,21 @@
       "recordset": "Sales.SalesOrderHeader",
       "rowCount": 31465,
       "schema": "Sales",
-      "sourceDefinition": "CREATE TABLE [Sales].[SalesOrderHeader](\r\n    [SalesOrderID] [int] IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,\r\n    [RevisionNumber] [tinyint] NOT NULL CONSTRAINT [DF_SalesOrderHeader_RevisionNumber] DEFAULT (0),\r\n    [OrderDate] [datetime] NOT NULL CONSTRAINT [DF_SalesOrderHeader_OrderDate] DEFAULT (GETDATE()),\r\n    [DueDate] [datetime] NOT NULL,\r\n    [ShipDate] [datetime] NULL,\r\n    [Status] [tinyint] NOT NULL CONSTRAINT [DF_SalesOrderHeader_Status] DEFAULT (1),\r\n    [OnlineOrderFlag] [Flag] NOT NULL CONSTRAINT [DF_SalesOrderHeader_OnlineOrderFlag] DEFAULT (1),\r\n    [SalesOrderNumber] AS ISNULL(N'SO' + CONVERT(nvarchar(23), [SalesOrderID]), N'*** ERROR ***'),\r\n    [PurchaseOrderNumber] [OrderNumber] NULL,\r\n    [AccountNumber] [AccountNumber] NULL,\r\n    [CustomerID] [int] NOT NULL,\r\n    [SalesPersonID] [int] NULL,\r\n    [TerritoryID] [int] NULL,\r\n    [BillToAddressID] [int] NOT NULL,\r\n    [ShipToAddressID] [int] NOT NULL,\r\n    [ShipMethodID] [int] NOT NULL,\r\n    [CreditCardID] [int] NULL,\r\n    [CreditCardApprovalCode] [varchar](15) NULL,   \r\n    [CurrencyRateID] [int] NULL,\r\n    [SubTotal] [money] NOT NULL CONSTRAINT [DF_SalesOrderHeader_SubTotal] DEFAULT (0.00),\r\n    [TaxAmt] [money] NOT NULL CONSTRAINT [DF_SalesOrderHeader_TaxAmt] DEFAULT (0.00),\r\n    [Freight] [money] NOT NULL CONSTRAINT [DF_SalesOrderHeader_Freight] DEFAULT (0.00),\r\n    [TotalDue] AS ISNULL([SubTotal] + [TaxAmt] + [Freight], 0),\r\n    [Comment] [nvarchar](128) NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_SalesOrderHeader_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_SalesOrderHeader_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_SalesOrderHeader_Status] CHECK ([Status] BETWEEN 0 AND 8),\r\n    CONSTRAINT [CK_SalesOrderHeader_DueDate] CHECK ([DueDate] >= [OrderDate]),\r\n    CONSTRAINT [CK_SalesOrderHeader_ShipDate] CHECK (([ShipDate] >= [OrderDate]) OR ([ShipDate] IS NULL)),\r\n    CONSTRAINT [CK_SalesOrderHeader_SubTotal] CHECK ([SubTotal] >= 0.00),\r\n    CONSTRAINT [CK_SalesOrderHeader_TaxAmt] CHECK ([TaxAmt] >= 0.00),\r\n    CONSTRAINT [CK_SalesOrderHeader_Freight] CHECK ([Freight] >= 0.00)\r\n)"
+      "sourceChecks": [
+        "\"Status\" BETWEEN 0 AND 8",
+        "\"DueDate\" >= \"OrderDate\"",
+        "(\"ShipDate\" >= \"OrderDate\") OR (\"ShipDate\" IS NULL)",
+        "\"SubTotal\" >= 0.00",
+        "\"TaxAmt\" >= 0.00",
+        "\"Freight\" >= 0.00"
+      ],
+      "sourceDefinition": "CREATE TABLE [Sales].[SalesOrderHeader](\r\n    [SalesOrderID] [int] IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,\r\n    [RevisionNumber] [tinyint] NOT NULL CONSTRAINT [DF_SalesOrderHeader_RevisionNumber] DEFAULT (0),\r\n    [OrderDate] [datetime] NOT NULL CONSTRAINT [DF_SalesOrderHeader_OrderDate] DEFAULT (GETDATE()),\r\n    [DueDate] [datetime] NOT NULL,\r\n    [ShipDate] [datetime] NULL,\r\n    [Status] [tinyint] NOT NULL CONSTRAINT [DF_SalesOrderHeader_Status] DEFAULT (1),\r\n    [OnlineOrderFlag] [Flag] NOT NULL CONSTRAINT [DF_SalesOrderHeader_OnlineOrderFlag] DEFAULT (1),\r\n    [SalesOrderNumber] AS ISNULL(N'SO' + CONVERT(nvarchar(23), [SalesOrderID]), N'*** ERROR ***'),\r\n    [PurchaseOrderNumber] [OrderNumber] NULL,\r\n    [AccountNumber] [AccountNumber] NULL,\r\n    [CustomerID] [int] NOT NULL,\r\n    [SalesPersonID] [int] NULL,\r\n    [TerritoryID] [int] NULL,\r\n    [BillToAddressID] [int] NOT NULL,\r\n    [ShipToAddressID] [int] NOT NULL,\r\n    [ShipMethodID] [int] NOT NULL,\r\n    [CreditCardID] [int] NULL,\r\n    [CreditCardApprovalCode] [varchar](15) NULL,   \r\n    [CurrencyRateID] [int] NULL,\r\n    [SubTotal] [money] NOT NULL CONSTRAINT [DF_SalesOrderHeader_SubTotal] DEFAULT (0.00),\r\n    [TaxAmt] [money] NOT NULL CONSTRAINT [DF_SalesOrderHeader_TaxAmt] DEFAULT (0.00),\r\n    [Freight] [money] NOT NULL CONSTRAINT [DF_SalesOrderHeader_Freight] DEFAULT (0.00),\r\n    [TotalDue] AS ISNULL([SubTotal] + [TaxAmt] + [Freight], 0),\r\n    [Comment] [nvarchar](128) NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_SalesOrderHeader_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_SalesOrderHeader_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_SalesOrderHeader_Status] CHECK ([Status] BETWEEN 0 AND 8),\r\n    CONSTRAINT [CK_SalesOrderHeader_DueDate] CHECK ([DueDate] >= [OrderDate]),\r\n    CONSTRAINT [CK_SalesOrderHeader_ShipDate] CHECK (([ShipDate] >= [OrderDate]) OR ([ShipDate] IS NULL)),\r\n    CONSTRAINT [CK_SalesOrderHeader_SubTotal] CHECK ([SubTotal] >= 0.00),\r\n    CONSTRAINT [CK_SalesOrderHeader_TaxAmt] CHECK ([TaxAmt] >= 0.00),\r\n    CONSTRAINT [CK_SalesOrderHeader_Freight] CHECK ([Freight] >= 0.00)\r\n)",
+      "sourceOnlyChecks": [
+        "\"SubTotal\" >= 0.00",
+        "\"TaxAmt\" >= 0.00",
+        "\"Freight\" >= 0.00"
+      ],
+      "sourceOnlyChecksValidated": true
     },
     {
       "checks": [],
@@ -6911,16 +7229,12 @@
       "recordset": "Sales.SalesOrderHeaderSalesReason",
       "rowCount": 27647,
       "schema": "Sales",
-      "sourceDefinition": "CREATE TABLE [Sales].[SalesOrderHeaderSalesReason](\r\n    [SalesOrderID] [int] NOT NULL,\r\n    [SalesReasonID] [int] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_SalesOrderHeaderSalesReason_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Sales].[SalesOrderHeaderSalesReason](\r\n    [SalesOrderID] [int] NOT NULL,\r\n    [SalesReasonID] [int] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_SalesOrderHeaderSalesReason_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
-      "checks": [
-        "\"SalesQuota\" > 0.00",
-        "\"Bonus\" >= 0.00",
-        "\"CommissionPct\" >= 0.00",
-        "\"SalesYTD\" >= 0.00",
-        "\"SalesLastYear\" >= 0.00"
-      ],
+      "checks": [],
       "columns": [
         {
           "computedExpression": null,
@@ -6949,10 +7263,14 @@
           "defaultExpression": null,
           "description": "Projected yearly sales.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "SalesQuota",
           "nullable": true,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[SalesQuota] [money] NULL",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -6960,10 +7278,14 @@
           "defaultExpression": "0.00",
           "description": "Bonus due if quota is met.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "Bonus",
           "nullable": false,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[Bonus] [money] NOT NULL CONSTRAINT [DF_SalesPerson_Bonus] DEFAULT (0.00)",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -6971,10 +7293,14 @@
           "defaultExpression": "0.00",
           "description": "Commision percent received per sale.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "CommissionPct",
           "nullable": false,
+          "precision": 10,
+          "scale": 4,
           "sourceDefinition": "[CommissionPct] [smallmoney] NOT NULL CONSTRAINT [DF_SalesPerson_CommissionPct] DEFAULT (0.00)",
           "sourceType": "smallmoney",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -6982,10 +7308,14 @@
           "defaultExpression": "0.00",
           "description": "Sales total year to date.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "SalesYTD",
           "nullable": false,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[SalesYTD] [money] NOT NULL CONSTRAINT [DF_SalesPerson_SalesYTD] DEFAULT (0.00)",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -6993,10 +7323,14 @@
           "defaultExpression": "0.00",
           "description": "Sales total of previous year.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "SalesLastYear",
           "nullable": false,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[SalesLastYear] [money] NOT NULL CONSTRAINT [DF_SalesPerson_SalesLastYear] DEFAULT (0.00)",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -7030,12 +7364,25 @@
       "recordset": "Sales.SalesPerson",
       "rowCount": 17,
       "schema": "Sales",
-      "sourceDefinition": "CREATE TABLE [Sales].[SalesPerson](\r\n    [BusinessEntityID] [int] NOT NULL,\r\n    [TerritoryID] [int] NULL,\r\n    [SalesQuota] [money] NULL,\r\n    [Bonus] [money] NOT NULL CONSTRAINT [DF_SalesPerson_Bonus] DEFAULT (0.00),\r\n    [CommissionPct] [smallmoney] NOT NULL CONSTRAINT [DF_SalesPerson_CommissionPct] DEFAULT (0.00),\r\n    [SalesYTD] [money] NOT NULL CONSTRAINT [DF_SalesPerson_SalesYTD] DEFAULT (0.00),\r\n    [SalesLastYear] [money] NOT NULL CONSTRAINT [DF_SalesPerson_SalesLastYear] DEFAULT (0.00),\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_SalesPerson_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_SalesPerson_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_SalesPerson_SalesQuota] CHECK ([SalesQuota] > 0.00),\r\n    CONSTRAINT [CK_SalesPerson_Bonus] CHECK ([Bonus] >= 0.00),\r\n    CONSTRAINT [CK_SalesPerson_CommissionPct] CHECK ([CommissionPct] >= 0.00),\r\n    CONSTRAINT [CK_SalesPerson_SalesYTD] CHECK ([SalesYTD] >= 0.00),\r\n    CONSTRAINT [CK_SalesPerson_SalesLastYear] CHECK ([SalesLastYear] >= 0.00)\r\n)"
+      "sourceChecks": [
+        "\"SalesQuota\" > 0.00",
+        "\"Bonus\" >= 0.00",
+        "\"CommissionPct\" >= 0.00",
+        "\"SalesYTD\" >= 0.00",
+        "\"SalesLastYear\" >= 0.00"
+      ],
+      "sourceDefinition": "CREATE TABLE [Sales].[SalesPerson](\r\n    [BusinessEntityID] [int] NOT NULL,\r\n    [TerritoryID] [int] NULL,\r\n    [SalesQuota] [money] NULL,\r\n    [Bonus] [money] NOT NULL CONSTRAINT [DF_SalesPerson_Bonus] DEFAULT (0.00),\r\n    [CommissionPct] [smallmoney] NOT NULL CONSTRAINT [DF_SalesPerson_CommissionPct] DEFAULT (0.00),\r\n    [SalesYTD] [money] NOT NULL CONSTRAINT [DF_SalesPerson_SalesYTD] DEFAULT (0.00),\r\n    [SalesLastYear] [money] NOT NULL CONSTRAINT [DF_SalesPerson_SalesLastYear] DEFAULT (0.00),\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_SalesPerson_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_SalesPerson_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_SalesPerson_SalesQuota] CHECK ([SalesQuota] > 0.00),\r\n    CONSTRAINT [CK_SalesPerson_Bonus] CHECK ([Bonus] >= 0.00),\r\n    CONSTRAINT [CK_SalesPerson_CommissionPct] CHECK ([CommissionPct] >= 0.00),\r\n    CONSTRAINT [CK_SalesPerson_SalesYTD] CHECK ([SalesYTD] >= 0.00),\r\n    CONSTRAINT [CK_SalesPerson_SalesLastYear] CHECK ([SalesLastYear] >= 0.00)\r\n)",
+      "sourceOnlyChecks": [
+        "\"SalesQuota\" > 0.00",
+        "\"Bonus\" >= 0.00",
+        "\"CommissionPct\" >= 0.00",
+        "\"SalesYTD\" >= 0.00",
+        "\"SalesLastYear\" >= 0.00"
+      ],
+      "sourceOnlyChecksValidated": true
     },
     {
-      "checks": [
-        "\"SalesQuota\" > 0.00"
-      ],
+      "checks": [],
       "columns": [
         {
           "computedExpression": null,
@@ -7064,10 +7411,14 @@
           "defaultExpression": null,
           "description": "Sales quota amount.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "SalesQuota",
           "nullable": false,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[SalesQuota] [money] NOT NULL",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -7102,7 +7453,14 @@
       "recordset": "Sales.SalesPersonQuotaHistory",
       "rowCount": 163,
       "schema": "Sales",
-      "sourceDefinition": "CREATE TABLE [Sales].[SalesPersonQuotaHistory](\r\n    [BusinessEntityID] [int] NOT NULL,\r\n    [QuotaDate] [datetime] NOT NULL,\r\n    [SalesQuota] [money] NOT NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_SalesPersonQuotaHistory_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_SalesPersonQuotaHistory_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_SalesPersonQuotaHistory_SalesQuota] CHECK ([SalesQuota] > 0.00)\r\n)"
+      "sourceChecks": [
+        "\"SalesQuota\" > 0.00"
+      ],
+      "sourceDefinition": "CREATE TABLE [Sales].[SalesPersonQuotaHistory](\r\n    [BusinessEntityID] [int] NOT NULL,\r\n    [QuotaDate] [datetime] NOT NULL,\r\n    [SalesQuota] [money] NOT NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_SalesPersonQuotaHistory_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_SalesPersonQuotaHistory_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_SalesPersonQuotaHistory_SalesQuota] CHECK ([SalesQuota] > 0.00)\r\n)",
+      "sourceOnlyChecks": [
+        "\"SalesQuota\" > 0.00"
+      ],
+      "sourceOnlyChecksValidated": true
     },
     {
       "checks": [],
@@ -7160,7 +7518,9 @@
       "recordset": "Sales.SalesReason",
       "rowCount": 10,
       "schema": "Sales",
-      "sourceDefinition": "CREATE TABLE [Sales].[SalesReason](\r\n    [SalesReasonID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [ReasonType] [Name] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_SalesReason_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Sales].[SalesReason](\r\n    [SalesReasonID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [ReasonType] [Name] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_SalesReason_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [
@@ -7205,10 +7565,14 @@
           "defaultExpression": "0.00",
           "description": "Tax rate amount.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "TaxRate",
           "nullable": false,
+          "precision": 10,
+          "scale": 4,
           "sourceDefinition": "[TaxRate] [smallmoney] NOT NULL CONSTRAINT [DF_SalesTaxRate_TaxRate] DEFAULT (0.00)",
           "sourceType": "smallmoney",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -7253,15 +7617,14 @@
       "recordset": "Sales.SalesTaxRate",
       "rowCount": 29,
       "schema": "Sales",
-      "sourceDefinition": "CREATE TABLE [Sales].[SalesTaxRate](\r\n    [SalesTaxRateID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [StateProvinceID] [int] NOT NULL,\r\n    [TaxType] [tinyint] NOT NULL,\r\n    [TaxRate] [smallmoney] NOT NULL CONSTRAINT [DF_SalesTaxRate_TaxRate] DEFAULT (0.00),\r\n    [Name] [Name] NOT NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_SalesTaxRate_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_SalesTaxRate_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_SalesTaxRate_TaxType] CHECK ([TaxType] BETWEEN 1 AND 3)\r\n)"
+      "sourceChecks": [
+        "\"TaxType\" BETWEEN 1 AND 3"
+      ],
+      "sourceDefinition": "CREATE TABLE [Sales].[SalesTaxRate](\r\n    [SalesTaxRateID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [StateProvinceID] [int] NOT NULL,\r\n    [TaxType] [tinyint] NOT NULL,\r\n    [TaxRate] [smallmoney] NOT NULL CONSTRAINT [DF_SalesTaxRate_TaxRate] DEFAULT (0.00),\r\n    [Name] [Name] NOT NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_SalesTaxRate_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_SalesTaxRate_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_SalesTaxRate_TaxType] CHECK ([TaxType] BETWEEN 1 AND 3)\r\n)",
+      "sourceOnlyChecks": []
     },
     {
-      "checks": [
-        "\"SalesYTD\" >= 0.00",
-        "\"SalesLastYear\" >= 0.00",
-        "\"CostYTD\" >= 0.00",
-        "\"CostLastYear\" >= 0.00"
-      ],
+      "checks": [],
       "columns": [
         {
           "computedExpression": null,
@@ -7312,10 +7675,14 @@
           "defaultExpression": "0.00",
           "description": "Sales in the territory year to date.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "SalesYTD",
           "nullable": false,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[SalesYTD] [money] NOT NULL CONSTRAINT [DF_SalesTerritory_SalesYTD] DEFAULT (0.00)",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -7323,10 +7690,14 @@
           "defaultExpression": "0.00",
           "description": "Sales in the territory the previous year.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "SalesLastYear",
           "nullable": false,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[SalesLastYear] [money] NOT NULL CONSTRAINT [DF_SalesTerritory_SalesLastYear] DEFAULT (0.00)",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -7334,10 +7705,14 @@
           "defaultExpression": "0.00",
           "description": "Business costs in the territory year to date.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "CostYTD",
           "nullable": false,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[CostYTD] [money] NOT NULL CONSTRAINT [DF_SalesTerritory_CostYTD] DEFAULT (0.00)",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -7345,10 +7720,14 @@
           "defaultExpression": "0.00",
           "description": "Business costs in the territory the previous year.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "CostLastYear",
           "nullable": false,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[CostLastYear] [money] NOT NULL CONSTRAINT [DF_SalesTerritory_CostLastYear] DEFAULT (0.00)",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -7382,7 +7761,20 @@
       "recordset": "Sales.SalesTerritory",
       "rowCount": 10,
       "schema": "Sales",
-      "sourceDefinition": "CREATE TABLE [Sales].[SalesTerritory](\r\n    [TerritoryID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [CountryRegionCode] [nvarchar](3) NOT NULL,\r\n    [Group] [nvarchar](50) NOT NULL,\r\n    [SalesYTD] [money] NOT NULL CONSTRAINT [DF_SalesTerritory_SalesYTD] DEFAULT (0.00),\r\n    [SalesLastYear] [money] NOT NULL CONSTRAINT [DF_SalesTerritory_SalesLastYear] DEFAULT (0.00),\r\n    [CostYTD] [money] NOT NULL CONSTRAINT [DF_SalesTerritory_CostYTD] DEFAULT (0.00),\r\n    [CostLastYear] [money] NOT NULL CONSTRAINT [DF_SalesTerritory_CostLastYear] DEFAULT (0.00),\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_SalesTerritory_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_SalesTerritory_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_SalesTerritory_SalesYTD] CHECK ([SalesYTD] >= 0.00),\r\n    CONSTRAINT [CK_SalesTerritory_SalesLastYear] CHECK ([SalesLastYear] >= 0.00),\r\n    CONSTRAINT [CK_SalesTerritory_CostYTD] CHECK ([CostYTD] >= 0.00),\r\n    CONSTRAINT [CK_SalesTerritory_CostLastYear] CHECK ([CostLastYear] >= 0.00)\r\n)"
+      "sourceChecks": [
+        "\"SalesYTD\" >= 0.00",
+        "\"SalesLastYear\" >= 0.00",
+        "\"CostYTD\" >= 0.00",
+        "\"CostLastYear\" >= 0.00"
+      ],
+      "sourceDefinition": "CREATE TABLE [Sales].[SalesTerritory](\r\n    [TerritoryID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [CountryRegionCode] [nvarchar](3) NOT NULL,\r\n    [Group] [nvarchar](50) NOT NULL,\r\n    [SalesYTD] [money] NOT NULL CONSTRAINT [DF_SalesTerritory_SalesYTD] DEFAULT (0.00),\r\n    [SalesLastYear] [money] NOT NULL CONSTRAINT [DF_SalesTerritory_SalesLastYear] DEFAULT (0.00),\r\n    [CostYTD] [money] NOT NULL CONSTRAINT [DF_SalesTerritory_CostYTD] DEFAULT (0.00),\r\n    [CostLastYear] [money] NOT NULL CONSTRAINT [DF_SalesTerritory_CostLastYear] DEFAULT (0.00),\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_SalesTerritory_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_SalesTerritory_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_SalesTerritory_SalesYTD] CHECK ([SalesYTD] >= 0.00),\r\n    CONSTRAINT [CK_SalesTerritory_SalesLastYear] CHECK ([SalesLastYear] >= 0.00),\r\n    CONSTRAINT [CK_SalesTerritory_CostYTD] CHECK ([CostYTD] >= 0.00),\r\n    CONSTRAINT [CK_SalesTerritory_CostLastYear] CHECK ([CostLastYear] >= 0.00)\r\n)",
+      "sourceOnlyChecks": [
+        "\"SalesYTD\" >= 0.00",
+        "\"SalesLastYear\" >= 0.00",
+        "\"CostYTD\" >= 0.00",
+        "\"CostLastYear\" >= 0.00"
+      ],
+      "sourceOnlyChecksValidated": true
     },
     {
       "checks": [
@@ -7466,7 +7858,11 @@
       "recordset": "Sales.SalesTerritoryHistory",
       "rowCount": 17,
       "schema": "Sales",
-      "sourceDefinition": "CREATE TABLE [Sales].[SalesTerritoryHistory](\r\n    [BusinessEntityID] [int] NOT NULL,  \n    [TerritoryID] [int] NOT NULL,\r\n    [StartDate] [datetime] NOT NULL,\r\n    [EndDate] [datetime] NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_SalesTerritoryHistory_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_SalesTerritoryHistory_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_SalesTerritoryHistory_EndDate] CHECK (([EndDate] >= [StartDate]) OR ([EndDate] IS NULL))\r\n)"
+      "sourceChecks": [
+        "(\"EndDate\" >= \"StartDate\") OR (\"EndDate\" IS NULL)"
+      ],
+      "sourceDefinition": "CREATE TABLE [Sales].[SalesTerritoryHistory](\r\n    [BusinessEntityID] [int] NOT NULL,  \n    [TerritoryID] [int] NOT NULL,\r\n    [StartDate] [datetime] NOT NULL,\r\n    [EndDate] [datetime] NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_SalesTerritoryHistory_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_SalesTerritoryHistory_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_SalesTerritoryHistory_EndDate] CHECK (([EndDate] >= [StartDate]) OR ([EndDate] IS NULL))\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [],
@@ -7513,7 +7909,9 @@
       "recordset": "Production.ScrapReason",
       "rowCount": 16,
       "schema": "Production",
-      "sourceDefinition": "CREATE TABLE [Production].[ScrapReason](\r\n    [ScrapReasonID] [smallint] IDENTITY (1, 1) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ScrapReason_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Production].[ScrapReason](\r\n    [ScrapReasonID] [smallint] IDENTITY (1, 1) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ScrapReason_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [],
@@ -7582,13 +7980,12 @@
       "recordset": "HumanResources.Shift",
       "rowCount": 3,
       "schema": "HumanResources",
-      "sourceDefinition": "CREATE TABLE [HumanResources].[Shift](\r\n    [ShiftID] [tinyint] IDENTITY (1, 1) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [StartTime] [time] NOT NULL,\r\n    [EndTime] [time] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_Shift_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [HumanResources].[Shift](\r\n    [ShiftID] [tinyint] IDENTITY (1, 1) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [StartTime] [time] NOT NULL,\r\n    [EndTime] [time] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_Shift_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
-      "checks": [
-        "\"ShipBase\" > 0.00",
-        "\"ShipRate\" > 0.00"
-      ],
+      "checks": [],
       "columns": [
         {
           "computedExpression": null,
@@ -7617,10 +8014,14 @@
           "defaultExpression": "0.00",
           "description": "Minimum shipping charge.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "ShipBase",
           "nullable": false,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[ShipBase] [money] NOT NULL CONSTRAINT [DF_ShipMethod_ShipBase] DEFAULT (0.00)",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -7628,10 +8029,14 @@
           "defaultExpression": "0.00",
           "description": "Shipping charge per pound.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "ShipRate",
           "nullable": false,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[ShipRate] [money] NOT NULL CONSTRAINT [DF_ShipMethod_ShipRate] DEFAULT (0.00)",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -7665,7 +8070,16 @@
       "recordset": "Purchasing.ShipMethod",
       "rowCount": 5,
       "schema": "Purchasing",
-      "sourceDefinition": "CREATE TABLE [Purchasing].[ShipMethod](\r\n    [ShipMethodID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [ShipBase] [money] NOT NULL CONSTRAINT [DF_ShipMethod_ShipBase] DEFAULT (0.00),\r\n    [ShipRate] [money] NOT NULL CONSTRAINT [DF_ShipMethod_ShipRate] DEFAULT (0.00),\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_ShipMethod_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ShipMethod_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_ShipMethod_ShipBase] CHECK ([ShipBase] > 0.00),\r\n    CONSTRAINT [CK_ShipMethod_ShipRate] CHECK ([ShipRate] > 0.00),\r\n)"
+      "sourceChecks": [
+        "\"ShipBase\" > 0.00",
+        "\"ShipRate\" > 0.00"
+      ],
+      "sourceDefinition": "CREATE TABLE [Purchasing].[ShipMethod](\r\n    [ShipMethodID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [ShipBase] [money] NOT NULL CONSTRAINT [DF_ShipMethod_ShipBase] DEFAULT (0.00),\r\n    [ShipRate] [money] NOT NULL CONSTRAINT [DF_ShipMethod_ShipRate] DEFAULT (0.00),\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_ShipMethod_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ShipMethod_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_ShipMethod_ShipBase] CHECK ([ShipBase] > 0.00),\r\n    CONSTRAINT [CK_ShipMethod_ShipRate] CHECK ([ShipRate] > 0.00),\r\n)",
+      "sourceOnlyChecks": [
+        "\"ShipBase\" > 0.00",
+        "\"ShipRate\" > 0.00"
+      ],
+      "sourceOnlyChecksValidated": true
     },
     {
       "checks": [
@@ -7747,12 +8161,15 @@
       "recordset": "Sales.ShoppingCartItem",
       "rowCount": 3,
       "schema": "Sales",
-      "sourceDefinition": "CREATE TABLE [Sales].[ShoppingCartItem](\r\n    [ShoppingCartItemID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [ShoppingCartID] [nvarchar](50) NOT NULL,\r\n    [Quantity] [int] NOT NULL CONSTRAINT [DF_ShoppingCartItem_Quantity] DEFAULT (1),\r\n    [ProductID] [int] NOT NULL,\r\n    [DateCreated] [datetime] NOT NULL CONSTRAINT [DF_ShoppingCartItem_DateCreated] DEFAULT (GETDATE()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ShoppingCartItem_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_ShoppingCartItem_Quantity] CHECK ([Quantity] >= 1)\r\n)"
+      "sourceChecks": [
+        "\"Quantity\" >= 1"
+      ],
+      "sourceDefinition": "CREATE TABLE [Sales].[ShoppingCartItem](\r\n    [ShoppingCartItemID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [ShoppingCartID] [nvarchar](50) NOT NULL,\r\n    [Quantity] [int] NOT NULL CONSTRAINT [DF_ShoppingCartItem_Quantity] DEFAULT (1),\r\n    [ProductID] [int] NOT NULL,\r\n    [DateCreated] [datetime] NOT NULL CONSTRAINT [DF_ShoppingCartItem_DateCreated] DEFAULT (GETDATE()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_ShoppingCartItem_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_ShoppingCartItem_Quantity] CHECK ([Quantity] >= 1)\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [
         "\"EndDate\" >= \"StartDate\"",
-        "\"DiscountPct\" >= 0.00",
         "\"MinQty\" >= 0",
         "\"MaxQty\" >= 0"
       ],
@@ -7784,10 +8201,14 @@
           "defaultExpression": "0.00",
           "description": "Discount precentage.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "DiscountPct",
           "nullable": false,
+          "precision": 10,
+          "scale": 4,
           "sourceDefinition": "[DiscountPct] [smallmoney] NOT NULL CONSTRAINT [DF_SpecialOffer_DiscountPct] DEFAULT (0.00)",
           "sourceType": "smallmoney",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -7887,7 +8308,17 @@
       "recordset": "Sales.SpecialOffer",
       "rowCount": 16,
       "schema": "Sales",
-      "sourceDefinition": "CREATE TABLE [Sales].[SpecialOffer](\r\n    [SpecialOfferID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [Description] [nvarchar](255) NOT NULL,\r\n    [DiscountPct] [smallmoney] NOT NULL CONSTRAINT [DF_SpecialOffer_DiscountPct] DEFAULT (0.00),\r\n    [Type] [nvarchar](50) NOT NULL,\r\n    [Category] [nvarchar](50) NOT NULL,\r\n    [StartDate] [datetime] NOT NULL,\r\n    [EndDate] [datetime] NOT NULL,\r\n    [MinQty] [int] NOT NULL CONSTRAINT [DF_SpecialOffer_MinQty] DEFAULT (0),\r\n    [MaxQty] [int] NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_SpecialOffer_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_SpecialOffer_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_SpecialOffer_EndDate] CHECK ([EndDate] >= [StartDate]),\r\n    CONSTRAINT [CK_SpecialOffer_DiscountPct] CHECK ([DiscountPct] >= 0.00),\r\n    CONSTRAINT [CK_SpecialOffer_MinQty] CHECK ([MinQty] >= 0),\r\n    CONSTRAINT [CK_SpecialOffer_MaxQty]  CHECK ([MaxQty] >= 0)\r\n)"
+      "sourceChecks": [
+        "\"EndDate\" >= \"StartDate\"",
+        "\"DiscountPct\" >= 0.00",
+        "\"MinQty\" >= 0",
+        "\"MaxQty\" >= 0"
+      ],
+      "sourceDefinition": "CREATE TABLE [Sales].[SpecialOffer](\r\n    [SpecialOfferID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [Description] [nvarchar](255) NOT NULL,\r\n    [DiscountPct] [smallmoney] NOT NULL CONSTRAINT [DF_SpecialOffer_DiscountPct] DEFAULT (0.00),\r\n    [Type] [nvarchar](50) NOT NULL,\r\n    [Category] [nvarchar](50) NOT NULL,\r\n    [StartDate] [datetime] NOT NULL,\r\n    [EndDate] [datetime] NOT NULL,\r\n    [MinQty] [int] NOT NULL CONSTRAINT [DF_SpecialOffer_MinQty] DEFAULT (0),\r\n    [MaxQty] [int] NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_SpecialOffer_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_SpecialOffer_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_SpecialOffer_EndDate] CHECK ([EndDate] >= [StartDate]),\r\n    CONSTRAINT [CK_SpecialOffer_DiscountPct] CHECK ([DiscountPct] >= 0.00),\r\n    CONSTRAINT [CK_SpecialOffer_MinQty] CHECK ([MinQty] >= 0),\r\n    CONSTRAINT [CK_SpecialOffer_MaxQty]  CHECK ([MaxQty] >= 0)\r\n)",
+      "sourceOnlyChecks": [
+        "\"DiscountPct\" >= 0.00"
+      ],
+      "sourceOnlyChecksValidated": true
     },
     {
       "checks": [],
@@ -7946,7 +8377,9 @@
       "recordset": "Sales.SpecialOfferProduct",
       "rowCount": 538,
       "schema": "Sales",
-      "sourceDefinition": "CREATE TABLE [Sales].[SpecialOfferProduct](\r\n    [SpecialOfferID] [int] NOT NULL,\r\n    [ProductID] [int] NOT NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_SpecialOfferProduct_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_SpecialOfferProduct_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Sales].[SpecialOfferProduct](\r\n    [SpecialOfferID] [int] NOT NULL,\r\n    [ProductID] [int] NOT NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_SpecialOfferProduct_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_SpecialOfferProduct_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [],
@@ -8048,7 +8481,9 @@
       "recordset": "Person.StateProvince",
       "rowCount": 181,
       "schema": "Person",
-      "sourceDefinition": "CREATE TABLE [Person].[StateProvince](\r\n    [StateProvinceID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [StateProvinceCode] [nchar](3) NOT NULL,\r\n    [CountryRegionCode] [nvarchar](3) NOT NULL,\r\n    [IsOnlyStateProvinceFlag] [Flag] NOT NULL CONSTRAINT [DF_StateProvince_IsOnlyStateProvinceFlag] DEFAULT (1),\r\n    [Name] [Name] NOT NULL,\r\n    [TerritoryID] [int] NOT NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_StateProvince_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_StateProvince_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Person].[StateProvince](\r\n    [StateProvinceID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [StateProvinceCode] [nchar](3) NOT NULL,\r\n    [CountryRegionCode] [nvarchar](3) NOT NULL,\r\n    [IsOnlyStateProvinceFlag] [Flag] NOT NULL CONSTRAINT [DF_StateProvince_IsOnlyStateProvinceFlag] DEFAULT (1),\r\n    [Name] [Name] NOT NULL,\r\n    [TerritoryID] [int] NOT NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_StateProvince_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_StateProvince_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [],
@@ -8128,7 +8563,9 @@
       "recordset": "Sales.Store",
       "rowCount": 701,
       "schema": "Sales",
-      "sourceDefinition": "CREATE TABLE [Sales].[Store](\r\n    [BusinessEntityID] [int] NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [SalesPersonID] [int] NULL,\r\n    [Demographics] [XML]([Sales].[StoreSurveySchemaCollection]) NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_Store_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_Store_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Sales].[Store](\r\n    [BusinessEntityID] [int] NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [SalesPersonID] [int] NULL,\r\n    [Demographics] [XML]([Sales].[StoreSurveySchemaCollection]) NULL,\r\n    [rowguid] uniqueidentifier ROWGUIDCOL NOT NULL CONSTRAINT [DF_Store_rowguid] DEFAULT (NEWID()),\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_Store_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [
@@ -8217,10 +8654,14 @@
           "defaultExpression": null,
           "description": "Product cost.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "ActualCost",
           "nullable": false,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[ActualCost] [money] NOT NULL",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -8243,7 +8684,11 @@
       "recordset": "Production.TransactionHistory",
       "rowCount": 113443,
       "schema": "Production",
-      "sourceDefinition": "CREATE TABLE [Production].[TransactionHistory](\r\n    [TransactionID] [int] IDENTITY (100000, 1) NOT NULL,\r\n    [ProductID] [int] NOT NULL,\r\n    [ReferenceOrderID] [int] NOT NULL,\r\n    [ReferenceOrderLineID] [int] NOT NULL CONSTRAINT [DF_TransactionHistory_ReferenceOrderLineID] DEFAULT (0),\r\n    [TransactionDate] [datetime] NOT NULL CONSTRAINT [DF_TransactionHistory_TransactionDate] DEFAULT (GETDATE()),\r\n    [TransactionType] [nchar](1) NOT NULL,\r\n    [Quantity] [int] NOT NULL,\r\n    [ActualCost] [money] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_TransactionHistory_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_TransactionHistory_TransactionType] CHECK (UPPER([TransactionType]) IN ('W', 'S', 'P'))\r\n)"
+      "sourceChecks": [
+        "UPPER(RTRIM(\"TransactionType\")) IN ('W', 'S', 'P')"
+      ],
+      "sourceDefinition": "CREATE TABLE [Production].[TransactionHistory](\r\n    [TransactionID] [int] IDENTITY (100000, 1) NOT NULL,\r\n    [ProductID] [int] NOT NULL,\r\n    [ReferenceOrderID] [int] NOT NULL,\r\n    [ReferenceOrderLineID] [int] NOT NULL CONSTRAINT [DF_TransactionHistory_ReferenceOrderLineID] DEFAULT (0),\r\n    [TransactionDate] [datetime] NOT NULL CONSTRAINT [DF_TransactionHistory_TransactionDate] DEFAULT (GETDATE()),\r\n    [TransactionType] [nchar](1) NOT NULL,\r\n    [Quantity] [int] NOT NULL,\r\n    [ActualCost] [money] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_TransactionHistory_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_TransactionHistory_TransactionType] CHECK (UPPER([TransactionType]) IN ('W', 'S', 'P'))\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [
@@ -8332,10 +8777,14 @@
           "defaultExpression": null,
           "description": "Product cost.",
           "identity": false,
+          "logicalType": "decimal",
           "name": "ActualCost",
           "nullable": false,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[ActualCost] [money] NOT NULL",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -8358,7 +8807,11 @@
       "recordset": "Production.TransactionHistoryArchive",
       "rowCount": 89253,
       "schema": "Production",
-      "sourceDefinition": "CREATE TABLE [Production].[TransactionHistoryArchive](\r\n    [TransactionID] [int] NOT NULL,\r\n    [ProductID] [int] NOT NULL,\r\n    [ReferenceOrderID] [int] NOT NULL,\r\n    [ReferenceOrderLineID] [int] NOT NULL CONSTRAINT [DF_TransactionHistoryArchive_ReferenceOrderLineID] DEFAULT (0),\r\n    [TransactionDate] [datetime] NOT NULL CONSTRAINT [DF_TransactionHistoryArchive_TransactionDate] DEFAULT (GETDATE()),\r\n    [TransactionType] [nchar](1) NOT NULL,\r\n    [Quantity] [int] NOT NULL,\r\n    [ActualCost] [money] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_TransactionHistoryArchive_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_TransactionHistoryArchive_TransactionType] CHECK (UPPER([TransactionType]) IN ('W', 'S', 'P'))\r\n)"
+      "sourceChecks": [
+        "UPPER(RTRIM(\"TransactionType\")) IN ('W', 'S', 'P')"
+      ],
+      "sourceDefinition": "CREATE TABLE [Production].[TransactionHistoryArchive](\r\n    [TransactionID] [int] NOT NULL,\r\n    [ProductID] [int] NOT NULL,\r\n    [ReferenceOrderID] [int] NOT NULL,\r\n    [ReferenceOrderLineID] [int] NOT NULL CONSTRAINT [DF_TransactionHistoryArchive_ReferenceOrderLineID] DEFAULT (0),\r\n    [TransactionDate] [datetime] NOT NULL CONSTRAINT [DF_TransactionHistoryArchive_TransactionDate] DEFAULT (GETDATE()),\r\n    [TransactionType] [nchar](1) NOT NULL,\r\n    [Quantity] [int] NOT NULL,\r\n    [ActualCost] [money] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_TransactionHistoryArchive_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_TransactionHistoryArchive_TransactionType] CHECK (UPPER([TransactionType]) IN ('W', 'S', 'P'))\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [],
@@ -8405,7 +8858,9 @@
       "recordset": "Production.UnitMeasure",
       "rowCount": 38,
       "schema": "Production",
-      "sourceDefinition": "CREATE TABLE [Production].[UnitMeasure](\r\n    [UnitMeasureCode] [nchar](3) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_UnitMeasure_ModifiedDate] DEFAULT (GETDATE())\r\n)"
+      "sourceChecks": [],
+      "sourceDefinition": "CREATE TABLE [Production].[UnitMeasure](\r\n    [UnitMeasureCode] [nchar](3) NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_UnitMeasure_ModifiedDate] DEFAULT (GETDATE())\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [
@@ -8509,7 +8964,11 @@
       "recordset": "Purchasing.Vendor",
       "rowCount": 104,
       "schema": "Purchasing",
-      "sourceDefinition": "CREATE TABLE [Purchasing].[Vendor](\r\n    [BusinessEntityID] [int] NOT NULL,\r\n    [AccountNumber] [AccountNumber] NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [CreditRating] [tinyint] NOT NULL,\r\n    [PreferredVendorStatus] [Flag] NOT NULL CONSTRAINT [DF_Vendor_PreferredVendorStatus] DEFAULT (1),\r\n    [ActiveFlag] [Flag] NOT NULL CONSTRAINT [DF_Vendor_ActiveFlag] DEFAULT (1),\r\n    [PurchasingWebServiceURL] [nvarchar](1024) NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_Vendor_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_Vendor_CreditRating] CHECK ([CreditRating] BETWEEN 1 AND 5)\r\n)"
+      "sourceChecks": [
+        "\"CreditRating\" BETWEEN 1 AND 5"
+      ],
+      "sourceDefinition": "CREATE TABLE [Purchasing].[Vendor](\r\n    [BusinessEntityID] [int] NOT NULL,\r\n    [AccountNumber] [AccountNumber] NOT NULL,\r\n    [Name] [Name] NOT NULL,\r\n    [CreditRating] [tinyint] NOT NULL,\r\n    [PreferredVendorStatus] [Flag] NOT NULL CONSTRAINT [DF_Vendor_PreferredVendorStatus] DEFAULT (1),\r\n    [ActiveFlag] [Flag] NOT NULL CONSTRAINT [DF_Vendor_ActiveFlag] DEFAULT (1),\r\n    [PurchasingWebServiceURL] [nvarchar](1024) NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_Vendor_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_Vendor_CreditRating] CHECK ([CreditRating] BETWEEN 1 AND 5)\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [
@@ -8637,15 +9096,18 @@
       "recordset": "Production.WorkOrder",
       "rowCount": 72591,
       "schema": "Production",
-      "sourceDefinition": "CREATE TABLE [Production].[WorkOrder](\r\n    [WorkOrderID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [ProductID] [int] NOT NULL,\r\n    [OrderQty] [int] NOT NULL,\r\n    [StockedQty] AS ISNULL([OrderQty] - [ScrappedQty], 0),\r\n    [ScrappedQty] [smallint] NOT NULL,\r\n    [StartDate] [datetime] NOT NULL,\r\n    [EndDate] [datetime] NULL,\r\n    [DueDate] [datetime] NOT NULL,\r\n    [ScrapReasonID] [smallint] NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_WorkOrder_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_WorkOrder_OrderQty] CHECK ([OrderQty] > 0),\r\n    CONSTRAINT [CK_WorkOrder_ScrappedQty] CHECK ([ScrappedQty] >= 0),\r\n    CONSTRAINT [CK_WorkOrder_EndDate] CHECK (([EndDate] >= [StartDate]) OR ([EndDate] IS NULL))\r\n)"
+      "sourceChecks": [
+        "\"OrderQty\" > 0",
+        "\"ScrappedQty\" >= 0",
+        "(\"EndDate\" >= \"StartDate\") OR (\"EndDate\" IS NULL)"
+      ],
+      "sourceDefinition": "CREATE TABLE [Production].[WorkOrder](\r\n    [WorkOrderID] [int] IDENTITY (1, 1) NOT NULL,\r\n    [ProductID] [int] NOT NULL,\r\n    [OrderQty] [int] NOT NULL,\r\n    [StockedQty] AS ISNULL([OrderQty] - [ScrappedQty], 0),\r\n    [ScrappedQty] [smallint] NOT NULL,\r\n    [StartDate] [datetime] NOT NULL,\r\n    [EndDate] [datetime] NULL,\r\n    [DueDate] [datetime] NOT NULL,\r\n    [ScrapReasonID] [smallint] NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_WorkOrder_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_WorkOrder_OrderQty] CHECK ([OrderQty] > 0),\r\n    CONSTRAINT [CK_WorkOrder_ScrappedQty] CHECK ([ScrappedQty] >= 0),\r\n    CONSTRAINT [CK_WorkOrder_EndDate] CHECK (([EndDate] >= [StartDate]) OR ([EndDate] IS NULL))\r\n)",
+      "sourceOnlyChecks": []
     },
     {
       "checks": [
         "\"ScheduledEndDate\" >= \"ScheduledStartDate\"",
-        "(\"ActualEndDate\" >= \"ActualStartDate\")\r\n        OR (\"ActualEndDate\" IS NULL) OR (\"ActualStartDate\" IS NULL)",
-        "\"ActualResourceHrs\" >= 0.0000",
-        "\"PlannedCost\" > 0.00",
-        "\"ActualCost\" > 0.00"
+        "(\"ActualEndDate\" >= \"ActualStartDate\")\r\n        OR (\"ActualEndDate\" IS NULL) OR (\"ActualStartDate\" IS NULL)"
       ],
       "columns": [
         {
@@ -8741,10 +9203,14 @@
           "defaultExpression": null,
           "description": "",
           "identity": false,
+          "logicalType": "decimal",
           "name": "ActualResourceHrs",
           "nullable": true,
+          "precision": 9,
+          "scale": 4,
           "sourceDefinition": "[ActualResourceHrs] [decimal](9, 4) NULL",
           "sourceType": "decimal",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -8752,10 +9218,14 @@
           "defaultExpression": null,
           "description": "",
           "identity": false,
+          "logicalType": "decimal",
           "name": "PlannedCost",
           "nullable": false,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[PlannedCost] [money] NOT NULL",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -8763,10 +9233,14 @@
           "defaultExpression": null,
           "description": "",
           "identity": false,
+          "logicalType": "decimal",
           "name": "ActualCost",
           "nullable": true,
+          "precision": 19,
+          "scale": 4,
           "sourceDefinition": "[ActualCost] [money] NULL",
           "sourceType": "money",
+          "sqliteStorage": "text",
           "unique": false
         },
         {
@@ -8791,7 +9265,20 @@
       "recordset": "Production.WorkOrderRouting",
       "rowCount": 67131,
       "schema": "Production",
-      "sourceDefinition": "CREATE TABLE [Production].[WorkOrderRouting](\r\n    [WorkOrderID] [int] NOT NULL,\r\n    [ProductID] [int] NOT NULL,\r\n    [OperationSequence] [smallint] NOT NULL,\r\n    [LocationID] [smallint] NOT NULL,\r\n    [ScheduledStartDate] [datetime] NOT NULL,\r\n    [ScheduledEndDate] [datetime] NOT NULL,\r\n    [ActualStartDate] [datetime] NULL,\r\n    [ActualEndDate] [datetime] NULL,\r\n    [ActualResourceHrs] [decimal](9, 4) NULL,\r\n    [PlannedCost] [money] NOT NULL,\r\n    [ActualCost] [money] NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_WorkOrderRouting_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_WorkOrderRouting_ScheduledEndDate] CHECK ([ScheduledEndDate] >= [ScheduledStartDate]),\r\n    CONSTRAINT [CK_WorkOrderRouting_ActualEndDate] CHECK (([ActualEndDate] >= [ActualStartDate])\r\n        OR ([ActualEndDate] IS NULL) OR ([ActualStartDate] IS NULL)),\r\n    CONSTRAINT [CK_WorkOrderRouting_ActualResourceHrs] CHECK ([ActualResourceHrs] >= 0.0000),\r\n    CONSTRAINT [CK_WorkOrderRouting_PlannedCost] CHECK ([PlannedCost] > 0.00),\r\n    CONSTRAINT [CK_WorkOrderRouting_ActualCost] CHECK ([ActualCost] > 0.00)\r\n)"
+      "sourceChecks": [
+        "\"ScheduledEndDate\" >= \"ScheduledStartDate\"",
+        "(\"ActualEndDate\" >= \"ActualStartDate\")\r\n        OR (\"ActualEndDate\" IS NULL) OR (\"ActualStartDate\" IS NULL)",
+        "\"ActualResourceHrs\" >= 0.0000",
+        "\"PlannedCost\" > 0.00",
+        "\"ActualCost\" > 0.00"
+      ],
+      "sourceDefinition": "CREATE TABLE [Production].[WorkOrderRouting](\r\n    [WorkOrderID] [int] NOT NULL,\r\n    [ProductID] [int] NOT NULL,\r\n    [OperationSequence] [smallint] NOT NULL,\r\n    [LocationID] [smallint] NOT NULL,\r\n    [ScheduledStartDate] [datetime] NOT NULL,\r\n    [ScheduledEndDate] [datetime] NOT NULL,\r\n    [ActualStartDate] [datetime] NULL,\r\n    [ActualEndDate] [datetime] NULL,\r\n    [ActualResourceHrs] [decimal](9, 4) NULL,\r\n    [PlannedCost] [money] NOT NULL,\r\n    [ActualCost] [money] NULL,\r\n    [ModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_WorkOrderRouting_ModifiedDate] DEFAULT (GETDATE()),\r\n    CONSTRAINT [CK_WorkOrderRouting_ScheduledEndDate] CHECK ([ScheduledEndDate] >= [ScheduledStartDate]),\r\n    CONSTRAINT [CK_WorkOrderRouting_ActualEndDate] CHECK (([ActualEndDate] >= [ActualStartDate])\r\n        OR ([ActualEndDate] IS NULL) OR ([ActualStartDate] IS NULL)),\r\n    CONSTRAINT [CK_WorkOrderRouting_ActualResourceHrs] CHECK ([ActualResourceHrs] >= 0.0000),\r\n    CONSTRAINT [CK_WorkOrderRouting_PlannedCost] CHECK ([PlannedCost] > 0.00),\r\n    CONSTRAINT [CK_WorkOrderRouting_ActualCost] CHECK ([ActualCost] > 0.00)\r\n)",
+      "sourceOnlyChecks": [
+        "\"ActualResourceHrs\" >= 0.0000",
+        "\"PlannedCost\" > 0.00",
+        "\"ActualCost\" > 0.00"
+      ],
+      "sourceOnlyChecksValidated": true
     }
   ],
   "upstreamRevision": "beaab06ef72831089ca80e5355d65e661fd19b26",

@@ -11,7 +11,7 @@
     "path": "samples/databases/adventure-works/oltp-install-script/instawdb.sql",
     "license": "MIT",
     "licenseFile": "data-source/microsoft-sql-server-samples/LICENSE.txt",
-    "notes": "Pinned Microsoft SQL Server Samples AdventureWorks OLTP installer and companion source files from commit beaab06ef72831089ca80e5355d65e661fd19b26. The source AWBuildVersion.csv identifies the installer fixture as SQL Server 2025 build 17.0.1000.3; the README says the script adapts to the installed SQL Server version, so this is the pinned source fixture rather than a claim about every generated server build. The converter imports all 68 BULK INSERT inputs plus the one-row AWBuildVersion.csv, preserving 759,240 seeded rows across 71 physical tables, source primary and foreign keys, 93 explicit indexes, and the inline unique constraint on Production.Document.rowguid. DatabaseLog and ErrorLog remain empty because the installer creates them for runtime audit/error events and supplies no static CSV. All 20 original SQL Server view definitions are retained in metadata/native-objects.json. Eleven straightforward relational views are translated into SQLite and their query results are rebuilt and checked; nine views using SQL Server-only XML, APPLY, or PIVOT constructs remain source-only, with no fabricated rows. SQL Server XML is stored as text; geography and hierarchyid serializations are stored as opaque BLOBs. Computed-column source expressions are retained in native metadata while the pinned CSV snapshot values are stored as ordinary SQLite columns. GETDATE defaults are frozen to the pinned build timestamp; SQL Server NEWID defaults remain in native metadata but are omitted from the static SQLite schema because SQLite only permits constant defaults, and seeded GUID values are preserved. SQL Server-only setup, triggers, stored procedures, query store, and optimized-locking behavior are not implemented. Fixed-width character data is preserved including padding; checks translate SQL Server trailing-space comparison and the source one-character LIKE range to equivalent SQLite expressions. Decimal, numeric, and money source strings are parsed as Python binary floats and stored with SQLite NUMERIC affinity; exact decimal scale and precision are not guaranteed, and this fixture makes no fixed-point MONEY claim. SQL Server collation and numeric behavior can differ. The converter checks the pinned source-file hashes, compares complete logical SQLite schema and row contents across rebuilds, and compares regenerated native SQL Server table/view metadata to the checked-in metadata file. SQLite file bytes may vary across SQLite library versions. JSON and SQLite preserve NULL; CSV represents NULL as an empty field, indistinguishable from empty text. BLOB values in JSON and CSV are base64 encoded. The full SQLite fixture is 125276160 bytes; static export delivery must preserve the full source without truncation and may use deterministic compressed chunks.",
+    "notes": "Pinned Microsoft SQL Server Samples AdventureWorks OLTP installer and companion source files from commit beaab06ef72831089ca80e5355d65e661fd19b26. The source AWBuildVersion.csv identifies the installer fixture as SQL Server 2025 build 17.0.1000.3; the README says the script adapts to the installed SQL Server version, so this is the pinned source fixture rather than a claim about every generated server build. The converter imports all 68 BULK INSERT inputs plus the one-row AWBuildVersion.csv, preserving 759,240 seeded rows across 71 physical tables, source primary and foreign keys, 93 explicit indexes, and the inline unique constraint on Production.Document.rowguid. DatabaseLog and ErrorLog remain empty because the installer creates them for runtime audit/error events and supplies no static CSV. All 20 original SQL Server view definitions are retained in metadata/native-objects.json. Eleven straightforward relational views are translated into SQLite and their query results are rebuilt and checked; nine views using SQL Server-only XML, APPLY, or PIVOT constructs remain source-only, with no fabricated rows. SQL Server XML is stored as text; geography and hierarchyid serializations are stored as opaque BLOBs. Computed-column source expressions are retained in native metadata while the pinned CSV snapshot values are stored as ordinary SQLite columns. GETDATE defaults are frozen to the pinned build timestamp; SQL Server NEWID defaults remain in native metadata but are omitted from the static SQLite schema because SQLite only permits constant defaults, and seeded GUID values are preserved. SQL Server-only setup, triggers, stored procedures, query store, and optimized-locking behavior are not implemented. Fixed-width character data is preserved including padding; checks translate SQL Server trailing-space comparison and the source one-character LIKE range to equivalent SQLite expressions. Decimal, numeric, money, and smallmoney source values are validated with Python Decimal and preserved as exact source strings in SQLite TEXT-affinity DECIMAL_TEXT(p,s) columns, JSON, and CSV. Native SQL Server decimal precision/scale are retained; money uses (19,4), smallmoney uses (10,4). Computed decimal snapshots preserve exact seeded strings and use p=38 with the maximum observed source fraction scale, explicitly as a storage contract rather than inferred SQL Server result metadata. Decimal-related SQL Server CHECK expressions remain in native source metadata and are not enforced by SQLite because text comparisons would not preserve numeric semantics; the rebuild evaluates all 39 against every seeded row with exact Decimal comparisons. Other translated source checks remain enforced. Ordinary float and real values remain approximate. The five computed decimal snapshot columns are stored values; SQLite does not recompute their SQL Server expressions. The converter checks the pinned source-file hashes, compares complete logical SQLite schema and row contents across rebuilds, and compares regenerated native SQL Server table/view metadata to the checked-in metadata file. SQLite file bytes may vary across SQLite library versions. JSON and SQLite preserve NULL; CSV represents NULL as an empty field, indistinguishable from empty text. BLOB values in JSON and CSV are base64 encoded. The full SQLite fixture is 126820352 bytes; static export delivery must preserve the full source without truncation and may use deterministic compressed chunks.",
     "recipe": [
       {
         "path": "data-source/microsoft-sql-server-samples/LICENSE.txt",
@@ -302,9 +302,9 @@
         "sha256": "d979f036750f9c7b4fb7be3d58cdbb596a74f864a6325998501b3a96c6ad53f9"
       }
     ],
-    "databaseSha256": "e0f352f0e3a28ff15158130c237a91d58f1b60fffa7f30d2c412b92df4065dfd",
+    "databaseSha256": "6a105e1982becfe003fc7a307d7cad9d738390cedd79d166c2167fd817168109",
     "inputCompression": "gzip",
-    "inputSha256": "533165298eb696d330be6a2fc648ba56d985be491d511ca581d7ea64736e1a28"
+    "inputSha256": "5516328f621cbbe21083a20f325bc1a6f841e6f709bb6d8bebfebbf48b81d203"
   },
   "blobEncoding": "base64",
   "modelingLimitations": [],
@@ -1234,12 +1234,17 @@
         },
         {
           "name": "Rate",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
           "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Salary hourly rate."
         },
         {
@@ -1312,89 +1317,89 @@
       ],
       "rowCount": 316,
       "viewSql": null,
-      "tableSql": "CREATE TABLE \"HumanResources.EmployeePayHistory\" (\"BusinessEntityID\" INTEGER NOT NULL, \"RateChangeDate\" TEXT NOT NULL, \"Rate\" NUMERIC NOT NULL, \"PayFrequency\" INTEGER NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK (\"PayFrequency\" IN (1, 2)), CHECK (\"Rate\" BETWEEN 6.50 AND 200.00), CONSTRAINT \"PK_EmployeePayHistory_BusinessEntityID_RateChangeDate\" PRIMARY KEY (\"BusinessEntityID\", \"RateChangeDate\"), CONSTRAINT \"FK_EmployeePayHistory_Employee_BusinessEntityID\" FOREIGN KEY (\"BusinessEntityID\") REFERENCES \"HumanResources.Employee\" (\"BusinessEntityID\"))",
+      "tableSql": "CREATE TABLE \"HumanResources.EmployeePayHistory\" (\"BusinessEntityID\" INTEGER NOT NULL, \"RateChangeDate\" TEXT NOT NULL, \"Rate\" DECIMAL_TEXT(19,4) NOT NULL, \"PayFrequency\" INTEGER NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK (\"PayFrequency\" IN (1, 2)), CONSTRAINT \"PK_EmployeePayHistory_BusinessEntityID_RateChangeDate\" PRIMARY KEY (\"BusinessEntityID\", \"RateChangeDate\"), CONSTRAINT \"FK_EmployeePayHistory_Employee_BusinessEntityID\" FOREIGN KEY (\"BusinessEntityID\") REFERENCES \"HumanResources.Employee\" (\"BusinessEntityID\"))",
       "rows": [
         {
           "BusinessEntityID": 1,
           "RateChangeDate": "2009-01-14 00:00:00.000",
-          "Rate": 125.5,
+          "Rate": "125.5000",
           "PayFrequency": 2,
           "ModifiedDate": "2014-06-30 00:00:00.000"
         },
         {
           "BusinessEntityID": 2,
           "RateChangeDate": "2008-01-31 00:00:00.000",
-          "Rate": 63.4615,
+          "Rate": "63.4615",
           "PayFrequency": 2,
           "ModifiedDate": "2014-06-30 00:00:00.000"
         },
         {
           "BusinessEntityID": 3,
           "RateChangeDate": "2007-11-11 00:00:00.000",
-          "Rate": 43.2692,
+          "Rate": "43.2692",
           "PayFrequency": 2,
           "ModifiedDate": "2014-06-30 00:00:00.000"
         },
         {
           "BusinessEntityID": 4,
           "RateChangeDate": "2007-12-05 00:00:00.000",
-          "Rate": 8.62,
+          "Rate": "8.6200",
           "PayFrequency": 2,
           "ModifiedDate": "2007-11-21 00:00:00.000"
         },
         {
           "BusinessEntityID": 4,
           "RateChangeDate": "2010-05-31 00:00:00.000",
-          "Rate": 23.72,
+          "Rate": "23.7200",
           "PayFrequency": 2,
           "ModifiedDate": "2010-05-16 00:00:00.000"
         },
         {
           "BusinessEntityID": 4,
           "RateChangeDate": "2011-12-15 00:00:00.000",
-          "Rate": 29.8462,
+          "Rate": "29.8462",
           "PayFrequency": 2,
           "ModifiedDate": "2011-12-01 00:00:00.000"
         },
         {
           "BusinessEntityID": 5,
           "RateChangeDate": "2008-01-06 00:00:00.000",
-          "Rate": 32.6923,
+          "Rate": "32.6923",
           "PayFrequency": 2,
           "ModifiedDate": "2014-06-30 00:00:00.000"
         },
         {
           "BusinessEntityID": 6,
           "RateChangeDate": "2008-01-24 00:00:00.000",
-          "Rate": 32.6923,
+          "Rate": "32.6923",
           "PayFrequency": 2,
           "ModifiedDate": "2014-06-30 00:00:00.000"
         },
         {
           "BusinessEntityID": 7,
           "RateChangeDate": "2009-02-08 00:00:00.000",
-          "Rate": 50.4808,
+          "Rate": "50.4808",
           "PayFrequency": 2,
           "ModifiedDate": "2014-06-30 00:00:00.000"
         },
         {
           "BusinessEntityID": 8,
           "RateChangeDate": "2008-12-29 00:00:00.000",
-          "Rate": 40.8654,
+          "Rate": "40.8654",
           "PayFrequency": 2,
           "ModifiedDate": "2014-06-30 00:00:00.000"
         },
         {
           "BusinessEntityID": 9,
           "RateChangeDate": "2009-01-16 00:00:00.000",
-          "Rate": 40.8654,
+          "Rate": "40.8654",
           "PayFrequency": 2,
           "ModifiedDate": "2014-06-30 00:00:00.000"
         },
         {
           "BusinessEntityID": 10,
           "RateChangeDate": "2009-05-03 00:00:00.000",
-          "Rate": 42.4808,
+          "Rate": "42.4808",
           "PayFrequency": 2,
           "ModifiedDate": "2014-06-30 00:00:00.000"
         }
@@ -4488,12 +4493,17 @@
         },
         {
           "name": "PerAssemblyQty",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(8,2)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
-          "defaultValue": "1.00",
+          "defaultValue": "'1.00'",
+          "decimal": {
+            "precision": 8,
+            "scale": 2,
+            "storage": "text"
+          },
           "description": "Quantity of the component needed to create the assembly."
         },
         {
@@ -4589,7 +4599,7 @@
       ],
       "rowCount": 2679,
       "viewSql": null,
-      "tableSql": "CREATE TABLE \"Production.BillOfMaterials\" (\"BillOfMaterialsID\" INTEGER NOT NULL, \"ProductAssemblyID\" INTEGER, \"ComponentID\" INTEGER NOT NULL, \"StartDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', \"EndDate\" TEXT, \"UnitMeasureCode\" TEXT NOT NULL, \"BOMLevel\" INTEGER NOT NULL, \"PerAssemblyQty\" NUMERIC NOT NULL DEFAULT 1.00, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK ((\"EndDate\" > \"StartDate\") OR (\"EndDate\" IS NULL)), CHECK (\"ProductAssemblyID\" <> \"ComponentID\"), CHECK (((\"ProductAssemblyID\" IS NULL)\r\n        AND (\"BOMLevel\" = 0) AND (\"PerAssemblyQty\" = 1.00))\r\n        OR ((\"ProductAssemblyID\" IS NOT NULL) AND (\"BOMLevel\" >= 1))), CHECK (\"PerAssemblyQty\" >= 1.00), CONSTRAINT \"PK_BillOfMaterials_BillOfMaterialsID\" PRIMARY KEY (\"BillOfMaterialsID\"), CONSTRAINT \"FK_BillOfMaterials_Product_ProductAssemblyID\" FOREIGN KEY (\"ProductAssemblyID\") REFERENCES \"Production.Product\" (\"ProductID\"), CONSTRAINT \"FK_BillOfMaterials_Product_ComponentID\" FOREIGN KEY (\"ComponentID\") REFERENCES \"Production.Product\" (\"ProductID\"), CONSTRAINT \"FK_BillOfMaterials_UnitMeasure_UnitMeasureCode\" FOREIGN KEY (\"UnitMeasureCode\") REFERENCES \"Production.UnitMeasure\" (\"UnitMeasureCode\"))",
+      "tableSql": "CREATE TABLE \"Production.BillOfMaterials\" (\"BillOfMaterialsID\" INTEGER NOT NULL, \"ProductAssemblyID\" INTEGER, \"ComponentID\" INTEGER NOT NULL, \"StartDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', \"EndDate\" TEXT, \"UnitMeasureCode\" TEXT NOT NULL, \"BOMLevel\" INTEGER NOT NULL, \"PerAssemblyQty\" DECIMAL_TEXT(8,2) NOT NULL DEFAULT '1.00', \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK ((\"EndDate\" > \"StartDate\") OR (\"EndDate\" IS NULL)), CHECK (\"ProductAssemblyID\" <> \"ComponentID\"), CONSTRAINT \"PK_BillOfMaterials_BillOfMaterialsID\" PRIMARY KEY (\"BillOfMaterialsID\"), CONSTRAINT \"FK_BillOfMaterials_Product_ProductAssemblyID\" FOREIGN KEY (\"ProductAssemblyID\") REFERENCES \"Production.Product\" (\"ProductID\"), CONSTRAINT \"FK_BillOfMaterials_Product_ComponentID\" FOREIGN KEY (\"ComponentID\") REFERENCES \"Production.Product\" (\"ProductID\"), CONSTRAINT \"FK_BillOfMaterials_UnitMeasure_UnitMeasureCode\" FOREIGN KEY (\"UnitMeasureCode\") REFERENCES \"Production.UnitMeasure\" (\"UnitMeasureCode\"))",
       "rows": [
         {
           "BillOfMaterialsID": 1,
@@ -4599,7 +4609,7 @@
           "EndDate": null,
           "UnitMeasureCode": "EA ",
           "BOMLevel": 2,
-          "PerAssemblyQty": 1,
+          "PerAssemblyQty": "1.00",
           "ModifiedDate": "2021-02-17 00:00:00.000"
         },
         {
@@ -4610,7 +4620,7 @@
           "EndDate": null,
           "UnitMeasureCode": "EA ",
           "BOMLevel": 1,
-          "PerAssemblyQty": 1,
+          "PerAssemblyQty": "1.00",
           "ModifiedDate": "2021-02-17 00:00:00.000"
         },
         {
@@ -4621,7 +4631,7 @@
           "EndDate": null,
           "UnitMeasureCode": "EA ",
           "BOMLevel": 0,
-          "PerAssemblyQty": 1,
+          "PerAssemblyQty": "1.00",
           "ModifiedDate": "2021-02-17 00:00:00.000"
         },
         {
@@ -4632,7 +4642,7 @@
           "EndDate": null,
           "UnitMeasureCode": "EA ",
           "BOMLevel": 0,
-          "PerAssemblyQty": 1,
+          "PerAssemblyQty": "1.00",
           "ModifiedDate": "2021-02-17 00:00:00.000"
         },
         {
@@ -4643,7 +4653,7 @@
           "EndDate": null,
           "UnitMeasureCode": "EA ",
           "BOMLevel": 0,
-          "PerAssemblyQty": 1,
+          "PerAssemblyQty": "1.00",
           "ModifiedDate": "2021-02-17 00:00:00.000"
         },
         {
@@ -4654,7 +4664,7 @@
           "EndDate": null,
           "UnitMeasureCode": "EA ",
           "BOMLevel": 2,
-          "PerAssemblyQty": 3,
+          "PerAssemblyQty": "3.00",
           "ModifiedDate": "2021-02-17 00:00:00.000"
         },
         {
@@ -4665,7 +4675,7 @@
           "EndDate": null,
           "UnitMeasureCode": "EA ",
           "BOMLevel": 1,
-          "PerAssemblyQty": 1,
+          "PerAssemblyQty": "1.00",
           "ModifiedDate": "2021-02-17 00:00:00.000"
         },
         {
@@ -4676,7 +4686,7 @@
           "EndDate": null,
           "UnitMeasureCode": "EA ",
           "BOMLevel": 1,
-          "PerAssemblyQty": 1,
+          "PerAssemblyQty": "1.00",
           "ModifiedDate": "2021-02-17 00:00:00.000"
         },
         {
@@ -4687,7 +4697,7 @@
           "EndDate": null,
           "UnitMeasureCode": "EA ",
           "BOMLevel": 2,
-          "PerAssemblyQty": 2,
+          "PerAssemblyQty": "2.00",
           "ModifiedDate": "2021-02-17 00:00:00.000"
         },
         {
@@ -4698,7 +4708,7 @@
           "EndDate": null,
           "UnitMeasureCode": "EA ",
           "BOMLevel": 2,
-          "PerAssemblyQty": 1,
+          "PerAssemblyQty": "1.00",
           "ModifiedDate": "2021-02-17 00:00:00.000"
         },
         {
@@ -4709,7 +4719,7 @@
           "EndDate": null,
           "UnitMeasureCode": "EA ",
           "BOMLevel": 2,
-          "PerAssemblyQty": 1,
+          "PerAssemblyQty": "1.00",
           "ModifiedDate": "2021-04-19 00:00:00.000"
         },
         {
@@ -4720,7 +4730,7 @@
           "EndDate": null,
           "UnitMeasureCode": "EA ",
           "BOMLevel": 2,
-          "PerAssemblyQty": 2,
+          "PerAssemblyQty": "2.00",
           "ModifiedDate": "2021-02-17 00:00:00.000"
         }
       ]
@@ -5421,22 +5431,32 @@
         },
         {
           "name": "CostRate",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(10,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00",
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 10,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Standard hourly cost of the manufacturing location."
         },
         {
           "name": "Availability",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(8,2)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00",
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 8,
+            "scale": 2,
+            "storage": "text"
+          },
           "description": "Work capacity (in hours) of the manufacturing location."
         },
         {
@@ -5485,90 +5505,90 @@
       "foreignKeys": [],
       "rowCount": 14,
       "viewSql": null,
-      "tableSql": "CREATE TABLE \"Production.Location\" (\"LocationID\" INTEGER NOT NULL, \"Name\" TEXT NOT NULL, \"CostRate\" NUMERIC NOT NULL DEFAULT 0.00, \"Availability\" NUMERIC NOT NULL DEFAULT 0.00, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK (\"CostRate\" >= 0.00), CHECK (\"Availability\" >= 0.00), CONSTRAINT \"PK_Location_LocationID\" PRIMARY KEY (\"LocationID\"))",
+      "tableSql": "CREATE TABLE \"Production.Location\" (\"LocationID\" INTEGER NOT NULL, \"Name\" TEXT NOT NULL, \"CostRate\" DECIMAL_TEXT(10,4) NOT NULL DEFAULT '0.00', \"Availability\" DECIMAL_TEXT(8,2) NOT NULL DEFAULT '0.00', \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CONSTRAINT \"PK_Location_LocationID\" PRIMARY KEY (\"LocationID\"))",
       "rows": [
         {
           "LocationID": 1,
           "Name": "Tool Crib",
-          "CostRate": 0,
-          "Availability": 0,
+          "CostRate": ".0000",
+          "Availability": ".00",
           "ModifiedDate": "2019-04-30 00:00:00.000"
         },
         {
           "LocationID": 2,
           "Name": "Sheet Metal Racks",
-          "CostRate": 0,
-          "Availability": 0,
+          "CostRate": ".0000",
+          "Availability": ".00",
           "ModifiedDate": "2019-04-30 00:00:00.000"
         },
         {
           "LocationID": 3,
           "Name": "Paint Shop",
-          "CostRate": 0,
-          "Availability": 0,
+          "CostRate": ".0000",
+          "Availability": ".00",
           "ModifiedDate": "2019-04-30 00:00:00.000"
         },
         {
           "LocationID": 4,
           "Name": "Paint Storage",
-          "CostRate": 0,
-          "Availability": 0,
+          "CostRate": ".0000",
+          "Availability": ".00",
           "ModifiedDate": "2019-04-30 00:00:00.000"
         },
         {
           "LocationID": 5,
           "Name": "Metal Storage",
-          "CostRate": 0,
-          "Availability": 0,
+          "CostRate": ".0000",
+          "Availability": ".00",
           "ModifiedDate": "2019-04-30 00:00:00.000"
         },
         {
           "LocationID": 6,
           "Name": "Miscellaneous Storage",
-          "CostRate": 0,
-          "Availability": 0,
+          "CostRate": ".0000",
+          "Availability": ".00",
           "ModifiedDate": "2019-04-30 00:00:00.000"
         },
         {
           "LocationID": 7,
           "Name": "Finished Goods Storage",
-          "CostRate": 0,
-          "Availability": 0,
+          "CostRate": ".0000",
+          "Availability": ".00",
           "ModifiedDate": "2019-04-30 00:00:00.000"
         },
         {
           "LocationID": 10,
           "Name": "Frame Forming",
-          "CostRate": 22.5,
-          "Availability": 96,
+          "CostRate": "22.5000",
+          "Availability": "96.00",
           "ModifiedDate": "2019-04-30 00:00:00.000"
         },
         {
           "LocationID": 20,
           "Name": "Frame Welding",
-          "CostRate": 25,
-          "Availability": 108,
+          "CostRate": "25.0000",
+          "Availability": "108.00",
           "ModifiedDate": "2019-04-30 00:00:00.000"
         },
         {
           "LocationID": 30,
           "Name": "Debur and Polish",
-          "CostRate": 14.5,
-          "Availability": 120,
+          "CostRate": "14.5000",
+          "Availability": "120.00",
           "ModifiedDate": "2019-04-30 00:00:00.000"
         },
         {
           "LocationID": 40,
           "Name": "Paint",
-          "CostRate": 15.75,
-          "Availability": 120,
+          "CostRate": "15.7500",
+          "Availability": "120.00",
           "ModifiedDate": "2019-04-30 00:00:00.000"
         },
         {
           "LocationID": 45,
           "Name": "Specialized Paint",
-          "CostRate": 18,
-          "Availability": 80,
+          "CostRate": "18.0000",
+          "Availability": "80.00",
           "ModifiedDate": "2019-04-30 00:00:00.000"
         }
       ]
@@ -5662,22 +5682,32 @@
         },
         {
           "name": "StandardCost",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
           "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Standard cost of the product."
         },
         {
           "name": "ListPrice",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
           "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Selling price."
         },
         {
@@ -5712,12 +5742,17 @@
         },
         {
           "name": "Weight",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(8,2)",
           "nullable": true,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
           "defaultValue": null,
+          "decimal": {
+            "precision": 8,
+            "scale": 2,
+            "storage": "text"
+          },
           "description": "Product weight."
         },
         {
@@ -5951,7 +5986,7 @@
       ],
       "rowCount": 504,
       "viewSql": null,
-      "tableSql": "CREATE TABLE \"Production.Product\" (\"ProductID\" INTEGER NOT NULL, \"Name\" TEXT NOT NULL, \"ProductNumber\" TEXT NOT NULL, \"MakeFlag\" INTEGER NOT NULL DEFAULT 1, \"FinishedGoodsFlag\" INTEGER NOT NULL DEFAULT 1, \"Color\" TEXT, \"SafetyStockLevel\" INTEGER NOT NULL, \"ReorderPoint\" INTEGER NOT NULL, \"StandardCost\" NUMERIC NOT NULL, \"ListPrice\" NUMERIC NOT NULL, \"Size\" TEXT, \"SizeUnitMeasureCode\" TEXT, \"WeightUnitMeasureCode\" TEXT, \"Weight\" NUMERIC, \"DaysToManufacture\" INTEGER NOT NULL, \"ProductLine\" TEXT, \"Class\" TEXT, \"Style\" TEXT, \"ProductSubcategoryID\" INTEGER, \"ProductModelID\" INTEGER, \"SellStartDate\" TEXT NOT NULL, \"SellEndDate\" TEXT, \"DiscontinuedDate\" TEXT, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK (\"SafetyStockLevel\" > 0), CHECK (\"ReorderPoint\" > 0), CHECK (\"StandardCost\" >= 0.00), CHECK (\"ListPrice\" >= 0.00), CHECK (\"Weight\" > 0.00), CHECK (\"DaysToManufacture\" >= 0), CHECK (UPPER(RTRIM(\"ProductLine\")) IN ('S', 'T', 'M', 'R') OR \"ProductLine\" IS NULL), CHECK (UPPER(RTRIM(\"Class\")) IN ('L', 'M', 'H') OR \"Class\" IS NULL), CHECK (UPPER(RTRIM(\"Style\")) IN ('W', 'M', 'U') OR \"Style\" IS NULL), CHECK ((\"SellEndDate\" >= \"SellStartDate\") OR (\"SellEndDate\" IS NULL)), CONSTRAINT \"PK_Product_ProductID\" PRIMARY KEY (\"ProductID\"), CONSTRAINT \"FK_Product_UnitMeasure_SizeUnitMeasureCode\" FOREIGN KEY (\"SizeUnitMeasureCode\") REFERENCES \"Production.UnitMeasure\" (\"UnitMeasureCode\"), CONSTRAINT \"FK_Product_UnitMeasure_WeightUnitMeasureCode\" FOREIGN KEY (\"WeightUnitMeasureCode\") REFERENCES \"Production.UnitMeasure\" (\"UnitMeasureCode\"), CONSTRAINT \"FK_Product_ProductModel_ProductModelID\" FOREIGN KEY (\"ProductModelID\") REFERENCES \"Production.ProductModel\" (\"ProductModelID\"), CONSTRAINT \"FK_Product_ProductSubcategory_ProductSubcategoryID\" FOREIGN KEY (\"ProductSubcategoryID\") REFERENCES \"Production.ProductSubcategory\" (\"ProductSubcategoryID\"))",
+      "tableSql": "CREATE TABLE \"Production.Product\" (\"ProductID\" INTEGER NOT NULL, \"Name\" TEXT NOT NULL, \"ProductNumber\" TEXT NOT NULL, \"MakeFlag\" INTEGER NOT NULL DEFAULT 1, \"FinishedGoodsFlag\" INTEGER NOT NULL DEFAULT 1, \"Color\" TEXT, \"SafetyStockLevel\" INTEGER NOT NULL, \"ReorderPoint\" INTEGER NOT NULL, \"StandardCost\" DECIMAL_TEXT(19,4) NOT NULL, \"ListPrice\" DECIMAL_TEXT(19,4) NOT NULL, \"Size\" TEXT, \"SizeUnitMeasureCode\" TEXT, \"WeightUnitMeasureCode\" TEXT, \"Weight\" DECIMAL_TEXT(8,2), \"DaysToManufacture\" INTEGER NOT NULL, \"ProductLine\" TEXT, \"Class\" TEXT, \"Style\" TEXT, \"ProductSubcategoryID\" INTEGER, \"ProductModelID\" INTEGER, \"SellStartDate\" TEXT NOT NULL, \"SellEndDate\" TEXT, \"DiscontinuedDate\" TEXT, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK (\"SafetyStockLevel\" > 0), CHECK (\"ReorderPoint\" > 0), CHECK (\"DaysToManufacture\" >= 0), CHECK (UPPER(RTRIM(\"ProductLine\")) IN ('S', 'T', 'M', 'R') OR \"ProductLine\" IS NULL), CHECK (UPPER(RTRIM(\"Class\")) IN ('L', 'M', 'H') OR \"Class\" IS NULL), CHECK (UPPER(RTRIM(\"Style\")) IN ('W', 'M', 'U') OR \"Style\" IS NULL), CHECK ((\"SellEndDate\" >= \"SellStartDate\") OR (\"SellEndDate\" IS NULL)), CONSTRAINT \"PK_Product_ProductID\" PRIMARY KEY (\"ProductID\"), CONSTRAINT \"FK_Product_UnitMeasure_SizeUnitMeasureCode\" FOREIGN KEY (\"SizeUnitMeasureCode\") REFERENCES \"Production.UnitMeasure\" (\"UnitMeasureCode\"), CONSTRAINT \"FK_Product_UnitMeasure_WeightUnitMeasureCode\" FOREIGN KEY (\"WeightUnitMeasureCode\") REFERENCES \"Production.UnitMeasure\" (\"UnitMeasureCode\"), CONSTRAINT \"FK_Product_ProductModel_ProductModelID\" FOREIGN KEY (\"ProductModelID\") REFERENCES \"Production.ProductModel\" (\"ProductModelID\"), CONSTRAINT \"FK_Product_ProductSubcategory_ProductSubcategoryID\" FOREIGN KEY (\"ProductSubcategoryID\") REFERENCES \"Production.ProductSubcategory\" (\"ProductSubcategoryID\"))",
       "rows": [
         {
           "ProductID": 1,
@@ -5962,8 +5997,8 @@
           "Color": null,
           "SafetyStockLevel": 1000,
           "ReorderPoint": 750,
-          "StandardCost": 0,
-          "ListPrice": 0,
+          "StandardCost": ".0000",
+          "ListPrice": ".0000",
           "Size": null,
           "SizeUnitMeasureCode": null,
           "WeightUnitMeasureCode": null,
@@ -5989,8 +6024,8 @@
           "Color": null,
           "SafetyStockLevel": 1000,
           "ReorderPoint": 750,
-          "StandardCost": 0,
-          "ListPrice": 0,
+          "StandardCost": ".0000",
+          "ListPrice": ".0000",
           "Size": null,
           "SizeUnitMeasureCode": null,
           "WeightUnitMeasureCode": null,
@@ -6016,8 +6051,8 @@
           "Color": null,
           "SafetyStockLevel": 800,
           "ReorderPoint": 600,
-          "StandardCost": 0,
-          "ListPrice": 0,
+          "StandardCost": ".0000",
+          "ListPrice": ".0000",
           "Size": null,
           "SizeUnitMeasureCode": null,
           "WeightUnitMeasureCode": null,
@@ -6043,8 +6078,8 @@
           "Color": null,
           "SafetyStockLevel": 800,
           "ReorderPoint": 600,
-          "StandardCost": 0,
-          "ListPrice": 0,
+          "StandardCost": ".0000",
+          "ListPrice": ".0000",
           "Size": null,
           "SizeUnitMeasureCode": null,
           "WeightUnitMeasureCode": null,
@@ -6070,8 +6105,8 @@
           "Color": null,
           "SafetyStockLevel": 800,
           "ReorderPoint": 600,
-          "StandardCost": 0,
-          "ListPrice": 0,
+          "StandardCost": ".0000",
+          "ListPrice": ".0000",
           "Size": null,
           "SizeUnitMeasureCode": null,
           "WeightUnitMeasureCode": null,
@@ -6097,8 +6132,8 @@
           "Color": "Black",
           "SafetyStockLevel": 500,
           "ReorderPoint": 375,
-          "StandardCost": 0,
-          "ListPrice": 0,
+          "StandardCost": ".0000",
+          "ListPrice": ".0000",
           "Size": null,
           "SizeUnitMeasureCode": null,
           "WeightUnitMeasureCode": null,
@@ -6124,8 +6159,8 @@
           "Color": "Black",
           "SafetyStockLevel": 500,
           "ReorderPoint": 375,
-          "StandardCost": 0,
-          "ListPrice": 0,
+          "StandardCost": ".0000",
+          "ListPrice": ".0000",
           "Size": null,
           "SizeUnitMeasureCode": null,
           "WeightUnitMeasureCode": null,
@@ -6151,8 +6186,8 @@
           "Color": "Black",
           "SafetyStockLevel": 500,
           "ReorderPoint": 375,
-          "StandardCost": 0,
-          "ListPrice": 0,
+          "StandardCost": ".0000",
+          "ListPrice": ".0000",
           "Size": null,
           "SizeUnitMeasureCode": null,
           "WeightUnitMeasureCode": null,
@@ -6178,8 +6213,8 @@
           "Color": "Silver",
           "SafetyStockLevel": 1000,
           "ReorderPoint": 750,
-          "StandardCost": 0,
-          "ListPrice": 0,
+          "StandardCost": ".0000",
+          "ListPrice": ".0000",
           "Size": null,
           "SizeUnitMeasureCode": null,
           "WeightUnitMeasureCode": null,
@@ -6205,8 +6240,8 @@
           "Color": "Silver",
           "SafetyStockLevel": 1000,
           "ReorderPoint": 750,
-          "StandardCost": 0,
-          "ListPrice": 0,
+          "StandardCost": ".0000",
+          "ListPrice": ".0000",
           "Size": null,
           "SizeUnitMeasureCode": null,
           "WeightUnitMeasureCode": null,
@@ -6232,8 +6267,8 @@
           "Color": "Black",
           "SafetyStockLevel": 1000,
           "ReorderPoint": 750,
-          "StandardCost": 0,
-          "ListPrice": 0,
+          "StandardCost": ".0000",
+          "ListPrice": ".0000",
           "Size": null,
           "SizeUnitMeasureCode": null,
           "WeightUnitMeasureCode": null,
@@ -6259,8 +6294,8 @@
           "Color": null,
           "SafetyStockLevel": 1000,
           "ReorderPoint": 750,
-          "StandardCost": 0,
-          "ListPrice": 0,
+          "StandardCost": ".0000",
+          "ListPrice": ".0000",
           "Size": null,
           "SizeUnitMeasureCode": null,
           "WeightUnitMeasureCode": null,
@@ -6451,12 +6486,17 @@
         },
         {
           "name": "StandardCost",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
           "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Standard cost of the product."
         },
         {
@@ -6519,90 +6559,90 @@
       ],
       "rowCount": 395,
       "viewSql": null,
-      "tableSql": "CREATE TABLE \"Production.ProductCostHistory\" (\"ProductID\" INTEGER NOT NULL, \"StartDate\" TEXT NOT NULL, \"EndDate\" TEXT, \"StandardCost\" NUMERIC NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK ((\"EndDate\" >= \"StartDate\") OR (\"EndDate\" IS NULL)), CHECK (\"StandardCost\" >= 0.00), CONSTRAINT \"PK_ProductCostHistory_ProductID_StartDate\" PRIMARY KEY (\"ProductID\", \"StartDate\"), CONSTRAINT \"FK_ProductCostHistory_Product_ProductID\" FOREIGN KEY (\"ProductID\") REFERENCES \"Production.Product\" (\"ProductID\"))",
+      "tableSql": "CREATE TABLE \"Production.ProductCostHistory\" (\"ProductID\" INTEGER NOT NULL, \"StartDate\" TEXT NOT NULL, \"EndDate\" TEXT, \"StandardCost\" DECIMAL_TEXT(19,4) NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK ((\"EndDate\" >= \"StartDate\") OR (\"EndDate\" IS NULL)), CONSTRAINT \"PK_ProductCostHistory_ProductID_StartDate\" PRIMARY KEY (\"ProductID\", \"StartDate\"), CONSTRAINT \"FK_ProductCostHistory_Product_ProductID\" FOREIGN KEY (\"ProductID\") REFERENCES \"Production.Product\" (\"ProductID\"))",
       "rows": [
         {
           "ProductID": 707,
           "StartDate": "2022-05-30 00:00:00.000",
           "EndDate": "2023-05-29 00:00:00.000",
-          "StandardCost": 12.0278,
+          "StandardCost": "12.0278",
           "ModifiedDate": "2023-05-29 00:00:00.000"
         },
         {
           "ProductID": 707,
           "StartDate": "2023-05-30 00:00:00.000",
           "EndDate": "2024-05-28 00:00:00.000",
-          "StandardCost": 13.8782,
+          "StandardCost": "13.8782",
           "ModifiedDate": "2024-05-28 00:00:00.000"
         },
         {
           "ProductID": 707,
           "StartDate": "2024-05-29 00:00:00.000",
           "EndDate": null,
-          "StandardCost": 13.0863,
+          "StandardCost": "13.0863",
           "ModifiedDate": "2024-05-15 00:00:00.000"
         },
         {
           "ProductID": 708,
           "StartDate": "2022-05-30 00:00:00.000",
           "EndDate": "2023-05-29 00:00:00.000",
-          "StandardCost": 12.0278,
+          "StandardCost": "12.0278",
           "ModifiedDate": "2023-05-29 00:00:00.000"
         },
         {
           "ProductID": 708,
           "StartDate": "2023-05-30 00:00:00.000",
           "EndDate": "2024-05-28 00:00:00.000",
-          "StandardCost": 13.8782,
+          "StandardCost": "13.8782",
           "ModifiedDate": "2024-05-28 00:00:00.000"
         },
         {
           "ProductID": 708,
           "StartDate": "2024-05-29 00:00:00.000",
           "EndDate": null,
-          "StandardCost": 13.0863,
+          "StandardCost": "13.0863",
           "ModifiedDate": "2024-05-15 00:00:00.000"
         },
         {
           "ProductID": 709,
           "StartDate": "2022-05-30 00:00:00.000",
           "EndDate": "2023-05-29 00:00:00.000",
-          "StandardCost": 3.3963,
+          "StandardCost": "3.3963",
           "ModifiedDate": "2023-05-29 00:00:00.000"
         },
         {
           "ProductID": 710,
           "StartDate": "2022-05-30 00:00:00.000",
           "EndDate": "2023-05-29 00:00:00.000",
-          "StandardCost": 3.3963,
+          "StandardCost": "3.3963",
           "ModifiedDate": "2023-05-29 00:00:00.000"
         },
         {
           "ProductID": 711,
           "StartDate": "2022-05-30 00:00:00.000",
           "EndDate": "2023-05-29 00:00:00.000",
-          "StandardCost": 12.0278,
+          "StandardCost": "12.0278",
           "ModifiedDate": "2023-05-29 00:00:00.000"
         },
         {
           "ProductID": 711,
           "StartDate": "2023-05-30 00:00:00.000",
           "EndDate": "2024-05-28 00:00:00.000",
-          "StandardCost": 13.8782,
+          "StandardCost": "13.8782",
           "ModifiedDate": "2024-05-28 00:00:00.000"
         },
         {
           "ProductID": 711,
           "StartDate": "2024-05-29 00:00:00.000",
           "EndDate": null,
-          "StandardCost": 13.0863,
+          "StandardCost": "13.0863",
           "ModifiedDate": "2024-05-15 00:00:00.000"
         },
         {
           "ProductID": 712,
           "StartDate": "2022-05-30 00:00:00.000",
           "EndDate": "2023-05-29 00:00:00.000",
-          "StandardCost": 5.7052,
+          "StandardCost": "5.7052",
           "ModifiedDate": "2023-05-29 00:00:00.000"
         }
       ]
@@ -7215,12 +7255,17 @@
         },
         {
           "name": "ListPrice",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
           "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Product list price."
         },
         {
@@ -7283,90 +7328,90 @@
       ],
       "rowCount": 395,
       "viewSql": null,
-      "tableSql": "CREATE TABLE \"Production.ProductListPriceHistory\" (\"ProductID\" INTEGER NOT NULL, \"StartDate\" TEXT NOT NULL, \"EndDate\" TEXT, \"ListPrice\" NUMERIC NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK ((\"EndDate\" >= \"StartDate\") OR (\"EndDate\" IS NULL)), CHECK (\"ListPrice\" > 0.00), CONSTRAINT \"PK_ProductListPriceHistory_ProductID_StartDate\" PRIMARY KEY (\"ProductID\", \"StartDate\"), CONSTRAINT \"FK_ProductListPriceHistory_Product_ProductID\" FOREIGN KEY (\"ProductID\") REFERENCES \"Production.Product\" (\"ProductID\"))",
+      "tableSql": "CREATE TABLE \"Production.ProductListPriceHistory\" (\"ProductID\" INTEGER NOT NULL, \"StartDate\" TEXT NOT NULL, \"EndDate\" TEXT, \"ListPrice\" DECIMAL_TEXT(19,4) NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK ((\"EndDate\" >= \"StartDate\") OR (\"EndDate\" IS NULL)), CONSTRAINT \"PK_ProductListPriceHistory_ProductID_StartDate\" PRIMARY KEY (\"ProductID\", \"StartDate\"), CONSTRAINT \"FK_ProductListPriceHistory_Product_ProductID\" FOREIGN KEY (\"ProductID\") REFERENCES \"Production.Product\" (\"ProductID\"))",
       "rows": [
         {
           "ProductID": 707,
           "StartDate": "2022-05-30 00:00:00.000",
           "EndDate": "2023-05-29 00:00:00.000",
-          "ListPrice": 33.6442,
+          "ListPrice": "33.6442",
           "ModifiedDate": "2023-05-29 00:00:00.000"
         },
         {
           "ProductID": 707,
           "StartDate": "2023-05-30 00:00:00.000",
           "EndDate": "2024-05-28 00:00:00.000",
-          "ListPrice": 33.6442,
+          "ListPrice": "33.6442",
           "ModifiedDate": "2024-05-28 00:00:00.000"
         },
         {
           "ProductID": 707,
           "StartDate": "2024-05-29 00:00:00.000",
           "EndDate": null,
-          "ListPrice": 34.99,
+          "ListPrice": "34.9900",
           "ModifiedDate": "2024-05-08 00:00:00.000"
         },
         {
           "ProductID": 708,
           "StartDate": "2022-05-30 00:00:00.000",
           "EndDate": "2023-05-29 00:00:00.000",
-          "ListPrice": 33.6442,
+          "ListPrice": "33.6442",
           "ModifiedDate": "2023-05-29 00:00:00.000"
         },
         {
           "ProductID": 708,
           "StartDate": "2023-05-30 00:00:00.000",
           "EndDate": "2024-05-28 00:00:00.000",
-          "ListPrice": 33.6442,
+          "ListPrice": "33.6442",
           "ModifiedDate": "2024-05-28 00:00:00.000"
         },
         {
           "ProductID": 708,
           "StartDate": "2024-05-29 00:00:00.000",
           "EndDate": null,
-          "ListPrice": 34.99,
+          "ListPrice": "34.9900",
           "ModifiedDate": "2024-05-08 00:00:00.000"
         },
         {
           "ProductID": 709,
           "StartDate": "2022-05-30 00:00:00.000",
           "EndDate": "2023-05-29 00:00:00.000",
-          "ListPrice": 9.5,
+          "ListPrice": "9.5000",
           "ModifiedDate": "2023-05-29 00:00:00.000"
         },
         {
           "ProductID": 710,
           "StartDate": "2022-05-30 00:00:00.000",
           "EndDate": "2023-05-29 00:00:00.000",
-          "ListPrice": 9.5,
+          "ListPrice": "9.5000",
           "ModifiedDate": "2023-05-29 00:00:00.000"
         },
         {
           "ProductID": 711,
           "StartDate": "2022-05-30 00:00:00.000",
           "EndDate": "2023-05-29 00:00:00.000",
-          "ListPrice": 33.6442,
+          "ListPrice": "33.6442",
           "ModifiedDate": "2023-05-29 00:00:00.000"
         },
         {
           "ProductID": 711,
           "StartDate": "2023-05-30 00:00:00.000",
           "EndDate": "2024-05-28 00:00:00.000",
-          "ListPrice": 33.6442,
+          "ListPrice": "33.6442",
           "ModifiedDate": "2024-05-28 00:00:00.000"
         },
         {
           "ProductID": 711,
           "StartDate": "2024-05-29 00:00:00.000",
           "EndDate": null,
-          "ListPrice": 34.99,
+          "ListPrice": "34.9900",
           "ModifiedDate": "2024-05-08 00:00:00.000"
         },
         {
           "ProductID": 712,
           "StartDate": "2022-05-30 00:00:00.000",
           "EndDate": "2023-05-29 00:00:00.000",
-          "ListPrice": 8.6442,
+          "ListPrice": "8.6442",
           "ModifiedDate": "2023-05-29 00:00:00.000"
         }
       ]
@@ -8882,12 +8927,17 @@
         },
         {
           "name": "ActualCost",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
           "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Product cost."
         },
         {
@@ -8923,7 +8973,7 @@
       ],
       "rowCount": 113443,
       "viewSql": null,
-      "tableSql": "CREATE TABLE \"Production.TransactionHistory\" (\"TransactionID\" INTEGER NOT NULL, \"ProductID\" INTEGER NOT NULL, \"ReferenceOrderID\" INTEGER NOT NULL, \"ReferenceOrderLineID\" INTEGER NOT NULL DEFAULT 0, \"TransactionDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', \"TransactionType\" TEXT NOT NULL, \"Quantity\" INTEGER NOT NULL, \"ActualCost\" NUMERIC NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK (UPPER(RTRIM(\"TransactionType\")) IN ('W', 'S', 'P')), CONSTRAINT \"PK_TransactionHistory_TransactionID\" PRIMARY KEY (\"TransactionID\"), CONSTRAINT \"FK_TransactionHistory_Product_ProductID\" FOREIGN KEY (\"ProductID\") REFERENCES \"Production.Product\" (\"ProductID\"))",
+      "tableSql": "CREATE TABLE \"Production.TransactionHistory\" (\"TransactionID\" INTEGER NOT NULL, \"ProductID\" INTEGER NOT NULL, \"ReferenceOrderID\" INTEGER NOT NULL, \"ReferenceOrderLineID\" INTEGER NOT NULL DEFAULT 0, \"TransactionDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', \"TransactionType\" TEXT NOT NULL, \"Quantity\" INTEGER NOT NULL, \"ActualCost\" DECIMAL_TEXT(19,4) NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK (UPPER(RTRIM(\"TransactionType\")) IN ('W', 'S', 'P')), CONSTRAINT \"PK_TransactionHistory_TransactionID\" PRIMARY KEY (\"TransactionID\"), CONSTRAINT \"FK_TransactionHistory_Product_ProductID\" FOREIGN KEY (\"ProductID\") REFERENCES \"Production.Product\" (\"ProductID\"))",
       "rows": [
         {
           "TransactionID": 100000,
@@ -8933,7 +8983,7 @@
           "TransactionDate": "2024-07-30 00:00:00.000",
           "TransactionType": "W",
           "Quantity": 2,
-          "ActualCost": 0,
+          "ActualCost": ".0000",
           "ModifiedDate": "2024-07-30 00:00:00.000"
         },
         {
@@ -8944,7 +8994,7 @@
           "TransactionDate": "2024-07-30 00:00:00.000",
           "TransactionType": "W",
           "Quantity": 1,
-          "ActualCost": 0,
+          "ActualCost": ".0000",
           "ModifiedDate": "2024-07-30 00:00:00.000"
         },
         {
@@ -8955,7 +9005,7 @@
           "TransactionDate": "2024-07-30 00:00:00.000",
           "TransactionType": "W",
           "Quantity": 1,
-          "ActualCost": 0,
+          "ActualCost": ".0000",
           "ModifiedDate": "2024-07-30 00:00:00.000"
         },
         {
@@ -8966,7 +9016,7 @@
           "TransactionDate": "2024-07-30 00:00:00.000",
           "TransactionType": "W",
           "Quantity": 1,
-          "ActualCost": 0,
+          "ActualCost": ".0000",
           "ModifiedDate": "2024-07-30 00:00:00.000"
         },
         {
@@ -8977,7 +9027,7 @@
           "TransactionDate": "2024-07-30 00:00:00.000",
           "TransactionType": "W",
           "Quantity": 1,
-          "ActualCost": 0,
+          "ActualCost": ".0000",
           "ModifiedDate": "2024-07-30 00:00:00.000"
         },
         {
@@ -8988,7 +9038,7 @@
           "TransactionDate": "2024-07-30 00:00:00.000",
           "TransactionType": "W",
           "Quantity": 1,
-          "ActualCost": 0,
+          "ActualCost": ".0000",
           "ModifiedDate": "2024-07-30 00:00:00.000"
         },
         {
@@ -8999,7 +9049,7 @@
           "TransactionDate": "2024-07-30 00:00:00.000",
           "TransactionType": "W",
           "Quantity": 1,
-          "ActualCost": 0,
+          "ActualCost": ".0000",
           "ModifiedDate": "2024-07-30 00:00:00.000"
         },
         {
@@ -9010,7 +9060,7 @@
           "TransactionDate": "2024-07-30 00:00:00.000",
           "TransactionType": "W",
           "Quantity": 1,
-          "ActualCost": 0,
+          "ActualCost": ".0000",
           "ModifiedDate": "2024-07-30 00:00:00.000"
         },
         {
@@ -9021,7 +9071,7 @@
           "TransactionDate": "2024-07-30 00:00:00.000",
           "TransactionType": "W",
           "Quantity": 1,
-          "ActualCost": 0,
+          "ActualCost": ".0000",
           "ModifiedDate": "2024-07-30 00:00:00.000"
         },
         {
@@ -9032,7 +9082,7 @@
           "TransactionDate": "2024-07-30 00:00:00.000",
           "TransactionType": "W",
           "Quantity": 1,
-          "ActualCost": 0,
+          "ActualCost": ".0000",
           "ModifiedDate": "2024-07-30 00:00:00.000"
         },
         {
@@ -9043,7 +9093,7 @@
           "TransactionDate": "2024-07-30 00:00:00.000",
           "TransactionType": "W",
           "Quantity": 1,
-          "ActualCost": 0,
+          "ActualCost": ".0000",
           "ModifiedDate": "2024-07-30 00:00:00.000"
         },
         {
@@ -9054,7 +9104,7 @@
           "TransactionDate": "2024-07-30 00:00:00.000",
           "TransactionType": "W",
           "Quantity": 1,
-          "ActualCost": 0,
+          "ActualCost": ".0000",
           "ModifiedDate": "2024-07-30 00:00:00.000"
         }
       ]
@@ -9138,12 +9188,17 @@
         },
         {
           "name": "ActualCost",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
           "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Product cost."
         },
         {
@@ -9168,7 +9223,7 @@
       "foreignKeys": [],
       "rowCount": 89253,
       "viewSql": null,
-      "tableSql": "CREATE TABLE \"Production.TransactionHistoryArchive\" (\"TransactionID\" INTEGER NOT NULL, \"ProductID\" INTEGER NOT NULL, \"ReferenceOrderID\" INTEGER NOT NULL, \"ReferenceOrderLineID\" INTEGER NOT NULL DEFAULT 0, \"TransactionDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', \"TransactionType\" TEXT NOT NULL, \"Quantity\" INTEGER NOT NULL, \"ActualCost\" NUMERIC NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK (UPPER(RTRIM(\"TransactionType\")) IN ('W', 'S', 'P')), CONSTRAINT \"PK_TransactionHistoryArchive_TransactionID\" PRIMARY KEY (\"TransactionID\"))",
+      "tableSql": "CREATE TABLE \"Production.TransactionHistoryArchive\" (\"TransactionID\" INTEGER NOT NULL, \"ProductID\" INTEGER NOT NULL, \"ReferenceOrderID\" INTEGER NOT NULL, \"ReferenceOrderLineID\" INTEGER NOT NULL DEFAULT 0, \"TransactionDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', \"TransactionType\" TEXT NOT NULL, \"Quantity\" INTEGER NOT NULL, \"ActualCost\" DECIMAL_TEXT(19,4) NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK (UPPER(RTRIM(\"TransactionType\")) IN ('W', 'S', 'P')), CONSTRAINT \"PK_TransactionHistoryArchive_TransactionID\" PRIMARY KEY (\"TransactionID\"))",
       "rows": [
         {
           "TransactionID": 1,
@@ -9178,7 +9233,7 @@
           "TransactionDate": "2022-04-15 00:00:00.000",
           "TransactionType": "P",
           "Quantity": 4,
-          "ActualCost": 50.26,
+          "ActualCost": "50.2600",
           "ModifiedDate": "2022-04-15 00:00:00.000"
         },
         {
@@ -9189,7 +9244,7 @@
           "TransactionDate": "2022-04-15 00:00:00.000",
           "TransactionType": "P",
           "Quantity": 3,
-          "ActualCost": 45.12,
+          "ActualCost": "45.1200",
           "ModifiedDate": "2022-04-15 00:00:00.000"
         },
         {
@@ -9200,7 +9255,7 @@
           "TransactionDate": "2022-04-15 00:00:00.000",
           "TransactionType": "P",
           "Quantity": 3,
-          "ActualCost": 45.5805,
+          "ActualCost": "45.5805",
           "ModifiedDate": "2022-04-15 00:00:00.000"
         },
         {
@@ -9211,7 +9266,7 @@
           "TransactionDate": "2022-04-15 00:00:00.000",
           "TransactionType": "P",
           "Quantity": 550,
-          "ActualCost": 16.086,
+          "ActualCost": "16.0860",
           "ModifiedDate": "2022-04-15 00:00:00.000"
         },
         {
@@ -9222,7 +9277,7 @@
           "TransactionDate": "2022-04-15 00:00:00.000",
           "TransactionType": "P",
           "Quantity": 3,
-          "ActualCost": 57.0255,
+          "ActualCost": "57.0255",
           "ModifiedDate": "2022-04-15 00:00:00.000"
         },
         {
@@ -9233,7 +9288,7 @@
           "TransactionDate": "2022-04-29 00:00:00.000",
           "TransactionType": "P",
           "Quantity": 550,
-          "ActualCost": 37.086,
+          "ActualCost": "37.0860",
           "ModifiedDate": "2022-04-29 00:00:00.000"
         },
         {
@@ -9244,7 +9299,7 @@
           "TransactionDate": "2022-04-29 00:00:00.000",
           "TransactionType": "P",
           "Quantity": 550,
-          "ActualCost": 26.5965,
+          "ActualCost": "26.5965",
           "ModifiedDate": "2022-04-29 00:00:00.000"
         },
         {
@@ -9255,7 +9310,7 @@
           "TransactionDate": "2022-04-29 00:00:00.000",
           "TransactionType": "P",
           "Quantity": 550,
-          "ActualCost": 27.0585,
+          "ActualCost": "27.0585",
           "ModifiedDate": "2022-04-29 00:00:00.000"
         },
         {
@@ -9266,7 +9321,7 @@
           "TransactionDate": "2022-04-29 00:00:00.000",
           "TransactionType": "P",
           "Quantity": 550,
-          "ActualCost": 33.579,
+          "ActualCost": "33.5790",
           "ModifiedDate": "2022-04-29 00:00:00.000"
         },
         {
@@ -9277,7 +9332,7 @@
           "TransactionDate": "2022-04-29 00:00:00.000",
           "TransactionType": "P",
           "Quantity": 550,
-          "ActualCost": 46.0635,
+          "ActualCost": "46.0635",
           "ModifiedDate": "2022-04-29 00:00:00.000"
         },
         {
@@ -9288,7 +9343,7 @@
           "TransactionDate": "2022-04-29 00:00:00.000",
           "TransactionType": "P",
           "Quantity": 3,
-          "ActualCost": 47.4705,
+          "ActualCost": "47.4705",
           "ModifiedDate": "2022-04-29 00:00:00.000"
         },
         {
@@ -9299,7 +9354,7 @@
           "TransactionDate": "2022-04-29 00:00:00.000",
           "TransactionType": "P",
           "Quantity": 3,
-          "ActualCost": 45.3705,
+          "ActualCost": "45.3705",
           "ModifiedDate": "2022-04-29 00:00:00.000"
         }
       ]
@@ -9816,30 +9871,45 @@
         },
         {
           "name": "ActualResourceHrs",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(9,4)",
           "nullable": true,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
-          "defaultValue": null
+          "defaultValue": null,
+          "decimal": {
+            "precision": 9,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "PlannedCost",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
-          "defaultValue": null
+          "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "ActualCost",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": true,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
-          "defaultValue": null
+          "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "ModifiedDate",
@@ -9921,7 +9991,7 @@
       ],
       "rowCount": 67131,
       "viewSql": null,
-      "tableSql": "CREATE TABLE \"Production.WorkOrderRouting\" (\"WorkOrderID\" INTEGER NOT NULL, \"ProductID\" INTEGER NOT NULL, \"OperationSequence\" INTEGER NOT NULL, \"LocationID\" INTEGER NOT NULL, \"ScheduledStartDate\" TEXT NOT NULL, \"ScheduledEndDate\" TEXT NOT NULL, \"ActualStartDate\" TEXT, \"ActualEndDate\" TEXT, \"ActualResourceHrs\" NUMERIC, \"PlannedCost\" NUMERIC NOT NULL, \"ActualCost\" NUMERIC, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK (\"ScheduledEndDate\" >= \"ScheduledStartDate\"), CHECK ((\"ActualEndDate\" >= \"ActualStartDate\")\r\n        OR (\"ActualEndDate\" IS NULL) OR (\"ActualStartDate\" IS NULL)), CHECK (\"ActualResourceHrs\" >= 0.0000), CHECK (\"PlannedCost\" > 0.00), CHECK (\"ActualCost\" > 0.00), CONSTRAINT \"PK_WorkOrderRouting_WorkOrderID_ProductID_OperationSequence\" PRIMARY KEY (\"WorkOrderID\", \"ProductID\", \"OperationSequence\"), CONSTRAINT \"FK_WorkOrderRouting_Location_LocationID\" FOREIGN KEY (\"LocationID\") REFERENCES \"Production.Location\" (\"LocationID\"), CONSTRAINT \"FK_WorkOrderRouting_WorkOrder_WorkOrderID\" FOREIGN KEY (\"WorkOrderID\") REFERENCES \"Production.WorkOrder\" (\"WorkOrderID\"))",
+      "tableSql": "CREATE TABLE \"Production.WorkOrderRouting\" (\"WorkOrderID\" INTEGER NOT NULL, \"ProductID\" INTEGER NOT NULL, \"OperationSequence\" INTEGER NOT NULL, \"LocationID\" INTEGER NOT NULL, \"ScheduledStartDate\" TEXT NOT NULL, \"ScheduledEndDate\" TEXT NOT NULL, \"ActualStartDate\" TEXT, \"ActualEndDate\" TEXT, \"ActualResourceHrs\" DECIMAL_TEXT(9,4), \"PlannedCost\" DECIMAL_TEXT(19,4) NOT NULL, \"ActualCost\" DECIMAL_TEXT(19,4), \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK (\"ScheduledEndDate\" >= \"ScheduledStartDate\"), CHECK ((\"ActualEndDate\" >= \"ActualStartDate\")\r\n        OR (\"ActualEndDate\" IS NULL) OR (\"ActualStartDate\" IS NULL)), CONSTRAINT \"PK_WorkOrderRouting_WorkOrderID_ProductID_OperationSequence\" PRIMARY KEY (\"WorkOrderID\", \"ProductID\", \"OperationSequence\"), CONSTRAINT \"FK_WorkOrderRouting_Location_LocationID\" FOREIGN KEY (\"LocationID\") REFERENCES \"Production.Location\" (\"LocationID\"), CONSTRAINT \"FK_WorkOrderRouting_WorkOrder_WorkOrderID\" FOREIGN KEY (\"WorkOrderID\") REFERENCES \"Production.WorkOrder\" (\"WorkOrderID\"))",
       "rows": [
         {
           "WorkOrderID": 13,
@@ -9932,9 +10002,9 @@
           "ScheduledEndDate": "2022-06-13 00:00:00.000",
           "ActualStartDate": "2022-06-02 00:00:00.000",
           "ActualEndDate": "2022-06-18 00:00:00.000",
-          "ActualResourceHrs": 4.1,
-          "PlannedCost": 92.25,
-          "ActualCost": 92.25,
+          "ActualResourceHrs": "4.1000",
+          "PlannedCost": "92.2500",
+          "ActualCost": "92.2500",
           "ModifiedDate": "2022-06-18 00:00:00.000"
         },
         {
@@ -9946,9 +10016,9 @@
           "ScheduledEndDate": "2022-06-13 00:00:00.000",
           "ActualStartDate": "2022-06-02 00:00:00.000",
           "ActualEndDate": "2022-06-18 00:00:00.000",
-          "ActualResourceHrs": 3.5,
-          "PlannedCost": 87.5,
-          "ActualCost": 87.5,
+          "ActualResourceHrs": "3.5000",
+          "PlannedCost": "87.5000",
+          "ActualCost": "87.5000",
           "ModifiedDate": "2022-06-18 00:00:00.000"
         },
         {
@@ -9960,9 +10030,9 @@
           "ScheduledEndDate": "2022-06-13 00:00:00.000",
           "ActualStartDate": "2022-06-02 00:00:00.000",
           "ActualEndDate": "2022-06-18 00:00:00.000",
-          "ActualResourceHrs": 1,
-          "PlannedCost": 14.5,
-          "ActualCost": 14.5,
+          "ActualResourceHrs": "1.0000",
+          "PlannedCost": "14.5000",
+          "ActualCost": "14.5000",
           "ModifiedDate": "2022-06-18 00:00:00.000"
         },
         {
@@ -9974,9 +10044,9 @@
           "ScheduledEndDate": "2022-06-13 00:00:00.000",
           "ActualStartDate": "2022-06-02 00:00:00.000",
           "ActualEndDate": "2022-06-18 00:00:00.000",
-          "ActualResourceHrs": 2,
-          "PlannedCost": 31.5,
-          "ActualCost": 31.5,
+          "ActualResourceHrs": "2.0000",
+          "PlannedCost": "31.5000",
+          "ActualCost": "31.5000",
           "ModifiedDate": "2022-06-18 00:00:00.000"
         },
         {
@@ -9988,9 +10058,9 @@
           "ScheduledEndDate": "2022-06-13 00:00:00.000",
           "ActualStartDate": "2022-06-02 00:00:00.000",
           "ActualEndDate": "2022-06-18 00:00:00.000",
-          "ActualResourceHrs": 3,
-          "PlannedCost": 36.75,
-          "ActualCost": 36.75,
+          "ActualResourceHrs": "3.0000",
+          "PlannedCost": "36.7500",
+          "ActualCost": "36.7500",
           "ModifiedDate": "2022-06-18 00:00:00.000"
         },
         {
@@ -10002,9 +10072,9 @@
           "ScheduledEndDate": "2022-06-13 00:00:00.000",
           "ActualStartDate": "2022-06-02 00:00:00.000",
           "ActualEndDate": "2022-06-18 00:00:00.000",
-          "ActualResourceHrs": 4,
-          "PlannedCost": 49,
-          "ActualCost": 49,
+          "ActualResourceHrs": "4.0000",
+          "PlannedCost": "49.0000",
+          "ActualCost": "49.0000",
           "ModifiedDate": "2022-06-18 00:00:00.000"
         },
         {
@@ -10016,9 +10086,9 @@
           "ScheduledEndDate": "2022-06-13 00:00:00.000",
           "ActualStartDate": "2022-06-02 00:00:00.000",
           "ActualEndDate": "2022-06-18 00:00:00.000",
-          "ActualResourceHrs": 4.1,
-          "PlannedCost": 92.25,
-          "ActualCost": 92.25,
+          "ActualResourceHrs": "4.1000",
+          "PlannedCost": "92.2500",
+          "ActualCost": "92.2500",
           "ModifiedDate": "2022-06-18 00:00:00.000"
         },
         {
@@ -10030,9 +10100,9 @@
           "ScheduledEndDate": "2022-06-13 00:00:00.000",
           "ActualStartDate": "2022-06-02 00:00:00.000",
           "ActualEndDate": "2022-06-18 00:00:00.000",
-          "ActualResourceHrs": 3.5,
-          "PlannedCost": 87.5,
-          "ActualCost": 87.5,
+          "ActualResourceHrs": "3.5000",
+          "PlannedCost": "87.5000",
+          "ActualCost": "87.5000",
           "ModifiedDate": "2022-06-18 00:00:00.000"
         },
         {
@@ -10044,9 +10114,9 @@
           "ScheduledEndDate": "2022-06-13 00:00:00.000",
           "ActualStartDate": "2022-06-02 00:00:00.000",
           "ActualEndDate": "2022-06-18 00:00:00.000",
-          "ActualResourceHrs": 1,
-          "PlannedCost": 14.5,
-          "ActualCost": 14.5,
+          "ActualResourceHrs": "1.0000",
+          "PlannedCost": "14.5000",
+          "ActualCost": "14.5000",
           "ModifiedDate": "2022-06-18 00:00:00.000"
         },
         {
@@ -10058,9 +10128,9 @@
           "ScheduledEndDate": "2022-06-13 00:00:00.000",
           "ActualStartDate": "2022-06-02 00:00:00.000",
           "ActualEndDate": "2022-06-18 00:00:00.000",
-          "ActualResourceHrs": 2,
-          "PlannedCost": 36,
-          "ActualCost": 36,
+          "ActualResourceHrs": "2.0000",
+          "PlannedCost": "36.0000",
+          "ActualCost": "36.0000",
           "ModifiedDate": "2022-06-18 00:00:00.000"
         },
         {
@@ -10072,9 +10142,9 @@
           "ScheduledEndDate": "2022-06-13 00:00:00.000",
           "ActualStartDate": "2022-06-02 00:00:00.000",
           "ActualEndDate": "2022-06-18 00:00:00.000",
-          "ActualResourceHrs": 3,
-          "PlannedCost": 36.75,
-          "ActualCost": 36.75,
+          "ActualResourceHrs": "3.0000",
+          "PlannedCost": "36.7500",
+          "ActualCost": "36.7500",
           "ModifiedDate": "2022-06-18 00:00:00.000"
         },
         {
@@ -10086,9 +10156,9 @@
           "ScheduledEndDate": "2022-06-13 00:00:00.000",
           "ActualStartDate": "2022-06-02 00:00:00.000",
           "ActualEndDate": "2022-06-18 00:00:00.000",
-          "ActualResourceHrs": 4,
-          "PlannedCost": 49,
-          "ActualCost": 49,
+          "ActualResourceHrs": "4.0000",
+          "PlannedCost": "49.0000",
+          "ActualCost": "49.0000",
           "ModifiedDate": "2022-06-18 00:00:00.000"
         }
       ]
@@ -10132,22 +10202,32 @@
         },
         {
           "name": "StandardPrice",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
           "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "The vendor's usual selling price."
         },
         {
           "name": "LastReceiptCost",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": true,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
           "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "The selling price when last purchased."
         },
         {
@@ -10280,14 +10360,14 @@
       ],
       "rowCount": 460,
       "viewSql": null,
-      "tableSql": "CREATE TABLE \"Purchasing.ProductVendor\" (\"ProductID\" INTEGER NOT NULL, \"BusinessEntityID\" INTEGER NOT NULL, \"AverageLeadTime\" INTEGER NOT NULL, \"StandardPrice\" NUMERIC NOT NULL, \"LastReceiptCost\" NUMERIC, \"LastReceiptDate\" TEXT, \"MinOrderQty\" INTEGER NOT NULL, \"MaxOrderQty\" INTEGER NOT NULL, \"OnOrderQty\" INTEGER, \"UnitMeasureCode\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK (\"AverageLeadTime\" >= 1), CHECK (\"StandardPrice\" > 0.00), CHECK (\"LastReceiptCost\" > 0.00), CHECK (\"MinOrderQty\" >= 1), CHECK (\"MaxOrderQty\" >= 1), CHECK (\"OnOrderQty\" >= 0), CONSTRAINT \"PK_ProductVendor_ProductID_BusinessEntityID\" PRIMARY KEY (\"ProductID\", \"BusinessEntityID\"), CONSTRAINT \"FK_ProductVendor_Product_ProductID\" FOREIGN KEY (\"ProductID\") REFERENCES \"Production.Product\" (\"ProductID\"), CONSTRAINT \"FK_ProductVendor_UnitMeasure_UnitMeasureCode\" FOREIGN KEY (\"UnitMeasureCode\") REFERENCES \"Production.UnitMeasure\" (\"UnitMeasureCode\"), CONSTRAINT \"FK_ProductVendor_Vendor_BusinessEntityID\" FOREIGN KEY (\"BusinessEntityID\") REFERENCES \"Purchasing.Vendor\" (\"BusinessEntityID\"))",
+      "tableSql": "CREATE TABLE \"Purchasing.ProductVendor\" (\"ProductID\" INTEGER NOT NULL, \"BusinessEntityID\" INTEGER NOT NULL, \"AverageLeadTime\" INTEGER NOT NULL, \"StandardPrice\" DECIMAL_TEXT(19,4) NOT NULL, \"LastReceiptCost\" DECIMAL_TEXT(19,4), \"LastReceiptDate\" TEXT, \"MinOrderQty\" INTEGER NOT NULL, \"MaxOrderQty\" INTEGER NOT NULL, \"OnOrderQty\" INTEGER, \"UnitMeasureCode\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK (\"AverageLeadTime\" >= 1), CHECK (\"MinOrderQty\" >= 1), CHECK (\"MaxOrderQty\" >= 1), CHECK (\"OnOrderQty\" >= 0), CONSTRAINT \"PK_ProductVendor_ProductID_BusinessEntityID\" PRIMARY KEY (\"ProductID\", \"BusinessEntityID\"), CONSTRAINT \"FK_ProductVendor_Product_ProductID\" FOREIGN KEY (\"ProductID\") REFERENCES \"Production.Product\" (\"ProductID\"), CONSTRAINT \"FK_ProductVendor_UnitMeasure_UnitMeasureCode\" FOREIGN KEY (\"UnitMeasureCode\") REFERENCES \"Production.UnitMeasure\" (\"UnitMeasureCode\"), CONSTRAINT \"FK_ProductVendor_Vendor_BusinessEntityID\" FOREIGN KEY (\"BusinessEntityID\") REFERENCES \"Purchasing.Vendor\" (\"BusinessEntityID\"))",
       "rows": [
         {
           "ProductID": 1,
           "BusinessEntityID": 1580,
           "AverageLeadTime": 17,
-          "StandardPrice": 47.87,
-          "LastReceiptCost": 50.2635,
+          "StandardPrice": "47.8700",
+          "LastReceiptCost": "50.2635",
           "LastReceiptDate": "2022-08-28 00:00:00.000",
           "MinOrderQty": 1,
           "MaxOrderQty": 5,
@@ -10299,8 +10379,8 @@
           "ProductID": 2,
           "BusinessEntityID": 1688,
           "AverageLeadTime": 19,
-          "StandardPrice": 39.92,
-          "LastReceiptCost": 41.916,
+          "StandardPrice": "39.9200",
+          "LastReceiptCost": "41.9160",
           "LastReceiptDate": "2022-08-28 00:00:00.000",
           "MinOrderQty": 1,
           "MaxOrderQty": 5,
@@ -10312,8 +10392,8 @@
           "ProductID": 4,
           "BusinessEntityID": 1650,
           "AverageLeadTime": 17,
-          "StandardPrice": 54.31,
-          "LastReceiptCost": 57.0255,
+          "StandardPrice": "54.3100",
+          "LastReceiptCost": "57.0255",
           "LastReceiptDate": "2022-08-28 00:00:00.000",
           "MinOrderQty": 1,
           "MaxOrderQty": 5,
@@ -10325,8 +10405,8 @@
           "ProductID": 317,
           "BusinessEntityID": 1578,
           "AverageLeadTime": 19,
-          "StandardPrice": 28.17,
-          "LastReceiptCost": 29.5785,
+          "StandardPrice": "28.1700",
+          "LastReceiptCost": "29.5785",
           "LastReceiptDate": "2022-08-28 00:00:00.000",
           "MinOrderQty": 100,
           "MaxOrderQty": 1000,
@@ -10338,8 +10418,8 @@
           "ProductID": 317,
           "BusinessEntityID": 1678,
           "AverageLeadTime": 17,
-          "StandardPrice": 25.77,
-          "LastReceiptCost": 27.0585,
+          "StandardPrice": "25.7700",
+          "LastReceiptCost": "27.0585",
           "LastReceiptDate": "2022-08-24 00:00:00.000",
           "MinOrderQty": 100,
           "MaxOrderQty": 1000,
@@ -10351,8 +10431,8 @@
           "ProductID": 318,
           "BusinessEntityID": 1578,
           "AverageLeadTime": 19,
-          "StandardPrice": 34.38,
-          "LastReceiptCost": 36.099,
+          "StandardPrice": "34.3800",
+          "LastReceiptCost": "36.0990",
           "LastReceiptDate": "2022-08-28 00:00:00.000",
           "MinOrderQty": 100,
           "MaxOrderQty": 1000,
@@ -10364,8 +10444,8 @@
           "ProductID": 318,
           "BusinessEntityID": 1678,
           "AverageLeadTime": 17,
-          "StandardPrice": 31.98,
-          "LastReceiptCost": 33.579,
+          "StandardPrice": "31.9800",
+          "LastReceiptCost": "33.5790",
           "LastReceiptDate": "2022-08-24 00:00:00.000",
           "MinOrderQty": 100,
           "MaxOrderQty": 1000,
@@ -10377,8 +10457,8 @@
           "ProductID": 319,
           "BusinessEntityID": 1556,
           "AverageLeadTime": 19,
-          "StandardPrice": 44.21,
-          "LastReceiptCost": 46.4205,
+          "StandardPrice": "44.2100",
+          "LastReceiptCost": "46.4205",
           "LastReceiptDate": "2022-08-28 00:00:00.000",
           "MinOrderQty": 100,
           "MaxOrderQty": 1000,
@@ -10390,8 +10470,8 @@
           "ProductID": 319,
           "BusinessEntityID": 1578,
           "AverageLeadTime": 19,
-          "StandardPrice": 46.27,
-          "LastReceiptCost": 48.5835,
+          "StandardPrice": "46.2700",
+          "LastReceiptCost": "48.5835",
           "LastReceiptDate": "2022-08-28 00:00:00.000",
           "MinOrderQty": 100,
           "MaxOrderQty": 1000,
@@ -10403,8 +10483,8 @@
           "ProductID": 319,
           "BusinessEntityID": 1678,
           "AverageLeadTime": 17,
-          "StandardPrice": 43.87,
-          "LastReceiptCost": 46.0635,
+          "StandardPrice": "43.8700",
+          "LastReceiptCost": "46.0635",
           "LastReceiptDate": "2022-08-24 00:00:00.000",
           "MinOrderQty": 100,
           "MaxOrderQty": 1000,
@@ -10416,8 +10496,8 @@
           "ProductID": 320,
           "BusinessEntityID": 1514,
           "AverageLeadTime": 19,
-          "StandardPrice": 47.28,
-          "LastReceiptCost": 49.644,
+          "StandardPrice": "47.2800",
+          "LastReceiptCost": "49.6440",
           "LastReceiptDate": "2022-08-28 00:00:00.000",
           "MinOrderQty": 1,
           "MaxOrderQty": 5,
@@ -10429,8 +10509,8 @@
           "ProductID": 320,
           "BusinessEntityID": 1602,
           "AverageLeadTime": 17,
-          "StandardPrice": 45.21,
-          "LastReceiptCost": 47.4705,
+          "StandardPrice": "45.2100",
+          "LastReceiptCost": "47.4705",
           "LastReceiptDate": "2022-08-18 00:00:00.000",
           "MinOrderQty": 1,
           "MaxOrderQty": 5,
@@ -10499,52 +10579,77 @@
         },
         {
           "name": "UnitPrice",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
           "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Vendor's selling price of a single product."
         },
         {
           "name": "LineTotal",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(38,4)",
           "nullable": true,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
           "defaultValue": null,
+          "decimal": {
+            "precision": 38,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Per product subtotal. Computed as OrderQty * UnitPrice. Source computed-column expression is retained in source metadata; the seeded value is stored as imported data in SQLite."
         },
         {
           "name": "ReceivedQty",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(8,2)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
           "defaultValue": null,
+          "decimal": {
+            "precision": 8,
+            "scale": 2,
+            "storage": "text"
+          },
           "description": "Quantity actually received from the vendor."
         },
         {
           "name": "RejectedQty",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(8,2)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
           "defaultValue": null,
+          "decimal": {
+            "precision": 8,
+            "scale": 2,
+            "storage": "text"
+          },
           "description": "Quantity rejected during inspection."
         },
         {
           "name": "StockedQty",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(38,2)",
           "nullable": true,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
           "defaultValue": null,
+          "decimal": {
+            "precision": 38,
+            "scale": 2,
+            "storage": "text"
+          },
           "description": "Quantity accepted into inventory. Computed as ReceivedQty - RejectedQty. Source computed-column expression is retained in source metadata; the seeded value is stored as imported data in SQLite."
         },
         {
@@ -10617,7 +10722,7 @@
       ],
       "rowCount": 8845,
       "viewSql": null,
-      "tableSql": "CREATE TABLE \"Purchasing.PurchaseOrderDetail\" (\"PurchaseOrderID\" INTEGER NOT NULL, \"PurchaseOrderDetailID\" INTEGER NOT NULL, \"DueDate\" TEXT NOT NULL, \"OrderQty\" INTEGER NOT NULL, \"ProductID\" INTEGER NOT NULL, \"UnitPrice\" NUMERIC NOT NULL, \"LineTotal\" NUMERIC, \"ReceivedQty\" NUMERIC NOT NULL, \"RejectedQty\" NUMERIC NOT NULL, \"StockedQty\" NUMERIC, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK (\"OrderQty\" > 0), CHECK (\"UnitPrice\" >= 0.00), CHECK (\"ReceivedQty\" >= 0.00), CHECK (\"RejectedQty\" >= 0.00), CONSTRAINT \"PK_PurchaseOrderDetail_PurchaseOrderID_PurchaseOrderDetailID\" PRIMARY KEY (\"PurchaseOrderID\", \"PurchaseOrderDetailID\"), CONSTRAINT \"FK_PurchaseOrderDetail_Product_ProductID\" FOREIGN KEY (\"ProductID\") REFERENCES \"Production.Product\" (\"ProductID\"), CONSTRAINT \"FK_PurchaseOrderDetail_PurchaseOrderHeader_PurchaseOrderID\" FOREIGN KEY (\"PurchaseOrderID\") REFERENCES \"Purchasing.PurchaseOrderHeader\" (\"PurchaseOrderID\"))",
+      "tableSql": "CREATE TABLE \"Purchasing.PurchaseOrderDetail\" (\"PurchaseOrderID\" INTEGER NOT NULL, \"PurchaseOrderDetailID\" INTEGER NOT NULL, \"DueDate\" TEXT NOT NULL, \"OrderQty\" INTEGER NOT NULL, \"ProductID\" INTEGER NOT NULL, \"UnitPrice\" DECIMAL_TEXT(19,4) NOT NULL, \"LineTotal\" DECIMAL_TEXT(38,4), \"ReceivedQty\" DECIMAL_TEXT(8,2) NOT NULL, \"RejectedQty\" DECIMAL_TEXT(8,2) NOT NULL, \"StockedQty\" DECIMAL_TEXT(38,2), \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK (\"OrderQty\" > 0), CONSTRAINT \"PK_PurchaseOrderDetail_PurchaseOrderID_PurchaseOrderDetailID\" PRIMARY KEY (\"PurchaseOrderID\", \"PurchaseOrderDetailID\"), CONSTRAINT \"FK_PurchaseOrderDetail_Product_ProductID\" FOREIGN KEY (\"ProductID\") REFERENCES \"Production.Product\" (\"ProductID\"), CONSTRAINT \"FK_PurchaseOrderDetail_PurchaseOrderHeader_PurchaseOrderID\" FOREIGN KEY (\"PurchaseOrderID\") REFERENCES \"Purchasing.PurchaseOrderHeader\" (\"PurchaseOrderID\"))",
       "rows": [
         {
           "PurchaseOrderID": 1,
@@ -10625,11 +10730,11 @@
           "DueDate": "2022-04-29 00:00:00.000",
           "OrderQty": 4,
           "ProductID": 1,
-          "UnitPrice": 50.26,
-          "LineTotal": 201.04,
-          "ReceivedQty": 3,
-          "RejectedQty": 0,
-          "StockedQty": 3,
+          "UnitPrice": "50.2600",
+          "LineTotal": "201.0400",
+          "ReceivedQty": "3.00",
+          "RejectedQty": ".00",
+          "StockedQty": "3.00",
           "ModifiedDate": "2022-04-22 00:00:00.000"
         },
         {
@@ -10638,11 +10743,11 @@
           "DueDate": "2022-04-29 00:00:00.000",
           "OrderQty": 3,
           "ProductID": 359,
-          "UnitPrice": 45.12,
-          "LineTotal": 135.36,
-          "ReceivedQty": 3,
-          "RejectedQty": 0,
-          "StockedQty": 3,
+          "UnitPrice": "45.1200",
+          "LineTotal": "135.3600",
+          "ReceivedQty": "3.00",
+          "RejectedQty": ".00",
+          "StockedQty": "3.00",
           "ModifiedDate": "2022-04-22 00:00:00.000"
         },
         {
@@ -10651,11 +10756,11 @@
           "DueDate": "2022-04-29 00:00:00.000",
           "OrderQty": 3,
           "ProductID": 360,
-          "UnitPrice": 45.5805,
-          "LineTotal": 136.7415,
-          "ReceivedQty": 3,
-          "RejectedQty": 0,
-          "StockedQty": 3,
+          "UnitPrice": "45.5805",
+          "LineTotal": "136.7415",
+          "ReceivedQty": "3.00",
+          "RejectedQty": ".00",
+          "StockedQty": "3.00",
           "ModifiedDate": "2022-04-22 00:00:00.000"
         },
         {
@@ -10664,11 +10769,11 @@
           "DueDate": "2022-04-29 00:00:00.000",
           "OrderQty": 550,
           "ProductID": 530,
-          "UnitPrice": 16.086,
-          "LineTotal": 8847.3,
-          "ReceivedQty": 550,
-          "RejectedQty": 0,
-          "StockedQty": 550,
+          "UnitPrice": "16.0860",
+          "LineTotal": "8847.3000",
+          "ReceivedQty": "550.00",
+          "RejectedQty": ".00",
+          "StockedQty": "550.00",
           "ModifiedDate": "2022-04-22 00:00:00.000"
         },
         {
@@ -10677,11 +10782,11 @@
           "DueDate": "2022-04-29 00:00:00.000",
           "OrderQty": 3,
           "ProductID": 4,
-          "UnitPrice": 57.0255,
-          "LineTotal": 171.0765,
-          "ReceivedQty": 2,
-          "RejectedQty": 1,
-          "StockedQty": 1,
+          "UnitPrice": "57.0255",
+          "LineTotal": "171.0765",
+          "ReceivedQty": "2.00",
+          "RejectedQty": "1.00",
+          "StockedQty": "1.00",
           "ModifiedDate": "2022-04-22 00:00:00.000"
         },
         {
@@ -10690,11 +10795,11 @@
           "DueDate": "2022-05-13 00:00:00.000",
           "OrderQty": 550,
           "ProductID": 512,
-          "UnitPrice": 37.086,
-          "LineTotal": 20397.3,
-          "ReceivedQty": 550,
-          "RejectedQty": 0,
-          "StockedQty": 550,
+          "UnitPrice": "37.0860",
+          "LineTotal": "20397.3000",
+          "ReceivedQty": "550.00",
+          "RejectedQty": ".00",
+          "StockedQty": "550.00",
           "ModifiedDate": "2022-05-06 00:00:00.000"
         },
         {
@@ -10703,11 +10808,11 @@
           "DueDate": "2022-05-13 00:00:00.000",
           "OrderQty": 550,
           "ProductID": 513,
-          "UnitPrice": 26.5965,
-          "LineTotal": 14628.075,
-          "ReceivedQty": 468,
-          "RejectedQty": 0,
-          "StockedQty": 468,
+          "UnitPrice": "26.5965",
+          "LineTotal": "14628.0750",
+          "ReceivedQty": "468.00",
+          "RejectedQty": ".00",
+          "StockedQty": "468.00",
           "ModifiedDate": "2022-05-06 00:00:00.000"
         },
         {
@@ -10716,11 +10821,11 @@
           "DueDate": "2022-05-13 00:00:00.000",
           "OrderQty": 550,
           "ProductID": 317,
-          "UnitPrice": 27.0585,
-          "LineTotal": 14882.175,
-          "ReceivedQty": 550,
-          "RejectedQty": 0,
-          "StockedQty": 550,
+          "UnitPrice": "27.0585",
+          "LineTotal": "14882.1750",
+          "ReceivedQty": "550.00",
+          "RejectedQty": ".00",
+          "StockedQty": "550.00",
           "ModifiedDate": "2022-05-06 00:00:00.000"
         },
         {
@@ -10729,11 +10834,11 @@
           "DueDate": "2022-05-13 00:00:00.000",
           "OrderQty": 550,
           "ProductID": 318,
-          "UnitPrice": 33.579,
-          "LineTotal": 18468.45,
-          "ReceivedQty": 550,
-          "RejectedQty": 0,
-          "StockedQty": 550,
+          "UnitPrice": "33.5790",
+          "LineTotal": "18468.4500",
+          "ReceivedQty": "550.00",
+          "RejectedQty": ".00",
+          "StockedQty": "550.00",
           "ModifiedDate": "2022-05-06 00:00:00.000"
         },
         {
@@ -10742,11 +10847,11 @@
           "DueDate": "2022-05-13 00:00:00.000",
           "OrderQty": 550,
           "ProductID": 319,
-          "UnitPrice": 46.0635,
-          "LineTotal": 25334.925,
-          "ReceivedQty": 550,
-          "RejectedQty": 0,
-          "StockedQty": 550,
+          "UnitPrice": "46.0635",
+          "LineTotal": "25334.9250",
+          "ReceivedQty": "550.00",
+          "RejectedQty": ".00",
+          "StockedQty": "550.00",
           "ModifiedDate": "2022-05-06 00:00:00.000"
         },
         {
@@ -10755,11 +10860,11 @@
           "DueDate": "2022-05-13 00:00:00.000",
           "OrderQty": 3,
           "ProductID": 403,
-          "UnitPrice": 47.4705,
-          "LineTotal": 142.4115,
-          "ReceivedQty": 3,
-          "RejectedQty": 0,
-          "StockedQty": 3,
+          "UnitPrice": "47.4705",
+          "LineTotal": "142.4115",
+          "ReceivedQty": "3.00",
+          "RejectedQty": ".00",
+          "StockedQty": "3.00",
           "ModifiedDate": "2022-05-06 00:00:00.000"
         },
         {
@@ -10768,11 +10873,11 @@
           "DueDate": "2022-05-13 00:00:00.000",
           "OrderQty": 3,
           "ProductID": 404,
-          "UnitPrice": 45.3705,
-          "LineTotal": 136.1115,
-          "ReceivedQty": 3,
-          "RejectedQty": 0,
-          "StockedQty": 3,
+          "UnitPrice": "45.3705",
+          "LineTotal": "136.1115",
+          "ReceivedQty": "3.00",
+          "RejectedQty": ".00",
+          "StockedQty": "3.00",
           "ModifiedDate": "2022-05-06 00:00:00.000"
         }
       ]
@@ -10866,42 +10971,62 @@
         },
         {
           "name": "SubTotal",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00",
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Purchase order subtotal. Computed as SUM(PurchaseOrderDetail.LineTotal)for the appropriate PurchaseOrderID."
         },
         {
           "name": "TaxAmt",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00",
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Tax amount."
         },
         {
           "name": "Freight",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00",
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Shipping cost."
         },
         {
           "name": "TotalDue",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(38,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
           "defaultValue": null,
+          "decimal": {
+            "precision": 38,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Total due to vendor. Computed as Subtotal + TaxAmt + Freight. Source computed-column expression is retained in source metadata; the seeded value is stored as imported data in SQLite."
         },
         {
@@ -10957,7 +11082,7 @@
       ],
       "rowCount": 4012,
       "viewSql": null,
-      "tableSql": "CREATE TABLE \"Purchasing.PurchaseOrderHeader\" (\"PurchaseOrderID\" INTEGER NOT NULL, \"RevisionNumber\" INTEGER NOT NULL DEFAULT 0, \"Status\" INTEGER NOT NULL DEFAULT 1, \"EmployeeID\" INTEGER NOT NULL, \"VendorID\" INTEGER NOT NULL, \"ShipMethodID\" INTEGER NOT NULL, \"OrderDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', \"ShipDate\" TEXT, \"SubTotal\" NUMERIC NOT NULL DEFAULT 0.00, \"TaxAmt\" NUMERIC NOT NULL DEFAULT 0.00, \"Freight\" NUMERIC NOT NULL DEFAULT 0.00, \"TotalDue\" NUMERIC NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK (\"Status\" BETWEEN 1 AND 4), CHECK ((\"ShipDate\" >= \"OrderDate\") OR (\"ShipDate\" IS NULL)), CHECK (\"SubTotal\" >= 0.00), CHECK (\"TaxAmt\" >= 0.00), CHECK (\"Freight\" >= 0.00), CONSTRAINT \"PK_PurchaseOrderHeader_PurchaseOrderID\" PRIMARY KEY (\"PurchaseOrderID\"), CONSTRAINT \"FK_PurchaseOrderHeader_Employee_EmployeeID\" FOREIGN KEY (\"EmployeeID\") REFERENCES \"HumanResources.Employee\" (\"BusinessEntityID\"), CONSTRAINT \"FK_PurchaseOrderHeader_Vendor_VendorID\" FOREIGN KEY (\"VendorID\") REFERENCES \"Purchasing.Vendor\" (\"BusinessEntityID\"), CONSTRAINT \"FK_PurchaseOrderHeader_ShipMethod_ShipMethodID\" FOREIGN KEY (\"ShipMethodID\") REFERENCES \"Purchasing.ShipMethod\" (\"ShipMethodID\"))",
+      "tableSql": "CREATE TABLE \"Purchasing.PurchaseOrderHeader\" (\"PurchaseOrderID\" INTEGER NOT NULL, \"RevisionNumber\" INTEGER NOT NULL DEFAULT 0, \"Status\" INTEGER NOT NULL DEFAULT 1, \"EmployeeID\" INTEGER NOT NULL, \"VendorID\" INTEGER NOT NULL, \"ShipMethodID\" INTEGER NOT NULL, \"OrderDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', \"ShipDate\" TEXT, \"SubTotal\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT '0.00', \"TaxAmt\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT '0.00', \"Freight\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT '0.00', \"TotalDue\" DECIMAL_TEXT(38,4) NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK (\"Status\" BETWEEN 1 AND 4), CHECK ((\"ShipDate\" >= \"OrderDate\") OR (\"ShipDate\" IS NULL)), CONSTRAINT \"PK_PurchaseOrderHeader_PurchaseOrderID\" PRIMARY KEY (\"PurchaseOrderID\"), CONSTRAINT \"FK_PurchaseOrderHeader_Employee_EmployeeID\" FOREIGN KEY (\"EmployeeID\") REFERENCES \"HumanResources.Employee\" (\"BusinessEntityID\"), CONSTRAINT \"FK_PurchaseOrderHeader_Vendor_VendorID\" FOREIGN KEY (\"VendorID\") REFERENCES \"Purchasing.Vendor\" (\"BusinessEntityID\"), CONSTRAINT \"FK_PurchaseOrderHeader_ShipMethod_ShipMethodID\" FOREIGN KEY (\"ShipMethodID\") REFERENCES \"Purchasing.ShipMethod\" (\"ShipMethodID\"))",
       "rows": [
         {
           "PurchaseOrderID": 1,
@@ -10968,10 +11093,10 @@
           "ShipMethodID": 3,
           "OrderDate": "2022-04-15 00:00:00.000",
           "ShipDate": "2022-04-24 00:00:00.000",
-          "SubTotal": 201.04,
-          "TaxAmt": 16.0832,
-          "Freight": 5.026,
-          "TotalDue": 222.1492,
+          "SubTotal": "201.0400",
+          "TaxAmt": "16.0832",
+          "Freight": "5.0260",
+          "TotalDue": "222.1492",
           "ModifiedDate": "2022-04-24 00:00:00.000"
         },
         {
@@ -10983,10 +11108,10 @@
           "ShipMethodID": 5,
           "OrderDate": "2022-04-15 00:00:00.000",
           "ShipDate": "2022-04-24 00:00:00.000",
-          "SubTotal": 272.1015,
-          "TaxAmt": 21.7681,
-          "Freight": 6.8025,
-          "TotalDue": 300.6721,
+          "SubTotal": "272.1015",
+          "TaxAmt": "21.7681",
+          "Freight": "6.8025",
+          "TotalDue": "300.6721",
           "ModifiedDate": "2022-04-24 00:00:00.000"
         },
         {
@@ -10998,10 +11123,10 @@
           "ShipMethodID": 2,
           "OrderDate": "2022-04-15 00:00:00.000",
           "ShipDate": "2022-04-24 00:00:00.000",
-          "SubTotal": 8847.3,
-          "TaxAmt": 707.784,
-          "Freight": 221.1825,
-          "TotalDue": 9776.2665,
+          "SubTotal": "8847.3000",
+          "TaxAmt": "707.7840",
+          "Freight": "221.1825",
+          "TotalDue": "9776.2665",
           "ModifiedDate": "2022-04-24 00:00:00.000"
         },
         {
@@ -11013,10 +11138,10 @@
           "ShipMethodID": 5,
           "OrderDate": "2022-04-15 00:00:00.000",
           "ShipDate": "2022-04-24 00:00:00.000",
-          "SubTotal": 171.0765,
-          "TaxAmt": 13.6861,
-          "Freight": 4.2769,
-          "TotalDue": 189.0395,
+          "SubTotal": "171.0765",
+          "TaxAmt": "13.6861",
+          "Freight": "4.2769",
+          "TotalDue": "189.0395",
           "ModifiedDate": "2022-04-24 00:00:00.000"
         },
         {
@@ -11028,10 +11153,10 @@
           "ShipMethodID": 4,
           "OrderDate": "2022-04-29 00:00:00.000",
           "ShipDate": "2022-05-08 00:00:00.000",
-          "SubTotal": 20397.3,
-          "TaxAmt": 1631.784,
-          "Freight": 509.9325,
-          "TotalDue": 22539.0165,
+          "SubTotal": "20397.3000",
+          "TaxAmt": "1631.7840",
+          "Freight": "509.9325",
+          "TotalDue": "22539.0165",
           "ModifiedDate": "2022-05-08 00:00:00.000"
         },
         {
@@ -11043,10 +11168,10 @@
           "ShipMethodID": 3,
           "OrderDate": "2022-04-29 00:00:00.000",
           "ShipDate": "2022-05-08 00:00:00.000",
-          "SubTotal": 14628.075,
-          "TaxAmt": 1170.246,
-          "Freight": 365.7019,
-          "TotalDue": 16164.0229,
+          "SubTotal": "14628.0750",
+          "TaxAmt": "1170.2460",
+          "Freight": "365.7019",
+          "TotalDue": "16164.0229",
           "ModifiedDate": "2022-05-08 00:00:00.000"
         },
         {
@@ -11058,10 +11183,10 @@
           "ShipMethodID": 3,
           "OrderDate": "2022-04-29 00:00:00.000",
           "ShipDate": "2022-05-08 00:00:00.000",
-          "SubTotal": 58685.55,
-          "TaxAmt": 4694.844,
-          "Freight": 1467.1388,
-          "TotalDue": 64847.5328,
+          "SubTotal": "58685.5500",
+          "TaxAmt": "4694.8440",
+          "Freight": "1467.1388",
+          "TotalDue": "64847.5328",
           "ModifiedDate": "2022-05-08 00:00:00.000"
         },
         {
@@ -11073,10 +11198,10 @@
           "ShipMethodID": 5,
           "OrderDate": "2022-04-29 00:00:00.000",
           "ShipDate": "2022-05-08 00:00:00.000",
-          "SubTotal": 693.378,
-          "TaxAmt": 55.4702,
-          "Freight": 17.3345,
-          "TotalDue": 766.1827,
+          "SubTotal": "693.3780",
+          "TaxAmt": "55.4702",
+          "Freight": "17.3345",
+          "TotalDue": "766.1827",
           "ModifiedDate": "2022-05-08 00:00:00.000"
         },
         {
@@ -11088,10 +11213,10 @@
           "ShipMethodID": 5,
           "OrderDate": "2022-12-13 00:00:00.000",
           "ShipDate": "2022-12-22 00:00:00.000",
-          "SubTotal": 694.1655,
-          "TaxAmt": 55.5332,
-          "Freight": 17.3541,
-          "TotalDue": 767.0528,
+          "SubTotal": "694.1655",
+          "TaxAmt": "55.5332",
+          "Freight": "17.3541",
+          "TotalDue": "767.0528",
           "ModifiedDate": "2022-12-22 00:00:00.000"
         },
         {
@@ -11103,10 +11228,10 @@
           "ShipMethodID": 5,
           "OrderDate": "2022-12-13 00:00:00.000",
           "ShipDate": "2022-12-22 00:00:00.000",
-          "SubTotal": 1796.0355,
-          "TaxAmt": 143.6828,
-          "Freight": 44.9009,
-          "TotalDue": 1984.6192,
+          "SubTotal": "1796.0355",
+          "TaxAmt": "143.6828",
+          "Freight": "44.9009",
+          "TotalDue": "1984.6192",
           "ModifiedDate": "2022-12-22 00:00:00.000"
         },
         {
@@ -11118,10 +11243,10 @@
           "ShipMethodID": 4,
           "OrderDate": "2022-12-13 00:00:00.000",
           "ShipDate": "2022-12-22 00:00:00.000",
-          "SubTotal": 501.1965,
-          "TaxAmt": 40.0957,
-          "Freight": 12.5299,
-          "TotalDue": 553.8221,
+          "SubTotal": "501.1965",
+          "TaxAmt": "40.0957",
+          "Freight": "12.5299",
+          "TotalDue": "553.8221",
           "ModifiedDate": "2022-12-22 00:00:00.000"
         },
         {
@@ -11133,10 +11258,10 @@
           "ShipMethodID": 5,
           "OrderDate": "2022-12-13 00:00:00.000",
           "ShipDate": "2022-12-22 00:00:00.000",
-          "SubTotal": 34644.225,
-          "TaxAmt": 2771.538,
-          "Freight": 866.1056,
-          "TotalDue": 38281.8686,
+          "SubTotal": "34644.2250",
+          "TaxAmt": "2771.5380",
+          "Freight": "866.1056",
+          "TotalDue": "38281.8686",
           "ModifiedDate": "2022-12-22 00:00:00.000"
         }
       ]
@@ -11170,22 +11295,32 @@
         },
         {
           "name": "ShipBase",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00",
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Minimum shipping charge."
         },
         {
           "name": "ShipRate",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00",
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Shipping charge per pound."
         },
         {
@@ -11266,45 +11401,45 @@
       "foreignKeys": [],
       "rowCount": 5,
       "viewSql": null,
-      "tableSql": "CREATE TABLE \"Purchasing.ShipMethod\" (\"ShipMethodID\" INTEGER NOT NULL, \"Name\" TEXT NOT NULL, \"ShipBase\" NUMERIC NOT NULL DEFAULT 0.00, \"ShipRate\" NUMERIC NOT NULL DEFAULT 0.00, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK (\"ShipBase\" > 0.00), CHECK (\"ShipRate\" > 0.00), CONSTRAINT \"PK_ShipMethod_ShipMethodID\" PRIMARY KEY (\"ShipMethodID\"))",
+      "tableSql": "CREATE TABLE \"Purchasing.ShipMethod\" (\"ShipMethodID\" INTEGER NOT NULL, \"Name\" TEXT NOT NULL, \"ShipBase\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT '0.00', \"ShipRate\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT '0.00', \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CONSTRAINT \"PK_ShipMethod_ShipMethodID\" PRIMARY KEY (\"ShipMethodID\"))",
       "rows": [
         {
           "ShipMethodID": 1,
           "Name": "XRQ - TRUCK GROUND",
-          "ShipBase": 3.95,
-          "ShipRate": 0.99,
+          "ShipBase": "3.9500",
+          "ShipRate": ".9900",
           "rowguid": "6BE756D9-D7BE-4463-8F2C-AE60C710D606",
           "ModifiedDate": "2019-04-30 00:00:00.000"
         },
         {
           "ShipMethodID": 2,
           "Name": "ZY - EXPRESS",
-          "ShipBase": 9.95,
-          "ShipRate": 1.99,
+          "ShipBase": "9.9500",
+          "ShipRate": "1.9900",
           "rowguid": "3455079B-F773-4DC6-8F1E-2A58649C4AB8",
           "ModifiedDate": "2019-04-30 00:00:00.000"
         },
         {
           "ShipMethodID": 3,
           "Name": "OVERSEAS - DELUXE",
-          "ShipBase": 29.95,
-          "ShipRate": 2.99,
+          "ShipBase": "29.9500",
+          "ShipRate": "2.9900",
           "rowguid": "22F4E461-28CF-4ACE-A980-F686CF112EC8",
           "ModifiedDate": "2019-04-30 00:00:00.000"
         },
         {
           "ShipMethodID": 4,
           "Name": "OVERNIGHT J-FAST",
-          "ShipBase": 21.95,
-          "ShipRate": 1.29,
+          "ShipBase": "21.9500",
+          "ShipRate": "1.2900",
           "rowguid": "107E8356-E7A8-463D-B60C-079FFF467F3F",
           "ModifiedDate": "2019-04-30 00:00:00.000"
         },
         {
           "ShipMethodID": 5,
           "Name": "CARGO TRANSPORT 5",
-          "ShipBase": 8.99,
-          "ShipRate": 1.49,
+          "ShipBase": "8.9900",
+          "ShipRate": "1.4900",
           "rowguid": "B166019A-B134-4E76-B957-2B0490C610ED",
           "ModifiedDate": "2019-04-30 00:00:00.000"
         }
@@ -12131,22 +12266,32 @@
         },
         {
           "name": "AverageRate",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
           "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Average exchange rate for the day."
         },
         {
           "name": "EndOfDayRate",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
           "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Final exchange rate for the day."
         },
         {
@@ -12232,15 +12377,15 @@
       ],
       "rowCount": 13532,
       "viewSql": null,
-      "tableSql": "CREATE TABLE \"Sales.CurrencyRate\" (\"CurrencyRateID\" INTEGER NOT NULL, \"CurrencyRateDate\" TEXT NOT NULL, \"FromCurrencyCode\" TEXT NOT NULL, \"ToCurrencyCode\" TEXT NOT NULL, \"AverageRate\" NUMERIC NOT NULL, \"EndOfDayRate\" NUMERIC NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CONSTRAINT \"PK_CurrencyRate_CurrencyRateID\" PRIMARY KEY (\"CurrencyRateID\"), CONSTRAINT \"FK_CurrencyRate_Currency_FromCurrencyCode\" FOREIGN KEY (\"FromCurrencyCode\") REFERENCES \"Sales.Currency\" (\"CurrencyCode\"), CONSTRAINT \"FK_CurrencyRate_Currency_ToCurrencyCode\" FOREIGN KEY (\"ToCurrencyCode\") REFERENCES \"Sales.Currency\" (\"CurrencyCode\"))",
+      "tableSql": "CREATE TABLE \"Sales.CurrencyRate\" (\"CurrencyRateID\" INTEGER NOT NULL, \"CurrencyRateDate\" TEXT NOT NULL, \"FromCurrencyCode\" TEXT NOT NULL, \"ToCurrencyCode\" TEXT NOT NULL, \"AverageRate\" DECIMAL_TEXT(19,4) NOT NULL, \"EndOfDayRate\" DECIMAL_TEXT(19,4) NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CONSTRAINT \"PK_CurrencyRate_CurrencyRateID\" PRIMARY KEY (\"CurrencyRateID\"), CONSTRAINT \"FK_CurrencyRate_Currency_FromCurrencyCode\" FOREIGN KEY (\"FromCurrencyCode\") REFERENCES \"Sales.Currency\" (\"CurrencyCode\"), CONSTRAINT \"FK_CurrencyRate_Currency_ToCurrencyCode\" FOREIGN KEY (\"ToCurrencyCode\") REFERENCES \"Sales.Currency\" (\"CurrencyCode\"))",
       "rows": [
         {
           "CurrencyRateID": 1,
           "CurrencyRateDate": "2022-05-30 00:00:00.000",
           "FromCurrencyCode": "USD",
           "ToCurrencyCode": "ARS",
-          "AverageRate": 1,
-          "EndOfDayRate": 1.0002,
+          "AverageRate": "1.0000",
+          "EndOfDayRate": "1.0002",
           "ModifiedDate": "2022-05-30 00:00:00.000"
         },
         {
@@ -12248,8 +12393,8 @@
           "CurrencyRateDate": "2022-05-30 00:00:00.000",
           "FromCurrencyCode": "USD",
           "ToCurrencyCode": "AUD",
-          "AverageRate": 1.5491,
-          "EndOfDayRate": 1.55,
+          "AverageRate": "1.5491",
+          "EndOfDayRate": "1.5500",
           "ModifiedDate": "2022-05-30 00:00:00.000"
         },
         {
@@ -12257,8 +12402,8 @@
           "CurrencyRateDate": "2022-05-30 00:00:00.000",
           "FromCurrencyCode": "USD",
           "ToCurrencyCode": "BRL",
-          "AverageRate": 1.9379,
-          "EndOfDayRate": 1.9419,
+          "AverageRate": "1.9379",
+          "EndOfDayRate": "1.9419",
           "ModifiedDate": "2022-05-30 00:00:00.000"
         },
         {
@@ -12266,8 +12411,8 @@
           "CurrencyRateDate": "2022-05-30 00:00:00.000",
           "FromCurrencyCode": "USD",
           "ToCurrencyCode": "CAD",
-          "AverageRate": 1.4641,
-          "EndOfDayRate": 1.4683,
+          "AverageRate": "1.4641",
+          "EndOfDayRate": "1.4683",
           "ModifiedDate": "2022-05-30 00:00:00.000"
         },
         {
@@ -12275,8 +12420,8 @@
           "CurrencyRateDate": "2022-05-30 00:00:00.000",
           "FromCurrencyCode": "USD",
           "ToCurrencyCode": "CNY",
-          "AverageRate": 8.2781,
-          "EndOfDayRate": 8.2784,
+          "AverageRate": "8.2781",
+          "EndOfDayRate": "8.2784",
           "ModifiedDate": "2022-05-30 00:00:00.000"
         },
         {
@@ -12284,8 +12429,8 @@
           "CurrencyRateDate": "2022-05-30 00:00:00.000",
           "FromCurrencyCode": "USD",
           "ToCurrencyCode": "DEM",
-          "AverageRate": 1.8967,
-          "EndOfDayRate": 1.8976,
+          "AverageRate": "1.8967",
+          "EndOfDayRate": "1.8976",
           "ModifiedDate": "2022-05-30 00:00:00.000"
         },
         {
@@ -12293,8 +12438,8 @@
           "CurrencyRateDate": "2022-05-30 00:00:00.000",
           "FromCurrencyCode": "USD",
           "ToCurrencyCode": "EUR",
-          "AverageRate": 0.9697,
-          "EndOfDayRate": 0.9703,
+          "AverageRate": ".9697",
+          "EndOfDayRate": ".9703",
           "ModifiedDate": "2022-05-30 00:00:00.000"
         },
         {
@@ -12302,8 +12447,8 @@
           "CurrencyRateDate": "2022-05-30 00:00:00.000",
           "FromCurrencyCode": "USD",
           "ToCurrencyCode": "FRF",
-          "AverageRate": 6.3611,
-          "EndOfDayRate": 6.3613,
+          "AverageRate": "6.3611",
+          "EndOfDayRate": "6.3613",
           "ModifiedDate": "2022-05-30 00:00:00.000"
         },
         {
@@ -12311,8 +12456,8 @@
           "CurrencyRateDate": "2022-05-30 00:00:00.000",
           "FromCurrencyCode": "USD",
           "ToCurrencyCode": "GBP",
-          "AverageRate": 0.6183,
-          "EndOfDayRate": 0.6183,
+          "AverageRate": ".6183",
+          "EndOfDayRate": ".6183",
           "ModifiedDate": "2022-05-30 00:00:00.000"
         },
         {
@@ -12320,8 +12465,8 @@
           "CurrencyRateDate": "2022-05-30 00:00:00.000",
           "FromCurrencyCode": "USD",
           "ToCurrencyCode": "JPY",
-          "AverageRate": 104.91,
-          "EndOfDayRate": 104.958,
+          "AverageRate": "104.9100",
+          "EndOfDayRate": "104.9580",
           "ModifiedDate": "2022-05-30 00:00:00.000"
         },
         {
@@ -12329,8 +12474,8 @@
           "CurrencyRateDate": "2022-05-30 00:00:00.000",
           "FromCurrencyCode": "USD",
           "ToCurrencyCode": "MXN",
-          "AverageRate": 9.374,
-          "EndOfDayRate": 9.384,
+          "AverageRate": "9.3740",
+          "EndOfDayRate": "9.3840",
           "ModifiedDate": "2022-05-30 00:00:00.000"
         },
         {
@@ -12338,8 +12483,8 @@
           "CurrencyRateDate": "2022-05-30 00:00:00.000",
           "FromCurrencyCode": "USD",
           "ToCurrencyCode": "SAR",
-          "AverageRate": 3.7507,
-          "EndOfDayRate": 3.7584,
+          "AverageRate": "3.7507",
+          "EndOfDayRate": "3.7584",
           "ModifiedDate": "2022-05-30 00:00:00.000"
         }
       ]
@@ -12852,32 +12997,47 @@
         },
         {
           "name": "UnitPrice",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
           "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Selling price of a single product."
         },
         {
           "name": "UnitPriceDiscount",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
-          "defaultValue": "0.0",
+          "defaultValue": "'0.0'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Discount amount."
         },
         {
           "name": "LineTotal",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(38,6)",
           "nullable": true,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
           "defaultValue": null,
+          "decimal": {
+            "precision": 38,
+            "scale": 6,
+            "storage": "text"
+          },
           "description": "Per product subtotal. Computed as UnitPrice * (1 - UnitPriceDiscount) * OrderQty. Source computed-column expression is retained in source metadata; the seeded value is stored as imported data in SQLite."
         },
         {
@@ -12993,7 +13153,7 @@
       ],
       "rowCount": 121317,
       "viewSql": null,
-      "tableSql": "CREATE TABLE \"Sales.SalesOrderDetail\" (\"SalesOrderID\" INTEGER NOT NULL, \"SalesOrderDetailID\" INTEGER NOT NULL, \"CarrierTrackingNumber\" TEXT, \"OrderQty\" INTEGER NOT NULL, \"ProductID\" INTEGER NOT NULL, \"SpecialOfferID\" INTEGER NOT NULL, \"UnitPrice\" NUMERIC NOT NULL, \"UnitPriceDiscount\" NUMERIC NOT NULL DEFAULT 0.0, \"LineTotal\" NUMERIC, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK (\"OrderQty\" > 0), CHECK (\"UnitPrice\" >= 0.00), CHECK (\"UnitPriceDiscount\" >= 0.00), CONSTRAINT \"PK_SalesOrderDetail_SalesOrderID_SalesOrderDetailID\" PRIMARY KEY (\"SalesOrderID\", \"SalesOrderDetailID\"), CONSTRAINT \"FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID\" FOREIGN KEY (\"SalesOrderID\") REFERENCES \"Sales.SalesOrderHeader\" (\"SalesOrderID\"), CONSTRAINT \"FK_SalesOrderDetail_SpecialOfferProduct_SpecialOfferIDProductID\" FOREIGN KEY (\"SpecialOfferID\", \"ProductID\") REFERENCES \"Sales.SpecialOfferProduct\" (\"SpecialOfferID\", \"ProductID\"))",
+      "tableSql": "CREATE TABLE \"Sales.SalesOrderDetail\" (\"SalesOrderID\" INTEGER NOT NULL, \"SalesOrderDetailID\" INTEGER NOT NULL, \"CarrierTrackingNumber\" TEXT, \"OrderQty\" INTEGER NOT NULL, \"ProductID\" INTEGER NOT NULL, \"SpecialOfferID\" INTEGER NOT NULL, \"UnitPrice\" DECIMAL_TEXT(19,4) NOT NULL, \"UnitPriceDiscount\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT '0.0', \"LineTotal\" DECIMAL_TEXT(38,6), \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK (\"OrderQty\" > 0), CONSTRAINT \"PK_SalesOrderDetail_SalesOrderID_SalesOrderDetailID\" PRIMARY KEY (\"SalesOrderID\", \"SalesOrderDetailID\"), CONSTRAINT \"FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID\" FOREIGN KEY (\"SalesOrderID\") REFERENCES \"Sales.SalesOrderHeader\" (\"SalesOrderID\"), CONSTRAINT \"FK_SalesOrderDetail_SpecialOfferProduct_SpecialOfferIDProductID\" FOREIGN KEY (\"SpecialOfferID\", \"ProductID\") REFERENCES \"Sales.SpecialOfferProduct\" (\"SpecialOfferID\", \"ProductID\"))",
       "rows": [
         {
           "SalesOrderID": 43659,
@@ -13002,9 +13162,9 @@
           "OrderQty": 1,
           "ProductID": 776,
           "SpecialOfferID": 1,
-          "UnitPrice": 2024.994,
-          "UnitPriceDiscount": 0,
-          "LineTotal": 2024.994,
+          "UnitPrice": "2024.9940",
+          "UnitPriceDiscount": ".0000",
+          "LineTotal": "2024.994000",
           "rowguid": "B207C96D-D9E6-402B-8470-2CC176C42283",
           "ModifiedDate": "2022-05-30 00:00:00.000"
         },
@@ -13015,9 +13175,9 @@
           "OrderQty": 3,
           "ProductID": 777,
           "SpecialOfferID": 1,
-          "UnitPrice": 2024.994,
-          "UnitPriceDiscount": 0,
-          "LineTotal": 6074.982,
+          "UnitPrice": "2024.9940",
+          "UnitPriceDiscount": ".0000",
+          "LineTotal": "6074.982000",
           "rowguid": "7ABB600D-1E77-41BE-9FE5-B9142CFC08FA",
           "ModifiedDate": "2022-05-30 00:00:00.000"
         },
@@ -13028,9 +13188,9 @@
           "OrderQty": 1,
           "ProductID": 778,
           "SpecialOfferID": 1,
-          "UnitPrice": 2024.994,
-          "UnitPriceDiscount": 0,
-          "LineTotal": 2024.994,
+          "UnitPrice": "2024.9940",
+          "UnitPriceDiscount": ".0000",
+          "LineTotal": "2024.994000",
           "rowguid": "475CF8C6-49F6-486E-B0AD-AFC6A50CDD2F",
           "ModifiedDate": "2022-05-30 00:00:00.000"
         },
@@ -13041,9 +13201,9 @@
           "OrderQty": 1,
           "ProductID": 771,
           "SpecialOfferID": 1,
-          "UnitPrice": 2039.994,
-          "UnitPriceDiscount": 0,
-          "LineTotal": 2039.994,
+          "UnitPrice": "2039.9940",
+          "UnitPriceDiscount": ".0000",
+          "LineTotal": "2039.994000",
           "rowguid": "04C4DE91-5815-45D6-8670-F462719FBCE3",
           "ModifiedDate": "2022-05-30 00:00:00.000"
         },
@@ -13054,9 +13214,9 @@
           "OrderQty": 1,
           "ProductID": 772,
           "SpecialOfferID": 1,
-          "UnitPrice": 2039.994,
-          "UnitPriceDiscount": 0,
-          "LineTotal": 2039.994,
+          "UnitPrice": "2039.9940",
+          "UnitPriceDiscount": ".0000",
+          "LineTotal": "2039.994000",
           "rowguid": "5A74C7D2-E641-438E-A7AC-37BF23280301",
           "ModifiedDate": "2022-05-30 00:00:00.000"
         },
@@ -13067,9 +13227,9 @@
           "OrderQty": 2,
           "ProductID": 773,
           "SpecialOfferID": 1,
-          "UnitPrice": 2039.994,
-          "UnitPriceDiscount": 0,
-          "LineTotal": 4079.988,
+          "UnitPrice": "2039.9940",
+          "UnitPriceDiscount": ".0000",
+          "LineTotal": "4079.988000",
           "rowguid": "CE472532-A4C0-45BA-816E-EEFD3FD848B3",
           "ModifiedDate": "2022-05-30 00:00:00.000"
         },
@@ -13080,9 +13240,9 @@
           "OrderQty": 1,
           "ProductID": 774,
           "SpecialOfferID": 1,
-          "UnitPrice": 2039.994,
-          "UnitPriceDiscount": 0,
-          "LineTotal": 2039.994,
+          "UnitPrice": "2039.9940",
+          "UnitPriceDiscount": ".0000",
+          "LineTotal": "2039.994000",
           "rowguid": "80667840-F962-4EE3-96E0-AECA108E0D4F",
           "ModifiedDate": "2022-05-30 00:00:00.000"
         },
@@ -13093,9 +13253,9 @@
           "OrderQty": 3,
           "ProductID": 714,
           "SpecialOfferID": 1,
-          "UnitPrice": 28.8404,
-          "UnitPriceDiscount": 0,
-          "LineTotal": 86.5212,
+          "UnitPrice": "28.8404",
+          "UnitPriceDiscount": ".0000",
+          "LineTotal": "86.521200",
           "rowguid": "E9D54907-E7B7-4969-80D9-76BA69F8A836",
           "ModifiedDate": "2022-05-30 00:00:00.000"
         },
@@ -13106,9 +13266,9 @@
           "OrderQty": 1,
           "ProductID": 716,
           "SpecialOfferID": 1,
-          "UnitPrice": 28.8404,
-          "UnitPriceDiscount": 0,
-          "LineTotal": 28.8404,
+          "UnitPrice": "28.8404",
+          "UnitPriceDiscount": ".0000",
+          "LineTotal": "28.840400",
           "rowguid": "AA542630-BDCD-4CE5-89A0-C1BF82747725",
           "ModifiedDate": "2022-05-30 00:00:00.000"
         },
@@ -13119,9 +13279,9 @@
           "OrderQty": 6,
           "ProductID": 709,
           "SpecialOfferID": 1,
-          "UnitPrice": 5.7,
-          "UnitPriceDiscount": 0,
-          "LineTotal": 34.2,
+          "UnitPrice": "5.7000",
+          "UnitPriceDiscount": ".0000",
+          "LineTotal": "34.200000",
           "rowguid": "AC769034-3C2F-495C-A5A7-3B71CDB25D4E",
           "ModifiedDate": "2022-05-30 00:00:00.000"
         },
@@ -13132,9 +13292,9 @@
           "OrderQty": 2,
           "ProductID": 712,
           "SpecialOfferID": 1,
-          "UnitPrice": 5.1865,
-          "UnitPriceDiscount": 0,
-          "LineTotal": 10.373,
+          "UnitPrice": "5.1865",
+          "UnitPriceDiscount": ".0000",
+          "LineTotal": "10.373000",
           "rowguid": "06A66921-6B9F-4199-A912-DDAFD383472B",
           "ModifiedDate": "2022-05-30 00:00:00.000"
         },
@@ -13145,9 +13305,9 @@
           "OrderQty": 4,
           "ProductID": 711,
           "SpecialOfferID": 1,
-          "UnitPrice": 20.1865,
-          "UnitPriceDiscount": 0,
-          "LineTotal": 80.746,
+          "UnitPrice": "20.1865",
+          "UnitPriceDiscount": ".0000",
+          "LineTotal": "80.746000",
           "rowguid": "0E371EE3-253E-4BB0-B813-83CF4224F972",
           "ModifiedDate": "2022-05-30 00:00:00.000"
         }
@@ -13352,42 +13512,62 @@
         },
         {
           "name": "SubTotal",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00",
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Sales subtotal. Computed as SUM(SalesOrderDetail.LineTotal)for the appropriate SalesOrderID."
         },
         {
           "name": "TaxAmt",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00",
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Tax amount."
         },
         {
           "name": "Freight",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00",
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Shipping cost."
         },
         {
           "name": "TotalDue",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(38,4)",
           "nullable": true,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
           "defaultValue": null,
+          "decimal": {
+            "precision": 38,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Total due from customer. Computed as Subtotal + TaxAmt + Freight. Source computed-column expression is retained in source metadata; the seeded value is stored as imported data in SQLite."
         },
         {
@@ -13559,7 +13739,7 @@
       ],
       "rowCount": 31465,
       "viewSql": null,
-      "tableSql": "CREATE TABLE \"Sales.SalesOrderHeader\" (\"SalesOrderID\" INTEGER NOT NULL, \"RevisionNumber\" INTEGER NOT NULL DEFAULT 0, \"OrderDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', \"DueDate\" TEXT NOT NULL, \"ShipDate\" TEXT, \"Status\" INTEGER NOT NULL DEFAULT 1, \"OnlineOrderFlag\" INTEGER NOT NULL DEFAULT 1, \"SalesOrderNumber\" TEXT, \"PurchaseOrderNumber\" TEXT, \"AccountNumber\" TEXT, \"CustomerID\" INTEGER NOT NULL, \"SalesPersonID\" INTEGER, \"TerritoryID\" INTEGER, \"BillToAddressID\" INTEGER NOT NULL, \"ShipToAddressID\" INTEGER NOT NULL, \"ShipMethodID\" INTEGER NOT NULL, \"CreditCardID\" INTEGER, \"CreditCardApprovalCode\" TEXT, \"CurrencyRateID\" INTEGER, \"SubTotal\" NUMERIC NOT NULL DEFAULT 0.00, \"TaxAmt\" NUMERIC NOT NULL DEFAULT 0.00, \"Freight\" NUMERIC NOT NULL DEFAULT 0.00, \"TotalDue\" NUMERIC, \"Comment\" TEXT, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK (\"Status\" BETWEEN 0 AND 8), CHECK (\"DueDate\" >= \"OrderDate\"), CHECK ((\"ShipDate\" >= \"OrderDate\") OR (\"ShipDate\" IS NULL)), CHECK (\"SubTotal\" >= 0.00), CHECK (\"TaxAmt\" >= 0.00), CHECK (\"Freight\" >= 0.00), CONSTRAINT \"PK_SalesOrderHeader_SalesOrderID\" PRIMARY KEY (\"SalesOrderID\"), CONSTRAINT \"FK_SalesOrderHeader_Address_BillToAddressID\" FOREIGN KEY (\"BillToAddressID\") REFERENCES \"Person.Address\" (\"AddressID\"), CONSTRAINT \"FK_SalesOrderHeader_Address_ShipToAddressID\" FOREIGN KEY (\"ShipToAddressID\") REFERENCES \"Person.Address\" (\"AddressID\"), CONSTRAINT \"FK_SalesOrderHeader_CreditCard_CreditCardID\" FOREIGN KEY (\"CreditCardID\") REFERENCES \"Sales.CreditCard\" (\"CreditCardID\"), CONSTRAINT \"FK_SalesOrderHeader_CurrencyRate_CurrencyRateID\" FOREIGN KEY (\"CurrencyRateID\") REFERENCES \"Sales.CurrencyRate\" (\"CurrencyRateID\"), CONSTRAINT \"FK_SalesOrderHeader_Customer_CustomerID\" FOREIGN KEY (\"CustomerID\") REFERENCES \"Sales.Customer\" (\"CustomerID\"), CONSTRAINT \"FK_SalesOrderHeader_SalesPerson_SalesPersonID\" FOREIGN KEY (\"SalesPersonID\") REFERENCES \"Sales.SalesPerson\" (\"BusinessEntityID\"), CONSTRAINT \"FK_SalesOrderHeader_ShipMethod_ShipMethodID\" FOREIGN KEY (\"ShipMethodID\") REFERENCES \"Purchasing.ShipMethod\" (\"ShipMethodID\"), CONSTRAINT \"FK_SalesOrderHeader_SalesTerritory_TerritoryID\" FOREIGN KEY (\"TerritoryID\") REFERENCES \"Sales.SalesTerritory\" (\"TerritoryID\"))",
+      "tableSql": "CREATE TABLE \"Sales.SalesOrderHeader\" (\"SalesOrderID\" INTEGER NOT NULL, \"RevisionNumber\" INTEGER NOT NULL DEFAULT 0, \"OrderDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', \"DueDate\" TEXT NOT NULL, \"ShipDate\" TEXT, \"Status\" INTEGER NOT NULL DEFAULT 1, \"OnlineOrderFlag\" INTEGER NOT NULL DEFAULT 1, \"SalesOrderNumber\" TEXT, \"PurchaseOrderNumber\" TEXT, \"AccountNumber\" TEXT, \"CustomerID\" INTEGER NOT NULL, \"SalesPersonID\" INTEGER, \"TerritoryID\" INTEGER, \"BillToAddressID\" INTEGER NOT NULL, \"ShipToAddressID\" INTEGER NOT NULL, \"ShipMethodID\" INTEGER NOT NULL, \"CreditCardID\" INTEGER, \"CreditCardApprovalCode\" TEXT, \"CurrencyRateID\" INTEGER, \"SubTotal\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT '0.00', \"TaxAmt\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT '0.00', \"Freight\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT '0.00', \"TotalDue\" DECIMAL_TEXT(38,4), \"Comment\" TEXT, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK (\"Status\" BETWEEN 0 AND 8), CHECK (\"DueDate\" >= \"OrderDate\"), CHECK ((\"ShipDate\" >= \"OrderDate\") OR (\"ShipDate\" IS NULL)), CONSTRAINT \"PK_SalesOrderHeader_SalesOrderID\" PRIMARY KEY (\"SalesOrderID\"), CONSTRAINT \"FK_SalesOrderHeader_Address_BillToAddressID\" FOREIGN KEY (\"BillToAddressID\") REFERENCES \"Person.Address\" (\"AddressID\"), CONSTRAINT \"FK_SalesOrderHeader_Address_ShipToAddressID\" FOREIGN KEY (\"ShipToAddressID\") REFERENCES \"Person.Address\" (\"AddressID\"), CONSTRAINT \"FK_SalesOrderHeader_CreditCard_CreditCardID\" FOREIGN KEY (\"CreditCardID\") REFERENCES \"Sales.CreditCard\" (\"CreditCardID\"), CONSTRAINT \"FK_SalesOrderHeader_CurrencyRate_CurrencyRateID\" FOREIGN KEY (\"CurrencyRateID\") REFERENCES \"Sales.CurrencyRate\" (\"CurrencyRateID\"), CONSTRAINT \"FK_SalesOrderHeader_Customer_CustomerID\" FOREIGN KEY (\"CustomerID\") REFERENCES \"Sales.Customer\" (\"CustomerID\"), CONSTRAINT \"FK_SalesOrderHeader_SalesPerson_SalesPersonID\" FOREIGN KEY (\"SalesPersonID\") REFERENCES \"Sales.SalesPerson\" (\"BusinessEntityID\"), CONSTRAINT \"FK_SalesOrderHeader_ShipMethod_ShipMethodID\" FOREIGN KEY (\"ShipMethodID\") REFERENCES \"Purchasing.ShipMethod\" (\"ShipMethodID\"), CONSTRAINT \"FK_SalesOrderHeader_SalesTerritory_TerritoryID\" FOREIGN KEY (\"TerritoryID\") REFERENCES \"Sales.SalesTerritory\" (\"TerritoryID\"))",
       "rows": [
         {
           "SalesOrderID": 43659,
@@ -13581,10 +13761,10 @@
           "CreditCardID": 16281,
           "CreditCardApprovalCode": "105041Vi84182",
           "CurrencyRateID": null,
-          "SubTotal": 20565.6206,
-          "TaxAmt": 1971.5149,
-          "Freight": 616.0984,
-          "TotalDue": 23153.2339,
+          "SubTotal": "20565.6206",
+          "TaxAmt": "1971.5149",
+          "Freight": "616.0984",
+          "TotalDue": "23153.2339",
           "Comment": null,
           "rowguid": "79B65321-39CA-4115-9CBA-8FE0903E12E6",
           "ModifiedDate": "2022-06-06 00:00:00.000"
@@ -13609,10 +13789,10 @@
           "CreditCardID": 5618,
           "CreditCardApprovalCode": "115213Vi29411",
           "CurrencyRateID": null,
-          "SubTotal": 1294.2529,
-          "TaxAmt": 124.2483,
-          "Freight": 38.8276,
-          "TotalDue": 1457.3288,
+          "SubTotal": "1294.2529",
+          "TaxAmt": "124.2483",
+          "Freight": "38.8276",
+          "TotalDue": "1457.3288",
           "Comment": null,
           "rowguid": "738DC42D-D03B-48A1-9822-F95A67EA7389",
           "ModifiedDate": "2022-06-06 00:00:00.000"
@@ -13637,10 +13817,10 @@
           "CreditCardID": 1346,
           "CreditCardApprovalCode": "85274Vi6854",
           "CurrencyRateID": 4,
-          "SubTotal": 32726.4786,
-          "TaxAmt": 3153.7696,
-          "Freight": 985.553,
-          "TotalDue": 36865.8012,
+          "SubTotal": "32726.4786",
+          "TaxAmt": "3153.7696",
+          "Freight": "985.5530",
+          "TotalDue": "36865.8012",
           "Comment": null,
           "rowguid": "D91B9131-18A4-4A11-BC3A-90B6F53E9D74",
           "ModifiedDate": "2022-06-06 00:00:00.000"
@@ -13665,10 +13845,10 @@
           "CreditCardID": 10456,
           "CreditCardApprovalCode": "125295Vi53935",
           "CurrencyRateID": 4,
-          "SubTotal": 28832.5289,
-          "TaxAmt": 2775.1646,
-          "Freight": 867.2389,
-          "TotalDue": 32474.9324,
+          "SubTotal": "28832.5289",
+          "TaxAmt": "2775.1646",
+          "Freight": "867.2389",
+          "TotalDue": "32474.9324",
           "Comment": null,
           "rowguid": "4A1ECFC0-CC3A-4740-B028-1C50BB48711C",
           "ModifiedDate": "2022-06-06 00:00:00.000"
@@ -13693,10 +13873,10 @@
           "CreditCardID": 4322,
           "CreditCardApprovalCode": "45303Vi22691",
           "CurrencyRateID": null,
-          "SubTotal": 419.4589,
-          "TaxAmt": 40.2681,
-          "Freight": 12.5838,
-          "TotalDue": 472.3108,
+          "SubTotal": "419.4589",
+          "TaxAmt": "40.2681",
+          "Freight": "12.5838",
+          "TotalDue": "472.3108",
           "Comment": null,
           "rowguid": "9B1E7A40-6AE0-4AD3-811C-A64951857C4B",
           "ModifiedDate": "2022-06-06 00:00:00.000"
@@ -13721,10 +13901,10 @@
           "CreditCardID": 806,
           "CreditCardApprovalCode": "95555Vi4081",
           "CurrencyRateID": null,
-          "SubTotal": 24432.6088,
-          "TaxAmt": 2344.9921,
-          "Freight": 732.81,
-          "TotalDue": 27510.4109,
+          "SubTotal": "24432.6088",
+          "TaxAmt": "2344.9921",
+          "Freight": "732.8100",
+          "TotalDue": "27510.4109",
           "Comment": null,
           "rowguid": "22A8A5DA-8C22-42AD-9241-839489B6EF0D",
           "ModifiedDate": "2022-06-06 00:00:00.000"
@@ -13749,10 +13929,10 @@
           "CreditCardID": 15232,
           "CreditCardApprovalCode": "35568Vi78804",
           "CurrencyRateID": null,
-          "SubTotal": 14352.7713,
-          "TaxAmt": 1375.9427,
-          "Freight": 429.9821,
-          "TotalDue": 16158.6961,
+          "SubTotal": "14352.7713",
+          "TaxAmt": "1375.9427",
+          "Freight": "429.9821",
+          "TotalDue": "16158.6961",
           "Comment": null,
           "rowguid": "5602C304-853C-43D7-9E79-76E320D476CF",
           "ModifiedDate": "2022-06-06 00:00:00.000"
@@ -13777,10 +13957,10 @@
           "CreditCardID": 13349,
           "CreditCardApprovalCode": "105623Vi69217",
           "CurrencyRateID": null,
-          "SubTotal": 5056.4896,
-          "TaxAmt": 486.3747,
-          "Freight": 151.9921,
-          "TotalDue": 5694.8564,
+          "SubTotal": "5056.4896",
+          "TaxAmt": "486.3747",
+          "Freight": "151.9921",
+          "TotalDue": "5694.8564",
           "Comment": null,
           "rowguid": "E2A90057-1366-4487-8A7E-8085845FF770",
           "ModifiedDate": "2022-06-06 00:00:00.000"
@@ -13805,10 +13985,10 @@
           "CreditCardID": 10370,
           "CreditCardApprovalCode": "55680Vi53503",
           "CurrencyRateID": null,
-          "SubTotal": 6107.082,
-          "TaxAmt": 586.1203,
-          "Freight": 183.1626,
-          "TotalDue": 6876.3649,
+          "SubTotal": "6107.0820",
+          "TaxAmt": "586.1203",
+          "Freight": "183.1626",
+          "TotalDue": "6876.3649",
           "Comment": null,
           "rowguid": "86D5237D-432D-4B21-8ABC-671942F5789D",
           "ModifiedDate": "2022-06-06 00:00:00.000"
@@ -13833,10 +14013,10 @@
           "CreditCardID": 1566,
           "CreditCardApprovalCode": "85817Vi8045",
           "CurrencyRateID": 4,
-          "SubTotal": 35944.1562,
-          "TaxAmt": 3461.7654,
-          "Freight": 1081.8017,
-          "TotalDue": 40487.7233,
+          "SubTotal": "35944.1562",
+          "TaxAmt": "3461.7654",
+          "Freight": "1081.8017",
+          "TotalDue": "40487.7233",
           "Comment": null,
           "rowguid": "281CC355-D538-494E-9B44-461B36A826C6",
           "ModifiedDate": "2022-06-06 00:00:00.000"
@@ -13861,10 +14041,10 @@
           "CreditCardID": 15538,
           "CreditCardApprovalCode": "25877Vi80261",
           "CurrencyRateID": null,
-          "SubTotal": 714.7043,
-          "TaxAmt": 70.5175,
-          "Freight": 22.0367,
-          "TotalDue": 807.2585,
+          "SubTotal": "714.7043",
+          "TaxAmt": "70.5175",
+          "Freight": "22.0367",
+          "TotalDue": "807.2585",
           "Comment": null,
           "rowguid": "FABFC5C2-E034-4E0E-A573-6F39E9FA0484",
           "ModifiedDate": "2022-06-06 00:00:00.000"
@@ -13889,10 +14069,10 @@
           "CreditCardID": 18017,
           "CreditCardApprovalCode": "105888Vi93490",
           "CurrencyRateID": null,
-          "SubTotal": 6122.082,
-          "TaxAmt": 587.5603,
-          "Freight": 183.6126,
-          "TotalDue": 6893.2549,
+          "SubTotal": "6122.0820",
+          "TaxAmt": "587.5603",
+          "Freight": "183.6126",
+          "TotalDue": "6893.2549",
           "Comment": null,
           "rowguid": "573E52A7-573F-40B6-B695-6F3D242E0C6D",
           "ModifiedDate": "2022-06-06 00:00:00.000"
@@ -14089,52 +14269,77 @@
         },
         {
           "name": "SalesQuota",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": true,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
           "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Projected yearly sales."
         },
         {
           "name": "Bonus",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00",
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Bonus due if quota is met."
         },
         {
           "name": "CommissionPct",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(10,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00",
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 10,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Commision percent received per sale."
         },
         {
           "name": "SalesYTD",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00",
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Sales total year to date."
         },
         {
           "name": "SalesLastYear",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00",
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Sales total of previous year."
         },
         {
@@ -14214,126 +14419,126 @@
       ],
       "rowCount": 17,
       "viewSql": null,
-      "tableSql": "CREATE TABLE \"Sales.SalesPerson\" (\"BusinessEntityID\" INTEGER NOT NULL, \"TerritoryID\" INTEGER, \"SalesQuota\" NUMERIC, \"Bonus\" NUMERIC NOT NULL DEFAULT 0.00, \"CommissionPct\" NUMERIC NOT NULL DEFAULT 0.00, \"SalesYTD\" NUMERIC NOT NULL DEFAULT 0.00, \"SalesLastYear\" NUMERIC NOT NULL DEFAULT 0.00, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK (\"SalesQuota\" > 0.00), CHECK (\"Bonus\" >= 0.00), CHECK (\"CommissionPct\" >= 0.00), CHECK (\"SalesYTD\" >= 0.00), CHECK (\"SalesLastYear\" >= 0.00), CONSTRAINT \"PK_SalesPerson_BusinessEntityID\" PRIMARY KEY (\"BusinessEntityID\"), CONSTRAINT \"FK_SalesPerson_Employee_BusinessEntityID\" FOREIGN KEY (\"BusinessEntityID\") REFERENCES \"HumanResources.Employee\" (\"BusinessEntityID\"), CONSTRAINT \"FK_SalesPerson_SalesTerritory_TerritoryID\" FOREIGN KEY (\"TerritoryID\") REFERENCES \"Sales.SalesTerritory\" (\"TerritoryID\"))",
+      "tableSql": "CREATE TABLE \"Sales.SalesPerson\" (\"BusinessEntityID\" INTEGER NOT NULL, \"TerritoryID\" INTEGER, \"SalesQuota\" DECIMAL_TEXT(19,4), \"Bonus\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT '0.00', \"CommissionPct\" DECIMAL_TEXT(10,4) NOT NULL DEFAULT '0.00', \"SalesYTD\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT '0.00', \"SalesLastYear\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT '0.00', \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CONSTRAINT \"PK_SalesPerson_BusinessEntityID\" PRIMARY KEY (\"BusinessEntityID\"), CONSTRAINT \"FK_SalesPerson_Employee_BusinessEntityID\" FOREIGN KEY (\"BusinessEntityID\") REFERENCES \"HumanResources.Employee\" (\"BusinessEntityID\"), CONSTRAINT \"FK_SalesPerson_SalesTerritory_TerritoryID\" FOREIGN KEY (\"TerritoryID\") REFERENCES \"Sales.SalesTerritory\" (\"TerritoryID\"))",
       "rows": [
         {
           "BusinessEntityID": 274,
           "TerritoryID": null,
           "SalesQuota": null,
-          "Bonus": 0,
-          "CommissionPct": 0,
-          "SalesYTD": 559697.5639,
-          "SalesLastYear": 0,
+          "Bonus": ".0000",
+          "CommissionPct": ".0000",
+          "SalesYTD": "559697.5639",
+          "SalesLastYear": ".0000",
           "rowguid": "48754992-9EE0-4C0E-8C94-9451604E3E02",
           "ModifiedDate": "2021-12-27 00:00:00.000"
         },
         {
           "BusinessEntityID": 275,
           "TerritoryID": 2,
-          "SalesQuota": 300000,
-          "Bonus": 4100,
-          "CommissionPct": 0.012,
-          "SalesYTD": 3763178.1787,
-          "SalesLastYear": 1750406.4785,
+          "SalesQuota": "300000.0000",
+          "Bonus": "4100.0000",
+          "CommissionPct": ".0120",
+          "SalesYTD": "3763178.1787",
+          "SalesLastYear": "1750406.4785",
           "rowguid": "1E0A7274-3064-4F58-88EE-4C6586C87169",
           "ModifiedDate": "2022-05-23 00:00:00.000"
         },
         {
           "BusinessEntityID": 276,
           "TerritoryID": 4,
-          "SalesQuota": 250000,
-          "Bonus": 2000,
-          "CommissionPct": 0.015,
-          "SalesYTD": 4251368.5497,
-          "SalesLastYear": 1439156.0291,
+          "SalesQuota": "250000.0000",
+          "Bonus": "2000.0000",
+          "CommissionPct": ".0150",
+          "SalesYTD": "4251368.5497",
+          "SalesLastYear": "1439156.0291",
           "rowguid": "4DD9EEE4-8E81-4F8C-AF97-683394C1F7C0",
           "ModifiedDate": "2022-05-23 00:00:00.000"
         },
         {
           "BusinessEntityID": 277,
           "TerritoryID": 3,
-          "SalesQuota": 250000,
-          "Bonus": 2500,
-          "CommissionPct": 0.015,
-          "SalesYTD": 3189418.3662,
-          "SalesLastYear": 1997186.2037,
+          "SalesQuota": "250000.0000",
+          "Bonus": "2500.0000",
+          "CommissionPct": ".0150",
+          "SalesYTD": "3189418.3662",
+          "SalesLastYear": "1997186.2037",
           "rowguid": "39012928-BFEC-4242-874D-423162C3F567",
           "ModifiedDate": "2022-05-23 00:00:00.000"
         },
         {
           "BusinessEntityID": 278,
           "TerritoryID": 6,
-          "SalesQuota": 250000,
-          "Bonus": 500,
-          "CommissionPct": 0.01,
-          "SalesYTD": 1453719.4653,
-          "SalesLastYear": 1620276.8966,
+          "SalesQuota": "250000.0000",
+          "Bonus": "500.0000",
+          "CommissionPct": ".0100",
+          "SalesYTD": "1453719.4653",
+          "SalesLastYear": "1620276.8966",
           "rowguid": "7A0AE1AB-B283-40F9-91D1-167ABF06D720",
           "ModifiedDate": "2022-05-23 00:00:00.000"
         },
         {
           "BusinessEntityID": 279,
           "TerritoryID": 5,
-          "SalesQuota": 300000,
-          "Bonus": 6700,
-          "CommissionPct": 0.01,
-          "SalesYTD": 2315185.611,
-          "SalesLastYear": 1849640.9418,
+          "SalesQuota": "300000.0000",
+          "Bonus": "6700.0000",
+          "CommissionPct": ".0100",
+          "SalesYTD": "2315185.6110",
+          "SalesLastYear": "1849640.9418",
           "rowguid": "52A5179D-3239-4157-AE29-17E868296DC0",
           "ModifiedDate": "2022-05-23 00:00:00.000"
         },
         {
           "BusinessEntityID": 280,
           "TerritoryID": 1,
-          "SalesQuota": 250000,
-          "Bonus": 5000,
-          "CommissionPct": 0.01,
-          "SalesYTD": 1352577.1325,
-          "SalesLastYear": 1927059.178,
+          "SalesQuota": "250000.0000",
+          "Bonus": "5000.0000",
+          "CommissionPct": ".0100",
+          "SalesYTD": "1352577.1325",
+          "SalesLastYear": "1927059.1780",
           "rowguid": "BE941A4A-FB50-4947-BDA4-BB8972365B08",
           "ModifiedDate": "2022-05-23 00:00:00.000"
         },
         {
           "BusinessEntityID": 281,
           "TerritoryID": 4,
-          "SalesQuota": 250000,
-          "Bonus": 3550,
-          "CommissionPct": 0.01,
-          "SalesYTD": 2458535.6169,
-          "SalesLastYear": 2073505.9999,
+          "SalesQuota": "250000.0000",
+          "Bonus": "3550.0000",
+          "CommissionPct": ".0100",
+          "SalesYTD": "2458535.6169",
+          "SalesLastYear": "2073505.9999",
           "rowguid": "35326DDB-7278-4FEF-B3BA-EA137B69094E",
           "ModifiedDate": "2022-05-23 00:00:00.000"
         },
         {
           "BusinessEntityID": 282,
           "TerritoryID": 6,
-          "SalesQuota": 250000,
-          "Bonus": 5000,
-          "CommissionPct": 0.015,
-          "SalesYTD": 2604540.7172,
-          "SalesLastYear": 2038234.6549,
+          "SalesQuota": "250000.0000",
+          "Bonus": "5000.0000",
+          "CommissionPct": ".0150",
+          "SalesYTD": "2604540.7172",
+          "SalesLastYear": "2038234.6549",
           "rowguid": "31FD7FC1-DC84-4F05-B9A0-762519EACACC",
           "ModifiedDate": "2022-05-23 00:00:00.000"
         },
         {
           "BusinessEntityID": 283,
           "TerritoryID": 1,
-          "SalesQuota": 250000,
-          "Bonus": 3500,
-          "CommissionPct": 0.012,
-          "SalesYTD": 1573012.9383,
-          "SalesLastYear": 1371635.3158,
+          "SalesQuota": "250000.0000",
+          "Bonus": "3500.0000",
+          "CommissionPct": ".0120",
+          "SalesYTD": "1573012.9383",
+          "SalesLastYear": "1371635.3158",
           "rowguid": "6BAC15B2-8FFB-45A9-B6D5-040E16C2073F",
           "ModifiedDate": "2022-05-23 00:00:00.000"
         },
         {
           "BusinessEntityID": 284,
           "TerritoryID": 1,
-          "SalesQuota": 300000,
-          "Bonus": 3900,
-          "CommissionPct": 0.019,
-          "SalesYTD": 1576562.1966,
-          "SalesLastYear": 0,
+          "SalesQuota": "300000.0000",
+          "Bonus": "3900.0000",
+          "CommissionPct": ".0190",
+          "SalesYTD": "1576562.1966",
+          "SalesLastYear": ".0000",
           "rowguid": "AC94EC04-A2DC-43E3-8654-DD0C546ABC17",
           "ModifiedDate": "2023-09-23 00:00:00.000"
         },
@@ -14341,10 +14546,10 @@
           "BusinessEntityID": 285,
           "TerritoryID": null,
           "SalesQuota": null,
-          "Bonus": 0,
-          "CommissionPct": 0,
-          "SalesYTD": 172524.4512,
-          "SalesLastYear": 0,
+          "Bonus": ".0000",
+          "CommissionPct": ".0000",
+          "SalesYTD": "172524.4512",
+          "SalesLastYear": ".0000",
           "rowguid": "CFDBEF27-B1F7-4A56-A878-0221C73BAE67",
           "ModifiedDate": "2024-03-06 00:00:00.000"
         }
@@ -14379,12 +14584,17 @@
         },
         {
           "name": "SalesQuota",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
           "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Sales quota amount."
         },
         {
@@ -14480,89 +14690,89 @@
       ],
       "rowCount": 163,
       "viewSql": null,
-      "tableSql": "CREATE TABLE \"Sales.SalesPersonQuotaHistory\" (\"BusinessEntityID\" INTEGER NOT NULL, \"QuotaDate\" TEXT NOT NULL, \"SalesQuota\" NUMERIC NOT NULL, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK (\"SalesQuota\" > 0.00), CONSTRAINT \"PK_SalesPersonQuotaHistory_BusinessEntityID_QuotaDate\" PRIMARY KEY (\"BusinessEntityID\", \"QuotaDate\"), CONSTRAINT \"FK_SalesPersonQuotaHistory_SalesPerson_BusinessEntityID\" FOREIGN KEY (\"BusinessEntityID\") REFERENCES \"Sales.SalesPerson\" (\"BusinessEntityID\"))",
+      "tableSql": "CREATE TABLE \"Sales.SalesPersonQuotaHistory\" (\"BusinessEntityID\" INTEGER NOT NULL, \"QuotaDate\" TEXT NOT NULL, \"SalesQuota\" DECIMAL_TEXT(19,4) NOT NULL, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CONSTRAINT \"PK_SalesPersonQuotaHistory_BusinessEntityID_QuotaDate\" PRIMARY KEY (\"BusinessEntityID\", \"QuotaDate\"), CONSTRAINT \"FK_SalesPersonQuotaHistory_SalesPerson_BusinessEntityID\" FOREIGN KEY (\"BusinessEntityID\") REFERENCES \"Sales.SalesPerson\" (\"BusinessEntityID\"))",
       "rows": [
         {
           "BusinessEntityID": 274,
           "QuotaDate": "2022-05-30 00:00:00.000",
-          "SalesQuota": 28000,
+          "SalesQuota": "28000.0000",
           "rowguid": "99109BBF-8693-4587-BC23-6036EC89E1BE",
           "ModifiedDate": "2022-04-15 00:00:00.000"
         },
         {
           "BusinessEntityID": 274,
           "QuotaDate": "2022-08-30 00:00:00.000",
-          "SalesQuota": 7000,
+          "SalesQuota": "7000.0000",
           "rowguid": "DFD01444-8900-461C-8D6F-04598DAE01D4",
           "ModifiedDate": "2022-07-16 00:00:00.000"
         },
         {
           "BusinessEntityID": 274,
           "QuotaDate": "2022-11-30 00:00:00.000",
-          "SalesQuota": 91000,
+          "SalesQuota": "91000.0000",
           "rowguid": "0A69F453-9689-4CCF-A08C-C644670F5668",
           "ModifiedDate": "2022-10-16 00:00:00.000"
         },
         {
           "BusinessEntityID": 274,
           "QuotaDate": "2023-02-28 00:00:00.000",
-          "SalesQuota": 140000,
+          "SalesQuota": "140000.0000",
           "rowguid": "DA8D1458-5FB9-4C3E-9EAD-8F5CE1393047",
           "ModifiedDate": "2023-01-14 00:00:00.000"
         },
         {
           "BusinessEntityID": 274,
           "QuotaDate": "2023-05-30 00:00:00.000",
-          "SalesQuota": 70000,
+          "SalesQuota": "70000.0000",
           "rowguid": "760CEF84-B980-417B-A667-7358C38857F0",
           "ModifiedDate": "2023-04-15 00:00:00.000"
         },
         {
           "BusinessEntityID": 274,
           "QuotaDate": "2023-08-30 00:00:00.000",
-          "SalesQuota": 154000,
+          "SalesQuota": "154000.0000",
           "rowguid": "FB29E024-F26A-49AA-A7CC-C99AE7BA4853",
           "ModifiedDate": "2023-07-16 00:00:00.000"
         },
         {
           "BusinessEntityID": 274,
           "QuotaDate": "2023-11-30 00:00:00.000",
-          "SalesQuota": 107000,
+          "SalesQuota": "107000.0000",
           "rowguid": "13947D2C-A254-47C9-8817-CBD186FFA526",
           "ModifiedDate": "2023-10-16 00:00:00.000"
         },
         {
           "BusinessEntityID": 274,
           "QuotaDate": "2024-02-28 00:00:00.000",
-          "SalesQuota": 58000,
+          "SalesQuota": "58000.0000",
           "rowguid": "BC1A222F-47A0-48D1-9C56-AC873269DC98",
           "ModifiedDate": "2024-01-14 00:00:00.000"
         },
         {
           "BusinessEntityID": 274,
           "QuotaDate": "2024-05-29 00:00:00.000",
-          "SalesQuota": 263000,
+          "SalesQuota": "263000.0000",
           "rowguid": "8B4E3CBF-F0EF-49C5-9A8C-87679055057E",
           "ModifiedDate": "2024-04-14 00:00:00.000"
         },
         {
           "BusinessEntityID": 274,
           "QuotaDate": "2024-08-29 00:00:00.000",
-          "SalesQuota": 116000,
+          "SalesQuota": "116000.0000",
           "rowguid": "E9DE95E3-B119-4441-BD1D-B27FC4516022",
           "ModifiedDate": "2024-07-15 00:00:00.000"
         },
         {
           "BusinessEntityID": 274,
           "QuotaDate": "2024-11-29 00:00:00.000",
-          "SalesQuota": 84000,
+          "SalesQuota": "84000.0000",
           "rowguid": "7CEA47B5-8391-4414-A866-FF6EC6628CD3",
           "ModifiedDate": "2024-10-15 00:00:00.000"
         },
         {
           "BusinessEntityID": 274,
           "QuotaDate": "2025-02-28 00:00:00.000",
-          "SalesQuota": 187000,
+          "SalesQuota": "187000.0000",
           "rowguid": "0CFB6474-20AA-46D3-A5C0-29DBA2EDA025",
           "ModifiedDate": "2025-01-14 00:00:00.000"
         }
@@ -14730,12 +14940,17 @@
         },
         {
           "name": "TaxRate",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(10,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00",
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 10,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Tax rate amount."
         },
         {
@@ -14845,13 +15060,13 @@
       ],
       "rowCount": 29,
       "viewSql": null,
-      "tableSql": "CREATE TABLE \"Sales.SalesTaxRate\" (\"SalesTaxRateID\" INTEGER NOT NULL, \"StateProvinceID\" INTEGER NOT NULL, \"TaxType\" INTEGER NOT NULL, \"TaxRate\" NUMERIC NOT NULL DEFAULT 0.00, \"Name\" TEXT NOT NULL, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK (\"TaxType\" BETWEEN 1 AND 3), CONSTRAINT \"PK_SalesTaxRate_SalesTaxRateID\" PRIMARY KEY (\"SalesTaxRateID\"), CONSTRAINT \"FK_SalesTaxRate_StateProvince_StateProvinceID\" FOREIGN KEY (\"StateProvinceID\") REFERENCES \"Person.StateProvince\" (\"StateProvinceID\"))",
+      "tableSql": "CREATE TABLE \"Sales.SalesTaxRate\" (\"SalesTaxRateID\" INTEGER NOT NULL, \"StateProvinceID\" INTEGER NOT NULL, \"TaxType\" INTEGER NOT NULL, \"TaxRate\" DECIMAL_TEXT(10,4) NOT NULL DEFAULT '0.00', \"Name\" TEXT NOT NULL, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK (\"TaxType\" BETWEEN 1 AND 3), CONSTRAINT \"PK_SalesTaxRate_SalesTaxRateID\" PRIMARY KEY (\"SalesTaxRateID\"), CONSTRAINT \"FK_SalesTaxRate_StateProvince_StateProvinceID\" FOREIGN KEY (\"StateProvinceID\") REFERENCES \"Person.StateProvince\" (\"StateProvinceID\"))",
       "rows": [
         {
           "SalesTaxRateID": 1,
           "StateProvinceID": 1,
           "TaxType": 1,
-          "TaxRate": 14,
+          "TaxRate": "14.0000",
           "Name": "Canadian GST + Alberta Provincial Tax",
           "rowguid": "683DE5DD-521A-47D4-A573-06A3CDB1BC5D",
           "ModifiedDate": "2019-04-30 00:00:00.000"
@@ -14860,7 +15075,7 @@
           "SalesTaxRateID": 2,
           "StateProvinceID": 57,
           "TaxType": 1,
-          "TaxRate": 14.25,
+          "TaxRate": "14.2500",
           "Name": "Canadian GST + Ontario Provincial Tax",
           "rowguid": "05C4FFDB-4F84-4CDF-ABE5-FDF3216EA74E",
           "ModifiedDate": "2019-04-30 00:00:00.000"
@@ -14869,7 +15084,7 @@
           "SalesTaxRateID": 3,
           "StateProvinceID": 63,
           "TaxType": 1,
-          "TaxRate": 14.25,
+          "TaxRate": "14.2500",
           "Name": "Canadian GST + Quebec Provincial Tax",
           "rowguid": "D4EDB557-56D7-403C-B538-4DF5E7302588",
           "ModifiedDate": "2019-04-30 00:00:00.000"
@@ -14878,7 +15093,7 @@
           "SalesTaxRateID": 4,
           "StateProvinceID": 1,
           "TaxType": 2,
-          "TaxRate": 7,
+          "TaxRate": "7.0000",
           "Name": "Canadian GST",
           "rowguid": "F0D76907-B433-453F-B95E-16FCE73B807A",
           "ModifiedDate": "2019-04-30 00:00:00.000"
@@ -14887,7 +15102,7 @@
           "SalesTaxRateID": 5,
           "StateProvinceID": 57,
           "TaxType": 2,
-          "TaxRate": 7,
+          "TaxRate": "7.0000",
           "Name": "Canadian GST",
           "rowguid": "7E0E97A2-878B-476F-A648-05A3DD4450ED",
           "ModifiedDate": "2019-04-30 00:00:00.000"
@@ -14896,7 +15111,7 @@
           "SalesTaxRateID": 6,
           "StateProvinceID": 63,
           "TaxType": 2,
-          "TaxRate": 7,
+          "TaxRate": "7.0000",
           "Name": "Canadian GST",
           "rowguid": "1E285D2C-8AF7-47AA-B06A-762CF4D93ACD",
           "ModifiedDate": "2019-04-30 00:00:00.000"
@@ -14905,7 +15120,7 @@
           "SalesTaxRateID": 7,
           "StateProvinceID": 7,
           "TaxType": 3,
-          "TaxRate": 7,
+          "TaxRate": "7.0000",
           "Name": "Canadian GST",
           "rowguid": "590CCB14-CB20-49BF-8FEE-E0C3ABC4C2B1",
           "ModifiedDate": "2019-04-30 00:00:00.000"
@@ -14914,7 +15129,7 @@
           "SalesTaxRateID": 8,
           "StateProvinceID": 29,
           "TaxType": 3,
-          "TaxRate": 7,
+          "TaxRate": "7.0000",
           "Name": "Canadian GST",
           "rowguid": "A8365F30-78B7-4DBE-8985-F8260560126B",
           "ModifiedDate": "2019-04-30 00:00:00.000"
@@ -14923,7 +15138,7 @@
           "SalesTaxRateID": 9,
           "StateProvinceID": 31,
           "TaxType": 3,
-          "TaxRate": 7,
+          "TaxRate": "7.0000",
           "Name": "Canadian GST",
           "rowguid": "F4FDE24B-7A53-4340-9D10-173E9424864A",
           "ModifiedDate": "2019-04-30 00:00:00.000"
@@ -14932,7 +15147,7 @@
           "SalesTaxRateID": 10,
           "StateProvinceID": 41,
           "TaxType": 3,
-          "TaxRate": 7,
+          "TaxRate": "7.0000",
           "Name": "Canadian GST",
           "rowguid": "383D465B-E1D1-492A-83F3-AB3E9CBF3282",
           "ModifiedDate": "2019-04-30 00:00:00.000"
@@ -14941,7 +15156,7 @@
           "SalesTaxRateID": 11,
           "StateProvinceID": 45,
           "TaxType": 3,
-          "TaxRate": 7,
+          "TaxRate": "7.0000",
           "Name": "Canadian GST",
           "rowguid": "8451909F-8A8D-4789-9F87-16A335D28053",
           "ModifiedDate": "2019-04-30 00:00:00.000"
@@ -14950,7 +15165,7 @@
           "SalesTaxRateID": 12,
           "StateProvinceID": 49,
           "TaxType": 3,
-          "TaxRate": 7,
+          "TaxRate": "7.0000",
           "Name": "Canadian GST",
           "rowguid": "FB7607EE-8F12-41EA-B461-10885C6F1533",
           "ModifiedDate": "2019-04-30 00:00:00.000"
@@ -15002,39 +15217,59 @@
         },
         {
           "name": "SalesYTD",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00"
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "SalesLastYear",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00"
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "CostYTD",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00"
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "CostLastYear",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00"
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "rowguid",
@@ -15123,17 +15358,17 @@
       ],
       "rowCount": 10,
       "viewSql": null,
-      "tableSql": "CREATE TABLE \"Sales.SalesTerritory\" (\"TerritoryID\" INTEGER NOT NULL, \"Name\" TEXT NOT NULL, \"CountryRegionCode\" TEXT NOT NULL, \"Group\" TEXT NOT NULL, \"SalesYTD\" NUMERIC NOT NULL DEFAULT 0.00, \"SalesLastYear\" NUMERIC NOT NULL DEFAULT 0.00, \"CostYTD\" NUMERIC NOT NULL DEFAULT 0.00, \"CostLastYear\" NUMERIC NOT NULL DEFAULT 0.00, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK (\"SalesYTD\" >= 0.00), CHECK (\"SalesLastYear\" >= 0.00), CHECK (\"CostYTD\" >= 0.00), CHECK (\"CostLastYear\" >= 0.00), CONSTRAINT \"PK_SalesTerritory_TerritoryID\" PRIMARY KEY (\"TerritoryID\"), CONSTRAINT \"FK_SalesTerritory_CountryRegion_CountryRegionCode\" FOREIGN KEY (\"CountryRegionCode\") REFERENCES \"Person.CountryRegion\" (\"CountryRegionCode\"))",
+      "tableSql": "CREATE TABLE \"Sales.SalesTerritory\" (\"TerritoryID\" INTEGER NOT NULL, \"Name\" TEXT NOT NULL, \"CountryRegionCode\" TEXT NOT NULL, \"Group\" TEXT NOT NULL, \"SalesYTD\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT '0.00', \"SalesLastYear\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT '0.00', \"CostYTD\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT '0.00', \"CostLastYear\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT '0.00', \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CONSTRAINT \"PK_SalesTerritory_TerritoryID\" PRIMARY KEY (\"TerritoryID\"), CONSTRAINT \"FK_SalesTerritory_CountryRegion_CountryRegionCode\" FOREIGN KEY (\"CountryRegionCode\") REFERENCES \"Person.CountryRegion\" (\"CountryRegionCode\"))",
       "rows": [
         {
           "TerritoryID": 1,
           "Name": "Northwest",
           "CountryRegionCode": "US",
           "Group": "North America",
-          "SalesYTD": 7887186.7882,
-          "SalesLastYear": 3298694.4938,
-          "CostYTD": 0,
-          "CostLastYear": 0,
+          "SalesYTD": "7887186.7882",
+          "SalesLastYear": "3298694.4938",
+          "CostYTD": ".0000",
+          "CostLastYear": ".0000",
           "rowguid": "43689A10-E30B-497F-B0DE-11DE20267FF7",
           "ModifiedDate": "2019-04-30 00:00:00.000"
         },
@@ -15142,10 +15377,10 @@
           "Name": "Northeast",
           "CountryRegionCode": "US",
           "Group": "North America",
-          "SalesYTD": 2402176.8476,
-          "SalesLastYear": 3607148.9371,
-          "CostYTD": 0,
-          "CostLastYear": 0,
+          "SalesYTD": "2402176.8476",
+          "SalesLastYear": "3607148.9371",
+          "CostYTD": ".0000",
+          "CostLastYear": ".0000",
           "rowguid": "00FB7309-96CC-49E2-8363-0A1BA72486F2",
           "ModifiedDate": "2019-04-30 00:00:00.000"
         },
@@ -15154,10 +15389,10 @@
           "Name": "Central",
           "CountryRegionCode": "US",
           "Group": "North America",
-          "SalesYTD": 3072175.118,
-          "SalesLastYear": 3205014.0767,
-          "CostYTD": 0,
-          "CostLastYear": 0,
+          "SalesYTD": "3072175.1180",
+          "SalesLastYear": "3205014.0767",
+          "CostYTD": ".0000",
+          "CostLastYear": ".0000",
           "rowguid": "DF6E7FD8-1A8D-468C-B103-ED8ADDB452C1",
           "ModifiedDate": "2019-04-30 00:00:00.000"
         },
@@ -15166,10 +15401,10 @@
           "Name": "Southwest",
           "CountryRegionCode": "US",
           "Group": "North America",
-          "SalesYTD": 10510853.8739,
-          "SalesLastYear": 5366575.7098,
-          "CostYTD": 0,
-          "CostLastYear": 0,
+          "SalesYTD": "10510853.8739",
+          "SalesLastYear": "5366575.7098",
+          "CostYTD": ".0000",
+          "CostLastYear": ".0000",
           "rowguid": "DC3E9EA0-7950-4431-9428-99DBCBC33865",
           "ModifiedDate": "2019-04-30 00:00:00.000"
         },
@@ -15178,10 +15413,10 @@
           "Name": "Southeast",
           "CountryRegionCode": "US",
           "Group": "North America",
-          "SalesYTD": 2538667.2515,
-          "SalesLastYear": 3925071.4318,
-          "CostYTD": 0,
-          "CostLastYear": 0,
+          "SalesYTD": "2538667.2515",
+          "SalesLastYear": "3925071.4318",
+          "CostYTD": ".0000",
+          "CostLastYear": ".0000",
           "rowguid": "6DC4165A-5E4C-42D2-809D-4344E0AC75E7",
           "ModifiedDate": "2019-04-30 00:00:00.000"
         },
@@ -15190,10 +15425,10 @@
           "Name": "Canada",
           "CountryRegionCode": "CA",
           "Group": "North America",
-          "SalesYTD": 6771829.1376,
-          "SalesLastYear": 5693988.86,
-          "CostYTD": 0,
-          "CostLastYear": 0,
+          "SalesYTD": "6771829.1376",
+          "SalesLastYear": "5693988.8600",
+          "CostYTD": ".0000",
+          "CostLastYear": ".0000",
           "rowguid": "06B4AF8A-1639-476E-9266-110461D66B00",
           "ModifiedDate": "2019-04-30 00:00:00.000"
         },
@@ -15202,10 +15437,10 @@
           "Name": "France",
           "CountryRegionCode": "FR",
           "Group": "Europe",
-          "SalesYTD": 4772398.3078,
-          "SalesLastYear": 2396539.7601,
-          "CostYTD": 0,
-          "CostLastYear": 0,
+          "SalesYTD": "4772398.3078",
+          "SalesLastYear": "2396539.7601",
+          "CostYTD": ".0000",
+          "CostLastYear": ".0000",
           "rowguid": "BF806804-9B4C-4B07-9D19-706F2E689552",
           "ModifiedDate": "2019-04-30 00:00:00.000"
         },
@@ -15214,10 +15449,10 @@
           "Name": "Germany",
           "CountryRegionCode": "DE",
           "Group": "Europe",
-          "SalesYTD": 3805202.3478,
-          "SalesLastYear": 1307949.7917,
-          "CostYTD": 0,
-          "CostLastYear": 0,
+          "SalesYTD": "3805202.3478",
+          "SalesLastYear": "1307949.7917",
+          "CostYTD": ".0000",
+          "CostLastYear": ".0000",
           "rowguid": "6D2450DB-8159-414F-A917-E73EE91C38A9",
           "ModifiedDate": "2019-04-30 00:00:00.000"
         },
@@ -15226,10 +15461,10 @@
           "Name": "Australia",
           "CountryRegionCode": "AU",
           "Group": "Pacific",
-          "SalesYTD": 5977814.9154,
-          "SalesLastYear": 2278548.9776,
-          "CostYTD": 0,
-          "CostLastYear": 0,
+          "SalesYTD": "5977814.9154",
+          "SalesLastYear": "2278548.9776",
+          "CostYTD": ".0000",
+          "CostLastYear": ".0000",
           "rowguid": "602E612E-DFE9-41D9-B894-27E489747885",
           "ModifiedDate": "2019-04-30 00:00:00.000"
         },
@@ -15238,10 +15473,10 @@
           "Name": "United Kingdom",
           "CountryRegionCode": "GB",
           "Group": "Europe",
-          "SalesYTD": 5012905.3656,
-          "SalesLastYear": 1635823.3967,
-          "CostYTD": 0,
-          "CostLastYear": 0,
+          "SalesYTD": "5012905.3656",
+          "SalesLastYear": "1635823.3967",
+          "CostYTD": ".0000",
+          "CostLastYear": ".0000",
           "rowguid": "05FC7E1F-2DEA-414E-9ECD-09D150516FB5",
           "ModifiedDate": "2019-04-30 00:00:00.000"
         }
@@ -15655,12 +15890,17 @@
         },
         {
           "name": "DiscountPct",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(10,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyOrder": 0,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00",
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 10,
+            "scale": 4,
+            "storage": "text"
+          },
           "description": "Discount precentage."
         },
         {
@@ -15779,12 +16019,12 @@
       "foreignKeys": [],
       "rowCount": 16,
       "viewSql": null,
-      "tableSql": "CREATE TABLE \"Sales.SpecialOffer\" (\"SpecialOfferID\" INTEGER NOT NULL, \"Description\" TEXT NOT NULL, \"DiscountPct\" NUMERIC NOT NULL DEFAULT 0.00, \"Type\" TEXT NOT NULL, \"Category\" TEXT NOT NULL, \"StartDate\" TEXT NOT NULL, \"EndDate\" TEXT NOT NULL, \"MinQty\" INTEGER NOT NULL DEFAULT 0, \"MaxQty\" INTEGER, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK (\"EndDate\" >= \"StartDate\"), CHECK (\"DiscountPct\" >= 0.00), CHECK (\"MinQty\" >= 0), CHECK (\"MaxQty\" >= 0), CONSTRAINT \"PK_SpecialOffer_SpecialOfferID\" PRIMARY KEY (\"SpecialOfferID\"))",
+      "tableSql": "CREATE TABLE \"Sales.SpecialOffer\" (\"SpecialOfferID\" INTEGER NOT NULL, \"Description\" TEXT NOT NULL, \"DiscountPct\" DECIMAL_TEXT(10,4) NOT NULL DEFAULT '0.00', \"Type\" TEXT NOT NULL, \"Category\" TEXT NOT NULL, \"StartDate\" TEXT NOT NULL, \"EndDate\" TEXT NOT NULL, \"MinQty\" INTEGER NOT NULL DEFAULT 0, \"MaxQty\" INTEGER, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT '2025-11-14 12:13:16.797', CHECK (\"EndDate\" >= \"StartDate\"), CHECK (\"MinQty\" >= 0), CHECK (\"MaxQty\" >= 0), CONSTRAINT \"PK_SpecialOffer_SpecialOfferID\" PRIMARY KEY (\"SpecialOfferID\"))",
       "rows": [
         {
           "SpecialOfferID": 1,
           "Description": "No Discount",
-          "DiscountPct": 0,
+          "DiscountPct": ".0000",
           "Type": "No Discount",
           "Category": "No Discount",
           "StartDate": "2022-04-30 00:00:00.000",
@@ -15797,7 +16037,7 @@
         {
           "SpecialOfferID": 2,
           "Description": "Volume Discount 11 to 14",
-          "DiscountPct": 0.02,
+          "DiscountPct": ".0200",
           "Type": "Volume Discount",
           "Category": "Reseller",
           "StartDate": "2022-05-30 00:00:00.000",
@@ -15810,7 +16050,7 @@
         {
           "SpecialOfferID": 3,
           "Description": "Volume Discount 15 to 24",
-          "DiscountPct": 0.05,
+          "DiscountPct": ".0500",
           "Type": "Volume Discount",
           "Category": "Reseller",
           "StartDate": "2022-05-30 00:00:00.000",
@@ -15823,7 +16063,7 @@
         {
           "SpecialOfferID": 4,
           "Description": "Volume Discount 25 to 40",
-          "DiscountPct": 0.1,
+          "DiscountPct": ".1000",
           "Type": "Volume Discount",
           "Category": "Reseller",
           "StartDate": "2022-05-30 00:00:00.000",
@@ -15836,7 +16076,7 @@
         {
           "SpecialOfferID": 5,
           "Description": "Volume Discount 41 to 60",
-          "DiscountPct": 0.15,
+          "DiscountPct": ".1500",
           "Type": "Volume Discount",
           "Category": "Reseller",
           "StartDate": "2022-05-30 00:00:00.000",
@@ -15849,7 +16089,7 @@
         {
           "SpecialOfferID": 6,
           "Description": "Volume Discount over 60",
-          "DiscountPct": 0.2,
+          "DiscountPct": ".2000",
           "Type": "Volume Discount",
           "Category": "Reseller",
           "StartDate": "2022-05-30 00:00:00.000",
@@ -15862,7 +16102,7 @@
         {
           "SpecialOfferID": 7,
           "Description": "Mountain-100 Clearance Sale",
-          "DiscountPct": 0.35,
+          "DiscountPct": ".3500",
           "Type": "Discontinued Product",
           "Category": "Reseller",
           "StartDate": "2023-04-13 00:00:00.000",
@@ -15875,7 +16115,7 @@
         {
           "SpecialOfferID": 8,
           "Description": "Sport Helmet Discount-2002",
-          "DiscountPct": 0.1,
+          "DiscountPct": ".1000",
           "Type": "Seasonal Discount",
           "Category": "Reseller",
           "StartDate": "2023-05-30 00:00:00.000",
@@ -15888,7 +16128,7 @@
         {
           "SpecialOfferID": 9,
           "Description": "Road-650 Overstock",
-          "DiscountPct": 0.3,
+          "DiscountPct": ".3000",
           "Type": "Excess Inventory",
           "Category": "Reseller",
           "StartDate": "2023-05-30 00:00:00.000",
@@ -15901,7 +16141,7 @@
         {
           "SpecialOfferID": 10,
           "Description": "Mountain Tire Sale",
-          "DiscountPct": 0.5,
+          "DiscountPct": ".5000",
           "Type": "Excess Inventory",
           "Category": "Customer",
           "StartDate": "2024-05-13 00:00:00.000",
@@ -15914,7 +16154,7 @@
         {
           "SpecialOfferID": 11,
           "Description": "Sport Helmet Discount-2003",
-          "DiscountPct": 0.15,
+          "DiscountPct": ".1500",
           "Type": "Seasonal Discount",
           "Category": "Reseller",
           "StartDate": "2024-05-29 00:00:00.000",
@@ -15927,7 +16167,7 @@
         {
           "SpecialOfferID": 12,
           "Description": "LL Road Frame Sale",
-          "DiscountPct": 0.35,
+          "DiscountPct": ".3500",
           "Type": "Excess Inventory",
           "Category": "Reseller",
           "StartDate": "2024-05-29 00:00:00.000",
@@ -19096,8 +19336,8 @@
           "TerritoryName": null,
           "TerritoryGroup": null,
           "SalesQuota": null,
-          "SalesYTD": 559697.5639,
-          "SalesLastYear": 0
+          "SalesYTD": "559697.5639",
+          "SalesLastYear": ".0000"
         },
         {
           "BusinessEntityID": 275,
@@ -19119,9 +19359,9 @@
           "CountryRegionName": "United States",
           "TerritoryName": "Northeast",
           "TerritoryGroup": "North America",
-          "SalesQuota": 300000,
-          "SalesYTD": 3763178.1787,
-          "SalesLastYear": 1750406.4785
+          "SalesQuota": "300000.0000",
+          "SalesYTD": "3763178.1787",
+          "SalesLastYear": "1750406.4785"
         },
         {
           "BusinessEntityID": 276,
@@ -19143,9 +19383,9 @@
           "CountryRegionName": "United States",
           "TerritoryName": "Southwest",
           "TerritoryGroup": "North America",
-          "SalesQuota": 250000,
-          "SalesYTD": 4251368.5497,
-          "SalesLastYear": 1439156.0291
+          "SalesQuota": "250000.0000",
+          "SalesYTD": "4251368.5497",
+          "SalesLastYear": "1439156.0291"
         },
         {
           "BusinessEntityID": 277,
@@ -19167,9 +19407,9 @@
           "CountryRegionName": "United States",
           "TerritoryName": "Central",
           "TerritoryGroup": "North America",
-          "SalesQuota": 250000,
-          "SalesYTD": 3189418.3662,
-          "SalesLastYear": 1997186.2037
+          "SalesQuota": "250000.0000",
+          "SalesYTD": "3189418.3662",
+          "SalesLastYear": "1997186.2037"
         },
         {
           "BusinessEntityID": 278,
@@ -19191,9 +19431,9 @@
           "CountryRegionName": "Canada",
           "TerritoryName": "Canada",
           "TerritoryGroup": "North America",
-          "SalesQuota": 250000,
-          "SalesYTD": 1453719.4653,
-          "SalesLastYear": 1620276.8966
+          "SalesQuota": "250000.0000",
+          "SalesYTD": "1453719.4653",
+          "SalesLastYear": "1620276.8966"
         },
         {
           "BusinessEntityID": 279,
@@ -19215,9 +19455,9 @@
           "CountryRegionName": "United States",
           "TerritoryName": "Southeast",
           "TerritoryGroup": "North America",
-          "SalesQuota": 300000,
-          "SalesYTD": 2315185.611,
-          "SalesLastYear": 1849640.9418
+          "SalesQuota": "300000.0000",
+          "SalesYTD": "2315185.6110",
+          "SalesLastYear": "1849640.9418"
         },
         {
           "BusinessEntityID": 280,
@@ -19239,9 +19479,9 @@
           "CountryRegionName": "United States",
           "TerritoryName": "Northwest",
           "TerritoryGroup": "North America",
-          "SalesQuota": 250000,
-          "SalesYTD": 1352577.1325,
-          "SalesLastYear": 1927059.178
+          "SalesQuota": "250000.0000",
+          "SalesYTD": "1352577.1325",
+          "SalesLastYear": "1927059.1780"
         },
         {
           "BusinessEntityID": 281,
@@ -19263,9 +19503,9 @@
           "CountryRegionName": "United States",
           "TerritoryName": "Southwest",
           "TerritoryGroup": "North America",
-          "SalesQuota": 250000,
-          "SalesYTD": 2458535.6169,
-          "SalesLastYear": 2073505.9999
+          "SalesQuota": "250000.0000",
+          "SalesYTD": "2458535.6169",
+          "SalesLastYear": "2073505.9999"
         },
         {
           "BusinessEntityID": 282,
@@ -19287,9 +19527,9 @@
           "CountryRegionName": "Canada",
           "TerritoryName": "Canada",
           "TerritoryGroup": "North America",
-          "SalesQuota": 250000,
-          "SalesYTD": 2604540.7172,
-          "SalesLastYear": 2038234.6549
+          "SalesQuota": "250000.0000",
+          "SalesYTD": "2604540.7172",
+          "SalesLastYear": "2038234.6549"
         },
         {
           "BusinessEntityID": 283,
@@ -19311,9 +19551,9 @@
           "CountryRegionName": "United States",
           "TerritoryName": "Northwest",
           "TerritoryGroup": "North America",
-          "SalesQuota": 250000,
-          "SalesYTD": 1573012.9383,
-          "SalesLastYear": 1371635.3158
+          "SalesQuota": "250000.0000",
+          "SalesYTD": "1573012.9383",
+          "SalesLastYear": "1371635.3158"
         },
         {
           "BusinessEntityID": 284,
@@ -19335,9 +19575,9 @@
           "CountryRegionName": "United States",
           "TerritoryName": "Northwest",
           "TerritoryGroup": "North America",
-          "SalesQuota": 300000,
-          "SalesYTD": 1576562.1966,
-          "SalesLastYear": 0
+          "SalesQuota": "300000.0000",
+          "SalesYTD": "1576562.1966",
+          "SalesLastYear": ".0000"
         },
         {
           "BusinessEntityID": 285,
@@ -19360,8 +19600,8 @@
           "TerritoryName": null,
           "TerritoryGroup": null,
           "SalesQuota": null,
-          "SalesYTD": 172524.4512,
-          "SalesLastYear": 0
+          "SalesYTD": "172524.4512",
+          "SalesLastYear": ".0000"
         }
       ]
     },

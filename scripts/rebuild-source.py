@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+from decimal import Decimal, InvalidOperation
 import gzip
 import hashlib
 import json
@@ -167,7 +168,7 @@ def sqlite_type(source_type: str, column_name: str) -> str:
     if source_type in {"int", "integer", "smallint", "tinyint", "bit", "flag", "namestyle"}:
         return "INTEGER"
     if source_type in {"decimal", "numeric", "money", "smallmoney"}:
-        return "NUMERIC"
+        raise ConversionError("fixed-point SQLite types require a declared precision and scale")
     if source_type in {"float", "real"}:
         return "REAL"
     if source_type in {"binary", "varbinary", "image", "timestamp", "rowversion", "geography", "geometry", "hierarchyid"}:
@@ -191,6 +192,215 @@ def sqlite_type(source_type: str, column_name: str) -> str:
 
 def declaration_is_computed(source_type: str) -> bool:
     return source_type.startswith("computed:")
+
+
+def fixed_point_declaration(column: dict[str, Any]) -> tuple[int, int] | None:
+    """Return SQL Server precision/scale for declared fixed-point columns."""
+    source_type = column["sourceType"].lower()
+    if source_type == "money":
+        return 19, 4
+    if source_type == "smallmoney":
+        return 10, 4
+    if source_type not in {"decimal", "numeric"}:
+        return None
+    match = re.search(r"\]\s+\[?(?:decimal|numeric)\]?\s*\(\s*(\d+)\s*,\s*(\d+)\s*\)", column["sourceDefinition"], re.I)
+    if not match:
+        raise ConversionError(f"fixed-point declaration has no precision and scale: {column['sourceDefinition']}")
+    precision, scale = map(int, match.groups())
+    if precision < 1 or precision > 38 or scale < 0 or scale > precision:
+        raise ConversionError(f"invalid SQL Server decimal precision/scale ({precision}, {scale}) for {column['name']}")
+    return precision, scale
+
+
+def decimal_text(raw: bytes, column: dict[str, Any]) -> str:
+    """Validate exact source fixed-point text without passing through float."""
+    try:
+        value = raw.decode("ascii", errors="strict")
+    except UnicodeDecodeError as exc:
+        raise ConversionError(f"invalid fixed-point source value for {column['name']}: {raw!r}") from exc
+    if not re.fullmatch(r"[+-]?(?:\d+(?:\.\d*)?|\.\d+)", value):
+        raise ConversionError(f"invalid fixed-point source value for {column['name']}: {raw!r}")
+    try:
+        number = Decimal(value)
+    except InvalidOperation as exc:
+        raise ConversionError(f"invalid fixed-point source value for {column['name']}: {raw!r}") from exc
+    if not number.is_finite():
+        raise ConversionError(f"non-finite fixed-point source value for {column['name']}: {value!r}")
+    precision, scale = column["precision"], column["scale"]
+    sign, digits, exponent = number.as_tuple()
+    fractional_digits = max(0, -exponent)
+    integer_digits = 0 if number.is_zero() else max(0, len(digits) + exponent)
+    significant_digits = max(1, integer_digits + min(fractional_digits, scale))
+    if fractional_digits > scale or integer_digits > precision - scale or significant_digits > precision:
+        raise ConversionError(
+            f"fixed-point source value {value!r} exceeds ({precision}, {scale}) for {column['name']}"
+        )
+    if column["sourceType"].lower() == "money":
+        if number < Decimal("-922337203685477.5808") or number > Decimal("922337203685477.5807"):
+            raise ConversionError(f"money value {value!r} is outside the SQL Server money range for {column['name']}")
+    elif column["sourceType"].lower() == "smallmoney":
+        if number < Decimal("-214748.3648") or number > Decimal("214748.3647"):
+            raise ConversionError(f"smallmoney value {value!r} is outside the SQL Server smallmoney range for {column['name']}")
+    return value
+
+
+CHECK_TOKEN = re.compile(r'\s*("(?:[^"]|"")+"|\d+(?:\.\d*)?|\.\d+|>=|<=|<>|!=|[()=><]|[A-Za-z_][A-Za-z0-9_]*)', re.I)
+
+
+def check_tokens(expression: str) -> list[str]:
+    tokens: list[str] = []
+    position = 0
+    while position < len(expression):
+        if expression[position:].isspace():
+            break
+        match = CHECK_TOKEN.match(expression, position)
+        if not match:
+            raise ConversionError(f"unsupported SQL Server CHECK expression: {expression}")
+        tokens.append(match.group(1))
+        position = match.end()
+    return tokens
+
+
+def validate_check_expression(expression: str, values: dict[str, Any]) -> bool | None:
+    """Evaluate the numeric/null CHECK subset used by this source, rejecting unknown syntax."""
+    tokens = check_tokens(expression)
+    index = 0
+
+    def take() -> str:
+        nonlocal index
+        if index >= len(tokens):
+            raise ConversionError(f"incomplete SQL Server CHECK expression: {expression}")
+        value = tokens[index]
+        index += 1
+        return value
+
+    def peek() -> str | None:
+        return tokens[index].upper() if index < len(tokens) else None
+
+    def operand() -> Any:
+        token = take()
+        if token.startswith('"'):
+            name = token[1:-1].replace('""', '"')
+            if name not in values:
+                raise ConversionError(f"SQL Server CHECK references unavailable column {name!r}: {expression}")
+            value = values[name]
+            if isinstance(value, str):
+                try:
+                    return Decimal(value)
+                except InvalidOperation:
+                    return value
+            return value
+        try:
+            return Decimal(token)
+        except InvalidOperation as exc:
+            raise ConversionError(f"unsupported SQL Server CHECK operand {token!r}: {expression}") from exc
+
+    def compare(left: Any, operator: str, right: Any) -> bool | None:
+        if left is None or right is None:
+            return None
+        if operator == ">=": return left >= right
+        if operator == ">": return left > right
+        if operator == "<=": return left <= right
+        if operator == "<": return left < right
+        if operator in ("=", "=="): return left == right
+        if operator in ("!=", "<>"): return left != right
+        raise ConversionError(f"unsupported SQL Server CHECK operator {operator!r}: {expression}")
+
+    def atom() -> bool | None:
+        if peek() == "(":
+            take()
+            result = disjunction()
+            if take() != ")":
+                raise ConversionError(f"unbalanced SQL Server CHECK expression: {expression}")
+            return result
+        left = operand()
+        if peek() == "IS":
+            take()
+            negated = peek() == "NOT"
+            if negated: take()
+            if take().upper() != "NULL":
+                raise ConversionError(f"unsupported SQL Server CHECK IS expression: {expression}")
+            result = left is None
+            return not result if negated else result
+        if peek() == "BETWEEN":
+            take()
+            lower = operand()
+            if take().upper() != "AND":
+                raise ConversionError(f"invalid SQL Server CHECK BETWEEN expression: {expression}")
+            upper = operand()
+            low_result, high_result = compare(left, ">=", lower), compare(left, "<=", upper)
+            return sql_and(low_result, high_result)
+        operator = peek()
+        if operator in (">=", ">", "<=", "<", "=", "!=", "<>"):
+            take()
+            return compare(left, operator, operand())
+        if isinstance(left, bool):
+            return left
+        raise ConversionError(f"unsupported SQL Server CHECK predicate: {expression}")
+
+    def conjunction() -> bool | None:
+        result = atom()
+        while peek() == "AND":
+            take()
+            result = sql_and(result, atom())
+        return result
+
+    def disjunction() -> bool | None:
+        result = conjunction()
+        while peek() == "OR":
+            take()
+            result = sql_or(result, conjunction())
+        return result
+
+    def sql_and(left: bool | None, right: bool | None) -> bool | None:
+        if left is False or right is False: return False
+        if left is None or right is None: return None
+        return True
+
+    def sql_or(left: bool | None, right: bool | None) -> bool | None:
+        if left is True or right is True: return True
+        if left is None or right is None: return None
+        return False
+
+    result = disjunction()
+    if index != len(tokens):
+        raise ConversionError(f"unsupported trailing SQL Server CHECK tokens: {expression}")
+    return result
+
+
+def computed_decimal_snapshot(column: dict[str, Any], rows: list[list[bytes]], column_index: int, decimal_operands: set[str]) -> tuple[int, int] | None:
+    """Describe a computed decimal snapshot without guessing SQL Server result metadata."""
+    if not column.get("computedExpression"):
+        return None
+    names = {name.lower() for name in re.findall(r"\[([^]]+)\]", column["computedExpression"])}
+    if not names.intersection({name.lower() for name in decimal_operands}):
+        return None
+    scale = 0
+    integer_digits = 0
+    for row in rows:
+        raw = row[column_index]
+        if raw == b"":
+            continue
+        try:
+            text = raw.decode("ascii", errors="strict")
+        except UnicodeDecodeError as exc:
+            raise ConversionError(f"non-ASCII computed decimal snapshot for {column['name']}") from exc
+        if not re.fullmatch(r"[+-]?(?:\d+(?:\.\d*)?|\.\d+)", text):
+            raise ConversionError(f"invalid computed decimal snapshot for {column['name']}: {text!r}")
+        try:
+            value = Decimal(text)
+        except InvalidOperation as exc:
+            raise ConversionError(f"invalid computed decimal snapshot for {column['name']}: {text!r}") from exc
+        if not value.is_finite():
+            raise ConversionError(f"non-finite computed decimal snapshot for {column['name']}: {text!r}")
+        _, digits, exponent = value.as_tuple()
+        value_scale = max(0, -exponent)
+        value_integer_digits = 0 if value.is_zero() else max(0, len(digits) + exponent)
+        scale = max(scale, value_scale)
+        integer_digits = max(integer_digits, value_integer_digits)
+    if integer_digits + scale > 38:
+        raise ConversionError(f"computed decimal snapshot for {column['name']} exceeds storage precision 38")
+    return 38, scale
 
 
 def normalize_expression(expression: str) -> str:
@@ -335,10 +545,26 @@ def parse_tables(source: str) -> list[dict[str, Any]]:
             "sourceDefinition": f"CREATE TABLE [{schema}].[{name}]({raw})",
             "columns": columns,
             "checks": checks,
+            "sourceChecks": list(checks),
+            "sourceOnlyChecks": [],
         })
         position = closing + 1
     if len(tables) != 71:
         raise ConversionError(f"expected 71 source tables, found {len(tables)}")
+    for table in tables:
+        decimal_columns = {
+            column["name"].lower()
+            for column in table["columns"]
+            if fixed_point_declaration(column) is not None
+        }
+        retained: list[str] = []
+        for check in table["checks"]:
+            referenced = {name.lower() for name in re.findall(r'"([^"]+)"', check)}
+            if referenced.intersection(decimal_columns):
+                table["sourceOnlyChecks"].append(check)
+            else:
+                retained.append(check)
+        table["checks"] = retained
     return tables
 
 
@@ -467,7 +693,11 @@ def record_rows(data: bytes, field: bytes, row: bytes, width: int, recordset: st
 def value_for(raw: bytes, column: dict[str, Any]) -> Any:
     source_type = column["sourceType"].lower()
     if raw == b"":
+        if column.get("logicalType") == "decimal" and not column["nullable"]:
+            raise ConversionError(f"missing fixed-point source value for non-nullable column {column['name']}")
         return None if column["nullable"] else ""
+    if column.get("logicalType") == "decimal":
+        return decimal_text(raw, column)
     binary = source_type in {"binary", "varbinary", "image", "timestamp", "rowversion", "geography", "geometry", "hierarchyid"}
     if binary:
         if raw[:2].lower() == b"0x":
@@ -489,6 +719,10 @@ def value_for(raw: bytes, column: dict[str, Any]) -> Any:
             return value
     if source_type in {"decimal", "numeric", "money", "smallmoney", "float", "real"}:
         try:
+            if source_type in {"float", "real"}:
+                return float(value)
+            if source_type in {"decimal", "numeric", "money", "smallmoney"}:
+                return value
             return float(value)
         except ValueError:
             return value
@@ -497,7 +731,10 @@ def value_for(raw: bytes, column: dict[str, Any]) -> Any:
 
 def sqlite_column_sql(column: dict[str, Any]) -> str:
     source_type = column["sourceType"].lower()
-    sql_type = sqlite_type(source_type if not column["computedExpression"] else "computed:" + source_type, column["name"])
+    if column.get("logicalType") == "decimal":
+        sql_type = f"DECIMAL_TEXT({column['precision']},{column['scale']})"
+    else:
+        sql_type = sqlite_type(source_type if not column["computedExpression"] else "computed:" + source_type, column["name"])
     declaration = f"{quote(column['name'])} {sql_type}"
     if not column["nullable"]:
         declaration += " NOT NULL"
@@ -506,6 +743,8 @@ def sqlite_column_sql(column: dict[str, Any]) -> str:
     # SQL Server NEWID() default in source metadata but omit it from the static
     # read-only SQLite schema; all seeded GUID values are imported unchanged.
     if default and default.upper() != "NEWID()" and not column["computedExpression"]:
+        if column.get("logicalType") == "decimal" and re.fullmatch(r"[-+]?\d+(?:\.\d+)?", default):
+            default = "'" + default + "'"
         declaration += f" DEFAULT {default}"
     return declaration
 
@@ -661,6 +900,61 @@ def parse_tables_and_files(source: str) -> tuple[list[dict[str, Any]], list[dict
     if len(aw_rows) != 1 or len(aw_rows[0]) != len(aw_table["columns"]):
         raise ConversionError("AWBuildVersion.csv no longer contains one complete pinned row")
     bulk["dbo.AWBuildVersion"] = {"file": "AWBuildVersion.csv", "field": b"\t", "row": b"\n", "rowCount": 1, "rows": [list(value.encode() for value in aw_rows[0])]}
+    for table in tables:
+        config = bulk.get(table["recordset"], {})
+        rows = config.get("rows", [])
+        decimal_operands: set[str] = set()
+        for column in table["columns"]:
+            declaration = fixed_point_declaration(column)
+            if declaration is not None:
+                column["logicalType"] = "decimal"
+                column["precision"], column["scale"] = declaration
+                column["sqliteStorage"] = "text"
+                decimal_operands.add(column["name"])
+        for index, column in enumerate(table["columns"]):
+            if column.get("logicalType") == "decimal":
+                continue
+            snapshot = computed_decimal_snapshot(column, rows, index, decimal_operands)
+            if snapshot is not None:
+                column["logicalType"] = "decimal"
+                column["precision"], column["scale"] = snapshot
+                column["sqliteStorage"] = "text"
+                column["precisionScaleProvenance"] = "computed snapshot scale; not SQL Server type inference"
+    for table in tables:
+        config = bulk.get(table["recordset"], {})
+        for column_index, column in enumerate(table["columns"]):
+            if column.get("logicalType") != "decimal":
+                continue
+            for row_index, row in enumerate(config.get("rows", []), 1):
+                raw = row[column_index]
+                if raw:
+                    try:
+                        decimal_text(raw, column)
+                    except ConversionError as exc:
+                        raise ConversionError(f"{table['recordset']} row {row_index}: {exc}") from exc
+    for table in tables:
+        config = bulk.get(table["recordset"], {})
+        if not table["sourceOnlyChecks"]:
+            continue
+        columns = {column["name"]: (index, column) for index, column in enumerate(table["columns"])}
+        referenced = {
+            name
+            for check in table["sourceOnlyChecks"]
+            for name in re.findall(r'"([^"]+)"', check)
+        }
+        for row_index, row in enumerate(config.get("rows", []), 1):
+            values = {
+                name: value_for(row[columns[name][0]], columns[name][1])
+                for name in referenced
+            }
+            for check in table["sourceOnlyChecks"]:
+                try:
+                    result = validate_check_expression(check, values)
+                except (TypeError, ValueError) as exc:
+                    raise ConversionError(f"{table['recordset']} CHECK validation failed on row {row_index}: {check}: {exc}") from exc
+                if result is False:
+                    raise ConversionError(f"{table['recordset']} row {row_index} violates source-only CHECK {check}")
+        table["sourceOnlyChecksValidated"] = True
     return tables, primary_keys, foreign_keys, indexes, bulk
 
 

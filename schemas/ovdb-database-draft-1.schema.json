@@ -86,7 +86,16 @@
                 "nullable": { "type": "boolean" },
                 "primaryKey": { "type": "boolean" },
                 "primaryKeyPosition": { "type": ["integer", "null"], "minimum": 1 },
-                "defaultValue": { "type": ["string", "number", "null"] }
+                "defaultValue": { "type": ["string", "number", "null"] },
+                "decimal": {
+                  "type": "object", "additionalProperties": false,
+                  "required": ["precision", "scale", "storage"],
+                  "properties": {
+                    "precision": { "type": "integer", "minimum": 1, "maximum": 1000 },
+                    "scale": { "type": "integer", "minimum": 0, "maximum": 1000 },
+                    "storage": { "const": "text" }
+                  }
+                }
               }
             }
           },
