@@ -59,8 +59,15 @@ jobs:
           if executable != {view["recordset"] for view in views if view["availableAsSqliteView"]}:
               raise SystemExit("SQLite view inventory differs from the translated source views")
           manifest = json.loads(Path("manifest.json").read_text(encoding="utf-8"))
-          if manifest["capabilities"]["ovdb"]["query"]:
-              raise SystemExit("query capability must remain disabled until backend mount verification")
+          capabilities = manifest["capabilities"]["ovdb"]
+          generator = manifest["generator"]["ovdb"]
+          descriptor = json.loads(Path("ovdb-database.json").read_text(encoding="utf-8"))
+          if capabilities["available"] is not True or capabilities["readOnly"] is not True or capabilities["query"] is not True or capabilities["deploymentVerified"] is not True:
+              raise SystemExit("OVDB must be declared available only for its verified read-only query mount")
+          if generator["query"] is not capabilities["query"]:
+              raise SystemExit("generator OVDB query capability differs from website capabilities")
+          if descriptor["capabilities"] != {"read": True, "query": True, "write": False}:
+              raise SystemExit("public descriptor must advertise verified read/query and disabled writes")
           PY
 
       - name: Install pinned ModelSpec and MeaningGraph tools
