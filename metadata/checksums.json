@@ -2,19 +2,19 @@
   "contractVersion": 1,
   "files": {
     "artifacts/adventureworks.sql.gz": {
-      "sha256": "7351fbd8bfa3c50e33f28cb43e403293078942107b1ee52cd9c01b5a94f4f041",
-      "bytes": 19191245,
+      "sha256": "d3887bf4538178ee68cb6fdee0498f758c45e80d7c87ac6fd578b1b96f6a06e7",
+      "bytes": 19280448,
       "compression": "gzip",
-      "decodedBytes": 134756217,
-      "decodedSha256": "e5d5b8797319ccf06a5e26e32502da21e400a083e4654c2b666593fad7b317b9"
+      "decodedBytes": 139135950,
+      "decodedSha256": "7c746b71f263deea8b20f539c9d5a4282ab854e102a75c2d6e18b7ce82d630fd"
     },
     "artifacts/adventureworks.sqlite.gz.part-0001": {
-      "sha256": "3c59d3812fbc29d8a3070da9bef2306b25cff219fa08bb3fd82e5838f92d080a",
+      "sha256": "60e1d23ec00f1938e39262cd2e30a85a29aada525def56a65960312e1a9c5ac6",
       "bytes": 26214400
     },
     "artifacts/adventureworks.sqlite.gz.part-0002": {
-      "sha256": "80b1a2c58648469aebe5b47b9dfaef3b3c84d14e141b5297e6f5f94953ef28a7",
-      "bytes": 9075051
+      "sha256": "899a20c972a8f6fdd25b1544a29804c4872b877061dbaa1d6a85478445071e10",
+      "bytes": 9153059
     },
     "artifacts/data/HumanResources.Department.csv": {
       "sha256": "0453a956051a67f98ddf298d062e7deb80f4c31ee3d79f97281eaba08d7ba7f7",
@@ -41,12 +41,12 @@
       "bytes": 42612
     },
     "artifacts/data/HumanResources.EmployeePayHistory.csv": {
-      "sha256": "f2533d5773819052c4bd2516f68bf14c206cfeca86cab8377fe232ce0e74cf2d",
-      "bytes": 18604
+      "sha256": "71748f35e0b78c9a71b9059c3b233fe2be2f747d182a014340137c5ad3476fc5",
+      "bytes": 19488
     },
     "artifacts/data/HumanResources.EmployeePayHistory.json": {
-      "sha256": "26cbb991791f236b3e3d7e8b345903b0652378cb5cc392f895c00aa307dc44d4",
-      "bytes": 46036
+      "sha256": "1bf7a466054b71be807be285e75bb6476f6b0df9aefa278455ef82d09efdd515",
+      "bytes": 47552
     },
     "artifacts/data/HumanResources.JobCandidate.csv": {
       "sha256": "0f2c90dbbf16c5966436c009ba33b317ac8b9174d8858de5221637cd10571477",
@@ -169,12 +169,12 @@
       "bytes": 43257
     },
     "artifacts/data/Production.BillOfMaterials.csv": {
-      "sha256": "107d6ba00aed33ff9bcb77cc8342526429ea1c1738f6f04a27fc6e8827ba5696",
-      "bytes": 191005
+      "sha256": "30331f773bb5cad5290963e6bb36fa73a55da08246cbf5f8dde37245c26a2595",
+      "bytes": 199042
     },
     "artifacts/data/Production.BillOfMaterials.json": {
-      "sha256": "e8b8d9239c19ca5795dc850df42ea63c80144f5ffda92cdabfe7106208002fac",
-      "bytes": 622222
+      "sha256": "738a6359ad5225ce4496dc6cb467988464a8315b40d382d43de0c3044bdd43c3",
+      "bytes": 635617
     },
     "artifacts/data/Production.Culture.csv": {
       "sha256": "7877c2a43f5f203497dd13b3ec3c9920d8ca265c3db593c371bee56409df153b",
@@ -201,20 +201,20 @@
       "bytes": 123425
     },
     "artifacts/data/Production.Location.csv": {
-      "sha256": "047cc80a75b2ed5e8ba956e0f785aed175ed321a7ea49c0ad1b727ef122e991d",
-      "bytes": 718
+      "sha256": "ce41d09f8f95ea543b4d7c21ecfb6dd0d16d4f07e678d8c813c70976a51baeba",
+      "bytes": 803
     },
     "artifacts/data/Production.Location.json": {
-      "sha256": "6d9a2dfb3a9f266f5049dd54e0af69cb43f4468e0d5f248ca032e0c40651b79e",
-      "bytes": 1720
+      "sha256": "aa13e1b6db036fe6b44d7458454de7603041d898fa5ed3210e2b34270e2cda6c",
+      "bytes": 1861
     },
     "artifacts/data/Production.Product.csv": {
-      "sha256": "8b9cebb541ccc3e39ad01ca7e0af9c64255946cb4ee80fb52c6c1222054e414e",
-      "bytes": 86843
+      "sha256": "31e845158531b44ce4dd545220db49d5d58b765247fc9452c0555bb22defb1cd",
+      "bytes": 89275
     },
     "artifacts/data/Production.Product.json": {
-      "sha256": "cb46498940af99eddfbbe056819ff56bec7b783bb2361fa4bf6f6a71e2122965",
-      "bytes": 305859
+      "sha256": "31e50bd5b2245d93df77347a8ff019a812b6c73f24063e34c37245578ac663c3",
+      "bytes": 310717
     },
     "artifacts/data/Production.ProductCategory.csv": {
       "sha256": "7e999150740026dd666bf3dcb48a8671d3b1fcc43b2aee6142d0e4bf803a4636",
@@ -225,12 +225,12 @@
       "bytes": 561
     },
     "artifacts/data/Production.ProductCostHistory.csv": {
-      "sha256": "14e05069c1bcb6f252c52932f1f39b39102363696451bd5ae7663c852593ec02",
-      "bytes": 28994
+      "sha256": "de0b2b4c622c974140ea99ebca45fed6eefb1c238ce5e275fb85ebe57cc2188b",
+      "bytes": 29032
     },
     "artifacts/data/Production.ProductCostHistory.json": {
-      "sha256": "c0e7a9d30705d03f940caf0db8502075c572e98699ef8d8b39c623a2beb42d2c",
-      "bytes": 60933
+      "sha256": "b3fbbb056f44f98430e1767de252acd946fa7cefd6a76d6e1b222d27ac126107",
+      "bytes": 61761
     },
     "artifacts/data/Production.ProductDescription.csv": {
       "sha256": "89b6e9e194717edef20ae1f8c6c2cb68cb75e5ace5bdc4659ae5476e44db06bf",
@@ -257,12 +257,12 @@
       "bytes": 180805
     },
     "artifacts/data/Production.ProductListPriceHistory.csv": {
-      "sha256": "8140946c5323bb30633c2071e2e451547ae4e3249b53d72ab1c532dd6074dcf8",
-      "bytes": 28520
+      "sha256": "bac23109ea81dcaa3d415f076b0607ac5e6028576e733ea17f44cf8acb3a804a",
+      "bytes": 29139
     },
     "artifacts/data/Production.ProductListPriceHistory.json": {
-      "sha256": "f9768d696dce27e3b0a6fb1da4650d2db24e2a9daf326c44c1ffaad38ff3a9b3",
-      "bytes": 59277
+      "sha256": "e8a48827b75b4b447b90c97ffdd65f647f5024993e0bd3ad0b1debf29b63a954",
+      "bytes": 60686
     },
     "artifacts/data/Production.ProductModel.csv": {
       "sha256": "c0be5593533b74b8cb9be59eec39f29cb0b9f1205c65efed9a14f1834fecb84a",
@@ -329,23 +329,23 @@
       "bytes": 1583
     },
     "artifacts/data/Production.TransactionHistory.csv": {
-      "sha256": "219c18f1ef47abf980e0028d0806375468f592d80dc132566045f5a5ee65a1a4",
-      "bytes": 8694808
+      "sha256": "c1828e9a816c958f0a27cf5e2385eaad1279ecef601bd5cfb3bdad88169413ce",
+      "bytes": 8937921
     },
     "artifacts/data/Production.TransactionHistory.json.gz": {
-      "sha256": "39725866f12943c3370e07266bcb0bc38c75f6b6da607b4b043d7004f6218b69",
-      "bytes": 1180061,
+      "sha256": "48306a19c78d6133d8d0dbc0572f749fad239115dad0b9e4104fe2046ded7b9e",
+      "bytes": 1181484,
       "compression": "gzip",
-      "decodedBytes": 27412779,
-      "decodedSha256": "3b5ffa37ac448939a82e6e13f8430eff21522d76f99c737094fcb85f22ddefcd"
+      "decodedBytes": 27882778,
+      "decodedSha256": "8898aee28d27cef1b791073887fb59a2ede1fd8b6430bebc036678cccceb8c1c"
     },
     "artifacts/data/Production.TransactionHistoryArchive.csv": {
-      "sha256": "cbd7a7d2dd808ecae3081e950c814de6d0f1f1d8e22c5828bf388875b5b4a9a6",
-      "bytes": 6737742
+      "sha256": "cf3e8db4e3f82f0c4f0f8cb8396cf3656df2edbb158a65c7bc5f227c7c4ff4a5",
+      "bytes": 6928541
     },
     "artifacts/data/Production.TransactionHistoryArchive.json": {
-      "sha256": "22139cef25100569114033768f34d293bacd5ae373827feaace226c465637cb7",
-      "bytes": 21464363
+      "sha256": "8cc8d532e8f964222f076c902448ed2b1aa3689794066c2c5fa248acfa9a5d34",
+      "bytes": 21833668
     },
     "artifacts/data/Production.UnitMeasure.csv": {
       "sha256": "b4654c59d140728f17002f1923508fb0bab9937f80cc45985a13053b66f6e63d",
@@ -364,44 +364,44 @@
       "bytes": 19415995
     },
     "artifacts/data/Production.WorkOrderRouting.csv": {
-      "sha256": "78ec371f0abc046c12452a989b52c2f149aec99b0eb6e41da683587707fb2ddb",
-      "bytes": 9893575
+      "sha256": "c6e690cb44a0521c2274eed64a75ad2a68bd90a63c1dd20fb8abd16f089cc5e9",
+      "bytes": 10598600
     },
     "artifacts/data/Production.WorkOrderRouting.json": {
-      "sha256": "007f081368ff98188f96d4c7c9fe8ef6180f452778c5c4b2c16d042930382002",
-      "bytes": 24796489
+      "sha256": "c78ee22570f91155a270cecacfa256bfc6d44e090a1fb272a45247cf8db960b4",
+      "bytes": 25904300
     },
     "artifacts/data/Purchasing.ProductVendor.csv": {
-      "sha256": "931adf40d571201d896cea88572c8aa21374d4fa08ce642c2bebad51a6a2527f",
-      "bytes": 39097
+      "sha256": "d7c80f80139ff64bfe5585fdd80668fb7a1f350e7743b98c2dd70c098d8e6f79",
+      "bytes": 40335
     },
     "artifacts/data/Purchasing.ProductVendor.json": {
-      "sha256": "d750d703c9d37909294b76374052395d5c23f843badd5acc48317c124058b369",
-      "bytes": 130787
+      "sha256": "b672af40e7c9f74a7cf1072b0fea5e4324157f13ea64b94cd8dc93d17b45df8a",
+      "bytes": 133865
     },
     "artifacts/data/Purchasing.PurchaseOrderDetail.csv": {
-      "sha256": "318f7d5b97c2077b596a822e7500d08ccd9b96503080c1568fffe06be2699c03",
-      "bytes": 785630
+      "sha256": "2eb9e29dce22a79b734d24d95ed7cd1d62e51662c19c664a249881ee8f251a17",
+      "bytes": 868908
     },
     "artifacts/data/Purchasing.PurchaseOrderDetail.json": {
-      "sha256": "bdfd431b635029d5a661b666560183834320e0cc385654cba9136431c439f7ba",
-      "bytes": 2333375
+      "sha256": "00183f33c25f18dc3e50415268ef533effe45723a35a7839ccc91001348d0e38",
+      "bytes": 2505103
     },
     "artifacts/data/Purchasing.PurchaseOrderHeader.csv": {
-      "sha256": "62dba19254608897ca2ea4ca86352c7b7dd8d2217f92eac4f9f3132064bb21ad",
-      "bytes": 508176
+      "sha256": "d103abcdbc97ef92c2bb7c5bcb9032b17705807e205ab8e892395eae7d6edab6",
+      "bytes": 517110
     },
     "artifacts/data/Purchasing.PurchaseOrderHeader.json": {
-      "sha256": "06d4eabe716a3916d19bea97643145e86fd37141b4b0cef734e3044cddbb9e30",
-      "bytes": 1254275
+      "sha256": "5e87e8948cc34fe2630ed9e418b421e26493bfe8a04d1b28002a98beec6f50d1",
+      "bytes": 1295305
     },
     "artifacts/data/Purchasing.ShipMethod.csv": {
-      "sha256": "db17c043c660613a72c98d15f5571d69886f5571548d03b85442f5e990121d4a",
-      "bytes": 509
+      "sha256": "7266b4497023ac95143d92d3c942890a8eac38c9c3f737d20c8ec46d4d94ed05",
+      "bytes": 528
     },
     "artifacts/data/Purchasing.ShipMethod.json": {
-      "sha256": "6f5c670578fe0c35c8a67126a467f1f48bec82b2f65dedb87f370f3f5923ad92",
-      "bytes": 885
+      "sha256": "1f09c1fb114923a2f4a160047b9926cfba6a2cf28e5e5acad647647682c5a669",
+      "bytes": 924
     },
     "artifacts/data/Purchasing.Vendor.csv": {
       "sha256": "3587cce8721256b3bb1c3d6be697366f73d5c169e35df73d05ad3b271d30a5a8",
@@ -436,12 +436,12 @@
       "bytes": 9670
     },
     "artifacts/data/Sales.CurrencyRate.csv": {
-      "sha256": "15883b773be50927ecb3c804a0ec95eefb63742b24c1a7142b6ced501d2c7b9a",
-      "bytes": 1003558
+      "sha256": "8cfdd2c430b19898cf0b41b05e292f828466fbdeb31f0461831a41a027f787a2",
+      "bytes": 1023051
     },
     "artifacts/data/Sales.CurrencyRate.json": {
-      "sha256": "e4b081d24916a9f5ffa4bb39d5eb25dbcfb60b5d5449d1711a19292f2af8c4df",
-      "bytes": 2843811
+      "sha256": "7d224160f20873394cfe1ad64ff1b60a50fc0ab67d2dd7fd024a9c207673ba5d",
+      "bytes": 2917432
     },
     "artifacts/data/Sales.Customer.csv": {
       "sha256": "44afd292e9e1cc577b735f6d7c047ebf7e2fcd2ba8c096d7f1bb4967dde70660",
@@ -460,23 +460,23 @@
       "bytes": 1796447
     },
     "artifacts/data/Sales.SalesOrderDetail.csv": {
-      "sha256": "8a105e13513ba804e74b6db5f9f7c324447ed6369ca8df24cf1c7c0f86685d73",
-      "bytes": 12647795
+      "sha256": "c5912e7e667110b7b415e5fd4c1d32af440997e2c688ca112fdf2f3313e61ce5",
+      "bytes": 13728058
     },
     "artifacts/data/Sales.SalesOrderDetail.json.gz": {
-      "sha256": "54c3d63d8972cdef50fa598aa274b3c0328646ea9131a13b1495a685290ea624",
-      "bytes": 4141867,
+      "sha256": "4e0d4ffbb379870ebadc184e8a401ef74144f4c4dfe8c89766ae1d9890458cbc",
+      "bytes": 4168245,
       "compression": "gzip",
-      "decodedBytes": 35939994,
-      "decodedSha256": "11212a8d71c1c20ff2d9233ee83e22ca10c9f532050ed18f72fd3cd87c3d6797"
+      "decodedBytes": 37748159,
+      "decodedSha256": "e4e766e89990301509c702a58264d39fba59831067f45c04c629581c2c0fb0b6"
     },
     "artifacts/data/Sales.SalesOrderHeader.csv": {
-      "sha256": "e60e4b6b1cbd68931a2d27ecd3ce02de2ff2748b7ca1fcec3f28fce1ae39296c",
-      "bytes": 7840360
+      "sha256": "3829c72bc9f5d92d940bc3cb4cc46e19823ec3a8836eb2ffae94b0667c6b0315",
+      "bytes": 7900311
     },
     "artifacts/data/Sales.SalesOrderHeader.json": {
-      "sha256": "47cdec94bbf4d666e42baf42d7b6e4484104ee4e2ce671f65ec10d54be2916dd",
-      "bytes": 21581220
+      "sha256": "1b374be8ea4e0677001e946e3fcf96075294a69fbf8433cde87f816323e9cccf",
+      "bytes": 21892891
     },
     "artifacts/data/Sales.SalesOrderHeaderSalesReason.csv": {
       "sha256": "dece69e9ec8b5102e8a3b1efb644dd76f6bced30a2879b261c75c849e772db9e",
@@ -487,20 +487,20 @@
       "bytes": 2434334
     },
     "artifacts/data/Sales.SalesPerson.csv": {
-      "sha256": "e872cd8d7fc1c6677dcffdb4761c72544d5d533593d149df8add0a481dbe259b",
-      "bytes": 1891
+      "sha256": "437b78ecade706343bb7ee5e16e587ffab0f4eb2ad468090ae26c33903a5434a",
+      "bytes": 2079
     },
     "artifacts/data/Sales.SalesPerson.json": {
-      "sha256": "a5c7076855b6e864649cb310ba317f4cf2f6b163ad35a9b1db3933c0006149dd",
-      "bytes": 4194
+      "sha256": "5a3fdc93fc571a8a12ba161d4663c02dc156add691ba3ec8c8fb73ab32847933",
+      "bytes": 4546
     },
     "artifacts/data/Sales.SalesPersonQuotaHistory.csv": {
-      "sha256": "f6c6de6f409240505d65a6468d92d68073bfe02f7fb7ea10c42b4a2c949a6d3d",
-      "bytes": 15716
+      "sha256": "5cb765e3f600f80954847a919b9d72133f0312009b24b507cbef8304b149feb0",
+      "bytes": 16531
     },
     "artifacts/data/Sales.SalesPersonQuotaHistory.json": {
-      "sha256": "2cb5af963188a515138c01035181720b7618f7416c6719223d481377fc2192ce",
-      "bytes": 29515
+      "sha256": "d53fc5ae35b2d837f2f7866108c7c1aca0134f3fd8086c36dd61364d0eb3ff5a",
+      "bytes": 30656
     },
     "artifacts/data/Sales.SalesReason.csv": {
       "sha256": "28f433a09179dc6d725542bbbc90073506456c2fdd1b36b754d11986c89fa4b0",
@@ -511,20 +511,20 @@
       "bytes": 1129
     },
     "artifacts/data/Sales.SalesTaxRate.csv": {
-      "sha256": "6b7ca6960cc58007999b6940560457f05937ddefe8e80b9a7666d5536691713c",
-      "bytes": 2754
+      "sha256": "a67cadf3c6b96327e89449dc7992c784f7ae5687444c454825ccf3e7bdadd9f0",
+      "bytes": 2870
     },
     "artifacts/data/Sales.SalesTaxRate.json": {
-      "sha256": "3e190d99ec38a1ad4093dd217577fb88e3424aa0556d031c51eff493e91e16ab",
-      "bytes": 5729
+      "sha256": "28b8af5cfd03abc51195bb280f889482ee1bb479587e58ab76ad75bbdfa49d50",
+      "bytes": 5903
     },
     "artifacts/data/Sales.SalesTerritory.csv": {
-      "sha256": "10e7c5c733970193e1b3a8e4b614a6651da76d7a01e22267ec73b2fe9b5e42c7",
-      "bytes": 1273
+      "sha256": "8c539afd9025d40801049cba65acc9f4e417aee09809e9e5f88f34cab1b5dfa3",
+      "bytes": 1356
     },
     "artifacts/data/Sales.SalesTerritory.json": {
-      "sha256": "ed558041147dd2b18617fd305972787860ab4db77782670420cf084bca0171b2",
-      "bytes": 2680
+      "sha256": "6021fb5cb04a3f782ef06cf6e689ab84b359ca166215b206dd04d16e0c391d71",
+      "bytes": 2843
     },
     "artifacts/data/Sales.SalesTerritoryHistory.csv": {
       "sha256": "923fbd6299f98d11252120797b57d03e7eb4adf4f810e378b1081236d9051249",
@@ -543,12 +543,12 @@
       "bytes": 510
     },
     "artifacts/data/Sales.SpecialOffer.csv": {
-      "sha256": "df459f42099eb032eeecdfd95fabc6ad315fbe505d1336f82a92ef88add3bd31",
-      "bytes": 2807
+      "sha256": "138033e444e2e2c4ebfe561ee1a770a11f0156464966abe2b0c4ecbe1db2d837",
+      "bytes": 2834
     },
     "artifacts/data/Sales.SpecialOffer.json": {
-      "sha256": "c8e22b1369063fdc6f6c0f8460404c27661e96014cea0f8d841dfeccd477688a",
-      "bytes": 5280
+      "sha256": "df3765e8455ff442cf05ac357f3e3d75bbb329d0d64c4df1f957e1c2235b807a",
+      "bytes": 5339
     },
     "artifacts/data/Sales.SpecialOfferProduct.csv": {
       "sha256": "898ad54428377cfa352d8f0dd65ec4ffb59dd1e840429be96714f9627546c911",
@@ -591,20 +591,20 @@
       "bytes": 5
     },
     "manifest.json": {
-      "sha256": "4e7dc2c5a5542d62bbe89331250ed59731f15a3dff5ce9913640bc7482a1a773",
-      "bytes": 78256
+      "sha256": "e5304e30db963e53fef0ba7cac939928622cefb7064aedaccd5ba313cf62440c",
+      "bytes": 78945
     },
     "metadata/contract.json": {
-      "sha256": "10a916207d9d9717473a6d56280fba7da0812b6a2629a9c3c5acd50a822cf7d7",
-      "bytes": 1783620
+      "sha256": "5b2cb733342ac9e848f2674090e0e534082d48111056ff4e6a3b6d4ef4f693e0",
+      "bytes": 1793175
     },
     "metadata/native-objects.json": {
-      "sha256": "2a33b6bbb4e55a2b1e310ecfb3d484b757ec54db6ea23f43ef062af281e21935",
-      "bytes": 383161
+      "sha256": "d05c6d2787c07f048d520e6ff40dac9db2ff71489f7bb2d4eb85408c7f95aca4",
+      "bytes": 398426
     },
     "metadata/schema.json": {
-      "sha256": "706c5bf85ebf8671e21a8fb506bed180885794fa0973d1719df07d137d1892c5",
-      "bytes": 1637646
+      "sha256": "b960a972e3a2c05071aa68670057cc81996cb08f52312e96431a756f6960d9d8",
+      "bytes": 1646031
     },
     "model/adventureworks.meaning.yaml": {
       "sha256": "2a251546e4d525d2c53bd5fe9b54988dcfe002c0def61b6891517e1f931ce45f",
@@ -619,16 +619,16 @@
       "bytes": 52388
     },
     "ovdb-database.json": {
-      "sha256": "7a2e45340d00c335c0e4afaf30bec689c2bf92ed236a881ed9a2846b0c68dd44",
-      "bytes": 157160
+      "sha256": "7885259b70241a932a6200b680ed667c97acfb35bf8d30f5395fe9a9ce22ccd6",
+      "bytes": 164121
     },
     "ovdb.yaml": {
       "sha256": "a62796fe1c7288a846b68a7bbd164736aed270d6d1782252978362bc9f06546b",
       "bytes": 7531
     },
     "schemas/ovdb-database-draft-1.schema.json": {
-      "sha256": "2424ef00acd462ab5a8abc546fe2d1fffbbb5397e312332aedc77b3e73109488",
-      "bytes": 5371
+      "sha256": "5c3acdf1b858f45a78558555e92255f847fb54d8d1bcbef5567c89bdff77758d",
+      "bytes": 5826
     }
   }
 }

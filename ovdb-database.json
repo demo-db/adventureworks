@@ -36,9 +36,9 @@
     "repository": "https://github.com/microsoft/sql-server-samples",
     "revision": "beaab06ef72831089ca80e5355d65e661fd19b26",
     "path": "samples/databases/adventure-works/oltp-install-script/instawdb.sql",
-    "sha256": "e0f352f0e3a28ff15158130c237a91d58f1b60fffa7f30d2c412b92df4065dfd",
+    "sha256": "6a105e1982becfe003fc7a307d7cad9d738390cedd79d166c2167fd817168109",
     "license": "MIT",
-    "notes": "Pinned Microsoft SQL Server Samples AdventureWorks OLTP installer and companion source files from commit beaab06ef72831089ca80e5355d65e661fd19b26. The source AWBuildVersion.csv identifies the installer fixture as SQL Server 2025 build 17.0.1000.3; the README says the script adapts to the installed SQL Server version, so this is the pinned source fixture rather than a claim about every generated server build. The converter imports all 68 BULK INSERT inputs plus the one-row AWBuildVersion.csv, preserving 759,240 seeded rows across 71 physical tables, source primary and foreign keys, 93 explicit indexes, and the inline unique constraint on Production.Document.rowguid. DatabaseLog and ErrorLog remain empty because the installer creates them for runtime audit/error events and supplies no static CSV. All 20 original SQL Server view definitions are retained in metadata/native-objects.json. Eleven straightforward relational views are translated into SQLite and their query results are rebuilt and checked; nine views using SQL Server-only XML, APPLY, or PIVOT constructs remain source-only, with no fabricated rows. SQL Server XML is stored as text; geography and hierarchyid serializations are stored as opaque BLOBs. Computed-column source expressions are retained in native metadata while the pinned CSV snapshot values are stored as ordinary SQLite columns. GETDATE defaults are frozen to the pinned build timestamp; SQL Server NEWID defaults remain in native metadata but are omitted from the static SQLite schema because SQLite only permits constant defaults, and seeded GUID values are preserved. SQL Server-only setup, triggers, stored procedures, query store, and optimized-locking behavior are not implemented. Fixed-width character data is preserved including padding; checks translate SQL Server trailing-space comparison and the source one-character LIKE range to equivalent SQLite expressions. Decimal, numeric, and money source strings are parsed as Python binary floats and stored with SQLite NUMERIC affinity; exact decimal scale and precision are not guaranteed, and this fixture makes no fixed-point MONEY claim. SQL Server collation and numeric behavior can differ. The converter checks the pinned source-file hashes, compares complete logical SQLite schema and row contents across rebuilds, and compares regenerated native SQL Server table/view metadata to the checked-in metadata file. SQLite file bytes may vary across SQLite library versions. JSON and SQLite preserve NULL; CSV represents NULL as an empty field, indistinguishable from empty text. BLOB values in JSON and CSV are base64 encoded. The full SQLite fixture is 125276160 bytes; static export delivery must preserve the full source without truncation and may use deterministic compressed chunks. The sha256 identifies the decoded SQLite fixture; source.inputSha256 identifies the compressed dataFile bytes."
+    "notes": "Pinned Microsoft SQL Server Samples AdventureWorks OLTP installer and companion source files from commit beaab06ef72831089ca80e5355d65e661fd19b26. The source AWBuildVersion.csv identifies the installer fixture as SQL Server 2025 build 17.0.1000.3; the README says the script adapts to the installed SQL Server version, so this is the pinned source fixture rather than a claim about every generated server build. The converter imports all 68 BULK INSERT inputs plus the one-row AWBuildVersion.csv, preserving 759,240 seeded rows across 71 physical tables, source primary and foreign keys, 93 explicit indexes, and the inline unique constraint on Production.Document.rowguid. DatabaseLog and ErrorLog remain empty because the installer creates them for runtime audit/error events and supplies no static CSV. All 20 original SQL Server view definitions are retained in metadata/native-objects.json. Eleven straightforward relational views are translated into SQLite and their query results are rebuilt and checked; nine views using SQL Server-only XML, APPLY, or PIVOT constructs remain source-only, with no fabricated rows. SQL Server XML is stored as text; geography and hierarchyid serializations are stored as opaque BLOBs. Computed-column source expressions are retained in native metadata while the pinned CSV snapshot values are stored as ordinary SQLite columns. GETDATE defaults are frozen to the pinned build timestamp; SQL Server NEWID defaults remain in native metadata but are omitted from the static SQLite schema because SQLite only permits constant defaults, and seeded GUID values are preserved. SQL Server-only setup, triggers, stored procedures, query store, and optimized-locking behavior are not implemented. Fixed-width character data is preserved including padding; checks translate SQL Server trailing-space comparison and the source one-character LIKE range to equivalent SQLite expressions. Decimal, numeric, money, and smallmoney source values are validated with Python Decimal and preserved as exact source strings in SQLite TEXT-affinity DECIMAL_TEXT(p,s) columns, JSON, and CSV. Native SQL Server decimal precision/scale are retained; money uses (19,4), smallmoney uses (10,4). Computed decimal snapshots preserve exact seeded strings and use p=38 with the maximum observed source fraction scale, explicitly as a storage contract rather than inferred SQL Server result metadata. Decimal-related SQL Server CHECK expressions remain in native source metadata and are not enforced by SQLite because text comparisons would not preserve numeric semantics; the rebuild evaluates all 39 against every seeded row with exact Decimal comparisons. Other translated source checks remain enforced. Ordinary float and real values remain approximate. The five computed decimal snapshot columns are stored values; SQLite does not recompute their SQL Server expressions. The converter checks the pinned source-file hashes, compares complete logical SQLite schema and row contents across rebuilds, and compares regenerated native SQL Server table/view metadata to the checked-in metadata file. SQLite file bytes may vary across SQLite library versions. JSON and SQLite preserve NULL; CSV represents NULL as an empty field, indistinguishable from empty text. BLOB values in JSON and CSV are base64 encoded. The full SQLite fixture is 126820352 bytes; static export delivery must preserve the full source without truncation and may use deterministic compressed chunks. The sha256 identifies the decoded SQLite fixture; source.inputSha256 identifies the compressed dataFile bytes."
   },
   "licences": {
     "data": "MIT",
@@ -470,11 +470,16 @@
         },
         {
           "name": "PerAssemblyQty",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(8,2)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": "1.00"
+          "defaultValue": "'1.00'",
+          "decimal": {
+            "precision": 8,
+            "scale": 2,
+            "storage": "text"
+          }
         },
         {
           "name": "ModifiedDate",
@@ -1051,19 +1056,29 @@
         },
         {
           "name": "AverageRate",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": null
+          "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "EndOfDayRate",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": null
+          "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "ModifiedDate",
@@ -1718,11 +1733,16 @@
         },
         {
           "name": "Rate",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": null
+          "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "PayFrequency",
@@ -1882,19 +1902,29 @@
         },
         {
           "name": "CostRate",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(10,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00"
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 10,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "Availability",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(8,2)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00"
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 8,
+            "scale": 2,
+            "storage": "text"
+          }
         },
         {
           "name": "ModifiedDate",
@@ -2348,19 +2378,29 @@
         },
         {
           "name": "StandardCost",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": null
+          "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "ListPrice",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": null
+          "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "Size",
@@ -2388,11 +2428,16 @@
         },
         {
           "name": "Weight",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(8,2)",
           "nullable": true,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": null
+          "defaultValue": null,
+          "decimal": {
+            "precision": 8,
+            "scale": 2,
+            "storage": "text"
+          }
         },
         {
           "name": "DaysToManufacture",
@@ -2601,11 +2646,16 @@
         },
         {
           "name": "StandardCost",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": null
+          "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "ModifiedDate",
@@ -2867,11 +2917,16 @@
         },
         {
           "name": "ListPrice",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": null
+          "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "ModifiedDate",
@@ -3419,19 +3474,29 @@
         },
         {
           "name": "StandardPrice",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": null
+          "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "LastReceiptCost",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": true,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": null
+          "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "LastReceiptDate",
@@ -3565,43 +3630,68 @@
         },
         {
           "name": "UnitPrice",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": null
+          "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "LineTotal",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(38,4)",
           "nullable": true,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": null
+          "defaultValue": null,
+          "decimal": {
+            "precision": 38,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "ReceivedQty",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(8,2)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": null
+          "defaultValue": null,
+          "decimal": {
+            "precision": 8,
+            "scale": 2,
+            "storage": "text"
+          }
         },
         {
           "name": "RejectedQty",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(8,2)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": null
+          "defaultValue": null,
+          "decimal": {
+            "precision": 8,
+            "scale": 2,
+            "storage": "text"
+          }
         },
         {
           "name": "StockedQty",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(38,2)",
           "nullable": true,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": null
+          "defaultValue": null,
+          "decimal": {
+            "precision": 38,
+            "scale": 2,
+            "storage": "text"
+          }
         },
         {
           "name": "ModifiedDate",
@@ -3712,35 +3802,55 @@
         },
         {
           "name": "SubTotal",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00"
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "TaxAmt",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00"
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "Freight",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00"
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "TotalDue",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(38,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": null
+          "defaultValue": null,
+          "decimal": {
+            "precision": 38,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "ModifiedDate",
@@ -3838,27 +3948,42 @@
         },
         {
           "name": "UnitPrice",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": null
+          "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "UnitPriceDiscount",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": "0.0"
+          "defaultValue": "'0.0'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "LineTotal",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(38,6)",
           "nullable": true,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": null
+          "defaultValue": null,
+          "decimal": {
+            "precision": 38,
+            "scale": 6,
+            "storage": "text"
+          }
         },
         {
           "name": "rowguid",
@@ -4072,35 +4197,55 @@
         },
         {
           "name": "SubTotal",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00"
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "TaxAmt",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00"
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "Freight",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00"
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "TotalDue",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(38,4)",
           "nullable": true,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": null
+          "defaultValue": null,
+          "decimal": {
+            "precision": 38,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "Comment",
@@ -4276,43 +4421,68 @@
         },
         {
           "name": "SalesQuota",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": true,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": null
+          "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "Bonus",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00"
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "CommissionPct",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(10,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00"
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 10,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "SalesYTD",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00"
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "SalesLastYear",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00"
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "rowguid",
@@ -4379,11 +4549,16 @@
         },
         {
           "name": "SalesQuota",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": null
+          "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "rowguid",
@@ -4503,11 +4678,16 @@
         },
         {
           "name": "TaxRate",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(10,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00"
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 10,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "Name",
@@ -4591,35 +4771,55 @@
         },
         {
           "name": "SalesYTD",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00"
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "SalesLastYear",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00"
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "CostYTD",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00"
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "CostLastYear",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00"
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "rowguid",
@@ -4862,19 +5062,29 @@
         },
         {
           "name": "ShipBase",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00"
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "ShipRate",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00"
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "rowguid",
@@ -4998,11 +5208,16 @@
         },
         {
           "name": "DiscountPct",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(10,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": "0.00"
+          "defaultValue": "'0.00'",
+          "decimal": {
+            "precision": 10,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "Type",
@@ -5383,11 +5598,16 @@
         },
         {
           "name": "ActualCost",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": null
+          "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "ModifiedDate",
@@ -5479,11 +5699,16 @@
         },
         {
           "name": "ActualCost",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": null
+          "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "ModifiedDate",
@@ -5814,27 +6039,42 @@
         },
         {
           "name": "ActualResourceHrs",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(9,4)",
           "nullable": true,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": null
+          "defaultValue": null,
+          "decimal": {
+            "precision": 9,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "PlannedCost",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": false,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": null
+          "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "ActualCost",
-          "type": "NUMERIC",
+          "type": "DECIMAL_TEXT(19,4)",
           "nullable": true,
           "primaryKey": false,
           "primaryKeyPosition": null,
-          "defaultValue": null
+          "defaultValue": null,
+          "decimal": {
+            "precision": 19,
+            "scale": 4,
+            "storage": "text"
+          }
         },
         {
           "name": "ModifiedDate",
