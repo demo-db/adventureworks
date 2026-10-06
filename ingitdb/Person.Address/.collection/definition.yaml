@@ -1,0 +1,102 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    AddressID:
+        type: int
+        required: true
+    AddressLine1:
+        type: string
+        required: true
+    AddressLine2:
+        type: string
+    City:
+        type: string
+        required: true
+    StateProvinceID:
+        type: int
+        required: true
+    PostalCode:
+        type: string
+        required: true
+    SpatialLocation:
+        type: string
+    rowguid:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - AddressID
+    - AddressLine1
+    - AddressLine2
+    - City
+    - StateProvinceID
+    - PostalCode
+    - SpatialLocation
+    - rowguid
+    - ModifiedDate
+primary_key:
+    - AddressID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Person.Address\" (\"AddressID\" INTEGER NOT NULL, \"AddressLine1\" TEXT NOT NULL, \"AddressLine2\" TEXT, \"City\" TEXT NOT NULL, \"StateProvinceID\" INTEGER NOT NULL, \"PostalCode\" TEXT NOT NULL, \"SpatialLocation\" BLOB, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_Address_AddressID\" PRIMARY KEY (\"AddressID\"), CONSTRAINT \"FK_Address_StateProvince_StateProvinceID\" FOREIGN KEY (\"StateProvinceID\") REFERENCES \"Person.StateProvince\" (\"StateProvinceID\"))","columns":[{"name":"AddressID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"AddressLine1","declaredType":"TEXT","notNull":true},{"name":"AddressLine2","declaredType":"TEXT","notNull":false},{"name":"City","declaredType":"TEXT","notNull":true},{"name":"StateProvinceID","declaredType":"INTEGER","notNull":true},{"name":"PostalCode","declaredType":"TEXT","notNull":true},{"name":"SpatialLocation","declaredType":"BLOB","notNull":false},{"name":"rowguid","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Person_Address_IX_Address_StateProvinceID","unique":false,"origin":"c","createSql":"CREATE INDEX \"Person_Address_IX_Address_StateProvinceID\" ON \"Person.Address\" (\"StateProvinceID\")","columns":[{"position":0,"name":"StateProvinceID","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"Person_Address_IX_Address_AddressLine1_AddressLine2_City_StateProvinceID_PostalCode","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Person_Address_IX_Address_AddressLine1_AddressLine2_City_StateProvinceID_PostalCode\" ON \"Person.Address\" (\"AddressLine1\", \"AddressLine2\", \"City\", \"StateProvinceID\", \"PostalCode\")","columns":[{"position":0,"name":"AddressLine1","key":true,"collation":"BINARY"},{"position":1,"name":"AddressLine2","key":true,"collation":"BINARY"},{"position":2,"name":"City","key":true,"collation":"BINARY"},{"position":3,"name":"StateProvinceID","key":true,"collation":"BINARY"},{"position":4,"name":"PostalCode","key":true,"collation":"BINARY"},{"position":5,"key":false,"collation":"BINARY"}]},{"name":"Person_Address_AK_Address_rowguid","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Person_Address_AK_Address_rowguid\" ON \"Person.Address\" (\"rowguid\")","columns":[{"position":0,"name":"rowguid","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: AddressID
+          type: int
+          nullable: false
+        - name: AddressLine1
+          type: string
+          nullable: false
+        - name: AddressLine2
+          type: string
+          nullable: true
+        - name: City
+          type: string
+          nullable: false
+        - name: StateProvinceID
+          type: int
+          nullable: false
+        - name: PostalCode
+          type: string
+          nullable: false
+        - name: SpatialLocation
+          type: bytes
+          nullable: true
+          encoding: base64
+        - name: rowguid
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Person_Address_IX_Address_StateProvinceID
+          fields:
+            - StateProvinceID
+        - name: Person_Address_IX_Address_AddressLine1_AddressLine2_City_StateProvinceID_PostalCode
+          fields:
+            - AddressLine1
+            - AddressLine2
+            - City
+            - StateProvinceID
+            - PostalCode
+          unique: true
+        - name: Person_Address_AK_Address_rowguid
+          fields:
+            - rowguid
+          unique: true
+    foreign_keys:
+        - name: Person.Address_fk_0
+          fields:
+            - StateProvinceID
+          referenced_collection: Person.StateProvince
+          referenced_fields:
+            - StateProvinceID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

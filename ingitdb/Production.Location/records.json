@@ -1,0 +1,16 @@
+{
+  "pk-W1siaW50NjQiLDFdXQ": {"Availability":".00","CostRate":".0000","LocationID":1,"ModifiedDate":"2019-04-30 00:00:00.000","Name":"Tool Crib"},
+  "pk-W1siaW50NjQiLDJdXQ": {"Availability":".00","CostRate":".0000","LocationID":2,"ModifiedDate":"2019-04-30 00:00:00.000","Name":"Sheet Metal Racks"},
+  "pk-W1siaW50NjQiLDNdXQ": {"Availability":".00","CostRate":".0000","LocationID":3,"ModifiedDate":"2019-04-30 00:00:00.000","Name":"Paint Shop"},
+  "pk-W1siaW50NjQiLDRdXQ": {"Availability":".00","CostRate":".0000","LocationID":4,"ModifiedDate":"2019-04-30 00:00:00.000","Name":"Paint Storage"},
+  "pk-W1siaW50NjQiLDVdXQ": {"Availability":".00","CostRate":".0000","LocationID":5,"ModifiedDate":"2019-04-30 00:00:00.000","Name":"Metal Storage"},
+  "pk-W1siaW50NjQiLDZdXQ": {"Availability":".00","CostRate":".0000","LocationID":6,"ModifiedDate":"2019-04-30 00:00:00.000","Name":"Miscellaneous Storage"},
+  "pk-W1siaW50NjQiLDddXQ": {"Availability":".00","CostRate":".0000","LocationID":7,"ModifiedDate":"2019-04-30 00:00:00.000","Name":"Finished Goods Storage"},
+  "pk-W1siaW50NjQiLDEwXV0": {"Availability":"96.00","CostRate":"22.5000","LocationID":10,"ModifiedDate":"2019-04-30 00:00:00.000","Name":"Frame Forming"},
+  "pk-W1siaW50NjQiLDIwXV0": {"Availability":"108.00","CostRate":"25.0000","LocationID":20,"ModifiedDate":"2019-04-30 00:00:00.000","Name":"Frame Welding"},
+  "pk-W1siaW50NjQiLDMwXV0": {"Availability":"120.00","CostRate":"14.5000","LocationID":30,"ModifiedDate":"2019-04-30 00:00:00.000","Name":"Debur and Polish"},
+  "pk-W1siaW50NjQiLDQwXV0": {"Availability":"120.00","CostRate":"15.7500","LocationID":40,"ModifiedDate":"2019-04-30 00:00:00.000","Name":"Paint"},
+  "pk-W1siaW50NjQiLDQ1XV0": {"Availability":"80.00","CostRate":"18.0000","LocationID":45,"ModifiedDate":"2019-04-30 00:00:00.000","Name":"Specialized Paint"},
+  "pk-W1siaW50NjQiLDUwXV0": {"Availability":"120.00","CostRate":"12.2500","LocationID":50,"ModifiedDate":"2019-04-30 00:00:00.000","Name":"Subassembly"},
+  "pk-W1siaW50NjQiLDYwXV0": {"Availability":"120.00","CostRate":"12.2500","LocationID":60,"ModifiedDate":"2019-04-30 00:00:00.000","Name":"Final Assembly"}
+}

@@ -1,0 +1,90 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    BusinessEntityID:
+        type: int
+        required: true
+    PersonID:
+        type: int
+        required: true
+    ContactTypeID:
+        type: int
+        required: true
+    rowguid:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - BusinessEntityID
+    - PersonID
+    - ContactTypeID
+    - rowguid
+    - ModifiedDate
+primary_key:
+    - BusinessEntityID
+    - PersonID
+    - ContactTypeID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Person.BusinessEntityContact\" (\"BusinessEntityID\" INTEGER NOT NULL, \"PersonID\" INTEGER NOT NULL, \"ContactTypeID\" INTEGER NOT NULL, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_BusinessEntityContact_BusinessEntityID_PersonID_ContactTypeID\" PRIMARY KEY (\"BusinessEntityID\", \"PersonID\", \"ContactTypeID\"), CONSTRAINT \"FK_BusinessEntityContact_Person_PersonID\" FOREIGN KEY (\"PersonID\") REFERENCES \"Person.Person\" (\"BusinessEntityID\"), CONSTRAINT \"FK_BusinessEntityContact_ContactType_ContactTypeID\" FOREIGN KEY (\"ContactTypeID\") REFERENCES \"Person.ContactType\" (\"ContactTypeID\"), CONSTRAINT \"FK_BusinessEntityContact_BusinessEntity_BusinessEntityID\" FOREIGN KEY (\"BusinessEntityID\") REFERENCES \"Person.BusinessEntity\" (\"BusinessEntityID\"))","columns":[{"name":"BusinessEntityID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"PersonID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":2},{"name":"ContactTypeID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":3},{"name":"rowguid","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Person_BusinessEntityContact_IX_BusinessEntityContact_ContactTypeID","unique":false,"origin":"c","createSql":"CREATE INDEX \"Person_BusinessEntityContact_IX_BusinessEntityContact_ContactTypeID\" ON \"Person.BusinessEntityContact\" (\"ContactTypeID\")","columns":[{"position":0,"name":"ContactTypeID","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"Person_BusinessEntityContact_IX_BusinessEntityContact_PersonID","unique":false,"origin":"c","createSql":"CREATE INDEX \"Person_BusinessEntityContact_IX_BusinessEntityContact_PersonID\" ON \"Person.BusinessEntityContact\" (\"PersonID\")","columns":[{"position":0,"name":"PersonID","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"Person_BusinessEntityContact_AK_BusinessEntityContact_rowguid","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Person_BusinessEntityContact_AK_BusinessEntityContact_rowguid\" ON \"Person.BusinessEntityContact\" (\"rowguid\")","columns":[{"position":0,"name":"rowguid","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"sqlite_autoindex_Person.BusinessEntityContact_1","unique":true,"origin":"pk","columns":[{"position":0,"name":"BusinessEntityID","key":true,"collation":"BINARY"},{"position":1,"name":"PersonID","key":true,"collation":"BINARY"},{"position":2,"name":"ContactTypeID","key":true,"collation":"BINARY"},{"position":3,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: BusinessEntityID
+          type: int
+          nullable: false
+        - name: PersonID
+          type: int
+          nullable: false
+        - name: ContactTypeID
+          type: int
+          nullable: false
+        - name: rowguid
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Person_BusinessEntityContact_IX_BusinessEntityContact_ContactTypeID
+          fields:
+            - ContactTypeID
+        - name: Person_BusinessEntityContact_IX_BusinessEntityContact_PersonID
+          fields:
+            - PersonID
+        - name: Person_BusinessEntityContact_AK_BusinessEntityContact_rowguid
+          fields:
+            - rowguid
+          unique: true
+    foreign_keys:
+        - name: Person.BusinessEntityContact_fk_0
+          fields:
+            - BusinessEntityID
+          referenced_collection: Person.BusinessEntity
+          referenced_fields:
+            - BusinessEntityID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Person.BusinessEntityContact_fk_1
+          fields:
+            - ContactTypeID
+          referenced_collection: Person.ContactType
+          referenced_fields:
+            - ContactTypeID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Person.BusinessEntityContact_fk_2
+          fields:
+            - PersonID
+          referenced_collection: Person.Person
+          referenced_fields:
+            - BusinessEntityID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

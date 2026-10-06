@@ -1,0 +1,40 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    CurrencyCode:
+        type: string
+        required: true
+    Name:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - CurrencyCode
+    - Name
+    - ModifiedDate
+primary_key:
+    - CurrencyCode
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Sales.Currency\" (\"CurrencyCode\" TEXT NOT NULL, \"Name\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_Currency_CurrencyCode\" PRIMARY KEY (\"CurrencyCode\"))","columns":[{"name":"CurrencyCode","declaredType":"TEXT","notNull":true,"primaryKeyPosition":1},{"name":"Name","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Sales_Currency_AK_Currency_Name","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Sales_Currency_AK_Currency_Name\" ON \"Sales.Currency\" (\"Name\")","columns":[{"position":0,"name":"Name","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"sqlite_autoindex_Sales.Currency_1","unique":true,"origin":"pk","columns":[{"position":0,"name":"CurrencyCode","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: CurrencyCode
+          type: string
+          nullable: false
+        - name: Name
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Sales_Currency_AK_Currency_Name
+          fields:
+            - Name
+          unique: true

@@ -1,0 +1,89 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    CurrencyRateID:
+        type: int
+        required: true
+    CurrencyRateDate:
+        type: string
+        required: true
+    FromCurrencyCode:
+        type: string
+        required: true
+    ToCurrencyCode:
+        type: string
+        required: true
+    AverageRate:
+        type: string
+        required: true
+    EndOfDayRate:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - CurrencyRateID
+    - CurrencyRateDate
+    - FromCurrencyCode
+    - ToCurrencyCode
+    - AverageRate
+    - EndOfDayRate
+    - ModifiedDate
+primary_key:
+    - CurrencyRateID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Sales.CurrencyRate\" (\"CurrencyRateID\" INTEGER NOT NULL, \"CurrencyRateDate\" TEXT NOT NULL, \"FromCurrencyCode\" TEXT NOT NULL, \"ToCurrencyCode\" TEXT NOT NULL, \"AverageRate\" DECIMAL_TEXT(19,4) NOT NULL, \"EndOfDayRate\" DECIMAL_TEXT(19,4) NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_CurrencyRate_CurrencyRateID\" PRIMARY KEY (\"CurrencyRateID\"), CONSTRAINT \"FK_CurrencyRate_Currency_FromCurrencyCode\" FOREIGN KEY (\"FromCurrencyCode\") REFERENCES \"Sales.Currency\" (\"CurrencyCode\"), CONSTRAINT \"FK_CurrencyRate_Currency_ToCurrencyCode\" FOREIGN KEY (\"ToCurrencyCode\") REFERENCES \"Sales.Currency\" (\"CurrencyCode\"))","columns":[{"name":"CurrencyRateID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"CurrencyRateDate","declaredType":"TEXT","notNull":true},{"name":"FromCurrencyCode","declaredType":"TEXT","notNull":true},{"name":"ToCurrencyCode","declaredType":"TEXT","notNull":true},{"name":"AverageRate","declaredType":"DECIMAL_TEXT(19,4)","notNull":true},{"name":"EndOfDayRate","declaredType":"DECIMAL_TEXT(19,4)","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Sales_CurrencyRate_AK_CurrencyRate_CurrencyRateDate_FromCurrencyCode_ToCurrencyCode","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Sales_CurrencyRate_AK_CurrencyRate_CurrencyRateDate_FromCurrencyCode_ToCurrencyCode\" ON \"Sales.CurrencyRate\" (\"CurrencyRateDate\", \"FromCurrencyCode\", \"ToCurrencyCode\")","columns":[{"position":0,"name":"CurrencyRateDate","key":true,"collation":"BINARY"},{"position":1,"name":"FromCurrencyCode","key":true,"collation":"BINARY"},{"position":2,"name":"ToCurrencyCode","key":true,"collation":"BINARY"},{"position":3,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: CurrencyRateID
+          type: int
+          nullable: false
+        - name: CurrencyRateDate
+          type: string
+          nullable: false
+        - name: FromCurrencyCode
+          type: string
+          nullable: false
+        - name: ToCurrencyCode
+          type: string
+          nullable: false
+        - name: AverageRate
+          type: string
+          nullable: false
+        - name: EndOfDayRate
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Sales_CurrencyRate_AK_CurrencyRate_CurrencyRateDate_FromCurrencyCode_ToCurrencyCode
+          fields:
+            - CurrencyRateDate
+            - FromCurrencyCode
+            - ToCurrencyCode
+          unique: true
+    foreign_keys:
+        - name: Sales.CurrencyRate_fk_0
+          fields:
+            - ToCurrencyCode
+          referenced_collection: Sales.Currency
+          referenced_fields:
+            - CurrencyCode
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Sales.CurrencyRate_fk_1
+          fields:
+            - FromCurrencyCode
+          referenced_collection: Sales.Currency
+          referenced_fields:
+            - CurrencyCode
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

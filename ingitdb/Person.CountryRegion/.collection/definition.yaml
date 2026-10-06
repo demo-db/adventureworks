@@ -1,0 +1,40 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    CountryRegionCode:
+        type: string
+        required: true
+    Name:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - CountryRegionCode
+    - Name
+    - ModifiedDate
+primary_key:
+    - CountryRegionCode
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Person.CountryRegion\" (\"CountryRegionCode\" TEXT NOT NULL, \"Name\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_CountryRegion_CountryRegionCode\" PRIMARY KEY (\"CountryRegionCode\"))","columns":[{"name":"CountryRegionCode","declaredType":"TEXT","notNull":true,"primaryKeyPosition":1},{"name":"Name","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Person_CountryRegion_AK_CountryRegion_Name","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Person_CountryRegion_AK_CountryRegion_Name\" ON \"Person.CountryRegion\" (\"Name\")","columns":[{"position":0,"name":"Name","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"sqlite_autoindex_Person.CountryRegion_1","unique":true,"origin":"pk","columns":[{"position":0,"name":"CountryRegionCode","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: CountryRegionCode
+          type: string
+          nullable: false
+        - name: Name
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Person_CountryRegion_AK_CountryRegion_Name
+          fields:
+            - Name
+          unique: true

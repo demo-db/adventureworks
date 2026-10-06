@@ -1,0 +1,139 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    PurchaseOrderID:
+        type: int
+        required: true
+    RevisionNumber:
+        type: int
+        required: true
+    Status:
+        type: int
+        required: true
+    EmployeeID:
+        type: int
+        required: true
+    VendorID:
+        type: int
+        required: true
+    ShipMethodID:
+        type: int
+        required: true
+    OrderDate:
+        type: string
+        required: true
+    ShipDate:
+        type: string
+    SubTotal:
+        type: string
+        required: true
+    TaxAmt:
+        type: string
+        required: true
+    Freight:
+        type: string
+        required: true
+    TotalDue:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - PurchaseOrderID
+    - RevisionNumber
+    - Status
+    - EmployeeID
+    - VendorID
+    - ShipMethodID
+    - OrderDate
+    - ShipDate
+    - SubTotal
+    - TaxAmt
+    - Freight
+    - TotalDue
+    - ModifiedDate
+primary_key:
+    - PurchaseOrderID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Purchasing.PurchaseOrderHeader\" (\"PurchaseOrderID\" INTEGER NOT NULL, \"RevisionNumber\" INTEGER NOT NULL DEFAULT 0, \"Status\" INTEGER NOT NULL DEFAULT 1, \"EmployeeID\" INTEGER NOT NULL, \"VendorID\" INTEGER NOT NULL, \"ShipMethodID\" INTEGER NOT NULL, \"OrderDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', \"ShipDate\" TEXT, \"SubTotal\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT ''0.00'', \"TaxAmt\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT ''0.00'', \"Freight\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT ''0.00'', \"TotalDue\" DECIMAL_TEXT(38,4) NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CHECK (\"Status\" BETWEEN 1 AND 4), CHECK ((\"ShipDate\" \u003e= \"OrderDate\") OR (\"ShipDate\" IS NULL)), CONSTRAINT \"PK_PurchaseOrderHeader_PurchaseOrderID\" PRIMARY KEY (\"PurchaseOrderID\"), CONSTRAINT \"FK_PurchaseOrderHeader_Employee_EmployeeID\" FOREIGN KEY (\"EmployeeID\") REFERENCES \"HumanResources.Employee\" (\"BusinessEntityID\"), CONSTRAINT \"FK_PurchaseOrderHeader_Vendor_VendorID\" FOREIGN KEY (\"VendorID\") REFERENCES \"Purchasing.Vendor\" (\"BusinessEntityID\"), CONSTRAINT \"FK_PurchaseOrderHeader_ShipMethod_ShipMethodID\" FOREIGN KEY (\"ShipMethodID\") REFERENCES \"Purchasing.ShipMethod\" (\"ShipMethodID\"))","columns":[{"name":"PurchaseOrderID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"RevisionNumber","declaredType":"INTEGER","notNull":true,"defaultSql":"0"},{"name":"Status","declaredType":"INTEGER","notNull":true,"defaultSql":"1"},{"name":"EmployeeID","declaredType":"INTEGER","notNull":true},{"name":"VendorID","declaredType":"INTEGER","notNull":true},{"name":"ShipMethodID","declaredType":"INTEGER","notNull":true},{"name":"OrderDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"},{"name":"ShipDate","declaredType":"TEXT","notNull":false},{"name":"SubTotal","declaredType":"DECIMAL_TEXT(19,4)","notNull":true,"defaultSql":"''0.00''"},{"name":"TaxAmt","declaredType":"DECIMAL_TEXT(19,4)","notNull":true,"defaultSql":"''0.00''"},{"name":"Freight","declaredType":"DECIMAL_TEXT(19,4)","notNull":true,"defaultSql":"''0.00''"},{"name":"TotalDue","declaredType":"DECIMAL_TEXT(38,4)","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Purchasing_PurchaseOrderHeader_IX_PurchaseOrderHeader_EmployeeID","unique":false,"origin":"c","createSql":"CREATE INDEX \"Purchasing_PurchaseOrderHeader_IX_PurchaseOrderHeader_EmployeeID\" ON \"Purchasing.PurchaseOrderHeader\" (\"EmployeeID\")","columns":[{"position":0,"name":"EmployeeID","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"Purchasing_PurchaseOrderHeader_IX_PurchaseOrderHeader_VendorID","unique":false,"origin":"c","createSql":"CREATE INDEX \"Purchasing_PurchaseOrderHeader_IX_PurchaseOrderHeader_VendorID\" ON \"Purchasing.PurchaseOrderHeader\" (\"VendorID\")","columns":[{"position":0,"name":"VendorID","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: PurchaseOrderID
+          type: int
+          nullable: false
+        - name: RevisionNumber
+          type: int
+          nullable: false
+        - name: Status
+          type: int
+          nullable: false
+        - name: EmployeeID
+          type: int
+          nullable: false
+        - name: VendorID
+          type: int
+          nullable: false
+        - name: ShipMethodID
+          type: int
+          nullable: false
+        - name: OrderDate
+          type: string
+          nullable: false
+        - name: ShipDate
+          type: string
+          nullable: true
+        - name: SubTotal
+          type: string
+          nullable: false
+        - name: TaxAmt
+          type: string
+          nullable: false
+        - name: Freight
+          type: string
+          nullable: false
+        - name: TotalDue
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Purchasing_PurchaseOrderHeader_IX_PurchaseOrderHeader_EmployeeID
+          fields:
+            - EmployeeID
+        - name: Purchasing_PurchaseOrderHeader_IX_PurchaseOrderHeader_VendorID
+          fields:
+            - VendorID
+    foreign_keys:
+        - name: Purchasing.PurchaseOrderHeader_fk_0
+          fields:
+            - ShipMethodID
+          referenced_collection: Purchasing.ShipMethod
+          referenced_fields:
+            - ShipMethodID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Purchasing.PurchaseOrderHeader_fk_1
+          fields:
+            - VendorID
+          referenced_collection: Purchasing.Vendor
+          referenced_fields:
+            - BusinessEntityID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Purchasing.PurchaseOrderHeader_fk_2
+          fields:
+            - EmployeeID
+          referenced_collection: HumanResources.Employee
+          referenced_fields:
+            - BusinessEntityID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

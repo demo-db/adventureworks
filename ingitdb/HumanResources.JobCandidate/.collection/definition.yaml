@@ -1,0 +1,54 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    JobCandidateID:
+        type: int
+        required: true
+    BusinessEntityID:
+        type: int
+    Resume:
+        type: string
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - JobCandidateID
+    - BusinessEntityID
+    - Resume
+    - ModifiedDate
+primary_key:
+    - JobCandidateID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"HumanResources.JobCandidate\" (\"JobCandidateID\" INTEGER NOT NULL, \"BusinessEntityID\" INTEGER, \"Resume\" TEXT, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_JobCandidate_JobCandidateID\" PRIMARY KEY (\"JobCandidateID\"), CONSTRAINT \"FK_JobCandidate_Employee_BusinessEntityID\" FOREIGN KEY (\"BusinessEntityID\") REFERENCES \"HumanResources.Employee\" (\"BusinessEntityID\"))","columns":[{"name":"JobCandidateID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"BusinessEntityID","declaredType":"INTEGER","notNull":false},{"name":"Resume","declaredType":"TEXT","notNull":false},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"HumanResources_JobCandidate_IX_JobCandidate_BusinessEntityID","unique":false,"origin":"c","createSql":"CREATE INDEX \"HumanResources_JobCandidate_IX_JobCandidate_BusinessEntityID\" ON \"HumanResources.JobCandidate\" (\"BusinessEntityID\")","columns":[{"position":0,"name":"BusinessEntityID","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: JobCandidateID
+          type: int
+          nullable: false
+        - name: BusinessEntityID
+          type: int
+          nullable: true
+        - name: Resume
+          type: string
+          nullable: true
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: HumanResources_JobCandidate_IX_JobCandidate_BusinessEntityID
+          fields:
+            - BusinessEntityID
+    foreign_keys:
+        - name: HumanResources.JobCandidate_fk_0
+          fields:
+            - BusinessEntityID
+          referenced_collection: HumanResources.Employee
+          referenced_fields:
+            - BusinessEntityID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

@@ -1,0 +1,139 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    DocumentNode:
+        type: string
+        required: true
+    DocumentLevel:
+        type: int
+    Title:
+        type: string
+        required: true
+    Owner:
+        type: int
+        required: true
+    FolderFlag:
+        type: int
+        required: true
+    FileName:
+        type: string
+        required: true
+    FileExtension:
+        type: string
+        required: true
+    Revision:
+        type: string
+        required: true
+    ChangeNumber:
+        type: int
+        required: true
+    Status:
+        type: int
+        required: true
+    DocumentSummary:
+        type: string
+    Document:
+        type: string
+    rowguid:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - DocumentNode
+    - DocumentLevel
+    - Title
+    - Owner
+    - FolderFlag
+    - FileName
+    - FileExtension
+    - Revision
+    - ChangeNumber
+    - Status
+    - DocumentSummary
+    - Document
+    - rowguid
+    - ModifiedDate
+primary_key:
+    - DocumentNode
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Production.Document\" (\"DocumentNode\" BLOB NOT NULL, \"DocumentLevel\" INTEGER, \"Title\" TEXT NOT NULL, \"Owner\" INTEGER NOT NULL, \"FolderFlag\" INTEGER NOT NULL DEFAULT 0, \"FileName\" TEXT NOT NULL, \"FileExtension\" TEXT NOT NULL, \"Revision\" TEXT NOT NULL, \"ChangeNumber\" INTEGER NOT NULL DEFAULT 0, \"Status\" INTEGER NOT NULL, \"DocumentSummary\" TEXT, \"Document\" BLOB, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CHECK (\"Status\" BETWEEN 1 AND 3), CONSTRAINT \"PK_Document_DocumentNode\" PRIMARY KEY (\"DocumentNode\"), CONSTRAINT \"FK_Document_Employee_Owner\" FOREIGN KEY (\"Owner\") REFERENCES \"HumanResources.Employee\" (\"BusinessEntityID\"))","columns":[{"name":"DocumentNode","declaredType":"BLOB","notNull":true,"primaryKeyPosition":1},{"name":"DocumentLevel","declaredType":"INTEGER","notNull":false},{"name":"Title","declaredType":"TEXT","notNull":true},{"name":"Owner","declaredType":"INTEGER","notNull":true},{"name":"FolderFlag","declaredType":"INTEGER","notNull":true,"defaultSql":"0"},{"name":"FileName","declaredType":"TEXT","notNull":true},{"name":"FileExtension","declaredType":"TEXT","notNull":true},{"name":"Revision","declaredType":"TEXT","notNull":true},{"name":"ChangeNumber","declaredType":"INTEGER","notNull":true,"defaultSql":"0"},{"name":"Status","declaredType":"INTEGER","notNull":true},{"name":"DocumentSummary","declaredType":"TEXT","notNull":false},{"name":"Document","declaredType":"BLOB","notNull":false},{"name":"rowguid","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Production_Document_inline_unique_rowguid","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Production_Document_inline_unique_rowguid\" ON \"Production.Document\" (\"rowguid\")","columns":[{"position":0,"name":"rowguid","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"Production_Document_IX_Document_FileName_Revision","unique":false,"origin":"c","createSql":"CREATE INDEX \"Production_Document_IX_Document_FileName_Revision\" ON \"Production.Document\" (\"FileName\", \"Revision\")","columns":[{"position":0,"name":"FileName","key":true,"collation":"BINARY"},{"position":1,"name":"Revision","key":true,"collation":"BINARY"},{"position":2,"key":false,"collation":"BINARY"}]},{"name":"Production_Document_AK_Document_rowguid","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Production_Document_AK_Document_rowguid\" ON \"Production.Document\" (\"rowguid\")","columns":[{"position":0,"name":"rowguid","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"Production_Document_AK_Document_DocumentLevel_DocumentNode","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Production_Document_AK_Document_DocumentLevel_DocumentNode\" ON \"Production.Document\" (\"DocumentLevel\", \"DocumentNode\")","columns":[{"position":0,"name":"DocumentLevel","key":true,"collation":"BINARY"},{"position":1,"name":"DocumentNode","key":true,"collation":"BINARY"},{"position":2,"key":false,"collation":"BINARY"}]},{"name":"sqlite_autoindex_Production.Document_1","unique":true,"origin":"pk","columns":[{"position":0,"name":"DocumentNode","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: DocumentNode
+          type: bytes
+          nullable: false
+          encoding: base64
+        - name: DocumentLevel
+          type: int
+          nullable: true
+        - name: Title
+          type: string
+          nullable: false
+        - name: Owner
+          type: int
+          nullable: false
+        - name: FolderFlag
+          type: int
+          nullable: false
+        - name: FileName
+          type: string
+          nullable: false
+        - name: FileExtension
+          type: string
+          nullable: false
+        - name: Revision
+          type: string
+          nullable: false
+        - name: ChangeNumber
+          type: int
+          nullable: false
+        - name: Status
+          type: int
+          nullable: false
+        - name: DocumentSummary
+          type: string
+          nullable: true
+        - name: Document
+          type: bytes
+          nullable: true
+          encoding: base64
+        - name: rowguid
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Production_Document_inline_unique_rowguid
+          fields:
+            - rowguid
+          unique: true
+        - name: Production_Document_IX_Document_FileName_Revision
+          fields:
+            - FileName
+            - Revision
+        - name: Production_Document_AK_Document_rowguid
+          fields:
+            - rowguid
+          unique: true
+        - name: Production_Document_AK_Document_DocumentLevel_DocumentNode
+          fields:
+            - DocumentLevel
+            - DocumentNode
+          unique: true
+    foreign_keys:
+        - name: Production.Document_fk_0
+          fields:
+            - Owner
+          referenced_collection: HumanResources.Employee
+          referenced_fields:
+            - BusinessEntityID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

@@ -1,0 +1,55 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    ProductModelID:
+        type: int
+        required: true
+    IllustrationID:
+        type: int
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - ProductModelID
+    - IllustrationID
+    - ModifiedDate
+primary_key:
+    - ProductModelID
+    - IllustrationID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Production.ProductModelIllustration\" (\"ProductModelID\" INTEGER NOT NULL, \"IllustrationID\" INTEGER NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_ProductModelIllustration_ProductModelID_IllustrationID\" PRIMARY KEY (\"ProductModelID\", \"IllustrationID\"), CONSTRAINT \"FK_ProductModelIllustration_ProductModel_ProductModelID\" FOREIGN KEY (\"ProductModelID\") REFERENCES \"Production.ProductModel\" (\"ProductModelID\"), CONSTRAINT \"FK_ProductModelIllustration_Illustration_IllustrationID\" FOREIGN KEY (\"IllustrationID\") REFERENCES \"Production.Illustration\" (\"IllustrationID\"))","columns":[{"name":"ProductModelID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"IllustrationID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":2},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"sqlite_autoindex_Production.ProductModelIllustration_1","unique":true,"origin":"pk","columns":[{"position":0,"name":"ProductModelID","key":true,"collation":"BINARY"},{"position":1,"name":"IllustrationID","key":true,"collation":"BINARY"},{"position":2,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: ProductModelID
+          type: int
+          nullable: false
+        - name: IllustrationID
+          type: int
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    foreign_keys:
+        - name: Production.ProductModelIllustration_fk_0
+          fields:
+            - IllustrationID
+          referenced_collection: Production.Illustration
+          referenced_fields:
+            - IllustrationID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Production.ProductModelIllustration_fk_1
+          fields:
+            - ProductModelID
+          referenced_collection: Production.ProductModel
+          referenced_fields:
+            - ProductModelID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

@@ -1,0 +1,99 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    CustomerID:
+        type: int
+        required: true
+    PersonID:
+        type: int
+    StoreID:
+        type: int
+    TerritoryID:
+        type: int
+    AccountNumber:
+        type: string
+    rowguid:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - CustomerID
+    - PersonID
+    - StoreID
+    - TerritoryID
+    - AccountNumber
+    - rowguid
+    - ModifiedDate
+primary_key:
+    - CustomerID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Sales.Customer\" (\"CustomerID\" INTEGER NOT NULL, \"PersonID\" INTEGER, \"StoreID\" INTEGER, \"TerritoryID\" INTEGER, \"AccountNumber\" TEXT, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_Customer_CustomerID\" PRIMARY KEY (\"CustomerID\"), CONSTRAINT \"FK_Customer_Person_PersonID\" FOREIGN KEY (\"PersonID\") REFERENCES \"Person.Person\" (\"BusinessEntityID\"), CONSTRAINT \"FK_Customer_Store_StoreID\" FOREIGN KEY (\"StoreID\") REFERENCES \"Sales.Store\" (\"BusinessEntityID\"), CONSTRAINT \"FK_Customer_SalesTerritory_TerritoryID\" FOREIGN KEY (\"TerritoryID\") REFERENCES \"Sales.SalesTerritory\" (\"TerritoryID\"))","columns":[{"name":"CustomerID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"PersonID","declaredType":"INTEGER","notNull":false},{"name":"StoreID","declaredType":"INTEGER","notNull":false},{"name":"TerritoryID","declaredType":"INTEGER","notNull":false},{"name":"AccountNumber","declaredType":"TEXT","notNull":false},{"name":"rowguid","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Sales_Customer_IX_Customer_TerritoryID","unique":false,"origin":"c","createSql":"CREATE INDEX \"Sales_Customer_IX_Customer_TerritoryID\" ON \"Sales.Customer\" (\"TerritoryID\")","columns":[{"position":0,"name":"TerritoryID","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"Sales_Customer_AK_Customer_AccountNumber","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Sales_Customer_AK_Customer_AccountNumber\" ON \"Sales.Customer\" (\"AccountNumber\")","columns":[{"position":0,"name":"AccountNumber","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"Sales_Customer_AK_Customer_rowguid","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Sales_Customer_AK_Customer_rowguid\" ON \"Sales.Customer\" (\"rowguid\")","columns":[{"position":0,"name":"rowguid","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: CustomerID
+          type: int
+          nullable: false
+        - name: PersonID
+          type: int
+          nullable: true
+        - name: StoreID
+          type: int
+          nullable: true
+        - name: TerritoryID
+          type: int
+          nullable: true
+        - name: AccountNumber
+          type: string
+          nullable: true
+        - name: rowguid
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Sales_Customer_IX_Customer_TerritoryID
+          fields:
+            - TerritoryID
+        - name: Sales_Customer_AK_Customer_AccountNumber
+          fields:
+            - AccountNumber
+          unique: true
+        - name: Sales_Customer_AK_Customer_rowguid
+          fields:
+            - rowguid
+          unique: true
+    foreign_keys:
+        - name: Sales.Customer_fk_0
+          fields:
+            - TerritoryID
+          referenced_collection: Sales.SalesTerritory
+          referenced_fields:
+            - TerritoryID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Sales.Customer_fk_1
+          fields:
+            - StoreID
+          referenced_collection: Sales.Store
+          referenced_fields:
+            - BusinessEntityID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Sales.Customer_fk_2
+          fields:
+            - PersonID
+          referenced_collection: Person.Person
+          referenced_fields:
+            - BusinessEntityID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

@@ -1,0 +1,119 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    SalesOrderID:
+        type: int
+        required: true
+    SalesOrderDetailID:
+        type: int
+        required: true
+    CarrierTrackingNumber:
+        type: string
+    OrderQty:
+        type: int
+        required: true
+    ProductID:
+        type: int
+        required: true
+    SpecialOfferID:
+        type: int
+        required: true
+    UnitPrice:
+        type: string
+        required: true
+    UnitPriceDiscount:
+        type: string
+        required: true
+    LineTotal:
+        type: string
+    rowguid:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - SalesOrderID
+    - SalesOrderDetailID
+    - CarrierTrackingNumber
+    - OrderQty
+    - ProductID
+    - SpecialOfferID
+    - UnitPrice
+    - UnitPriceDiscount
+    - LineTotal
+    - rowguid
+    - ModifiedDate
+primary_key:
+    - SalesOrderID
+    - SalesOrderDetailID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Sales.SalesOrderDetail\" (\"SalesOrderID\" INTEGER NOT NULL, \"SalesOrderDetailID\" INTEGER NOT NULL, \"CarrierTrackingNumber\" TEXT, \"OrderQty\" INTEGER NOT NULL, \"ProductID\" INTEGER NOT NULL, \"SpecialOfferID\" INTEGER NOT NULL, \"UnitPrice\" DECIMAL_TEXT(19,4) NOT NULL, \"UnitPriceDiscount\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT ''0.0'', \"LineTotal\" DECIMAL_TEXT(38,6), \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CHECK (\"OrderQty\" \u003e 0), CONSTRAINT \"PK_SalesOrderDetail_SalesOrderID_SalesOrderDetailID\" PRIMARY KEY (\"SalesOrderID\", \"SalesOrderDetailID\"), CONSTRAINT \"FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID\" FOREIGN KEY (\"SalesOrderID\") REFERENCES \"Sales.SalesOrderHeader\" (\"SalesOrderID\"), CONSTRAINT \"FK_SalesOrderDetail_SpecialOfferProduct_SpecialOfferIDProductID\" FOREIGN KEY (\"SpecialOfferID\", \"ProductID\") REFERENCES \"Sales.SpecialOfferProduct\" (\"SpecialOfferID\", \"ProductID\"))","columns":[{"name":"SalesOrderID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"SalesOrderDetailID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":2},{"name":"CarrierTrackingNumber","declaredType":"TEXT","notNull":false},{"name":"OrderQty","declaredType":"INTEGER","notNull":true},{"name":"ProductID","declaredType":"INTEGER","notNull":true},{"name":"SpecialOfferID","declaredType":"INTEGER","notNull":true},{"name":"UnitPrice","declaredType":"DECIMAL_TEXT(19,4)","notNull":true},{"name":"UnitPriceDiscount","declaredType":"DECIMAL_TEXT(19,4)","notNull":true,"defaultSql":"''0.0''"},{"name":"LineTotal","declaredType":"DECIMAL_TEXT(38,6)","notNull":false},{"name":"rowguid","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Sales_SalesOrderDetail_IX_SalesOrderDetail_ProductID","unique":false,"origin":"c","createSql":"CREATE INDEX \"Sales_SalesOrderDetail_IX_SalesOrderDetail_ProductID\" ON \"Sales.SalesOrderDetail\" (\"ProductID\")","columns":[{"position":0,"name":"ProductID","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"Sales_SalesOrderDetail_AK_SalesOrderDetail_rowguid","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Sales_SalesOrderDetail_AK_SalesOrderDetail_rowguid\" ON \"Sales.SalesOrderDetail\" (\"rowguid\")","columns":[{"position":0,"name":"rowguid","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"sqlite_autoindex_Sales.SalesOrderDetail_1","unique":true,"origin":"pk","columns":[{"position":0,"name":"SalesOrderID","key":true,"collation":"BINARY"},{"position":1,"name":"SalesOrderDetailID","key":true,"collation":"BINARY"},{"position":2,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: SalesOrderID
+          type: int
+          nullable: false
+        - name: SalesOrderDetailID
+          type: int
+          nullable: false
+        - name: CarrierTrackingNumber
+          type: string
+          nullable: true
+        - name: OrderQty
+          type: int
+          nullable: false
+        - name: ProductID
+          type: int
+          nullable: false
+        - name: SpecialOfferID
+          type: int
+          nullable: false
+        - name: UnitPrice
+          type: string
+          nullable: false
+        - name: UnitPriceDiscount
+          type: string
+          nullable: false
+        - name: LineTotal
+          type: string
+          nullable: true
+        - name: rowguid
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Sales_SalesOrderDetail_IX_SalesOrderDetail_ProductID
+          fields:
+            - ProductID
+        - name: Sales_SalesOrderDetail_AK_SalesOrderDetail_rowguid
+          fields:
+            - rowguid
+          unique: true
+    foreign_keys:
+        - name: Sales.SalesOrderDetail_fk_0
+          fields:
+            - SpecialOfferID
+            - ProductID
+          referenced_collection: Sales.SpecialOfferProduct
+          referenced_fields:
+            - SpecialOfferID
+            - ProductID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Sales.SalesOrderDetail_fk_1
+          fields:
+            - SalesOrderID
+          referenced_collection: Sales.SalesOrderHeader
+          referenced_fields:
+            - SalesOrderID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

@@ -1,0 +1,110 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    WorkOrderID:
+        type: int
+        required: true
+    ProductID:
+        type: int
+        required: true
+    OrderQty:
+        type: int
+        required: true
+    StockedQty:
+        type: string
+    ScrappedQty:
+        type: int
+        required: true
+    StartDate:
+        type: string
+        required: true
+    EndDate:
+        type: string
+    DueDate:
+        type: string
+        required: true
+    ScrapReasonID:
+        type: int
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - WorkOrderID
+    - ProductID
+    - OrderQty
+    - StockedQty
+    - ScrappedQty
+    - StartDate
+    - EndDate
+    - DueDate
+    - ScrapReasonID
+    - ModifiedDate
+primary_key:
+    - WorkOrderID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Production.WorkOrder\" (\"WorkOrderID\" INTEGER NOT NULL, \"ProductID\" INTEGER NOT NULL, \"OrderQty\" INTEGER NOT NULL, \"StockedQty\" NUMERIC, \"ScrappedQty\" INTEGER NOT NULL, \"StartDate\" TEXT NOT NULL, \"EndDate\" TEXT, \"DueDate\" TEXT NOT NULL, \"ScrapReasonID\" INTEGER, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CHECK (\"OrderQty\" \u003e 0), CHECK (\"ScrappedQty\" \u003e= 0), CHECK ((\"EndDate\" \u003e= \"StartDate\") OR (\"EndDate\" IS NULL)), CONSTRAINT \"PK_WorkOrder_WorkOrderID\" PRIMARY KEY (\"WorkOrderID\"), CONSTRAINT \"FK_WorkOrder_Product_ProductID\" FOREIGN KEY (\"ProductID\") REFERENCES \"Production.Product\" (\"ProductID\"), CONSTRAINT \"FK_WorkOrder_ScrapReason_ScrapReasonID\" FOREIGN KEY (\"ScrapReasonID\") REFERENCES \"Production.ScrapReason\" (\"ScrapReasonID\"))","columns":[{"name":"WorkOrderID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"ProductID","declaredType":"INTEGER","notNull":true},{"name":"OrderQty","declaredType":"INTEGER","notNull":true},{"name":"StockedQty","declaredType":"NUMERIC","notNull":false},{"name":"ScrappedQty","declaredType":"INTEGER","notNull":true},{"name":"StartDate","declaredType":"TEXT","notNull":true},{"name":"EndDate","declaredType":"TEXT","notNull":false},{"name":"DueDate","declaredType":"TEXT","notNull":true},{"name":"ScrapReasonID","declaredType":"INTEGER","notNull":false},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Production_WorkOrder_IX_WorkOrder_ProductID","unique":false,"origin":"c","createSql":"CREATE INDEX \"Production_WorkOrder_IX_WorkOrder_ProductID\" ON \"Production.WorkOrder\" (\"ProductID\")","columns":[{"position":0,"name":"ProductID","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"Production_WorkOrder_IX_WorkOrder_ScrapReasonID","unique":false,"origin":"c","createSql":"CREATE INDEX \"Production_WorkOrder_IX_WorkOrder_ScrapReasonID\" ON \"Production.WorkOrder\" (\"ScrapReasonID\")","columns":[{"position":0,"name":"ScrapReasonID","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    storage_class_files:
+        - source-storage-0001.jsonl
+    fields:
+        - name: WorkOrderID
+          type: int
+          nullable: false
+        - name: ProductID
+          type: int
+          nullable: false
+        - name: OrderQty
+          type: int
+          nullable: false
+        - name: StockedQty
+          type: decimal
+          nullable: true
+          encoding: decimal-string
+        - name: ScrappedQty
+          type: int
+          nullable: false
+        - name: StartDate
+          type: string
+          nullable: false
+        - name: EndDate
+          type: string
+          nullable: true
+        - name: DueDate
+          type: string
+          nullable: false
+        - name: ScrapReasonID
+          type: int
+          nullable: true
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Production_WorkOrder_IX_WorkOrder_ProductID
+          fields:
+            - ProductID
+        - name: Production_WorkOrder_IX_WorkOrder_ScrapReasonID
+          fields:
+            - ScrapReasonID
+    foreign_keys:
+        - name: Production.WorkOrder_fk_0
+          fields:
+            - ScrapReasonID
+          referenced_collection: Production.ScrapReason
+          referenced_fields:
+            - ScrapReasonID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Production.WorkOrder_fk_1
+          fields:
+            - ProductID
+          referenced_collection: Production.Product
+          referenced_fields:
+            - ProductID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

@@ -1,0 +1,55 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    SalesOrderID:
+        type: int
+        required: true
+    SalesReasonID:
+        type: int
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - SalesOrderID
+    - SalesReasonID
+    - ModifiedDate
+primary_key:
+    - SalesOrderID
+    - SalesReasonID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Sales.SalesOrderHeaderSalesReason\" (\"SalesOrderID\" INTEGER NOT NULL, \"SalesReasonID\" INTEGER NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_SalesOrderHeaderSalesReason_SalesOrderID_SalesReasonID\" PRIMARY KEY (\"SalesOrderID\", \"SalesReasonID\"), CONSTRAINT \"FK_SalesOrderHeaderSalesReason_SalesReason_SalesReasonID\" FOREIGN KEY (\"SalesReasonID\") REFERENCES \"Sales.SalesReason\" (\"SalesReasonID\"), CONSTRAINT \"FK_SalesOrderHeaderSalesReason_SalesOrderHeader_SalesOrderID\" FOREIGN KEY (\"SalesOrderID\") REFERENCES \"Sales.SalesOrderHeader\" (\"SalesOrderID\"))","columns":[{"name":"SalesOrderID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"SalesReasonID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":2},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"sqlite_autoindex_Sales.SalesOrderHeaderSalesReason_1","unique":true,"origin":"pk","columns":[{"position":0,"name":"SalesOrderID","key":true,"collation":"BINARY"},{"position":1,"name":"SalesReasonID","key":true,"collation":"BINARY"},{"position":2,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: SalesOrderID
+          type: int
+          nullable: false
+        - name: SalesReasonID
+          type: int
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    foreign_keys:
+        - name: Sales.SalesOrderHeaderSalesReason_fk_0
+          fields:
+            - SalesOrderID
+          referenced_collection: Sales.SalesOrderHeader
+          referenced_fields:
+            - SalesOrderID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Sales.SalesOrderHeaderSalesReason_fk_1
+          fields:
+            - SalesReasonID
+          referenced_collection: Sales.SalesReason
+          referenced_fields:
+            - SalesReasonID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

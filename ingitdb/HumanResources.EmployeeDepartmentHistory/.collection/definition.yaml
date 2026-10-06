@@ -1,0 +1,93 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    BusinessEntityID:
+        type: int
+        required: true
+    DepartmentID:
+        type: int
+        required: true
+    ShiftID:
+        type: int
+        required: true
+    StartDate:
+        type: string
+        required: true
+    EndDate:
+        type: string
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - BusinessEntityID
+    - DepartmentID
+    - ShiftID
+    - StartDate
+    - EndDate
+    - ModifiedDate
+primary_key:
+    - BusinessEntityID
+    - StartDate
+    - DepartmentID
+    - ShiftID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"HumanResources.EmployeeDepartmentHistory\" (\"BusinessEntityID\" INTEGER NOT NULL, \"DepartmentID\" INTEGER NOT NULL, \"ShiftID\" INTEGER NOT NULL, \"StartDate\" TEXT NOT NULL, \"EndDate\" TEXT, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CHECK ((\"EndDate\" \u003e= \"StartDate\") OR (\"EndDate\" IS NULL)), CONSTRAINT \"PK_EmployeeDepartmentHistory_BusinessEntityID_StartDate_DepartmentID\" PRIMARY KEY (\"BusinessEntityID\", \"StartDate\", \"DepartmentID\", \"ShiftID\"), CONSTRAINT \"FK_EmployeeDepartmentHistory_Department_DepartmentID\" FOREIGN KEY (\"DepartmentID\") REFERENCES \"HumanResources.Department\" (\"DepartmentID\"), CONSTRAINT \"FK_EmployeeDepartmentHistory_Employee_BusinessEntityID\" FOREIGN KEY (\"BusinessEntityID\") REFERENCES \"HumanResources.Employee\" (\"BusinessEntityID\"), CONSTRAINT \"FK_EmployeeDepartmentHistory_Shift_ShiftID\" FOREIGN KEY (\"ShiftID\") REFERENCES \"HumanResources.Shift\" (\"ShiftID\"))","columns":[{"name":"BusinessEntityID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"DepartmentID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":3},{"name":"ShiftID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":4},{"name":"StartDate","declaredType":"TEXT","notNull":true,"primaryKeyPosition":2},{"name":"EndDate","declaredType":"TEXT","notNull":false},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"HumanResources_EmployeeDepartmentHistory_IX_EmployeeDepartmentHistory_ShiftID","unique":false,"origin":"c","createSql":"CREATE INDEX \"HumanResources_EmployeeDepartmentHistory_IX_EmployeeDepartmentHistory_ShiftID\" ON \"HumanResources.EmployeeDepartmentHistory\" (\"ShiftID\")","columns":[{"position":0,"name":"ShiftID","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"HumanResources_EmployeeDepartmentHistory_IX_EmployeeDepartmentHistory_DepartmentID","unique":false,"origin":"c","createSql":"CREATE INDEX \"HumanResources_EmployeeDepartmentHistory_IX_EmployeeDepartmentHistory_DepartmentID\" ON \"HumanResources.EmployeeDepartmentHistory\" (\"DepartmentID\")","columns":[{"position":0,"name":"DepartmentID","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"sqlite_autoindex_HumanResources.EmployeeDepartmentHistory_1","unique":true,"origin":"pk","columns":[{"position":0,"name":"BusinessEntityID","key":true,"collation":"BINARY"},{"position":1,"name":"StartDate","key":true,"collation":"BINARY"},{"position":2,"name":"DepartmentID","key":true,"collation":"BINARY"},{"position":3,"name":"ShiftID","key":true,"collation":"BINARY"},{"position":4,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: BusinessEntityID
+          type: int
+          nullable: false
+        - name: DepartmentID
+          type: int
+          nullable: false
+        - name: ShiftID
+          type: int
+          nullable: false
+        - name: StartDate
+          type: string
+          nullable: false
+        - name: EndDate
+          type: string
+          nullable: true
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: HumanResources_EmployeeDepartmentHistory_IX_EmployeeDepartmentHistory_ShiftID
+          fields:
+            - ShiftID
+        - name: HumanResources_EmployeeDepartmentHistory_IX_EmployeeDepartmentHistory_DepartmentID
+          fields:
+            - DepartmentID
+    foreign_keys:
+        - name: HumanResources.EmployeeDepartmentHistory_fk_0
+          fields:
+            - ShiftID
+          referenced_collection: HumanResources.Shift
+          referenced_fields:
+            - ShiftID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: HumanResources.EmployeeDepartmentHistory_fk_1
+          fields:
+            - BusinessEntityID
+          referenced_collection: HumanResources.Employee
+          referenced_fields:
+            - BusinessEntityID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: HumanResources.EmployeeDepartmentHistory_fk_2
+          fields:
+            - DepartmentID
+          referenced_collection: HumanResources.Department
+          referenced_fields:
+            - DepartmentID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

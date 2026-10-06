@@ -1,0 +1,63 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    BusinessEntityID:
+        type: int
+        required: true
+    EmailAddressID:
+        type: int
+        required: true
+    EmailAddress:
+        type: string
+    rowguid:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - BusinessEntityID
+    - EmailAddressID
+    - EmailAddress
+    - rowguid
+    - ModifiedDate
+primary_key:
+    - BusinessEntityID
+    - EmailAddressID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Person.EmailAddress\" (\"BusinessEntityID\" INTEGER NOT NULL, \"EmailAddressID\" INTEGER NOT NULL, \"EmailAddress\" TEXT, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_EmailAddress_BusinessEntityID_EmailAddressID\" PRIMARY KEY (\"BusinessEntityID\", \"EmailAddressID\"), CONSTRAINT \"FK_EmailAddress_Person_BusinessEntityID\" FOREIGN KEY (\"BusinessEntityID\") REFERENCES \"Person.Person\" (\"BusinessEntityID\"))","columns":[{"name":"BusinessEntityID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"EmailAddressID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":2},{"name":"EmailAddress","declaredType":"TEXT","notNull":false},{"name":"rowguid","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Person_EmailAddress_IX_EmailAddress_EmailAddress","unique":false,"origin":"c","createSql":"CREATE INDEX \"Person_EmailAddress_IX_EmailAddress_EmailAddress\" ON \"Person.EmailAddress\" (\"EmailAddress\")","columns":[{"position":0,"name":"EmailAddress","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"sqlite_autoindex_Person.EmailAddress_1","unique":true,"origin":"pk","columns":[{"position":0,"name":"BusinessEntityID","key":true,"collation":"BINARY"},{"position":1,"name":"EmailAddressID","key":true,"collation":"BINARY"},{"position":2,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: BusinessEntityID
+          type: int
+          nullable: false
+        - name: EmailAddressID
+          type: int
+          nullable: false
+        - name: EmailAddress
+          type: string
+          nullable: true
+        - name: rowguid
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Person_EmailAddress_IX_EmailAddress_EmailAddress
+          fields:
+            - EmailAddress
+    foreign_keys:
+        - name: Person.EmailAddress_fk_0
+          fields:
+            - BusinessEntityID
+          referenced_collection: Person.Person
+          referenced_fields:
+            - BusinessEntityID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

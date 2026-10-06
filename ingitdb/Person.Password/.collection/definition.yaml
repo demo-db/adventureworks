@@ -1,0 +1,59 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    BusinessEntityID:
+        type: int
+        required: true
+    PasswordHash:
+        type: string
+        required: true
+    PasswordSalt:
+        type: string
+        required: true
+    rowguid:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - BusinessEntityID
+    - PasswordHash
+    - PasswordSalt
+    - rowguid
+    - ModifiedDate
+primary_key:
+    - BusinessEntityID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Person.Password\" (\"BusinessEntityID\" INTEGER NOT NULL, \"PasswordHash\" TEXT NOT NULL, \"PasswordSalt\" TEXT NOT NULL, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_Password_BusinessEntityID\" PRIMARY KEY (\"BusinessEntityID\"), CONSTRAINT \"FK_Password_Person_BusinessEntityID\" FOREIGN KEY (\"BusinessEntityID\") REFERENCES \"Person.Person\" (\"BusinessEntityID\"))","columns":[{"name":"BusinessEntityID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"PasswordHash","declaredType":"TEXT","notNull":true},{"name":"PasswordSalt","declaredType":"TEXT","notNull":true},{"name":"rowguid","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: BusinessEntityID
+          type: int
+          nullable: false
+        - name: PasswordHash
+          type: string
+          nullable: false
+        - name: PasswordSalt
+          type: string
+          nullable: false
+        - name: rowguid
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    foreign_keys:
+        - name: Person.Password_fk_0
+          fields:
+            - BusinessEntityID
+          referenced_collection: Person.Person
+          referenced_fields:
+            - BusinessEntityID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

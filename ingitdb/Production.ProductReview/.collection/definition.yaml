@@ -1,0 +1,84 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    ProductReviewID:
+        type: int
+        required: true
+    ProductID:
+        type: int
+        required: true
+    ReviewerName:
+        type: string
+        required: true
+    ReviewDate:
+        type: string
+        required: true
+    EmailAddress:
+        type: string
+        required: true
+    Rating:
+        type: int
+        required: true
+    Comments:
+        type: string
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - ProductReviewID
+    - ProductID
+    - ReviewerName
+    - ReviewDate
+    - EmailAddress
+    - Rating
+    - Comments
+    - ModifiedDate
+primary_key:
+    - ProductReviewID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Production.ProductReview\" (\"ProductReviewID\" INTEGER NOT NULL, \"ProductID\" INTEGER NOT NULL, \"ReviewerName\" TEXT NOT NULL, \"ReviewDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', \"EmailAddress\" TEXT NOT NULL, \"Rating\" INTEGER NOT NULL, \"Comments\" TEXT, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CHECK (\"Rating\" BETWEEN 1 AND 5), CONSTRAINT \"PK_ProductReview_ProductReviewID\" PRIMARY KEY (\"ProductReviewID\"), CONSTRAINT \"FK_ProductReview_Product_ProductID\" FOREIGN KEY (\"ProductID\") REFERENCES \"Production.Product\" (\"ProductID\"))","columns":[{"name":"ProductReviewID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"ProductID","declaredType":"INTEGER","notNull":true},{"name":"ReviewerName","declaredType":"TEXT","notNull":true},{"name":"ReviewDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"},{"name":"EmailAddress","declaredType":"TEXT","notNull":true},{"name":"Rating","declaredType":"INTEGER","notNull":true},{"name":"Comments","declaredType":"TEXT","notNull":false},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Production_ProductReview_IX_ProductReview_ProductID_Name","unique":false,"origin":"c","createSql":"CREATE INDEX \"Production_ProductReview_IX_ProductReview_ProductID_Name\" ON \"Production.ProductReview\" (\"ProductID\", \"ReviewerName\")","columns":[{"position":0,"name":"ProductID","key":true,"collation":"BINARY"},{"position":1,"name":"ReviewerName","key":true,"collation":"BINARY"},{"position":2,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: ProductReviewID
+          type: int
+          nullable: false
+        - name: ProductID
+          type: int
+          nullable: false
+        - name: ReviewerName
+          type: string
+          nullable: false
+        - name: ReviewDate
+          type: string
+          nullable: false
+        - name: EmailAddress
+          type: string
+          nullable: false
+        - name: Rating
+          type: int
+          nullable: false
+        - name: Comments
+          type: string
+          nullable: true
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Production_ProductReview_IX_ProductReview_ProductID_Name
+          fields:
+            - ProductID
+            - ReviewerName
+    foreign_keys:
+        - name: Production.ProductReview_fk_0
+          fields:
+            - ProductID
+          referenced_collection: Production.Product
+          referenced_fields:
+            - ProductID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

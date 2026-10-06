@@ -1,0 +1,103 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    StateProvinceID:
+        type: int
+        required: true
+    StateProvinceCode:
+        type: string
+        required: true
+    CountryRegionCode:
+        type: string
+        required: true
+    IsOnlyStateProvinceFlag:
+        type: int
+        required: true
+    Name:
+        type: string
+        required: true
+    TerritoryID:
+        type: int
+        required: true
+    rowguid:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - StateProvinceID
+    - StateProvinceCode
+    - CountryRegionCode
+    - IsOnlyStateProvinceFlag
+    - Name
+    - TerritoryID
+    - rowguid
+    - ModifiedDate
+primary_key:
+    - StateProvinceID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Person.StateProvince\" (\"StateProvinceID\" INTEGER NOT NULL, \"StateProvinceCode\" TEXT NOT NULL, \"CountryRegionCode\" TEXT NOT NULL, \"IsOnlyStateProvinceFlag\" INTEGER NOT NULL DEFAULT 1, \"Name\" TEXT NOT NULL, \"TerritoryID\" INTEGER NOT NULL, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_StateProvince_StateProvinceID\" PRIMARY KEY (\"StateProvinceID\"), CONSTRAINT \"FK_StateProvince_CountryRegion_CountryRegionCode\" FOREIGN KEY (\"CountryRegionCode\") REFERENCES \"Person.CountryRegion\" (\"CountryRegionCode\"), CONSTRAINT \"FK_StateProvince_SalesTerritory_TerritoryID\" FOREIGN KEY (\"TerritoryID\") REFERENCES \"Sales.SalesTerritory\" (\"TerritoryID\"))","columns":[{"name":"StateProvinceID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"StateProvinceCode","declaredType":"TEXT","notNull":true},{"name":"CountryRegionCode","declaredType":"TEXT","notNull":true},{"name":"IsOnlyStateProvinceFlag","declaredType":"INTEGER","notNull":true,"defaultSql":"1"},{"name":"Name","declaredType":"TEXT","notNull":true},{"name":"TerritoryID","declaredType":"INTEGER","notNull":true},{"name":"rowguid","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Person_StateProvince_AK_StateProvince_rowguid","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Person_StateProvince_AK_StateProvince_rowguid\" ON \"Person.StateProvince\" (\"rowguid\")","columns":[{"position":0,"name":"rowguid","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"Person_StateProvince_AK_StateProvince_StateProvinceCode_CountryRegionCode","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Person_StateProvince_AK_StateProvince_StateProvinceCode_CountryRegionCode\" ON \"Person.StateProvince\" (\"StateProvinceCode\", \"CountryRegionCode\")","columns":[{"position":0,"name":"StateProvinceCode","key":true,"collation":"BINARY"},{"position":1,"name":"CountryRegionCode","key":true,"collation":"BINARY"},{"position":2,"key":false,"collation":"BINARY"}]},{"name":"Person_StateProvince_AK_StateProvince_Name","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Person_StateProvince_AK_StateProvince_Name\" ON \"Person.StateProvince\" (\"Name\")","columns":[{"position":0,"name":"Name","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: StateProvinceID
+          type: int
+          nullable: false
+        - name: StateProvinceCode
+          type: string
+          nullable: false
+        - name: CountryRegionCode
+          type: string
+          nullable: false
+        - name: IsOnlyStateProvinceFlag
+          type: int
+          nullable: false
+        - name: Name
+          type: string
+          nullable: false
+        - name: TerritoryID
+          type: int
+          nullable: false
+        - name: rowguid
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Person_StateProvince_AK_StateProvince_rowguid
+          fields:
+            - rowguid
+          unique: true
+        - name: Person_StateProvince_AK_StateProvince_StateProvinceCode_CountryRegionCode
+          fields:
+            - StateProvinceCode
+            - CountryRegionCode
+          unique: true
+        - name: Person_StateProvince_AK_StateProvince_Name
+          fields:
+            - Name
+          unique: true
+    foreign_keys:
+        - name: Person.StateProvince_fk_0
+          fields:
+            - TerritoryID
+          referenced_collection: Sales.SalesTerritory
+          referenced_fields:
+            - TerritoryID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Person.StateProvince_fk_1
+          fields:
+            - CountryRegionCode
+          referenced_collection: Person.CountryRegion
+          referenced_fields:
+            - CountryRegionCode
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

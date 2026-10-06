@@ -1,0 +1,84 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    BusinessEntityID:
+        type: int
+        required: true
+    AccountNumber:
+        type: string
+        required: true
+    Name:
+        type: string
+        required: true
+    CreditRating:
+        type: int
+        required: true
+    PreferredVendorStatus:
+        type: int
+        required: true
+    ActiveFlag:
+        type: int
+        required: true
+    PurchasingWebServiceURL:
+        type: string
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - BusinessEntityID
+    - AccountNumber
+    - Name
+    - CreditRating
+    - PreferredVendorStatus
+    - ActiveFlag
+    - PurchasingWebServiceURL
+    - ModifiedDate
+primary_key:
+    - BusinessEntityID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Purchasing.Vendor\" (\"BusinessEntityID\" INTEGER NOT NULL, \"AccountNumber\" TEXT NOT NULL, \"Name\" TEXT NOT NULL, \"CreditRating\" INTEGER NOT NULL, \"PreferredVendorStatus\" INTEGER NOT NULL DEFAULT 1, \"ActiveFlag\" INTEGER NOT NULL DEFAULT 1, \"PurchasingWebServiceURL\" TEXT, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CHECK (\"CreditRating\" BETWEEN 1 AND 5), CONSTRAINT \"PK_Vendor_BusinessEntityID\" PRIMARY KEY (\"BusinessEntityID\"), CONSTRAINT \"FK_Vendor_BusinessEntity_BusinessEntityID\" FOREIGN KEY (\"BusinessEntityID\") REFERENCES \"Person.BusinessEntity\" (\"BusinessEntityID\"))","columns":[{"name":"BusinessEntityID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"AccountNumber","declaredType":"TEXT","notNull":true},{"name":"Name","declaredType":"TEXT","notNull":true},{"name":"CreditRating","declaredType":"INTEGER","notNull":true},{"name":"PreferredVendorStatus","declaredType":"INTEGER","notNull":true,"defaultSql":"1"},{"name":"ActiveFlag","declaredType":"INTEGER","notNull":true,"defaultSql":"1"},{"name":"PurchasingWebServiceURL","declaredType":"TEXT","notNull":false},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Purchasing_Vendor_AK_Vendor_AccountNumber","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Purchasing_Vendor_AK_Vendor_AccountNumber\" ON \"Purchasing.Vendor\" (\"AccountNumber\")","columns":[{"position":0,"name":"AccountNumber","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: BusinessEntityID
+          type: int
+          nullable: false
+        - name: AccountNumber
+          type: string
+          nullable: false
+        - name: Name
+          type: string
+          nullable: false
+        - name: CreditRating
+          type: int
+          nullable: false
+        - name: PreferredVendorStatus
+          type: int
+          nullable: false
+        - name: ActiveFlag
+          type: int
+          nullable: false
+        - name: PurchasingWebServiceURL
+          type: string
+          nullable: true
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Purchasing_Vendor_AK_Vendor_AccountNumber
+          fields:
+            - AccountNumber
+          unique: true
+    foreign_keys:
+        - name: Purchasing.Vendor_fk_0
+          fields:
+            - BusinessEntityID
+          referenced_collection: Person.BusinessEntity
+          referenced_fields:
+            - BusinessEntityID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

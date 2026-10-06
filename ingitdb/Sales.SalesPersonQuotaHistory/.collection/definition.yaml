@@ -1,0 +1,65 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    BusinessEntityID:
+        type: int
+        required: true
+    QuotaDate:
+        type: string
+        required: true
+    SalesQuota:
+        type: string
+        required: true
+    rowguid:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - BusinessEntityID
+    - QuotaDate
+    - SalesQuota
+    - rowguid
+    - ModifiedDate
+primary_key:
+    - BusinessEntityID
+    - QuotaDate
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Sales.SalesPersonQuotaHistory\" (\"BusinessEntityID\" INTEGER NOT NULL, \"QuotaDate\" TEXT NOT NULL, \"SalesQuota\" DECIMAL_TEXT(19,4) NOT NULL, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_SalesPersonQuotaHistory_BusinessEntityID_QuotaDate\" PRIMARY KEY (\"BusinessEntityID\", \"QuotaDate\"), CONSTRAINT \"FK_SalesPersonQuotaHistory_SalesPerson_BusinessEntityID\" FOREIGN KEY (\"BusinessEntityID\") REFERENCES \"Sales.SalesPerson\" (\"BusinessEntityID\"))","columns":[{"name":"BusinessEntityID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"QuotaDate","declaredType":"TEXT","notNull":true,"primaryKeyPosition":2},{"name":"SalesQuota","declaredType":"DECIMAL_TEXT(19,4)","notNull":true},{"name":"rowguid","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Sales_SalesPersonQuotaHistory_AK_SalesPersonQuotaHistory_rowguid","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Sales_SalesPersonQuotaHistory_AK_SalesPersonQuotaHistory_rowguid\" ON \"Sales.SalesPersonQuotaHistory\" (\"rowguid\")","columns":[{"position":0,"name":"rowguid","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"sqlite_autoindex_Sales.SalesPersonQuotaHistory_1","unique":true,"origin":"pk","columns":[{"position":0,"name":"BusinessEntityID","key":true,"collation":"BINARY"},{"position":1,"name":"QuotaDate","key":true,"collation":"BINARY"},{"position":2,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: BusinessEntityID
+          type: int
+          nullable: false
+        - name: QuotaDate
+          type: string
+          nullable: false
+        - name: SalesQuota
+          type: string
+          nullable: false
+        - name: rowguid
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Sales_SalesPersonQuotaHistory_AK_SalesPersonQuotaHistory_rowguid
+          fields:
+            - rowguid
+          unique: true
+    foreign_keys:
+        - name: Sales.SalesPersonQuotaHistory_fk_0
+          fields:
+            - BusinessEntityID
+          referenced_collection: Sales.SalesPerson
+          referenced_fields:
+            - BusinessEntityID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

@@ -1,0 +1,70 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    SpecialOfferID:
+        type: int
+        required: true
+    ProductID:
+        type: int
+        required: true
+    rowguid:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - SpecialOfferID
+    - ProductID
+    - rowguid
+    - ModifiedDate
+primary_key:
+    - SpecialOfferID
+    - ProductID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Sales.SpecialOfferProduct\" (\"SpecialOfferID\" INTEGER NOT NULL, \"ProductID\" INTEGER NOT NULL, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_SpecialOfferProduct_SpecialOfferID_ProductID\" PRIMARY KEY (\"SpecialOfferID\", \"ProductID\"), CONSTRAINT \"FK_SpecialOfferProduct_Product_ProductID\" FOREIGN KEY (\"ProductID\") REFERENCES \"Production.Product\" (\"ProductID\"), CONSTRAINT \"FK_SpecialOfferProduct_SpecialOffer_SpecialOfferID\" FOREIGN KEY (\"SpecialOfferID\") REFERENCES \"Sales.SpecialOffer\" (\"SpecialOfferID\"))","columns":[{"name":"SpecialOfferID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"ProductID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":2},{"name":"rowguid","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Sales_SpecialOfferProduct_IX_SpecialOfferProduct_ProductID","unique":false,"origin":"c","createSql":"CREATE INDEX \"Sales_SpecialOfferProduct_IX_SpecialOfferProduct_ProductID\" ON \"Sales.SpecialOfferProduct\" (\"ProductID\")","columns":[{"position":0,"name":"ProductID","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"Sales_SpecialOfferProduct_AK_SpecialOfferProduct_rowguid","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Sales_SpecialOfferProduct_AK_SpecialOfferProduct_rowguid\" ON \"Sales.SpecialOfferProduct\" (\"rowguid\")","columns":[{"position":0,"name":"rowguid","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"sqlite_autoindex_Sales.SpecialOfferProduct_1","unique":true,"origin":"pk","columns":[{"position":0,"name":"SpecialOfferID","key":true,"collation":"BINARY"},{"position":1,"name":"ProductID","key":true,"collation":"BINARY"},{"position":2,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: SpecialOfferID
+          type: int
+          nullable: false
+        - name: ProductID
+          type: int
+          nullable: false
+        - name: rowguid
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Sales_SpecialOfferProduct_IX_SpecialOfferProduct_ProductID
+          fields:
+            - ProductID
+        - name: Sales_SpecialOfferProduct_AK_SpecialOfferProduct_rowguid
+          fields:
+            - rowguid
+          unique: true
+    foreign_keys:
+        - name: Sales.SpecialOfferProduct_fk_0
+          fields:
+            - SpecialOfferID
+          referenced_collection: Sales.SpecialOffer
+          referenced_fields:
+            - SpecialOfferID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Sales.SpecialOfferProduct_fk_1
+          fields:
+            - ProductID
+          referenced_collection: Production.Product
+          referenced_fields:
+            - ProductID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

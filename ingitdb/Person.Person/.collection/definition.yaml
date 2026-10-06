@@ -1,0 +1,120 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    BusinessEntityID:
+        type: int
+        required: true
+    PersonType:
+        type: string
+        required: true
+    NameStyle:
+        type: int
+        required: true
+    Title:
+        type: string
+    FirstName:
+        type: string
+        required: true
+    MiddleName:
+        type: string
+    LastName:
+        type: string
+        required: true
+    Suffix:
+        type: string
+    EmailPromotion:
+        type: int
+        required: true
+    AdditionalContactInfo:
+        type: string
+    Demographics:
+        type: string
+    rowguid:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - BusinessEntityID
+    - PersonType
+    - NameStyle
+    - Title
+    - FirstName
+    - MiddleName
+    - LastName
+    - Suffix
+    - EmailPromotion
+    - AdditionalContactInfo
+    - Demographics
+    - rowguid
+    - ModifiedDate
+primary_key:
+    - BusinessEntityID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Person.Person\" (\"BusinessEntityID\" INTEGER NOT NULL, \"PersonType\" TEXT NOT NULL, \"NameStyle\" INTEGER NOT NULL DEFAULT 0, \"Title\" TEXT, \"FirstName\" TEXT NOT NULL, \"MiddleName\" TEXT, \"LastName\" TEXT NOT NULL, \"Suffix\" TEXT, \"EmailPromotion\" INTEGER NOT NULL DEFAULT 0, \"AdditionalContactInfo\" TEXT, \"Demographics\" TEXT, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CHECK (\"EmailPromotion\" BETWEEN 0 AND 2), CHECK (\"PersonType\" IS NULL OR UPPER(RTRIM(\"PersonType\")) IN (''SC'', ''VC'', ''IN'', ''EM'', ''SP'', ''GC'')), CONSTRAINT \"PK_Person_BusinessEntityID\" PRIMARY KEY (\"BusinessEntityID\"), CONSTRAINT \"FK_Person_BusinessEntity_BusinessEntityID\" FOREIGN KEY (\"BusinessEntityID\") REFERENCES \"Person.BusinessEntity\" (\"BusinessEntityID\"))","columns":[{"name":"BusinessEntityID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"PersonType","declaredType":"TEXT","notNull":true},{"name":"NameStyle","declaredType":"INTEGER","notNull":true,"defaultSql":"0"},{"name":"Title","declaredType":"TEXT","notNull":false},{"name":"FirstName","declaredType":"TEXT","notNull":true},{"name":"MiddleName","declaredType":"TEXT","notNull":false},{"name":"LastName","declaredType":"TEXT","notNull":true},{"name":"Suffix","declaredType":"TEXT","notNull":false},{"name":"EmailPromotion","declaredType":"INTEGER","notNull":true,"defaultSql":"0"},{"name":"AdditionalContactInfo","declaredType":"TEXT","notNull":false},{"name":"Demographics","declaredType":"TEXT","notNull":false},{"name":"rowguid","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Person_Person_AK_Person_rowguid","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Person_Person_AK_Person_rowguid\" ON \"Person.Person\" (\"rowguid\")","columns":[{"position":0,"name":"rowguid","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"Person_Person_IX_Person_LastName_FirstName_MiddleName","unique":false,"origin":"c","createSql":"CREATE INDEX \"Person_Person_IX_Person_LastName_FirstName_MiddleName\" ON \"Person.Person\" (\"LastName\", \"FirstName\", \"MiddleName\")","columns":[{"position":0,"name":"LastName","key":true,"collation":"BINARY"},{"position":1,"name":"FirstName","key":true,"collation":"BINARY"},{"position":2,"name":"MiddleName","key":true,"collation":"BINARY"},{"position":3,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: BusinessEntityID
+          type: int
+          nullable: false
+        - name: PersonType
+          type: string
+          nullable: false
+        - name: NameStyle
+          type: int
+          nullable: false
+        - name: Title
+          type: string
+          nullable: true
+        - name: FirstName
+          type: string
+          nullable: false
+        - name: MiddleName
+          type: string
+          nullable: true
+        - name: LastName
+          type: string
+          nullable: false
+        - name: Suffix
+          type: string
+          nullable: true
+        - name: EmailPromotion
+          type: int
+          nullable: false
+        - name: AdditionalContactInfo
+          type: string
+          nullable: true
+        - name: Demographics
+          type: string
+          nullable: true
+        - name: rowguid
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Person_Person_AK_Person_rowguid
+          fields:
+            - rowguid
+          unique: true
+        - name: Person_Person_IX_Person_LastName_FirstName_MiddleName
+          fields:
+            - LastName
+            - FirstName
+            - MiddleName
+    foreign_keys:
+        - name: Person.Person_fk_0
+          fields:
+            - BusinessEntityID
+          referenced_collection: Person.BusinessEntity
+          referenced_fields:
+            - BusinessEntityID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

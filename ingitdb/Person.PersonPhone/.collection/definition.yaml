@@ -1,0 +1,67 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    BusinessEntityID:
+        type: int
+        required: true
+    PhoneNumber:
+        type: string
+        required: true
+    PhoneNumberTypeID:
+        type: int
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - BusinessEntityID
+    - PhoneNumber
+    - PhoneNumberTypeID
+    - ModifiedDate
+primary_key:
+    - BusinessEntityID
+    - PhoneNumber
+    - PhoneNumberTypeID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Person.PersonPhone\" (\"BusinessEntityID\" INTEGER NOT NULL, \"PhoneNumber\" TEXT NOT NULL, \"PhoneNumberTypeID\" INTEGER NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_PersonPhone_BusinessEntityID_PhoneNumber_PhoneNumberTypeID\" PRIMARY KEY (\"BusinessEntityID\", \"PhoneNumber\", \"PhoneNumberTypeID\"), CONSTRAINT \"FK_PersonPhone_Person_BusinessEntityID\" FOREIGN KEY (\"BusinessEntityID\") REFERENCES \"Person.Person\" (\"BusinessEntityID\"), CONSTRAINT \"FK_PersonPhone_PhoneNumberType_PhoneNumberTypeID\" FOREIGN KEY (\"PhoneNumberTypeID\") REFERENCES \"Person.PhoneNumberType\" (\"PhoneNumberTypeID\"))","columns":[{"name":"BusinessEntityID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"PhoneNumber","declaredType":"TEXT","notNull":true,"primaryKeyPosition":2},{"name":"PhoneNumberTypeID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":3},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Person_PersonPhone_IX_PersonPhone_PhoneNumber","unique":false,"origin":"c","createSql":"CREATE INDEX \"Person_PersonPhone_IX_PersonPhone_PhoneNumber\" ON \"Person.PersonPhone\" (\"PhoneNumber\")","columns":[{"position":0,"name":"PhoneNumber","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"sqlite_autoindex_Person.PersonPhone_1","unique":true,"origin":"pk","columns":[{"position":0,"name":"BusinessEntityID","key":true,"collation":"BINARY"},{"position":1,"name":"PhoneNumber","key":true,"collation":"BINARY"},{"position":2,"name":"PhoneNumberTypeID","key":true,"collation":"BINARY"},{"position":3,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: BusinessEntityID
+          type: int
+          nullable: false
+        - name: PhoneNumber
+          type: string
+          nullable: false
+        - name: PhoneNumberTypeID
+          type: int
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Person_PersonPhone_IX_PersonPhone_PhoneNumber
+          fields:
+            - PhoneNumber
+    foreign_keys:
+        - name: Person.PersonPhone_fk_0
+          fields:
+            - PhoneNumberTypeID
+          referenced_collection: Person.PhoneNumberType
+          referenced_fields:
+            - PhoneNumberTypeID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Person.PersonPhone_fk_1
+          fields:
+            - BusinessEntityID
+          referenced_collection: Person.Person
+          referenced_fields:
+            - BusinessEntityID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

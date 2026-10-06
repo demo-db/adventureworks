@@ -1,0 +1,65 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    ShipMethodID:
+        type: int
+        required: true
+    Name:
+        type: string
+        required: true
+    ShipBase:
+        type: string
+        required: true
+    ShipRate:
+        type: string
+        required: true
+    rowguid:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - ShipMethodID
+    - Name
+    - ShipBase
+    - ShipRate
+    - rowguid
+    - ModifiedDate
+primary_key:
+    - ShipMethodID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Purchasing.ShipMethod\" (\"ShipMethodID\" INTEGER NOT NULL, \"Name\" TEXT NOT NULL, \"ShipBase\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT ''0.00'', \"ShipRate\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT ''0.00'', \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_ShipMethod_ShipMethodID\" PRIMARY KEY (\"ShipMethodID\"))","columns":[{"name":"ShipMethodID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"Name","declaredType":"TEXT","notNull":true},{"name":"ShipBase","declaredType":"DECIMAL_TEXT(19,4)","notNull":true,"defaultSql":"''0.00''"},{"name":"ShipRate","declaredType":"DECIMAL_TEXT(19,4)","notNull":true,"defaultSql":"''0.00''"},{"name":"rowguid","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Purchasing_ShipMethod_AK_ShipMethod_rowguid","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Purchasing_ShipMethod_AK_ShipMethod_rowguid\" ON \"Purchasing.ShipMethod\" (\"rowguid\")","columns":[{"position":0,"name":"rowguid","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"Purchasing_ShipMethod_AK_ShipMethod_Name","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Purchasing_ShipMethod_AK_ShipMethod_Name\" ON \"Purchasing.ShipMethod\" (\"Name\")","columns":[{"position":0,"name":"Name","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: ShipMethodID
+          type: int
+          nullable: false
+        - name: Name
+          type: string
+          nullable: false
+        - name: ShipBase
+          type: string
+          nullable: false
+        - name: ShipRate
+          type: string
+          nullable: false
+        - name: rowguid
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Purchasing_ShipMethod_AK_ShipMethod_rowguid
+          fields:
+            - rowguid
+          unique: true
+        - name: Purchasing_ShipMethod_AK_ShipMethod_Name
+          fields:
+            - Name
+          unique: true

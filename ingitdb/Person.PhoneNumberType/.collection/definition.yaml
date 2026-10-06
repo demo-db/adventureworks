@@ -1,0 +1,35 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    PhoneNumberTypeID:
+        type: int
+        required: true
+    Name:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - PhoneNumberTypeID
+    - Name
+    - ModifiedDate
+primary_key:
+    - PhoneNumberTypeID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Person.PhoneNumberType\" (\"PhoneNumberTypeID\" INTEGER NOT NULL, \"Name\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_PhoneNumberType_PhoneNumberTypeID\" PRIMARY KEY (\"PhoneNumberTypeID\"))","columns":[{"name":"PhoneNumberTypeID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"Name","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: PhoneNumberTypeID
+          type: int
+          nullable: false
+        - name: Name
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false

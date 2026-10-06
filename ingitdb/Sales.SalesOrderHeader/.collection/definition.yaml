@@ -1,0 +1,273 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    SalesOrderID:
+        type: int
+        required: true
+    RevisionNumber:
+        type: int
+        required: true
+    OrderDate:
+        type: string
+        required: true
+    DueDate:
+        type: string
+        required: true
+    ShipDate:
+        type: string
+    Status:
+        type: int
+        required: true
+    OnlineOrderFlag:
+        type: int
+        required: true
+    SalesOrderNumber:
+        type: string
+    PurchaseOrderNumber:
+        type: string
+    AccountNumber:
+        type: string
+    CustomerID:
+        type: int
+        required: true
+    SalesPersonID:
+        type: int
+    TerritoryID:
+        type: int
+    BillToAddressID:
+        type: int
+        required: true
+    ShipToAddressID:
+        type: int
+        required: true
+    ShipMethodID:
+        type: int
+        required: true
+    CreditCardID:
+        type: int
+    CreditCardApprovalCode:
+        type: string
+    CurrencyRateID:
+        type: int
+    SubTotal:
+        type: string
+        required: true
+    TaxAmt:
+        type: string
+        required: true
+    Freight:
+        type: string
+        required: true
+    TotalDue:
+        type: string
+    Comment:
+        type: string
+    rowguid:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - SalesOrderID
+    - RevisionNumber
+    - OrderDate
+    - DueDate
+    - ShipDate
+    - Status
+    - OnlineOrderFlag
+    - SalesOrderNumber
+    - PurchaseOrderNumber
+    - AccountNumber
+    - CustomerID
+    - SalesPersonID
+    - TerritoryID
+    - BillToAddressID
+    - ShipToAddressID
+    - ShipMethodID
+    - CreditCardID
+    - CreditCardApprovalCode
+    - CurrencyRateID
+    - SubTotal
+    - TaxAmt
+    - Freight
+    - TotalDue
+    - Comment
+    - rowguid
+    - ModifiedDate
+primary_key:
+    - SalesOrderID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Sales.SalesOrderHeader\" (\"SalesOrderID\" INTEGER NOT NULL, \"RevisionNumber\" INTEGER NOT NULL DEFAULT 0, \"OrderDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', \"DueDate\" TEXT NOT NULL, \"ShipDate\" TEXT, \"Status\" INTEGER NOT NULL DEFAULT 1, \"OnlineOrderFlag\" INTEGER NOT NULL DEFAULT 1, \"SalesOrderNumber\" TEXT, \"PurchaseOrderNumber\" TEXT, \"AccountNumber\" TEXT, \"CustomerID\" INTEGER NOT NULL, \"SalesPersonID\" INTEGER, \"TerritoryID\" INTEGER, \"BillToAddressID\" INTEGER NOT NULL, \"ShipToAddressID\" INTEGER NOT NULL, \"ShipMethodID\" INTEGER NOT NULL, \"CreditCardID\" INTEGER, \"CreditCardApprovalCode\" TEXT, \"CurrencyRateID\" INTEGER, \"SubTotal\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT ''0.00'', \"TaxAmt\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT ''0.00'', \"Freight\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT ''0.00'', \"TotalDue\" DECIMAL_TEXT(38,4), \"Comment\" TEXT, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CHECK (\"Status\" BETWEEN 0 AND 8), CHECK (\"DueDate\" \u003e= \"OrderDate\"), CHECK ((\"ShipDate\" \u003e= \"OrderDate\") OR (\"ShipDate\" IS NULL)), CONSTRAINT \"PK_SalesOrderHeader_SalesOrderID\" PRIMARY KEY (\"SalesOrderID\"), CONSTRAINT \"FK_SalesOrderHeader_Address_BillToAddressID\" FOREIGN KEY (\"BillToAddressID\") REFERENCES \"Person.Address\" (\"AddressID\"), CONSTRAINT \"FK_SalesOrderHeader_Address_ShipToAddressID\" FOREIGN KEY (\"ShipToAddressID\") REFERENCES \"Person.Address\" (\"AddressID\"), CONSTRAINT \"FK_SalesOrderHeader_CreditCard_CreditCardID\" FOREIGN KEY (\"CreditCardID\") REFERENCES \"Sales.CreditCard\" (\"CreditCardID\"), CONSTRAINT \"FK_SalesOrderHeader_CurrencyRate_CurrencyRateID\" FOREIGN KEY (\"CurrencyRateID\") REFERENCES \"Sales.CurrencyRate\" (\"CurrencyRateID\"), CONSTRAINT \"FK_SalesOrderHeader_Customer_CustomerID\" FOREIGN KEY (\"CustomerID\") REFERENCES \"Sales.Customer\" (\"CustomerID\"), CONSTRAINT \"FK_SalesOrderHeader_SalesPerson_SalesPersonID\" FOREIGN KEY (\"SalesPersonID\") REFERENCES \"Sales.SalesPerson\" (\"BusinessEntityID\"), CONSTRAINT \"FK_SalesOrderHeader_ShipMethod_ShipMethodID\" FOREIGN KEY (\"ShipMethodID\") REFERENCES \"Purchasing.ShipMethod\" (\"ShipMethodID\"), CONSTRAINT \"FK_SalesOrderHeader_SalesTerritory_TerritoryID\" FOREIGN KEY (\"TerritoryID\") REFERENCES \"Sales.SalesTerritory\" (\"TerritoryID\"))","columns":[{"name":"SalesOrderID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"RevisionNumber","declaredType":"INTEGER","notNull":true,"defaultSql":"0"},{"name":"OrderDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"},{"name":"DueDate","declaredType":"TEXT","notNull":true},{"name":"ShipDate","declaredType":"TEXT","notNull":false},{"name":"Status","declaredType":"INTEGER","notNull":true,"defaultSql":"1"},{"name":"OnlineOrderFlag","declaredType":"INTEGER","notNull":true,"defaultSql":"1"},{"name":"SalesOrderNumber","declaredType":"TEXT","notNull":false},{"name":"PurchaseOrderNumber","declaredType":"TEXT","notNull":false},{"name":"AccountNumber","declaredType":"TEXT","notNull":false},{"name":"CustomerID","declaredType":"INTEGER","notNull":true},{"name":"SalesPersonID","declaredType":"INTEGER","notNull":false},{"name":"TerritoryID","declaredType":"INTEGER","notNull":false},{"name":"BillToAddressID","declaredType":"INTEGER","notNull":true},{"name":"ShipToAddressID","declaredType":"INTEGER","notNull":true},{"name":"ShipMethodID","declaredType":"INTEGER","notNull":true},{"name":"CreditCardID","declaredType":"INTEGER","notNull":false},{"name":"CreditCardApprovalCode","declaredType":"TEXT","notNull":false},{"name":"CurrencyRateID","declaredType":"INTEGER","notNull":false},{"name":"SubTotal","declaredType":"DECIMAL_TEXT(19,4)","notNull":true,"defaultSql":"''0.00''"},{"name":"TaxAmt","declaredType":"DECIMAL_TEXT(19,4)","notNull":true,"defaultSql":"''0.00''"},{"name":"Freight","declaredType":"DECIMAL_TEXT(19,4)","notNull":true,"defaultSql":"''0.00''"},{"name":"TotalDue","declaredType":"DECIMAL_TEXT(38,4)","notNull":false},{"name":"Comment","declaredType":"TEXT","notNull":false},{"name":"rowguid","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Sales_SalesOrderHeader_IX_SalesOrderHeader_SalesPersonID","unique":false,"origin":"c","createSql":"CREATE INDEX \"Sales_SalesOrderHeader_IX_SalesOrderHeader_SalesPersonID\" ON \"Sales.SalesOrderHeader\" (\"SalesPersonID\")","columns":[{"position":0,"name":"SalesPersonID","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"Sales_SalesOrderHeader_IX_SalesOrderHeader_CustomerID","unique":false,"origin":"c","createSql":"CREATE INDEX \"Sales_SalesOrderHeader_IX_SalesOrderHeader_CustomerID\" ON \"Sales.SalesOrderHeader\" (\"CustomerID\")","columns":[{"position":0,"name":"CustomerID","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"Sales_SalesOrderHeader_AK_SalesOrderHeader_SalesOrderNumber","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Sales_SalesOrderHeader_AK_SalesOrderHeader_SalesOrderNumber\" ON \"Sales.SalesOrderHeader\" (\"SalesOrderNumber\")","columns":[{"position":0,"name":"SalesOrderNumber","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"Sales_SalesOrderHeader_AK_SalesOrderHeader_rowguid","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Sales_SalesOrderHeader_AK_SalesOrderHeader_rowguid\" ON \"Sales.SalesOrderHeader\" (\"rowguid\")","columns":[{"position":0,"name":"rowguid","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: SalesOrderID
+          type: int
+          nullable: false
+        - name: RevisionNumber
+          type: int
+          nullable: false
+        - name: OrderDate
+          type: string
+          nullable: false
+        - name: DueDate
+          type: string
+          nullable: false
+        - name: ShipDate
+          type: string
+          nullable: true
+        - name: Status
+          type: int
+          nullable: false
+        - name: OnlineOrderFlag
+          type: int
+          nullable: false
+        - name: SalesOrderNumber
+          type: string
+          nullable: true
+        - name: PurchaseOrderNumber
+          type: string
+          nullable: true
+        - name: AccountNumber
+          type: string
+          nullable: true
+        - name: CustomerID
+          type: int
+          nullable: false
+        - name: SalesPersonID
+          type: int
+          nullable: true
+        - name: TerritoryID
+          type: int
+          nullable: true
+        - name: BillToAddressID
+          type: int
+          nullable: false
+        - name: ShipToAddressID
+          type: int
+          nullable: false
+        - name: ShipMethodID
+          type: int
+          nullable: false
+        - name: CreditCardID
+          type: int
+          nullable: true
+        - name: CreditCardApprovalCode
+          type: string
+          nullable: true
+        - name: CurrencyRateID
+          type: int
+          nullable: true
+        - name: SubTotal
+          type: string
+          nullable: false
+        - name: TaxAmt
+          type: string
+          nullable: false
+        - name: Freight
+          type: string
+          nullable: false
+        - name: TotalDue
+          type: string
+          nullable: true
+        - name: Comment
+          type: string
+          nullable: true
+        - name: rowguid
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Sales_SalesOrderHeader_IX_SalesOrderHeader_SalesPersonID
+          fields:
+            - SalesPersonID
+        - name: Sales_SalesOrderHeader_IX_SalesOrderHeader_CustomerID
+          fields:
+            - CustomerID
+        - name: Sales_SalesOrderHeader_AK_SalesOrderHeader_SalesOrderNumber
+          fields:
+            - SalesOrderNumber
+          unique: true
+        - name: Sales_SalesOrderHeader_AK_SalesOrderHeader_rowguid
+          fields:
+            - rowguid
+          unique: true
+    foreign_keys:
+        - name: Sales.SalesOrderHeader_fk_0
+          fields:
+            - TerritoryID
+          referenced_collection: Sales.SalesTerritory
+          referenced_fields:
+            - TerritoryID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Sales.SalesOrderHeader_fk_1
+          fields:
+            - ShipMethodID
+          referenced_collection: Purchasing.ShipMethod
+          referenced_fields:
+            - ShipMethodID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Sales.SalesOrderHeader_fk_2
+          fields:
+            - SalesPersonID
+          referenced_collection: Sales.SalesPerson
+          referenced_fields:
+            - BusinessEntityID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Sales.SalesOrderHeader_fk_3
+          fields:
+            - CustomerID
+          referenced_collection: Sales.Customer
+          referenced_fields:
+            - CustomerID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Sales.SalesOrderHeader_fk_4
+          fields:
+            - CurrencyRateID
+          referenced_collection: Sales.CurrencyRate
+          referenced_fields:
+            - CurrencyRateID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Sales.SalesOrderHeader_fk_5
+          fields:
+            - CreditCardID
+          referenced_collection: Sales.CreditCard
+          referenced_fields:
+            - CreditCardID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Sales.SalesOrderHeader_fk_6
+          fields:
+            - ShipToAddressID
+          referenced_collection: Person.Address
+          referenced_fields:
+            - AddressID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Sales.SalesOrderHeader_fk_7
+          fields:
+            - BillToAddressID
+          referenced_collection: Person.Address
+          referenced_fields:
+            - AddressID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

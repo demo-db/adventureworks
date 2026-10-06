@@ -1,0 +1,90 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    BusinessEntityID:
+        type: int
+        required: true
+    AddressID:
+        type: int
+        required: true
+    AddressTypeID:
+        type: int
+        required: true
+    rowguid:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - BusinessEntityID
+    - AddressID
+    - AddressTypeID
+    - rowguid
+    - ModifiedDate
+primary_key:
+    - BusinessEntityID
+    - AddressID
+    - AddressTypeID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Person.BusinessEntityAddress\" (\"BusinessEntityID\" INTEGER NOT NULL, \"AddressID\" INTEGER NOT NULL, \"AddressTypeID\" INTEGER NOT NULL, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_BusinessEntityAddress_BusinessEntityID_AddressID_AddressTypeID\" PRIMARY KEY (\"BusinessEntityID\", \"AddressID\", \"AddressTypeID\"), CONSTRAINT \"FK_BusinessEntityAddress_Address_AddressID\" FOREIGN KEY (\"AddressID\") REFERENCES \"Person.Address\" (\"AddressID\"), CONSTRAINT \"FK_BusinessEntityAddress_AddressType_AddressTypeID\" FOREIGN KEY (\"AddressTypeID\") REFERENCES \"Person.AddressType\" (\"AddressTypeID\"), CONSTRAINT \"FK_BusinessEntityAddress_BusinessEntity_BusinessEntityID\" FOREIGN KEY (\"BusinessEntityID\") REFERENCES \"Person.BusinessEntity\" (\"BusinessEntityID\"))","columns":[{"name":"BusinessEntityID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"AddressID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":2},{"name":"AddressTypeID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":3},{"name":"rowguid","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Person_BusinessEntityAddress_IX_BusinessEntityAddress_AddressTypeID","unique":false,"origin":"c","createSql":"CREATE INDEX \"Person_BusinessEntityAddress_IX_BusinessEntityAddress_AddressTypeID\" ON \"Person.BusinessEntityAddress\" (\"AddressTypeID\")","columns":[{"position":0,"name":"AddressTypeID","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"Person_BusinessEntityAddress_IX_BusinessEntityAddress_AddressID","unique":false,"origin":"c","createSql":"CREATE INDEX \"Person_BusinessEntityAddress_IX_BusinessEntityAddress_AddressID\" ON \"Person.BusinessEntityAddress\" (\"AddressID\")","columns":[{"position":0,"name":"AddressID","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"Person_BusinessEntityAddress_AK_BusinessEntityAddress_rowguid","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Person_BusinessEntityAddress_AK_BusinessEntityAddress_rowguid\" ON \"Person.BusinessEntityAddress\" (\"rowguid\")","columns":[{"position":0,"name":"rowguid","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"sqlite_autoindex_Person.BusinessEntityAddress_1","unique":true,"origin":"pk","columns":[{"position":0,"name":"BusinessEntityID","key":true,"collation":"BINARY"},{"position":1,"name":"AddressID","key":true,"collation":"BINARY"},{"position":2,"name":"AddressTypeID","key":true,"collation":"BINARY"},{"position":3,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: BusinessEntityID
+          type: int
+          nullable: false
+        - name: AddressID
+          type: int
+          nullable: false
+        - name: AddressTypeID
+          type: int
+          nullable: false
+        - name: rowguid
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Person_BusinessEntityAddress_IX_BusinessEntityAddress_AddressTypeID
+          fields:
+            - AddressTypeID
+        - name: Person_BusinessEntityAddress_IX_BusinessEntityAddress_AddressID
+          fields:
+            - AddressID
+        - name: Person_BusinessEntityAddress_AK_BusinessEntityAddress_rowguid
+          fields:
+            - rowguid
+          unique: true
+    foreign_keys:
+        - name: Person.BusinessEntityAddress_fk_0
+          fields:
+            - BusinessEntityID
+          referenced_collection: Person.BusinessEntity
+          referenced_fields:
+            - BusinessEntityID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Person.BusinessEntityAddress_fk_1
+          fields:
+            - AddressTypeID
+          referenced_collection: Person.AddressType
+          referenced_fields:
+            - AddressTypeID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Person.BusinessEntityAddress_fk_2
+          fields:
+            - AddressID
+          referenced_collection: Person.Address
+          referenced_fields:
+            - AddressID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

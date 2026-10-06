@@ -1,0 +1,51 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    AddressTypeID:
+        type: int
+        required: true
+    Name:
+        type: string
+        required: true
+    rowguid:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - AddressTypeID
+    - Name
+    - rowguid
+    - ModifiedDate
+primary_key:
+    - AddressTypeID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Person.AddressType\" (\"AddressTypeID\" INTEGER NOT NULL, \"Name\" TEXT NOT NULL, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_AddressType_AddressTypeID\" PRIMARY KEY (\"AddressTypeID\"))","columns":[{"name":"AddressTypeID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"Name","declaredType":"TEXT","notNull":true},{"name":"rowguid","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Person_AddressType_AK_AddressType_Name","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Person_AddressType_AK_AddressType_Name\" ON \"Person.AddressType\" (\"Name\")","columns":[{"position":0,"name":"Name","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"Person_AddressType_AK_AddressType_rowguid","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Person_AddressType_AK_AddressType_rowguid\" ON \"Person.AddressType\" (\"rowguid\")","columns":[{"position":0,"name":"rowguid","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: AddressTypeID
+          type: int
+          nullable: false
+        - name: Name
+          type: string
+          nullable: false
+        - name: rowguid
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Person_AddressType_AK_AddressType_Name
+          fields:
+            - Name
+          unique: true
+        - name: Person_AddressType_AK_AddressType_rowguid
+          fields:
+            - rowguid
+          unique: true

@@ -1,0 +1,63 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    ProductModelID:
+        type: int
+        required: true
+    Name:
+        type: string
+        required: true
+    CatalogDescription:
+        type: string
+    Instructions:
+        type: string
+    rowguid:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - ProductModelID
+    - Name
+    - CatalogDescription
+    - Instructions
+    - rowguid
+    - ModifiedDate
+primary_key:
+    - ProductModelID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Production.ProductModel\" (\"ProductModelID\" INTEGER NOT NULL, \"Name\" TEXT NOT NULL, \"CatalogDescription\" TEXT, \"Instructions\" TEXT, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_ProductModel_ProductModelID\" PRIMARY KEY (\"ProductModelID\"))","columns":[{"name":"ProductModelID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"Name","declaredType":"TEXT","notNull":true},{"name":"CatalogDescription","declaredType":"TEXT","notNull":false},{"name":"Instructions","declaredType":"TEXT","notNull":false},{"name":"rowguid","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Production_ProductModel_AK_ProductModel_rowguid","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Production_ProductModel_AK_ProductModel_rowguid\" ON \"Production.ProductModel\" (\"rowguid\")","columns":[{"position":0,"name":"rowguid","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"Production_ProductModel_AK_ProductModel_Name","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Production_ProductModel_AK_ProductModel_Name\" ON \"Production.ProductModel\" (\"Name\")","columns":[{"position":0,"name":"Name","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: ProductModelID
+          type: int
+          nullable: false
+        - name: Name
+          type: string
+          nullable: false
+        - name: CatalogDescription
+          type: string
+          nullable: true
+        - name: Instructions
+          type: string
+          nullable: true
+        - name: rowguid
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Production_ProductModel_AK_ProductModel_rowguid
+          fields:
+            - rowguid
+          unique: true
+        - name: Production_ProductModel_AK_ProductModel_Name
+          fields:
+            - Name
+          unique: true

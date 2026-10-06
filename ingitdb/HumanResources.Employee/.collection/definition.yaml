@@ -1,0 +1,155 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    BusinessEntityID:
+        type: int
+        required: true
+    NationalIDNumber:
+        type: string
+        required: true
+    LoginID:
+        type: string
+        required: true
+    OrganizationNode:
+        type: string
+    OrganizationLevel:
+        type: int
+    JobTitle:
+        type: string
+        required: true
+    BirthDate:
+        type: string
+        required: true
+    MaritalStatus:
+        type: string
+        required: true
+    Gender:
+        type: string
+        required: true
+    HireDate:
+        type: string
+        required: true
+    SalariedFlag:
+        type: int
+        required: true
+    VacationHours:
+        type: int
+        required: true
+    SickLeaveHours:
+        type: int
+        required: true
+    CurrentFlag:
+        type: int
+        required: true
+    rowguid:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - BusinessEntityID
+    - NationalIDNumber
+    - LoginID
+    - OrganizationNode
+    - OrganizationLevel
+    - JobTitle
+    - BirthDate
+    - MaritalStatus
+    - Gender
+    - HireDate
+    - SalariedFlag
+    - VacationHours
+    - SickLeaveHours
+    - CurrentFlag
+    - rowguid
+    - ModifiedDate
+primary_key:
+    - BusinessEntityID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"HumanResources.Employee\" (\"BusinessEntityID\" INTEGER NOT NULL, \"NationalIDNumber\" TEXT NOT NULL, \"LoginID\" TEXT NOT NULL, \"OrganizationNode\" BLOB, \"OrganizationLevel\" INTEGER, \"JobTitle\" TEXT NOT NULL, \"BirthDate\" TEXT NOT NULL, \"MaritalStatus\" TEXT NOT NULL, \"Gender\" TEXT NOT NULL, \"HireDate\" TEXT NOT NULL, \"SalariedFlag\" INTEGER NOT NULL DEFAULT 1, \"VacationHours\" INTEGER NOT NULL DEFAULT 0, \"SickLeaveHours\" INTEGER NOT NULL DEFAULT 0, \"CurrentFlag\" INTEGER NOT NULL DEFAULT 1, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CHECK (\"BirthDate\" BETWEEN ''1930-01-01'' AND ''2007-11-14 12:13:16.797''), CHECK (UPPER(RTRIM(\"MaritalStatus\")) IN (''M'', ''S'')), CHECK (\"HireDate\" BETWEEN ''1996-07-01'' AND ''2025-11-15 12:13:16.797''), CHECK (UPPER(RTRIM(\"Gender\")) IN (''M'', ''F'')), CHECK (\"VacationHours\" BETWEEN -40 AND 240), CHECK (\"SickLeaveHours\" BETWEEN 0 AND 120), CONSTRAINT \"PK_Employee_BusinessEntityID\" PRIMARY KEY (\"BusinessEntityID\"), CONSTRAINT \"FK_Employee_Person_BusinessEntityID\" FOREIGN KEY (\"BusinessEntityID\") REFERENCES \"Person.Person\" (\"BusinessEntityID\"))","columns":[{"name":"BusinessEntityID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"NationalIDNumber","declaredType":"TEXT","notNull":true},{"name":"LoginID","declaredType":"TEXT","notNull":true},{"name":"OrganizationNode","declaredType":"BLOB","notNull":false},{"name":"OrganizationLevel","declaredType":"INTEGER","notNull":false},{"name":"JobTitle","declaredType":"TEXT","notNull":true},{"name":"BirthDate","declaredType":"TEXT","notNull":true},{"name":"MaritalStatus","declaredType":"TEXT","notNull":true},{"name":"Gender","declaredType":"TEXT","notNull":true},{"name":"HireDate","declaredType":"TEXT","notNull":true},{"name":"SalariedFlag","declaredType":"INTEGER","notNull":true,"defaultSql":"1"},{"name":"VacationHours","declaredType":"INTEGER","notNull":true,"defaultSql":"0"},{"name":"SickLeaveHours","declaredType":"INTEGER","notNull":true,"defaultSql":"0"},{"name":"CurrentFlag","declaredType":"INTEGER","notNull":true,"defaultSql":"1"},{"name":"rowguid","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"HumanResources_Employee_AK_Employee_rowguid","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"HumanResources_Employee_AK_Employee_rowguid\" ON \"HumanResources.Employee\" (\"rowguid\")","columns":[{"position":0,"name":"rowguid","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"HumanResources_Employee_AK_Employee_NationalIDNumber","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"HumanResources_Employee_AK_Employee_NationalIDNumber\" ON \"HumanResources.Employee\" (\"NationalIDNumber\")","columns":[{"position":0,"name":"NationalIDNumber","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"HumanResources_Employee_AK_Employee_LoginID","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"HumanResources_Employee_AK_Employee_LoginID\" ON \"HumanResources.Employee\" (\"LoginID\")","columns":[{"position":0,"name":"LoginID","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"HumanResources_Employee_IX_Employee_OrganizationLevel_OrganizationNode","unique":false,"origin":"c","createSql":"CREATE INDEX \"HumanResources_Employee_IX_Employee_OrganizationLevel_OrganizationNode\" ON \"HumanResources.Employee\" (\"OrganizationLevel\", \"OrganizationNode\")","columns":[{"position":0,"name":"OrganizationLevel","key":true,"collation":"BINARY"},{"position":1,"name":"OrganizationNode","key":true,"collation":"BINARY"},{"position":2,"key":false,"collation":"BINARY"}]},{"name":"HumanResources_Employee_IX_Employee_OrganizationNode","unique":false,"origin":"c","createSql":"CREATE INDEX \"HumanResources_Employee_IX_Employee_OrganizationNode\" ON \"HumanResources.Employee\" (\"OrganizationNode\")","columns":[{"position":0,"name":"OrganizationNode","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: BusinessEntityID
+          type: int
+          nullable: false
+        - name: NationalIDNumber
+          type: string
+          nullable: false
+        - name: LoginID
+          type: string
+          nullable: false
+        - name: OrganizationNode
+          type: bytes
+          nullable: true
+          encoding: base64
+        - name: OrganizationLevel
+          type: int
+          nullable: true
+        - name: JobTitle
+          type: string
+          nullable: false
+        - name: BirthDate
+          type: string
+          nullable: false
+        - name: MaritalStatus
+          type: string
+          nullable: false
+        - name: Gender
+          type: string
+          nullable: false
+        - name: HireDate
+          type: string
+          nullable: false
+        - name: SalariedFlag
+          type: int
+          nullable: false
+        - name: VacationHours
+          type: int
+          nullable: false
+        - name: SickLeaveHours
+          type: int
+          nullable: false
+        - name: CurrentFlag
+          type: int
+          nullable: false
+        - name: rowguid
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: HumanResources_Employee_AK_Employee_rowguid
+          fields:
+            - rowguid
+          unique: true
+        - name: HumanResources_Employee_AK_Employee_NationalIDNumber
+          fields:
+            - NationalIDNumber
+          unique: true
+        - name: HumanResources_Employee_AK_Employee_LoginID
+          fields:
+            - LoginID
+          unique: true
+        - name: HumanResources_Employee_IX_Employee_OrganizationLevel_OrganizationNode
+          fields:
+            - OrganizationLevel
+            - OrganizationNode
+        - name: HumanResources_Employee_IX_Employee_OrganizationNode
+          fields:
+            - OrganizationNode
+    foreign_keys:
+        - name: HumanResources.Employee_fk_0
+          fields:
+            - BusinessEntityID
+          referenced_collection: Person.Person
+          referenced_fields:
+            - BusinessEntityID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

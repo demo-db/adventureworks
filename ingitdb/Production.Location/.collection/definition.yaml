@@ -1,0 +1,54 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    LocationID:
+        type: int
+        required: true
+    Name:
+        type: string
+        required: true
+    CostRate:
+        type: string
+        required: true
+    Availability:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - LocationID
+    - Name
+    - CostRate
+    - Availability
+    - ModifiedDate
+primary_key:
+    - LocationID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Production.Location\" (\"LocationID\" INTEGER NOT NULL, \"Name\" TEXT NOT NULL, \"CostRate\" DECIMAL_TEXT(10,4) NOT NULL DEFAULT ''0.00'', \"Availability\" DECIMAL_TEXT(8,2) NOT NULL DEFAULT ''0.00'', \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_Location_LocationID\" PRIMARY KEY (\"LocationID\"))","columns":[{"name":"LocationID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"Name","declaredType":"TEXT","notNull":true},{"name":"CostRate","declaredType":"DECIMAL_TEXT(10,4)","notNull":true,"defaultSql":"''0.00''"},{"name":"Availability","declaredType":"DECIMAL_TEXT(8,2)","notNull":true,"defaultSql":"''0.00''"},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Production_Location_AK_Location_Name","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Production_Location_AK_Location_Name\" ON \"Production.Location\" (\"Name\")","columns":[{"position":0,"name":"Name","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: LocationID
+          type: int
+          nullable: false
+        - name: Name
+          type: string
+          nullable: false
+        - name: CostRate
+          type: string
+          nullable: false
+        - name: Availability
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Production_Location_AK_Location_Name
+          fields:
+            - Name
+          unique: true

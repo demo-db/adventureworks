@@ -1,0 +1,83 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    ProductID:
+        type: int
+        required: true
+    LocationID:
+        type: int
+        required: true
+    Shelf:
+        type: string
+        required: true
+    Bin:
+        type: int
+        required: true
+    Quantity:
+        type: int
+        required: true
+    rowguid:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - ProductID
+    - LocationID
+    - Shelf
+    - Bin
+    - Quantity
+    - rowguid
+    - ModifiedDate
+primary_key:
+    - ProductID
+    - LocationID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Production.ProductInventory\" (\"ProductID\" INTEGER NOT NULL, \"LocationID\" INTEGER NOT NULL, \"Shelf\" TEXT NOT NULL, \"Bin\" INTEGER NOT NULL, \"Quantity\" INTEGER NOT NULL DEFAULT 0, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CHECK ((\"Shelf\" GLOB ''[A-Za-z]'') OR (\"Shelf\" = ''N/A'')), CHECK (\"Bin\" BETWEEN 0 AND 100), CONSTRAINT \"PK_ProductInventory_ProductID_LocationID\" PRIMARY KEY (\"ProductID\", \"LocationID\"), CONSTRAINT \"FK_ProductInventory_Location_LocationID\" FOREIGN KEY (\"LocationID\") REFERENCES \"Production.Location\" (\"LocationID\"), CONSTRAINT \"FK_ProductInventory_Product_ProductID\" FOREIGN KEY (\"ProductID\") REFERENCES \"Production.Product\" (\"ProductID\"))","columns":[{"name":"ProductID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"LocationID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":2},{"name":"Shelf","declaredType":"TEXT","notNull":true},{"name":"Bin","declaredType":"INTEGER","notNull":true},{"name":"Quantity","declaredType":"INTEGER","notNull":true,"defaultSql":"0"},{"name":"rowguid","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"sqlite_autoindex_Production.ProductInventory_1","unique":true,"origin":"pk","columns":[{"position":0,"name":"ProductID","key":true,"collation":"BINARY"},{"position":1,"name":"LocationID","key":true,"collation":"BINARY"},{"position":2,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: ProductID
+          type: int
+          nullable: false
+        - name: LocationID
+          type: int
+          nullable: false
+        - name: Shelf
+          type: string
+          nullable: false
+        - name: Bin
+          type: int
+          nullable: false
+        - name: Quantity
+          type: int
+          nullable: false
+        - name: rowguid
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    foreign_keys:
+        - name: Production.ProductInventory_fk_0
+          fields:
+            - ProductID
+          referenced_collection: Production.Product
+          referenced_fields:
+            - ProductID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Production.ProductInventory_fk_1
+          fields:
+            - LocationID
+          referenced_collection: Production.Location
+          referenced_fields:
+            - LocationID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
