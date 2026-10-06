@@ -1,0 +1,27 @@
+record_file:
+  name: records.json
+  format: json
+  type: "map[$record_id]map[$field_name]any"
+columns:
+  "SalesOrderID":
+    type: any
+  "SalesOrderDetailID":
+    type: any
+  "CarrierTrackingNumber":
+    type: any
+  "OrderQty":
+    type: any
+  "ProductID":
+    type: any
+  "SpecialOfferID":
+    type: any
+  "UnitPrice":
+    type: any
+  "UnitPriceDiscount":
+    type: any
+  "LineTotal":
+    type: any
+  "rowguid":
+    type: any
+  "ModifiedDate":
+    type: any

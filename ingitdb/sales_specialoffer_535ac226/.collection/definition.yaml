@@ -1,0 +1,27 @@
+record_file:
+  name: records.json
+  format: json
+  type: "map[$record_id]map[$field_name]any"
+columns:
+  "SpecialOfferID":
+    type: any
+  "Description":
+    type: any
+  "DiscountPct":
+    type: any
+  "Type":
+    type: any
+  "Category":
+    type: any
+  "StartDate":
+    type: any
+  "EndDate":
+    type: any
+  "MinQty":
+    type: any
+  "MaxQty":
+    type: any
+  "rowguid":
+    type: any
+  "ModifiedDate":
+    type: any

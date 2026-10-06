@@ -1,0 +1,55 @@
+record_file:
+  name: records.json
+  format: json
+  type: "map[$record_id]map[$field_name]any"
+columns:
+  "ProductID":
+    type: any
+  "Name":
+    type: any
+  "ProductNumber":
+    type: any
+  "MakeFlag":
+    type: any
+  "FinishedGoodsFlag":
+    type: any
+  "Color":
+    type: any
+  "SafetyStockLevel":
+    type: any
+  "ReorderPoint":
+    type: any
+  "StandardCost":
+    type: any
+  "ListPrice":
+    type: any
+  "Size":
+    type: any
+  "SizeUnitMeasureCode":
+    type: any
+  "WeightUnitMeasureCode":
+    type: any
+  "Weight":
+    type: any
+  "DaysToManufacture":
+    type: any
+  "ProductLine":
+    type: any
+  "Class":
+    type: any
+  "Style":
+    type: any
+  "ProductSubcategoryID":
+    type: any
+  "ProductModelID":
+    type: any
+  "SellStartDate":
+    type: any
+  "SellEndDate":
+    type: any
+  "DiscontinuedDate":
+    type: any
+  "rowguid":
+    type: any
+  "ModifiedDate":
+    type: any

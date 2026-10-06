@@ -1,0 +1,57 @@
+record_file:
+  name: records.json
+  format: json
+  type: "map[$record_id]map[$field_name]any"
+columns:
+  "SalesOrderID":
+    type: any
+  "RevisionNumber":
+    type: any
+  "OrderDate":
+    type: any
+  "DueDate":
+    type: any
+  "ShipDate":
+    type: any
+  "Status":
+    type: any
+  "OnlineOrderFlag":
+    type: any
+  "SalesOrderNumber":
+    type: any
+  "PurchaseOrderNumber":
+    type: any
+  "AccountNumber":
+    type: any
+  "CustomerID":
+    type: any
+  "SalesPersonID":
+    type: any
+  "TerritoryID":
+    type: any
+  "BillToAddressID":
+    type: any
+  "ShipToAddressID":
+    type: any
+  "ShipMethodID":
+    type: any
+  "CreditCardID":
+    type: any
+  "CreditCardApprovalCode":
+    type: any
+  "CurrencyRateID":
+    type: any
+  "SubTotal":
+    type: any
+  "TaxAmt":
+    type: any
+  "Freight":
+    type: any
+  "TotalDue":
+    type: any
+  "Comment":
+    type: any
+  "rowguid":
+    type: any
+  "ModifiedDate":
+    type: any

@@ -1,0 +1,13 @@
+record_file:
+  name: records.json
+  format: json
+  type: "map[$record_id]map[$field_name]any"
+columns:
+  "ProductDescriptionID":
+    type: any
+  "Description":
+    type: any
+  "rowguid":
+    type: any
+  "ModifiedDate":
+    type: any

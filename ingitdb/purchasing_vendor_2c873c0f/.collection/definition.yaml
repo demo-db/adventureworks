@@ -1,0 +1,21 @@
+record_file:
+  name: records.json
+  format: json
+  type: "map[$record_id]map[$field_name]any"
+columns:
+  "BusinessEntityID":
+    type: any
+  "AccountNumber":
+    type: any
+  "Name":
+    type: any
+  "CreditRating":
+    type: any
+  "PreferredVendorStatus":
+    type: any
+  "ActiveFlag":
+    type: any
+  "PurchasingWebServiceURL":
+    type: any
+  "ModifiedDate":
+    type: any

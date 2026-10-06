@@ -1,0 +1,19 @@
+record_file:
+  name: records.json
+  format: json
+  type: "map[$record_id]map[$field_name]any"
+columns:
+  "SalesTaxRateID":
+    type: any
+  "StateProvinceID":
+    type: any
+  "TaxType":
+    type: any
+  "TaxRate":
+    type: any
+  "Name":
+    type: any
+  "rowguid":
+    type: any
+  "ModifiedDate":
+    type: any

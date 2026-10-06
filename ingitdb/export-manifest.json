@@ -1,0 +1,4509 @@
+{
+  "format": "demodb-ingitdb-export/v1",
+  "datasetId": "adventureworks",
+  "source": {
+    "repository": "https://github.com/microsoft/sql-server-samples",
+    "revision": "beaab06ef72831089ca80e5355d65e661fd19b26",
+    "providerRepository": "https://github.com/demo-db/adventureworks",
+    "providerCommit": "5028a27189b487d6fd8025fafc1307aada707fd2",
+    "providerContractSha256": "5b2cb733342ac9e848f2674090e0e534082d48111056ff4e6a3b6d4ef4f693e0",
+    "fixtureSha256": "6a105e1982becfe003fc7a307d7cad9d738390cedd79d166c2167fd817168109",
+    "fixtureBytes": 126820352
+  },
+  "rowCount": 759240,
+  "tables": [
+    {
+      "nativeName": "HumanResources.Department",
+      "collection": "humanresources_department_3ff8b674",
+      "rows": 16,
+      "primaryKey": [
+        "DepartmentID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [],
+      "columns": [
+        {
+          "nativeName": "DepartmentID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Name",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "GroupName",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "humanresources_department_3ff8b674/records.json",
+        "sha256": "1af2fa9c1ba835014855d3c14cde82d5454535a125d88cfae1192b8c83c7dda5"
+      }
+    },
+    {
+      "nativeName": "HumanResources.Employee",
+      "collection": "humanresources_employee_01f149f6",
+      "rows": 290,
+      "primaryKey": [
+        "BusinessEntityID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Person.Person",
+          "from": "BusinessEntityID",
+          "to": "BusinessEntityID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "BusinessEntityID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "NationalIDNumber",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "LoginID",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "OrganizationNode",
+          "declaredType": "BLOB",
+          "encoding": "base64"
+        },
+        {
+          "nativeName": "OrganizationLevel",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "JobTitle",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "BirthDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "MaritalStatus",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Gender",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "HireDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "SalariedFlag",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "VacationHours",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "SickLeaveHours",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "CurrentFlag",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "rowguid",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "humanresources_employee_01f149f6/records.json",
+        "sha256": "89abcf5d7a7dd20fc14403381a4c41f4102a1542e67a3983836c3babb3157850"
+      }
+    },
+    {
+      "nativeName": "HumanResources.EmployeeDepartmentHistory",
+      "collection": "humanresources_employeedepartmenthi_81c88b3c",
+      "rows": 296,
+      "primaryKey": [
+        "BusinessEntityID",
+        "StartDate",
+        "DepartmentID",
+        "ShiftID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "HumanResources.Shift",
+          "from": "ShiftID",
+          "to": "ShiftID"
+        },
+        {
+          "id": 1,
+          "sequence": 0,
+          "table": "HumanResources.Employee",
+          "from": "BusinessEntityID",
+          "to": "BusinessEntityID"
+        },
+        {
+          "id": 2,
+          "sequence": 0,
+          "table": "HumanResources.Department",
+          "from": "DepartmentID",
+          "to": "DepartmentID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "BusinessEntityID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "DepartmentID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ShiftID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "StartDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "EndDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "humanresources_employeedepartmenthi_81c88b3c/records.json",
+        "sha256": "deaf294632fc2c4d21013fc29a2a5f303022ceade24e0307a2f80238d4d194e7"
+      }
+    },
+    {
+      "nativeName": "HumanResources.EmployeePayHistory",
+      "collection": "humanresources_employeepayhistory_bd11afae",
+      "rows": 316,
+      "primaryKey": [
+        "BusinessEntityID",
+        "RateChangeDate"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "HumanResources.Employee",
+          "from": "BusinessEntityID",
+          "to": "BusinessEntityID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "BusinessEntityID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "RateChangeDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Rate",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "PayFrequency",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "humanresources_employeepayhistory_bd11afae/records.json",
+        "sha256": "4f2dc04b19385d024411dbca5e76ff55a2d8cf7b04de00d5b0352e62455a74f1"
+      }
+    },
+    {
+      "nativeName": "HumanResources.JobCandidate",
+      "collection": "humanresources_jobcandidate_c04ecc0b",
+      "rows": 13,
+      "primaryKey": [
+        "JobCandidateID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "HumanResources.Employee",
+          "from": "BusinessEntityID",
+          "to": "BusinessEntityID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "JobCandidateID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "BusinessEntityID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Resume",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "humanresources_jobcandidate_c04ecc0b/records.json",
+        "sha256": "8a470d0be0248abaf98ffcd1111d32f26f4b95112478420a785b96bb270fc4aa"
+      }
+    },
+    {
+      "nativeName": "HumanResources.Shift",
+      "collection": "humanresources_shift_d751633c",
+      "rows": 3,
+      "primaryKey": [
+        "ShiftID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [],
+      "columns": [
+        {
+          "nativeName": "ShiftID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Name",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "StartTime",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "EndTime",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "humanresources_shift_d751633c/records.json",
+        "sha256": "2cc100bb393678a3351cf3af58dbb57b8915be5742cfaeed28807e7482aedb7a"
+      }
+    },
+    {
+      "nativeName": "Person.Address",
+      "collection": "person_address_f38d975d",
+      "rows": 19614,
+      "primaryKey": [
+        "AddressID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Person.StateProvince",
+          "from": "StateProvinceID",
+          "to": "StateProvinceID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "AddressID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "AddressLine1",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "AddressLine2",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "City",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "StateProvinceID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "PostalCode",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "SpatialLocation",
+          "declaredType": "BLOB",
+          "encoding": "base64"
+        },
+        {
+          "nativeName": "rowguid",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "person_address_f38d975d/records.json",
+        "sha256": "84f7182ee35a09dfba22b6eec13bcc05c371be869d2e8ce0318458b665715a5e"
+      }
+    },
+    {
+      "nativeName": "Person.AddressType",
+      "collection": "person_addresstype_fa587c1e",
+      "rows": 6,
+      "primaryKey": [
+        "AddressTypeID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [],
+      "columns": [
+        {
+          "nativeName": "AddressTypeID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Name",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "rowguid",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "person_addresstype_fa587c1e/records.json",
+        "sha256": "d4dc656e8ab042ce69d4021c4474c6f0176d226ff237ea8ce43fb28becd656d7"
+      }
+    },
+    {
+      "nativeName": "Person.BusinessEntity",
+      "collection": "person_businessentity_2493ea0b",
+      "rows": 20777,
+      "primaryKey": [
+        "BusinessEntityID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [],
+      "columns": [
+        {
+          "nativeName": "BusinessEntityID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "rowguid",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "person_businessentity_2493ea0b/records.json",
+        "sha256": "02e1c0d282790a8ad576c14d6d266a0aceef016fd60d492a01fa3da62a979051"
+      }
+    },
+    {
+      "nativeName": "Person.BusinessEntityAddress",
+      "collection": "person_businessentityaddress_aa5a1c3b",
+      "rows": 19614,
+      "primaryKey": [
+        "BusinessEntityID",
+        "AddressID",
+        "AddressTypeID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Person.BusinessEntity",
+          "from": "BusinessEntityID",
+          "to": "BusinessEntityID"
+        },
+        {
+          "id": 1,
+          "sequence": 0,
+          "table": "Person.AddressType",
+          "from": "AddressTypeID",
+          "to": "AddressTypeID"
+        },
+        {
+          "id": 2,
+          "sequence": 0,
+          "table": "Person.Address",
+          "from": "AddressID",
+          "to": "AddressID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "BusinessEntityID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "AddressID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "AddressTypeID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "rowguid",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "person_businessentityaddress_aa5a1c3b/records.json",
+        "sha256": "1f02de210724f6338629bf67a52ce62f1b854bf1b3c65416a403fb3aaac398b9"
+      }
+    },
+    {
+      "nativeName": "Person.BusinessEntityContact",
+      "collection": "person_businessentitycontact_8f4f4cb9",
+      "rows": 909,
+      "primaryKey": [
+        "BusinessEntityID",
+        "PersonID",
+        "ContactTypeID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Person.BusinessEntity",
+          "from": "BusinessEntityID",
+          "to": "BusinessEntityID"
+        },
+        {
+          "id": 1,
+          "sequence": 0,
+          "table": "Person.ContactType",
+          "from": "ContactTypeID",
+          "to": "ContactTypeID"
+        },
+        {
+          "id": 2,
+          "sequence": 0,
+          "table": "Person.Person",
+          "from": "PersonID",
+          "to": "BusinessEntityID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "BusinessEntityID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "PersonID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ContactTypeID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "rowguid",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "person_businessentitycontact_8f4f4cb9/records.json",
+        "sha256": "0fcf6727055e0b62301266f5fc1f0bff07f9a7a3e53975ac28f97f5a172a79e0"
+      }
+    },
+    {
+      "nativeName": "Person.ContactType",
+      "collection": "person_contacttype_f6c8f657",
+      "rows": 20,
+      "primaryKey": [
+        "ContactTypeID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [],
+      "columns": [
+        {
+          "nativeName": "ContactTypeID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Name",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "person_contacttype_f6c8f657/records.json",
+        "sha256": "7495d980929ae64b81ff81f6f817730bbfde2b823e3ce87156ba41c38750c763"
+      }
+    },
+    {
+      "nativeName": "Person.CountryRegion",
+      "collection": "person_countryregion_b8923af6",
+      "rows": 238,
+      "primaryKey": [
+        "CountryRegionCode"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [],
+      "columns": [
+        {
+          "nativeName": "CountryRegionCode",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Name",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "person_countryregion_b8923af6/records.json",
+        "sha256": "220714387a8d90d5f57c279653cf41fff4bd68ed781d94395b931c6ca656403c"
+      }
+    },
+    {
+      "nativeName": "Person.EmailAddress",
+      "collection": "person_emailaddress_105e506c",
+      "rows": 19972,
+      "primaryKey": [
+        "BusinessEntityID",
+        "EmailAddressID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Person.Person",
+          "from": "BusinessEntityID",
+          "to": "BusinessEntityID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "BusinessEntityID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "EmailAddressID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "EmailAddress",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "rowguid",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "person_emailaddress_105e506c/records.json",
+        "sha256": "2ab425ea9d4e87fa6c9f2f2218409a78b9fd8428d27481e2354bbbf998f1fb28"
+      }
+    },
+    {
+      "nativeName": "Person.Password",
+      "collection": "person_password_c74cbb2f",
+      "rows": 19972,
+      "primaryKey": [
+        "BusinessEntityID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Person.Person",
+          "from": "BusinessEntityID",
+          "to": "BusinessEntityID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "BusinessEntityID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "PasswordHash",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "PasswordSalt",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "rowguid",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "person_password_c74cbb2f/records.json",
+        "sha256": "bcc2d1e01aacb9caf5c88d44f1ab9ed24be68999268bd70927f9d6ff44e4be72"
+      }
+    },
+    {
+      "nativeName": "Person.Person",
+      "collection": "person_person_35047814",
+      "rows": 19972,
+      "primaryKey": [
+        "BusinessEntityID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Person.BusinessEntity",
+          "from": "BusinessEntityID",
+          "to": "BusinessEntityID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "BusinessEntityID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "PersonType",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "NameStyle",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Title",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "FirstName",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "MiddleName",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "LastName",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Suffix",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "EmailPromotion",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "AdditionalContactInfo",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Demographics",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "rowguid",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "person_person_35047814/records.json",
+        "sha256": "c78b503a98d579b7a25198b61f9b658991e5efb394aa5ec7de01c9e544bc88b2"
+      }
+    },
+    {
+      "nativeName": "Person.PersonPhone",
+      "collection": "person_personphone_8147b2ea",
+      "rows": 19972,
+      "primaryKey": [
+        "BusinessEntityID",
+        "PhoneNumber",
+        "PhoneNumberTypeID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Person.PhoneNumberType",
+          "from": "PhoneNumberTypeID",
+          "to": "PhoneNumberTypeID"
+        },
+        {
+          "id": 1,
+          "sequence": 0,
+          "table": "Person.Person",
+          "from": "BusinessEntityID",
+          "to": "BusinessEntityID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "BusinessEntityID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "PhoneNumber",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "PhoneNumberTypeID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "person_personphone_8147b2ea/records.json",
+        "sha256": "1b6b7ce9adec41668fee42f4b5c4fab2d4633e53d5d1508f88e8523ecb3217e0"
+      }
+    },
+    {
+      "nativeName": "Person.PhoneNumberType",
+      "collection": "person_phonenumbertype_31b4fa1e",
+      "rows": 3,
+      "primaryKey": [
+        "PhoneNumberTypeID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [],
+      "columns": [
+        {
+          "nativeName": "PhoneNumberTypeID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Name",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "person_phonenumbertype_31b4fa1e/records.json",
+        "sha256": "568d3a3d05cb415f6f945faa876680798568dbf6ba333adb255b92752b1b90b2"
+      }
+    },
+    {
+      "nativeName": "Person.StateProvince",
+      "collection": "person_stateprovince_255cbbca",
+      "rows": 181,
+      "primaryKey": [
+        "StateProvinceID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Sales.SalesTerritory",
+          "from": "TerritoryID",
+          "to": "TerritoryID"
+        },
+        {
+          "id": 1,
+          "sequence": 0,
+          "table": "Person.CountryRegion",
+          "from": "CountryRegionCode",
+          "to": "CountryRegionCode"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "StateProvinceID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "StateProvinceCode",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "CountryRegionCode",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "IsOnlyStateProvinceFlag",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Name",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "TerritoryID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "rowguid",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "person_stateprovince_255cbbca/records.json",
+        "sha256": "3c6fe8efe715ffd4a473394c916023647f4ec5a1e7411258089634ae2a3b2b0c"
+      }
+    },
+    {
+      "nativeName": "Production.BillOfMaterials",
+      "collection": "production_billofmaterials_a60d1762",
+      "rows": 2679,
+      "primaryKey": [
+        "BillOfMaterialsID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Production.UnitMeasure",
+          "from": "UnitMeasureCode",
+          "to": "UnitMeasureCode"
+        },
+        {
+          "id": 1,
+          "sequence": 0,
+          "table": "Production.Product",
+          "from": "ComponentID",
+          "to": "ProductID"
+        },
+        {
+          "id": 2,
+          "sequence": 0,
+          "table": "Production.Product",
+          "from": "ProductAssemblyID",
+          "to": "ProductID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "BillOfMaterialsID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ProductAssemblyID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ComponentID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "StartDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "EndDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "UnitMeasureCode",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "BOMLevel",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "PerAssemblyQty",
+          "declaredType": "DECIMAL_TEXT(8,2)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "production_billofmaterials_a60d1762/records.json",
+        "sha256": "948ba2f877527abbe5af0d78c38f805fa28c771cb7acce29a5f5e700970f0b98"
+      }
+    },
+    {
+      "nativeName": "Production.Culture",
+      "collection": "production_culture_d6273cdb",
+      "rows": 8,
+      "primaryKey": [
+        "CultureID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [],
+      "columns": [
+        {
+          "nativeName": "CultureID",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Name",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "production_culture_d6273cdb/records.json",
+        "sha256": "7509ae2128e051002b298c0a6171bfe22db28d8ca73aeaf5dc7c272e6a9f3226"
+      }
+    },
+    {
+      "nativeName": "Production.Document",
+      "collection": "production_document_4aff4926",
+      "rows": 12,
+      "primaryKey": [
+        "DocumentNode"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "HumanResources.Employee",
+          "from": "Owner",
+          "to": "BusinessEntityID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "DocumentNode",
+          "declaredType": "BLOB",
+          "encoding": "base64"
+        },
+        {
+          "nativeName": "DocumentLevel",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Title",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Owner",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "FolderFlag",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "FileName",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "FileExtension",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Revision",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ChangeNumber",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Status",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "DocumentSummary",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Document",
+          "declaredType": "BLOB",
+          "encoding": "base64"
+        },
+        {
+          "nativeName": "rowguid",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "production_document_4aff4926/records.json",
+        "sha256": "13a6485c17530e6cd918c0c9d6b53c6216fef0b1280dfdd18739ecdeab9780d9"
+      }
+    },
+    {
+      "nativeName": "Production.Illustration",
+      "collection": "production_illustration_9af88c44",
+      "rows": 5,
+      "primaryKey": [
+        "IllustrationID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [],
+      "columns": [
+        {
+          "nativeName": "IllustrationID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Diagram",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "production_illustration_9af88c44/records.json",
+        "sha256": "e32d24f8829803ddc70ffcc6b7bbdb35a0fd02bc131919bc644f132cf4861ae1"
+      }
+    },
+    {
+      "nativeName": "Production.Location",
+      "collection": "production_location_863531d9",
+      "rows": 14,
+      "primaryKey": [
+        "LocationID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [],
+      "columns": [
+        {
+          "nativeName": "LocationID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Name",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "CostRate",
+          "declaredType": "DECIMAL_TEXT(10,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "Availability",
+          "declaredType": "DECIMAL_TEXT(8,2)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "production_location_863531d9/records.json",
+        "sha256": "c2db023da667d9f0df38359eada5511b1f10f34ca06dcd1add2789c193b62ad3"
+      }
+    },
+    {
+      "nativeName": "Production.Product",
+      "collection": "production_product_dff8e81d",
+      "rows": 504,
+      "primaryKey": [
+        "ProductID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Production.ProductSubcategory",
+          "from": "ProductSubcategoryID",
+          "to": "ProductSubcategoryID"
+        },
+        {
+          "id": 1,
+          "sequence": 0,
+          "table": "Production.ProductModel",
+          "from": "ProductModelID",
+          "to": "ProductModelID"
+        },
+        {
+          "id": 2,
+          "sequence": 0,
+          "table": "Production.UnitMeasure",
+          "from": "WeightUnitMeasureCode",
+          "to": "UnitMeasureCode"
+        },
+        {
+          "id": 3,
+          "sequence": 0,
+          "table": "Production.UnitMeasure",
+          "from": "SizeUnitMeasureCode",
+          "to": "UnitMeasureCode"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "ProductID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Name",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ProductNumber",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "MakeFlag",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "FinishedGoodsFlag",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Color",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "SafetyStockLevel",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ReorderPoint",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "StandardCost",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "ListPrice",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "Size",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "SizeUnitMeasureCode",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "WeightUnitMeasureCode",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Weight",
+          "declaredType": "DECIMAL_TEXT(8,2)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "DaysToManufacture",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ProductLine",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Class",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Style",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ProductSubcategoryID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ProductModelID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "SellStartDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "SellEndDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "DiscontinuedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "rowguid",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "production_product_dff8e81d/records.json",
+        "sha256": "e889e72b336b94ef4fd8ca7590988c99fc9dbff6a89493cb1101eee8b598cae6"
+      }
+    },
+    {
+      "nativeName": "Production.ProductCategory",
+      "collection": "production_productcategory_d3112684",
+      "rows": 4,
+      "primaryKey": [
+        "ProductCategoryID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [],
+      "columns": [
+        {
+          "nativeName": "ProductCategoryID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Name",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "rowguid",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "production_productcategory_d3112684/records.json",
+        "sha256": "3d72eccad84838ef1f27326590d6169566932cfce3f66bc27560ccbd5b783b32"
+      }
+    },
+    {
+      "nativeName": "Production.ProductCostHistory",
+      "collection": "production_productcosthistory_1f0f04b9",
+      "rows": 395,
+      "primaryKey": [
+        "ProductID",
+        "StartDate"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Production.Product",
+          "from": "ProductID",
+          "to": "ProductID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "ProductID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "StartDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "EndDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "StandardCost",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "production_productcosthistory_1f0f04b9/records.json",
+        "sha256": "fe94b6c2396f4f75336ff7d9afc23d8c330b762f3d1cee5a289693c8310f60fc"
+      }
+    },
+    {
+      "nativeName": "Production.ProductDescription",
+      "collection": "production_productdescription_816104dd",
+      "rows": 762,
+      "primaryKey": [
+        "ProductDescriptionID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [],
+      "columns": [
+        {
+          "nativeName": "ProductDescriptionID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Description",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "rowguid",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "production_productdescription_816104dd/records.json",
+        "sha256": "651398533835e4db08d1669d929082ae631ac89a23e9a062d9eaeb28e971970a"
+      }
+    },
+    {
+      "nativeName": "Production.ProductDocument",
+      "collection": "production_productdocument_5637ea1a",
+      "rows": 32,
+      "primaryKey": [
+        "ProductID",
+        "DocumentNode"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Production.Document",
+          "from": "DocumentNode",
+          "to": "DocumentNode"
+        },
+        {
+          "id": 1,
+          "sequence": 0,
+          "table": "Production.Product",
+          "from": "ProductID",
+          "to": "ProductID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "ProductID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "DocumentNode",
+          "declaredType": "BLOB",
+          "encoding": "base64"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "production_productdocument_5637ea1a/records.json",
+        "sha256": "ac0e6306ef7a0ff6891be29df793b8bf52c4940564a22b9c27263a3eba21ee13"
+      }
+    },
+    {
+      "nativeName": "Production.ProductInventory",
+      "collection": "production_productinventory_86858786",
+      "rows": 1069,
+      "primaryKey": [
+        "ProductID",
+        "LocationID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Production.Product",
+          "from": "ProductID",
+          "to": "ProductID"
+        },
+        {
+          "id": 1,
+          "sequence": 0,
+          "table": "Production.Location",
+          "from": "LocationID",
+          "to": "LocationID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "ProductID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "LocationID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Shelf",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Bin",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Quantity",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "rowguid",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "production_productinventory_86858786/records.json",
+        "sha256": "c40cd89eeb18cecc51680a4d568bbca0d78d3f0278603dc82948670cc9f796b7"
+      }
+    },
+    {
+      "nativeName": "Production.ProductListPriceHistory",
+      "collection": "production_productlistpricehistory_f7d67dcd",
+      "rows": 395,
+      "primaryKey": [
+        "ProductID",
+        "StartDate"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Production.Product",
+          "from": "ProductID",
+          "to": "ProductID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "ProductID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "StartDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "EndDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ListPrice",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "production_productlistpricehistory_f7d67dcd/records.json",
+        "sha256": "374cb7eebfefc94613dd6d99af6217c4e90cb97231c5808c8f2d781941744a3c"
+      }
+    },
+    {
+      "nativeName": "Production.ProductModel",
+      "collection": "production_productmodel_4c9505c3",
+      "rows": 128,
+      "primaryKey": [
+        "ProductModelID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [],
+      "columns": [
+        {
+          "nativeName": "ProductModelID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Name",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "CatalogDescription",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Instructions",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "rowguid",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "production_productmodel_4c9505c3/records.json",
+        "sha256": "06c8e75157fe88fc93e5f32368d379feef4a347dd9239853d037ba09bcb59266"
+      }
+    },
+    {
+      "nativeName": "Production.ProductModelIllustration",
+      "collection": "production_productmodelillustration_6fc25fba",
+      "rows": 7,
+      "primaryKey": [
+        "ProductModelID",
+        "IllustrationID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Production.Illustration",
+          "from": "IllustrationID",
+          "to": "IllustrationID"
+        },
+        {
+          "id": 1,
+          "sequence": 0,
+          "table": "Production.ProductModel",
+          "from": "ProductModelID",
+          "to": "ProductModelID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "ProductModelID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "IllustrationID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "production_productmodelillustration_6fc25fba/records.json",
+        "sha256": "7e2137cf9e69189a97ee107c83a6e05fe4b9579439678ee3d0fb2f7ba1625cb7"
+      }
+    },
+    {
+      "nativeName": "Production.ProductModelProductDescriptionCulture",
+      "collection": "production_productmodelproductdescr_93f20502",
+      "rows": 762,
+      "primaryKey": [
+        "ProductModelID",
+        "ProductDescriptionID",
+        "CultureID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Production.ProductModel",
+          "from": "ProductModelID",
+          "to": "ProductModelID"
+        },
+        {
+          "id": 1,
+          "sequence": 0,
+          "table": "Production.Culture",
+          "from": "CultureID",
+          "to": "CultureID"
+        },
+        {
+          "id": 2,
+          "sequence": 0,
+          "table": "Production.ProductDescription",
+          "from": "ProductDescriptionID",
+          "to": "ProductDescriptionID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "ProductModelID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ProductDescriptionID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "CultureID",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "production_productmodelproductdescr_93f20502/records.json",
+        "sha256": "6acbf8dff15b79482b28a42b65e472bd1e52364494fa584bc7b5efea68f7bfd3"
+      }
+    },
+    {
+      "nativeName": "Production.ProductPhoto",
+      "collection": "production_productphoto_ec3fb132",
+      "rows": 101,
+      "primaryKey": [
+        "ProductPhotoID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [],
+      "columns": [
+        {
+          "nativeName": "ProductPhotoID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ThumbNailPhoto",
+          "declaredType": "BLOB",
+          "encoding": "base64"
+        },
+        {
+          "nativeName": "ThumbnailPhotoFileName",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "LargePhoto",
+          "declaredType": "BLOB",
+          "encoding": "base64"
+        },
+        {
+          "nativeName": "LargePhotoFileName",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "production_productphoto_ec3fb132/records.json",
+        "sha256": "240c62b509936c1faaf67f4920b1bf7451f8511e4cce04863a72461338d87897"
+      }
+    },
+    {
+      "nativeName": "Production.ProductProductPhoto",
+      "collection": "production_productproductphoto_3143d723",
+      "rows": 504,
+      "primaryKey": [
+        "ProductID",
+        "ProductPhotoID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Production.ProductPhoto",
+          "from": "ProductPhotoID",
+          "to": "ProductPhotoID"
+        },
+        {
+          "id": 1,
+          "sequence": 0,
+          "table": "Production.Product",
+          "from": "ProductID",
+          "to": "ProductID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "ProductID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ProductPhotoID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Primary",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "production_productproductphoto_3143d723/records.json",
+        "sha256": "54d53e22e641c144f40d05d53c1c1981dd44a3d0d5d34a44b4abd4dca8b3c81a"
+      }
+    },
+    {
+      "nativeName": "Production.ProductReview",
+      "collection": "production_productreview_aeb526d1",
+      "rows": 4,
+      "primaryKey": [
+        "ProductReviewID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Production.Product",
+          "from": "ProductID",
+          "to": "ProductID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "ProductReviewID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ProductID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ReviewerName",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ReviewDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "EmailAddress",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Rating",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Comments",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "production_productreview_aeb526d1/records.json",
+        "sha256": "dc85caa6f8ca0a39f861dde737043c9c70a1d8d538713689ff8de92e3a0818ef"
+      }
+    },
+    {
+      "nativeName": "Production.ProductSubcategory",
+      "collection": "production_productsubcategory_2bec4c53",
+      "rows": 37,
+      "primaryKey": [
+        "ProductSubcategoryID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Production.ProductCategory",
+          "from": "ProductCategoryID",
+          "to": "ProductCategoryID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "ProductSubcategoryID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ProductCategoryID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Name",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "rowguid",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "production_productsubcategory_2bec4c53/records.json",
+        "sha256": "439077e8cf2ec7394fe073f676770649daa85391eb3e32bbf672a798ce69dae2"
+      }
+    },
+    {
+      "nativeName": "Production.ScrapReason",
+      "collection": "production_scrapreason_14418d9a",
+      "rows": 16,
+      "primaryKey": [
+        "ScrapReasonID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [],
+      "columns": [
+        {
+          "nativeName": "ScrapReasonID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Name",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "production_scrapreason_14418d9a/records.json",
+        "sha256": "282a6ee7e572760065275b9d66222688b4170646cf4c58a60ae837fdd42291ef"
+      }
+    },
+    {
+      "nativeName": "Production.TransactionHistory",
+      "collection": "production_transactionhistory_18fc0bc5",
+      "rows": 113443,
+      "primaryKey": [
+        "TransactionID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Production.Product",
+          "from": "ProductID",
+          "to": "ProductID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "TransactionID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ProductID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ReferenceOrderID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ReferenceOrderLineID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "TransactionDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "TransactionType",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Quantity",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ActualCost",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "production_transactionhistory_18fc0bc5/records.json",
+        "sha256": "84c370be6f5ad30f58f04af80a02bf144e7782a5e8ca58a8f45c1fe653f466ab"
+      }
+    },
+    {
+      "nativeName": "Production.TransactionHistoryArchive",
+      "collection": "production_transactionhistoryarchiv_20bb7674",
+      "rows": 89253,
+      "primaryKey": [
+        "TransactionID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [],
+      "columns": [
+        {
+          "nativeName": "TransactionID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ProductID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ReferenceOrderID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ReferenceOrderLineID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "TransactionDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "TransactionType",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Quantity",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ActualCost",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "production_transactionhistoryarchiv_20bb7674/records.json",
+        "sha256": "563a0ea99f0c810e63584ceac1d680558feae7d2c8e56defd5b840823ae8b662"
+      }
+    },
+    {
+      "nativeName": "Production.UnitMeasure",
+      "collection": "production_unitmeasure_ad8b1f1f",
+      "rows": 38,
+      "primaryKey": [
+        "UnitMeasureCode"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [],
+      "columns": [
+        {
+          "nativeName": "UnitMeasureCode",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Name",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "production_unitmeasure_ad8b1f1f/records.json",
+        "sha256": "84b210a88c630cd878e24167e43229c83f8476064c3b10b15e5fe5867b6281f4"
+      }
+    },
+    {
+      "nativeName": "Production.WorkOrder",
+      "collection": "production_workorder_8909be6e",
+      "rows": 72591,
+      "primaryKey": [
+        "WorkOrderID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Production.ScrapReason",
+          "from": "ScrapReasonID",
+          "to": "ScrapReasonID"
+        },
+        {
+          "id": 1,
+          "sequence": 0,
+          "table": "Production.Product",
+          "from": "ProductID",
+          "to": "ProductID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "WorkOrderID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ProductID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "OrderQty",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "StockedQty",
+          "declaredType": "NUMERIC",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ScrappedQty",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "StartDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "EndDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "DueDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ScrapReasonID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "production_workorder_8909be6e/records.json",
+        "sha256": "762ad8afb2a4433fbc4b91fb79484da17cbedfa3e5d74f3b953b540bdb147ebf"
+      }
+    },
+    {
+      "nativeName": "Production.WorkOrderRouting",
+      "collection": "production_workorderrouting_d4d55b81",
+      "rows": 67131,
+      "primaryKey": [
+        "WorkOrderID",
+        "ProductID",
+        "OperationSequence"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Production.WorkOrder",
+          "from": "WorkOrderID",
+          "to": "WorkOrderID"
+        },
+        {
+          "id": 1,
+          "sequence": 0,
+          "table": "Production.Location",
+          "from": "LocationID",
+          "to": "LocationID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "WorkOrderID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ProductID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "OperationSequence",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "LocationID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ScheduledStartDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ScheduledEndDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ActualStartDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ActualEndDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ActualResourceHrs",
+          "declaredType": "DECIMAL_TEXT(9,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "PlannedCost",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "ActualCost",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "production_workorderrouting_d4d55b81/records.json",
+        "sha256": "dc29044f3559dd19396d22bcfdf4a416b9a29901a13d198e0dee5c38fac03a10"
+      }
+    },
+    {
+      "nativeName": "Purchasing.ProductVendor",
+      "collection": "purchasing_productvendor_3209ced0",
+      "rows": 460,
+      "primaryKey": [
+        "ProductID",
+        "BusinessEntityID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Purchasing.Vendor",
+          "from": "BusinessEntityID",
+          "to": "BusinessEntityID"
+        },
+        {
+          "id": 1,
+          "sequence": 0,
+          "table": "Production.UnitMeasure",
+          "from": "UnitMeasureCode",
+          "to": "UnitMeasureCode"
+        },
+        {
+          "id": 2,
+          "sequence": 0,
+          "table": "Production.Product",
+          "from": "ProductID",
+          "to": "ProductID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "ProductID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "BusinessEntityID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "AverageLeadTime",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "StandardPrice",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "LastReceiptCost",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "LastReceiptDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "MinOrderQty",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "MaxOrderQty",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "OnOrderQty",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "UnitMeasureCode",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "purchasing_productvendor_3209ced0/records.json",
+        "sha256": "09dbc6e27b6ff199587474f9c822054bf4a746eac6588aa0889d1236d76edce1"
+      }
+    },
+    {
+      "nativeName": "Purchasing.PurchaseOrderDetail",
+      "collection": "purchasing_purchaseorderdetail_a5febe00",
+      "rows": 8845,
+      "primaryKey": [
+        "PurchaseOrderID",
+        "PurchaseOrderDetailID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Purchasing.PurchaseOrderHeader",
+          "from": "PurchaseOrderID",
+          "to": "PurchaseOrderID"
+        },
+        {
+          "id": 1,
+          "sequence": 0,
+          "table": "Production.Product",
+          "from": "ProductID",
+          "to": "ProductID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "PurchaseOrderID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "PurchaseOrderDetailID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "DueDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "OrderQty",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ProductID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "UnitPrice",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "LineTotal",
+          "declaredType": "DECIMAL_TEXT(38,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "ReceivedQty",
+          "declaredType": "DECIMAL_TEXT(8,2)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "RejectedQty",
+          "declaredType": "DECIMAL_TEXT(8,2)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "StockedQty",
+          "declaredType": "DECIMAL_TEXT(38,2)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "purchasing_purchaseorderdetail_a5febe00/records.json",
+        "sha256": "ff858253e0eda9d05dba9c32b1931fe486d062c93dc8e434221df78bf3cce723"
+      }
+    },
+    {
+      "nativeName": "Purchasing.PurchaseOrderHeader",
+      "collection": "purchasing_purchaseorderheader_2ae703c1",
+      "rows": 4012,
+      "primaryKey": [
+        "PurchaseOrderID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Purchasing.ShipMethod",
+          "from": "ShipMethodID",
+          "to": "ShipMethodID"
+        },
+        {
+          "id": 1,
+          "sequence": 0,
+          "table": "Purchasing.Vendor",
+          "from": "VendorID",
+          "to": "BusinessEntityID"
+        },
+        {
+          "id": 2,
+          "sequence": 0,
+          "table": "HumanResources.Employee",
+          "from": "EmployeeID",
+          "to": "BusinessEntityID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "PurchaseOrderID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "RevisionNumber",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Status",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "EmployeeID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "VendorID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ShipMethodID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "OrderDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ShipDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "SubTotal",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "TaxAmt",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "Freight",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "TotalDue",
+          "declaredType": "DECIMAL_TEXT(38,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "purchasing_purchaseorderheader_2ae703c1/records.json",
+        "sha256": "56b346edf49c0d03cfad7b1603cc3ba2400e7c0fe3d3f30f96327c26bbc4913a"
+      }
+    },
+    {
+      "nativeName": "Purchasing.ShipMethod",
+      "collection": "purchasing_shipmethod_0fd3d33b",
+      "rows": 5,
+      "primaryKey": [
+        "ShipMethodID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [],
+      "columns": [
+        {
+          "nativeName": "ShipMethodID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Name",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ShipBase",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "ShipRate",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "rowguid",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "purchasing_shipmethod_0fd3d33b/records.json",
+        "sha256": "489544058d64959d3fb4e2294b31572a8d085d99fc707bdc4fe7312c82a9d207"
+      }
+    },
+    {
+      "nativeName": "Purchasing.Vendor",
+      "collection": "purchasing_vendor_2c873c0f",
+      "rows": 104,
+      "primaryKey": [
+        "BusinessEntityID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Person.BusinessEntity",
+          "from": "BusinessEntityID",
+          "to": "BusinessEntityID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "BusinessEntityID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "AccountNumber",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Name",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "CreditRating",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "PreferredVendorStatus",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ActiveFlag",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "PurchasingWebServiceURL",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "purchasing_vendor_2c873c0f/records.json",
+        "sha256": "b702b71c306b336874fe5fd5533ec5dfbf4f16773bcd4bad87418a4f9cc7682a"
+      }
+    },
+    {
+      "nativeName": "Sales.CountryRegionCurrency",
+      "collection": "sales_countryregioncurrency_11eea95b",
+      "rows": 109,
+      "primaryKey": [
+        "CountryRegionCode",
+        "CurrencyCode"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Sales.Currency",
+          "from": "CurrencyCode",
+          "to": "CurrencyCode"
+        },
+        {
+          "id": 1,
+          "sequence": 0,
+          "table": "Person.CountryRegion",
+          "from": "CountryRegionCode",
+          "to": "CountryRegionCode"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "CountryRegionCode",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "CurrencyCode",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "sales_countryregioncurrency_11eea95b/records.json",
+        "sha256": "2646ac49112f442440af1dbaa2203066960caabc18f6ffbc65ce755f805f7368"
+      }
+    },
+    {
+      "nativeName": "Sales.CreditCard",
+      "collection": "sales_creditcard_d4f0fe96",
+      "rows": 19118,
+      "primaryKey": [
+        "CreditCardID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [],
+      "columns": [
+        {
+          "nativeName": "CreditCardID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "CardType",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "CardNumber",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ExpMonth",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ExpYear",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "sales_creditcard_d4f0fe96/records.json",
+        "sha256": "ac3b6ce01365a37ded767fd42c0e637fe88a0a045b05f2b7aedcdec1482f71f3"
+      }
+    },
+    {
+      "nativeName": "Sales.Currency",
+      "collection": "sales_currency_7c070cbf",
+      "rows": 105,
+      "primaryKey": [
+        "CurrencyCode"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [],
+      "columns": [
+        {
+          "nativeName": "CurrencyCode",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Name",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "sales_currency_7c070cbf/records.json",
+        "sha256": "a99f3cc1d7ffae4051c8b465fcc5d6d249574bd54e2c76449dd1c86b101cc384"
+      }
+    },
+    {
+      "nativeName": "Sales.CurrencyRate",
+      "collection": "sales_currencyrate_4012cf55",
+      "rows": 13532,
+      "primaryKey": [
+        "CurrencyRateID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Sales.Currency",
+          "from": "ToCurrencyCode",
+          "to": "CurrencyCode"
+        },
+        {
+          "id": 1,
+          "sequence": 0,
+          "table": "Sales.Currency",
+          "from": "FromCurrencyCode",
+          "to": "CurrencyCode"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "CurrencyRateID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "CurrencyRateDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "FromCurrencyCode",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ToCurrencyCode",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "AverageRate",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "EndOfDayRate",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "sales_currencyrate_4012cf55/records.json",
+        "sha256": "52d60ea25ac2985e8d23066b009ff27818a9eb109a4d348ffec09ea917612180"
+      }
+    },
+    {
+      "nativeName": "Sales.Customer",
+      "collection": "sales_customer_de2b646f",
+      "rows": 19820,
+      "primaryKey": [
+        "CustomerID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Sales.SalesTerritory",
+          "from": "TerritoryID",
+          "to": "TerritoryID"
+        },
+        {
+          "id": 1,
+          "sequence": 0,
+          "table": "Sales.Store",
+          "from": "StoreID",
+          "to": "BusinessEntityID"
+        },
+        {
+          "id": 2,
+          "sequence": 0,
+          "table": "Person.Person",
+          "from": "PersonID",
+          "to": "BusinessEntityID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "CustomerID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "PersonID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "StoreID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "TerritoryID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "AccountNumber",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "rowguid",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "sales_customer_de2b646f/records.json",
+        "sha256": "5e59c2104df0169c90a13bbc13365bd396091c2e1d654ecb7036abe17d5e0af2"
+      }
+    },
+    {
+      "nativeName": "Sales.PersonCreditCard",
+      "collection": "sales_personcreditcard_45b97e02",
+      "rows": 19118,
+      "primaryKey": [
+        "BusinessEntityID",
+        "CreditCardID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Sales.CreditCard",
+          "from": "CreditCardID",
+          "to": "CreditCardID"
+        },
+        {
+          "id": 1,
+          "sequence": 0,
+          "table": "Person.Person",
+          "from": "BusinessEntityID",
+          "to": "BusinessEntityID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "BusinessEntityID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "CreditCardID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "sales_personcreditcard_45b97e02/records.json",
+        "sha256": "4983fcc70a078d1a34b1105e2c20fb663080d2d671debd30799018114652a906"
+      }
+    },
+    {
+      "nativeName": "Sales.SalesOrderDetail",
+      "collection": "sales_salesorderdetail_5964ee2b",
+      "rows": 121317,
+      "primaryKey": [
+        "SalesOrderID",
+        "SalesOrderDetailID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Sales.SpecialOfferProduct",
+          "from": "SpecialOfferID",
+          "to": "SpecialOfferID"
+        },
+        {
+          "id": 0,
+          "sequence": 1,
+          "table": "Sales.SpecialOfferProduct",
+          "from": "ProductID",
+          "to": "ProductID"
+        },
+        {
+          "id": 1,
+          "sequence": 0,
+          "table": "Sales.SalesOrderHeader",
+          "from": "SalesOrderID",
+          "to": "SalesOrderID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "SalesOrderID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "SalesOrderDetailID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "CarrierTrackingNumber",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "OrderQty",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ProductID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "SpecialOfferID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "UnitPrice",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "UnitPriceDiscount",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "LineTotal",
+          "declaredType": "DECIMAL_TEXT(38,6)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "rowguid",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "sales_salesorderdetail_5964ee2b/records.json",
+        "sha256": "a3d9d36cc30a6e6f503505f78ccdf9894713b575fcaa2a355802ace8c34c240e"
+      }
+    },
+    {
+      "nativeName": "Sales.SalesOrderHeader",
+      "collection": "sales_salesorderheader_75ca86eb",
+      "rows": 31465,
+      "primaryKey": [
+        "SalesOrderID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Sales.SalesTerritory",
+          "from": "TerritoryID",
+          "to": "TerritoryID"
+        },
+        {
+          "id": 1,
+          "sequence": 0,
+          "table": "Purchasing.ShipMethod",
+          "from": "ShipMethodID",
+          "to": "ShipMethodID"
+        },
+        {
+          "id": 2,
+          "sequence": 0,
+          "table": "Sales.SalesPerson",
+          "from": "SalesPersonID",
+          "to": "BusinessEntityID"
+        },
+        {
+          "id": 3,
+          "sequence": 0,
+          "table": "Sales.Customer",
+          "from": "CustomerID",
+          "to": "CustomerID"
+        },
+        {
+          "id": 4,
+          "sequence": 0,
+          "table": "Sales.CurrencyRate",
+          "from": "CurrencyRateID",
+          "to": "CurrencyRateID"
+        },
+        {
+          "id": 5,
+          "sequence": 0,
+          "table": "Sales.CreditCard",
+          "from": "CreditCardID",
+          "to": "CreditCardID"
+        },
+        {
+          "id": 6,
+          "sequence": 0,
+          "table": "Person.Address",
+          "from": "ShipToAddressID",
+          "to": "AddressID"
+        },
+        {
+          "id": 7,
+          "sequence": 0,
+          "table": "Person.Address",
+          "from": "BillToAddressID",
+          "to": "AddressID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "SalesOrderID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "RevisionNumber",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "OrderDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "DueDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ShipDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Status",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "OnlineOrderFlag",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "SalesOrderNumber",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "PurchaseOrderNumber",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "AccountNumber",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "CustomerID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "SalesPersonID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "TerritoryID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "BillToAddressID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ShipToAddressID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ShipMethodID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "CreditCardID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "CreditCardApprovalCode",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "CurrencyRateID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "SubTotal",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "TaxAmt",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "Freight",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "TotalDue",
+          "declaredType": "DECIMAL_TEXT(38,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "Comment",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "rowguid",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "sales_salesorderheader_75ca86eb/records.json",
+        "sha256": "e4cc90122e434fbabc9127107a7b2c2d8945c32ba4f2dce56307dda0f01b1377"
+      }
+    },
+    {
+      "nativeName": "Sales.SalesOrderHeaderSalesReason",
+      "collection": "sales_salesorderheadersalesreason_2f8baf46",
+      "rows": 27647,
+      "primaryKey": [
+        "SalesOrderID",
+        "SalesReasonID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Sales.SalesOrderHeader",
+          "from": "SalesOrderID",
+          "to": "SalesOrderID"
+        },
+        {
+          "id": 1,
+          "sequence": 0,
+          "table": "Sales.SalesReason",
+          "from": "SalesReasonID",
+          "to": "SalesReasonID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "SalesOrderID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "SalesReasonID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "sales_salesorderheadersalesreason_2f8baf46/records.json",
+        "sha256": "4b842cc987196c1b4cd99e3bdf0b0027b6b6b7bc102f0a5dcdeefa1af070a528"
+      }
+    },
+    {
+      "nativeName": "Sales.SalesPerson",
+      "collection": "sales_salesperson_ac0eed10",
+      "rows": 17,
+      "primaryKey": [
+        "BusinessEntityID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Sales.SalesTerritory",
+          "from": "TerritoryID",
+          "to": "TerritoryID"
+        },
+        {
+          "id": 1,
+          "sequence": 0,
+          "table": "HumanResources.Employee",
+          "from": "BusinessEntityID",
+          "to": "BusinessEntityID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "BusinessEntityID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "TerritoryID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "SalesQuota",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "Bonus",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "CommissionPct",
+          "declaredType": "DECIMAL_TEXT(10,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "SalesYTD",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "SalesLastYear",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "rowguid",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "sales_salesperson_ac0eed10/records.json",
+        "sha256": "f95eeac5b83bc041d029c3e45ed81257dad7524215097255fa8009235806640d"
+      }
+    },
+    {
+      "nativeName": "Sales.SalesPersonQuotaHistory",
+      "collection": "sales_salespersonquotahistory_a140a817",
+      "rows": 163,
+      "primaryKey": [
+        "BusinessEntityID",
+        "QuotaDate"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Sales.SalesPerson",
+          "from": "BusinessEntityID",
+          "to": "BusinessEntityID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "BusinessEntityID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "QuotaDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "SalesQuota",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "rowguid",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "sales_salespersonquotahistory_a140a817/records.json",
+        "sha256": "b51e568bd1708c424ed5f7543bad4b991597e2fd10e5e67d4a89620126a059d4"
+      }
+    },
+    {
+      "nativeName": "Sales.SalesReason",
+      "collection": "sales_salesreason_82c947b1",
+      "rows": 10,
+      "primaryKey": [
+        "SalesReasonID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [],
+      "columns": [
+        {
+          "nativeName": "SalesReasonID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Name",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ReasonType",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "sales_salesreason_82c947b1/records.json",
+        "sha256": "b20b99d3fd97ea303b38fb6155c23643e7ec01b6d4312730faa0b9ded258d9d1"
+      }
+    },
+    {
+      "nativeName": "Sales.SalesTaxRate",
+      "collection": "sales_salestaxrate_cb19d69a",
+      "rows": 29,
+      "primaryKey": [
+        "SalesTaxRateID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Person.StateProvince",
+          "from": "StateProvinceID",
+          "to": "StateProvinceID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "SalesTaxRateID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "StateProvinceID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "TaxType",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "TaxRate",
+          "declaredType": "DECIMAL_TEXT(10,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "Name",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "rowguid",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "sales_salestaxrate_cb19d69a/records.json",
+        "sha256": "f09d25f174026066e0322812d8796de91603c9957a363dc5a39139e8079f6e93"
+      }
+    },
+    {
+      "nativeName": "Sales.SalesTerritory",
+      "collection": "sales_salesterritory_cd9a5375",
+      "rows": 10,
+      "primaryKey": [
+        "TerritoryID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Person.CountryRegion",
+          "from": "CountryRegionCode",
+          "to": "CountryRegionCode"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "TerritoryID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Name",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "CountryRegionCode",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Group",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "SalesYTD",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "SalesLastYear",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "CostYTD",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "CostLastYear",
+          "declaredType": "DECIMAL_TEXT(19,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "rowguid",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "sales_salesterritory_cd9a5375/records.json",
+        "sha256": "258fc6742b21e62866b214766ddeeb6d27ac3576834bdb174a66e708141fcbdb"
+      }
+    },
+    {
+      "nativeName": "Sales.SalesTerritoryHistory",
+      "collection": "sales_salesterritoryhistory_b530c0d8",
+      "rows": 17,
+      "primaryKey": [
+        "BusinessEntityID",
+        "StartDate",
+        "TerritoryID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Sales.SalesTerritory",
+          "from": "TerritoryID",
+          "to": "TerritoryID"
+        },
+        {
+          "id": 1,
+          "sequence": 0,
+          "table": "Sales.SalesPerson",
+          "from": "BusinessEntityID",
+          "to": "BusinessEntityID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "BusinessEntityID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "TerritoryID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "StartDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "EndDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "rowguid",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "sales_salesterritoryhistory_b530c0d8/records.json",
+        "sha256": "e18491e41cf684f849e36ca4a8d398708cbecce280ccbb317cb69d9375d4f3f5"
+      }
+    },
+    {
+      "nativeName": "Sales.ShoppingCartItem",
+      "collection": "sales_shoppingcartitem_393501d5",
+      "rows": 3,
+      "primaryKey": [
+        "ShoppingCartItemID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Production.Product",
+          "from": "ProductID",
+          "to": "ProductID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "ShoppingCartItemID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ShoppingCartID",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Quantity",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ProductID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "DateCreated",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "sales_shoppingcartitem_393501d5/records.json",
+        "sha256": "4696256b8edc3feae7bd55e0c88c50745cd187d818b728df8ed60e516c43df44"
+      }
+    },
+    {
+      "nativeName": "Sales.SpecialOffer",
+      "collection": "sales_specialoffer_535ac226",
+      "rows": 16,
+      "primaryKey": [
+        "SpecialOfferID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [],
+      "columns": [
+        {
+          "nativeName": "SpecialOfferID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Description",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "DiscountPct",
+          "declaredType": "DECIMAL_TEXT(10,4)",
+          "encoding": "decimal-string-from-source"
+        },
+        {
+          "nativeName": "Type",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Category",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "StartDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "EndDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "MinQty",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "MaxQty",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "rowguid",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "sales_specialoffer_535ac226/records.json",
+        "sha256": "7f2357bac488c4930ddc51000ca404f16f15db43ff14e7cbe0bc534dc7455060"
+      }
+    },
+    {
+      "nativeName": "Sales.SpecialOfferProduct",
+      "collection": "sales_specialofferproduct_2d05b139",
+      "rows": 538,
+      "primaryKey": [
+        "SpecialOfferID",
+        "ProductID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Sales.SpecialOffer",
+          "from": "SpecialOfferID",
+          "to": "SpecialOfferID"
+        },
+        {
+          "id": 1,
+          "sequence": 0,
+          "table": "Production.Product",
+          "from": "ProductID",
+          "to": "ProductID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "SpecialOfferID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ProductID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "rowguid",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "sales_specialofferproduct_2d05b139/records.json",
+        "sha256": "c100b5306b965e2707939ef1977eb14ddda21fe4883e97b0540b5cb874005d1b"
+      }
+    },
+    {
+      "nativeName": "Sales.Store",
+      "collection": "sales_store_09ca5e8d",
+      "rows": 701,
+      "primaryKey": [
+        "BusinessEntityID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [
+        {
+          "id": 0,
+          "sequence": 0,
+          "table": "Sales.SalesPerson",
+          "from": "SalesPersonID",
+          "to": "BusinessEntityID"
+        },
+        {
+          "id": 1,
+          "sequence": 0,
+          "table": "Person.BusinessEntity",
+          "from": "BusinessEntityID",
+          "to": "BusinessEntityID"
+        }
+      ],
+      "columns": [
+        {
+          "nativeName": "BusinessEntityID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Name",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "SalesPersonID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Demographics",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "rowguid",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "sales_store_09ca5e8d/records.json",
+        "sha256": "ff232d4701e31ca5a207ac8f841f36cfdf8ed443a248451075fdd011e6888043"
+      }
+    },
+    {
+      "nativeName": "dbo.AWBuildVersion",
+      "collection": "dbo_awbuildversion_759a780c",
+      "rows": 1,
+      "primaryKey": [
+        "SystemInformationID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [],
+      "columns": [
+        {
+          "nativeName": "SystemInformationID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Database Version",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "VersionDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ModifiedDate",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "dbo_awbuildversion_759a780c/records.json",
+        "sha256": "aead985a3e0f639c9226f46e2d2190c7beb513faee7d3a139accab088a3a08f7"
+      }
+    },
+    {
+      "nativeName": "dbo.DatabaseLog",
+      "collection": "dbo_databaselog_6de9f983",
+      "rows": 0,
+      "primaryKey": [
+        "DatabaseLogID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [],
+      "columns": [
+        {
+          "nativeName": "DatabaseLogID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "PostTime",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "DatabaseUser",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Event",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Schema",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "Object",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "TSQL",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "XmlEvent",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "dbo_databaselog_6de9f983/records.json",
+        "sha256": "8e1d794b49e35ea828279c6a8c95282bbb9a0787cf5c9385256c2cc9d17baeb7"
+      }
+    },
+    {
+      "nativeName": "dbo.ErrorLog",
+      "collection": "dbo_errorlog_b61e5334",
+      "rows": 0,
+      "primaryKey": [
+        "ErrorLogID"
+      ],
+      "transportId": "encoded-native-primary-key",
+      "foreignKeys": [],
+      "columns": [
+        {
+          "nativeName": "ErrorLogID",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ErrorTime",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "UserName",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ErrorNumber",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ErrorSeverity",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ErrorState",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ErrorProcedure",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ErrorLine",
+          "declaredType": "INTEGER",
+          "encoding": "native-json"
+        },
+        {
+          "nativeName": "ErrorMessage",
+          "declaredType": "TEXT",
+          "encoding": "native-json"
+        }
+      ],
+      "records": {
+        "path": "dbo_errorlog_b61e5334/records.json",
+        "sha256": "8e1d794b49e35ea828279c6a8c95282bbb9a0787cf5c9385256c2cc9d17baeb7"
+      }
+    }
+  ],
+  "views": [
+    {
+      "name": "HumanResources.vEmployee",
+      "status": "source-definition-only",
+      "columns": [
+        "BusinessEntityID",
+        "Title",
+        "FirstName",
+        "MiddleName",
+        "LastName",
+        "Suffix",
+        "JobTitle",
+        "PhoneNumber",
+        "PhoneNumberType",
+        "EmailAddress",
+        "EmailPromotion",
+        "AddressLine1",
+        "AddressLine2",
+        "City",
+        "StateProvinceName",
+        "PostalCode",
+        "CountryRegionName",
+        "AdditionalContactInfo"
+      ],
+      "sourceSql": "CREATE VIEW \"HumanResources.vEmployee\" AS\r\nSELECT\r\n    e.\"BusinessEntityID\"\r\n    ,p.\"Title\"\r\n    ,p.\"FirstName\"\r\n    ,p.\"MiddleName\"\r\n    ,p.\"LastName\"\r\n    ,p.\"Suffix\"\r\n    ,e.\"JobTitle\" \r\n    ,pp.\"PhoneNumber\"\r\n    ,pnt.\"Name\" AS \"PhoneNumberType\"\r\n    ,ea.\"EmailAddress\"\r\n    ,p.\"EmailPromotion\"\r\n    ,a.\"AddressLine1\"\r\n    ,a.\"AddressLine2\"\r\n    ,a.\"City\"\r\n    ,sp.\"Name\" AS \"StateProvinceName\"\r\n    ,a.\"PostalCode\"\r\n    ,cr.\"Name\" AS \"CountryRegionName\"\r\n    ,p.\"AdditionalContactInfo\"\r\nFROM \"HumanResources.Employee\" e\r\n\tINNER JOIN \"Person.Person\" p\r\n\tON p.\"BusinessEntityID\" = e.\"BusinessEntityID\"\r\n    INNER JOIN \"Person.BusinessEntityAddress\" bea\r\n    ON bea.\"BusinessEntityID\" = e.\"BusinessEntityID\"\r\n    INNER JOIN \"Person.Address\" a\r\n    ON a.\"AddressID\" = bea.\"AddressID\"\r\n    INNER JOIN \"Person.StateProvince\" sp\r\n    ON sp.\"StateProvinceID\" = a.\"StateProvinceID\"\r\n    INNER JOIN \"Person.CountryRegion\" cr\r\n    ON cr.\"CountryRegionCode\" = sp.\"CountryRegionCode\"\r\n    LEFT OUTER JOIN \"Person.PersonPhone\" pp\r\n    ON pp.BusinessEntityID = p.\"BusinessEntityID\"\r\n    LEFT OUTER JOIN \"Person.PhoneNumberType\" pnt\r\n    ON pp.\"PhoneNumberTypeID\" = pnt.\"PhoneNumberTypeID\"\r\n    LEFT OUTER JOIN \"Person.EmailAddress\" ea\r\n    ON p.\"BusinessEntityID\" = ea.\"BusinessEntityID\""
+    },
+    {
+      "name": "HumanResources.vEmployeeDepartment",
+      "status": "source-definition-only",
+      "columns": [
+        "BusinessEntityID",
+        "Title",
+        "FirstName",
+        "MiddleName",
+        "LastName",
+        "Suffix",
+        "JobTitle",
+        "Department",
+        "GroupName",
+        "StartDate"
+      ],
+      "sourceSql": "CREATE VIEW \"HumanResources.vEmployeeDepartment\" AS\r\nSELECT\r\n    e.\"BusinessEntityID\"\r\n    ,p.\"Title\"\r\n    ,p.\"FirstName\"\r\n    ,p.\"MiddleName\"\r\n    ,p.\"LastName\"\r\n    ,p.\"Suffix\"\r\n    ,e.\"JobTitle\"\r\n    ,d.\"Name\" AS \"Department\"\r\n    ,d.\"GroupName\"\r\n    ,edh.\"StartDate\"\r\nFROM \"HumanResources.Employee\" e\r\n\tINNER JOIN \"Person.Person\" p\r\n\tON p.\"BusinessEntityID\" = e.\"BusinessEntityID\"\r\n    INNER JOIN \"HumanResources.EmployeeDepartmentHistory\" edh\r\n    ON e.\"BusinessEntityID\" = edh.\"BusinessEntityID\"\r\n    INNER JOIN \"HumanResources.Department\" d\r\n    ON edh.\"DepartmentID\" = d.\"DepartmentID\"\r\nWHERE edh.EndDate IS NULL"
+    },
+    {
+      "name": "HumanResources.vEmployeeDepartmentHistory",
+      "status": "source-definition-only",
+      "columns": [
+        "BusinessEntityID",
+        "Title",
+        "FirstName",
+        "MiddleName",
+        "LastName",
+        "Suffix",
+        "Shift",
+        "Department",
+        "GroupName",
+        "StartDate",
+        "EndDate"
+      ],
+      "sourceSql": "CREATE VIEW \"HumanResources.vEmployeeDepartmentHistory\" AS\r\nSELECT\r\n    e.\"BusinessEntityID\"\r\n    ,p.\"Title\"\r\n    ,p.\"FirstName\"\r\n    ,p.\"MiddleName\"\r\n    ,p.\"LastName\"\r\n    ,p.\"Suffix\"\r\n    ,s.\"Name\" AS \"Shift\"\r\n    ,d.\"Name\" AS \"Department\"\r\n    ,d.\"GroupName\"\r\n    ,edh.\"StartDate\"\r\n    ,edh.\"EndDate\"\r\nFROM \"HumanResources.Employee\" e\r\n\tINNER JOIN \"Person.Person\" p\r\n\tON p.\"BusinessEntityID\" = e.\"BusinessEntityID\"\r\n    INNER JOIN \"HumanResources.EmployeeDepartmentHistory\" edh\r\n    ON e.\"BusinessEntityID\" = edh.\"BusinessEntityID\"\r\n    INNER JOIN \"HumanResources.Department\" d\r\n    ON edh.\"DepartmentID\" = d.\"DepartmentID\"\r\n    INNER JOIN \"HumanResources.Shift\" s\r\n    ON s.\"ShiftID\" = edh.\"ShiftID\""
+    },
+    {
+      "name": "Person.vStateProvinceCountryRegion",
+      "status": "source-definition-only",
+      "columns": [
+        "StateProvinceID",
+        "StateProvinceCode",
+        "IsOnlyStateProvinceFlag",
+        "StateProvinceName",
+        "TerritoryID",
+        "CountryRegionCode",
+        "CountryRegionName"
+      ],
+      "sourceSql": "CREATE VIEW \"Person.vStateProvinceCountryRegion\" AS\r\nSELECT\r\n    sp.\"StateProvinceID\"\r\n    ,sp.\"StateProvinceCode\"\r\n    ,sp.\"IsOnlyStateProvinceFlag\"\r\n    ,sp.\"Name\" AS \"StateProvinceName\"\r\n    ,sp.\"TerritoryID\"\r\n    ,cr.\"CountryRegionCode\"\r\n    ,cr.\"Name\" AS \"CountryRegionName\"\r\nFROM \"Person.StateProvince\" sp\r\n    INNER JOIN \"Person.CountryRegion\" cr\r\n    ON sp.\"CountryRegionCode\" = cr.\"CountryRegionCode\""
+    },
+    {
+      "name": "Production.vProductAndDescription",
+      "status": "source-definition-only",
+      "columns": [
+        "ProductID",
+        "Name",
+        "ProductModel",
+        "CultureID",
+        "Description"
+      ],
+      "sourceSql": "CREATE VIEW \"Production.vProductAndDescription\" AS\r\n\nSELECT\r\n    p.\"ProductID\"\r\n    ,p.\"Name\"\r\n    ,pm.\"Name\" AS \"ProductModel\"\r\n    ,pmx.\"CultureID\"\r\n    ,pd.\"Description\"\r\nFROM \"Production.Product\" p\r\n    INNER JOIN \"Production.ProductModel\" pm\r\n    ON p.\"ProductModelID\" = pm.\"ProductModelID\"\r\n    INNER JOIN \"Production.ProductModelProductDescriptionCulture\" pmx\r\n    ON pm.\"ProductModelID\" = pmx.\"ProductModelID\"\r\n    INNER JOIN \"Production.ProductDescription\" pd\r\n    ON pmx.\"ProductDescriptionID\" = pd.\"ProductDescriptionID\""
+    },
+    {
+      "name": "Purchasing.vVendorWithAddresses",
+      "status": "source-definition-only",
+      "columns": [
+        "BusinessEntityID",
+        "Name",
+        "AddressType",
+        "AddressLine1",
+        "AddressLine2",
+        "City",
+        "StateProvinceName",
+        "PostalCode",
+        "CountryRegionName"
+      ],
+      "sourceSql": "CREATE VIEW \"Purchasing.vVendorWithAddresses\" AS\r\nSELECT\r\n    v.\"BusinessEntityID\"\r\n    ,v.\"Name\"\r\n    ,at.\"Name\" AS \"AddressType\"\r\n    ,a.\"AddressLine1\"\r\n    ,a.\"AddressLine2\"\r\n    ,a.\"City\"\r\n    ,sp.\"Name\" AS \"StateProvinceName\"\r\n    ,a.\"PostalCode\"\r\n    ,cr.\"Name\" AS \"CountryRegionName\"\r\nFROM \"Purchasing.Vendor\" v\r\n    INNER JOIN \"Person.BusinessEntityAddress\" bea\r\n    ON bea.\"BusinessEntityID\" = v.\"BusinessEntityID\"\r\n    INNER JOIN \"Person.Address\" a\r\n    ON a.\"AddressID\" = bea.\"AddressID\"\r\n    INNER JOIN \"Person.StateProvince\" sp\r\n    ON sp.\"StateProvinceID\" = a.\"StateProvinceID\"\r\n    INNER JOIN \"Person.CountryRegion\" cr\r\n    ON cr.\"CountryRegionCode\" = sp.\"CountryRegionCode\"\r\n    INNER JOIN \"Person.AddressType\" at\r\n    ON at.\"AddressTypeID\" = bea.\"AddressTypeID\""
+    },
+    {
+      "name": "Purchasing.vVendorWithContacts",
+      "status": "source-definition-only",
+      "columns": [
+        "BusinessEntityID",
+        "Name",
+        "ContactType",
+        "Title",
+        "FirstName",
+        "MiddleName",
+        "LastName",
+        "Suffix",
+        "PhoneNumber",
+        "PhoneNumberType",
+        "EmailAddress",
+        "EmailPromotion"
+      ],
+      "sourceSql": "CREATE VIEW \"Purchasing.vVendorWithContacts\" AS\r\nSELECT\r\n    v.\"BusinessEntityID\"\r\n    ,v.\"Name\"\r\n    ,ct.\"Name\" AS \"ContactType\"\r\n    ,p.\"Title\"\r\n    ,p.\"FirstName\"\r\n    ,p.\"MiddleName\"\r\n    ,p.\"LastName\"\r\n    ,p.\"Suffix\"\r\n    ,pp.\"PhoneNumber\"\r\n\t,pnt.\"Name\" AS \"PhoneNumberType\"\r\n    ,ea.\"EmailAddress\"\r\n    ,p.\"EmailPromotion\"\r\nFROM \"Purchasing.Vendor\" v\r\n    INNER JOIN \"Person.BusinessEntityContact\" bec\r\n    ON bec.\"BusinessEntityID\" = v.\"BusinessEntityID\"\r\n\tINNER JOIN \"Person.ContactType\" ct\r\n\tON ct.\"ContactTypeID\" = bec.\"ContactTypeID\"\r\n\tINNER JOIN \"Person.Person\" p\r\n\tON p.\"BusinessEntityID\" = bec.\"PersonID\"\r\n\tLEFT OUTER JOIN \"Person.EmailAddress\" ea\r\n\tON ea.\"BusinessEntityID\" = p.\"BusinessEntityID\"\r\n\tLEFT OUTER JOIN \"Person.PersonPhone\" pp\r\n\tON pp.\"BusinessEntityID\" = p.\"BusinessEntityID\"\r\n\tLEFT OUTER JOIN \"Person.PhoneNumberType\" pnt\r\n\tON pnt.\"PhoneNumberTypeID\" = pp.\"PhoneNumberTypeID\""
+    },
+    {
+      "name": "Sales.vIndividualCustomer",
+      "status": "source-definition-only",
+      "columns": [
+        "BusinessEntityID",
+        "Title",
+        "FirstName",
+        "MiddleName",
+        "LastName",
+        "Suffix",
+        "PhoneNumber",
+        "PhoneNumberType",
+        "EmailAddress",
+        "EmailPromotion",
+        "AddressType",
+        "AddressLine1",
+        "AddressLine2",
+        "City",
+        "StateProvinceName",
+        "PostalCode",
+        "CountryRegionName",
+        "Demographics"
+      ],
+      "sourceSql": "CREATE VIEW \"Sales.vIndividualCustomer\" AS\r\nSELECT\r\n    p.\"BusinessEntityID\"\r\n    ,p.\"Title\"\r\n    ,p.\"FirstName\"\r\n    ,p.\"MiddleName\"\r\n    ,p.\"LastName\"\r\n    ,p.\"Suffix\"\r\n    ,pp.\"PhoneNumber\"\r\n\t,pnt.\"Name\" AS \"PhoneNumberType\"\r\n    ,ea.\"EmailAddress\"\r\n    ,p.\"EmailPromotion\"\r\n    ,at.\"Name\" AS \"AddressType\"\r\n    ,a.\"AddressLine1\"\r\n    ,a.\"AddressLine2\"\r\n    ,a.\"City\"\r\n    , sp.\"Name\" AS \"StateProvinceName\"\r\n    ,a.\"PostalCode\"\r\n    , cr.\"Name\" AS \"CountryRegionName\"\r\n    ,p.\"Demographics\"\r\nFROM \"Person.Person\" p\r\n    INNER JOIN \"Person.BusinessEntityAddress\" bea\r\n    ON bea.\"BusinessEntityID\" = p.\"BusinessEntityID\"\r\n    INNER JOIN \"Person.Address\" a\r\n    ON a.\"AddressID\" = bea.\"AddressID\"\r\n    INNER JOIN \"Person.StateProvince\" sp\r\n    ON sp.\"StateProvinceID\" = a.\"StateProvinceID\"\r\n    INNER JOIN \"Person.CountryRegion\" cr\r\n    ON cr.\"CountryRegionCode\" = sp.\"CountryRegionCode\"\r\n    INNER JOIN \"Person.AddressType\" at\r\n    ON at.\"AddressTypeID\" = bea.\"AddressTypeID\"\r\n\tINNER JOIN \"Sales.Customer\" c\r\n\tON c.\"PersonID\" = p.\"BusinessEntityID\"\r\n\tLEFT OUTER JOIN \"Person.EmailAddress\" ea\r\n\tON ea.\"BusinessEntityID\" = p.\"BusinessEntityID\"\r\n\tLEFT OUTER JOIN \"Person.PersonPhone\" pp\r\n\tON pp.\"BusinessEntityID\" = p.\"BusinessEntityID\"\r\n\tLEFT OUTER JOIN \"Person.PhoneNumberType\" pnt\r\n\tON pnt.\"PhoneNumberTypeID\" = pp.\"PhoneNumberTypeID\"\r\nWHERE c.StoreID IS NULL"
+    },
+    {
+      "name": "Sales.vSalesPerson",
+      "status": "source-definition-only",
+      "columns": [
+        "BusinessEntityID",
+        "Title",
+        "FirstName",
+        "MiddleName",
+        "LastName",
+        "Suffix",
+        "JobTitle",
+        "PhoneNumber",
+        "PhoneNumberType",
+        "EmailAddress",
+        "EmailPromotion",
+        "AddressLine1",
+        "AddressLine2",
+        "City",
+        "StateProvinceName",
+        "PostalCode",
+        "CountryRegionName",
+        "TerritoryName",
+        "TerritoryGroup",
+        "SalesQuota",
+        "SalesYTD",
+        "SalesLastYear"
+      ],
+      "sourceSql": "CREATE VIEW \"Sales.vSalesPerson\" AS\r\nSELECT\r\n    s.\"BusinessEntityID\"\r\n    ,p.\"Title\"\r\n    ,p.\"FirstName\"\r\n    ,p.\"MiddleName\"\r\n    ,p.\"LastName\"\r\n    ,p.\"Suffix\"\r\n    ,e.\"JobTitle\"\r\n    ,pp.\"PhoneNumber\"\r\n\t,pnt.\"Name\" AS \"PhoneNumberType\"\r\n    ,ea.\"EmailAddress\"\r\n    ,p.\"EmailPromotion\"\r\n    ,a.\"AddressLine1\"\r\n    ,a.\"AddressLine2\"\r\n    ,a.\"City\"\r\n    , sp.\"Name\" AS \"StateProvinceName\"\r\n    ,a.\"PostalCode\"\r\n    , cr.\"Name\" AS \"CountryRegionName\"\r\n    , st.\"Name\" AS \"TerritoryName\"\r\n    , st.\"Group\" AS \"TerritoryGroup\"\r\n    ,s.\"SalesQuota\"\r\n    ,s.\"SalesYTD\"\r\n    ,s.\"SalesLastYear\"\r\nFROM \"Sales.SalesPerson\" s\r\n    INNER JOIN \"HumanResources.Employee\" e\r\n    ON e.\"BusinessEntityID\" = s.\"BusinessEntityID\"\r\n\tINNER JOIN \"Person.Person\" p\r\n\tON p.\"BusinessEntityID\" = s.\"BusinessEntityID\"\r\n    INNER JOIN \"Person.BusinessEntityAddress\" bea\r\n    ON bea.\"BusinessEntityID\" = s.\"BusinessEntityID\"\r\n    INNER JOIN \"Person.Address\" a\r\n    ON a.\"AddressID\" = bea.\"AddressID\"\r\n    INNER JOIN \"Person.StateProvince\" sp\r\n    ON sp.\"StateProvinceID\" = a.\"StateProvinceID\"\r\n    INNER JOIN \"Person.CountryRegion\" cr\r\n    ON cr.\"CountryRegionCode\" = sp.\"CountryRegionCode\"\r\n    LEFT OUTER JOIN \"Sales.SalesTerritory\" st\r\n    ON st.\"TerritoryID\" = s.\"TerritoryID\"\r\n\tLEFT OUTER JOIN \"Person.EmailAddress\" ea\r\n\tON ea.\"BusinessEntityID\" = p.\"BusinessEntityID\"\r\n\tLEFT OUTER JOIN \"Person.PersonPhone\" pp\r\n\tON pp.\"BusinessEntityID\" = p.\"BusinessEntityID\"\r\n\tLEFT OUTER JOIN \"Person.PhoneNumberType\" pnt\r\n\tON pnt.\"PhoneNumberTypeID\" = pp.\"PhoneNumberTypeID\""
+    },
+    {
+      "name": "Sales.vStoreWithAddresses",
+      "status": "source-definition-only",
+      "columns": [
+        "BusinessEntityID",
+        "Name",
+        "AddressType",
+        "AddressLine1",
+        "AddressLine2",
+        "City",
+        "StateProvinceName",
+        "PostalCode",
+        "CountryRegionName"
+      ],
+      "sourceSql": "CREATE VIEW \"Sales.vStoreWithAddresses\" AS\r\nSELECT\r\n    s.\"BusinessEntityID\"\r\n    ,s.\"Name\"\r\n    ,at.\"Name\" AS \"AddressType\"\r\n    ,a.\"AddressLine1\"\r\n    ,a.\"AddressLine2\"\r\n    ,a.\"City\"\r\n    ,sp.\"Name\" AS \"StateProvinceName\"\r\n    ,a.\"PostalCode\"\r\n    ,cr.\"Name\" AS \"CountryRegionName\"\r\nFROM \"Sales.Store\" s\r\n    INNER JOIN \"Person.BusinessEntityAddress\" bea\r\n    ON bea.\"BusinessEntityID\" = s.\"BusinessEntityID\"\r\n    INNER JOIN \"Person.Address\" a\r\n    ON a.\"AddressID\" = bea.\"AddressID\"\r\n    INNER JOIN \"Person.StateProvince\" sp\r\n    ON sp.\"StateProvinceID\" = a.\"StateProvinceID\"\r\n    INNER JOIN \"Person.CountryRegion\" cr\r\n    ON cr.\"CountryRegionCode\" = sp.\"CountryRegionCode\"\r\n    INNER JOIN \"Person.AddressType\" at\r\n    ON at.\"AddressTypeID\" = bea.\"AddressTypeID\""
+    },
+    {
+      "name": "Sales.vStoreWithContacts",
+      "status": "source-definition-only",
+      "columns": [
+        "BusinessEntityID",
+        "Name",
+        "ContactType",
+        "Title",
+        "FirstName",
+        "MiddleName",
+        "LastName",
+        "Suffix",
+        "PhoneNumber",
+        "PhoneNumberType",
+        "EmailAddress",
+        "EmailPromotion"
+      ],
+      "sourceSql": "CREATE VIEW \"Sales.vStoreWithContacts\" AS\r\nSELECT\r\n    s.\"BusinessEntityID\"\r\n    ,s.\"Name\"\r\n    ,ct.\"Name\" AS \"ContactType\"\r\n    ,p.\"Title\"\r\n    ,p.\"FirstName\"\r\n    ,p.\"MiddleName\"\r\n    ,p.\"LastName\"\r\n    ,p.\"Suffix\"\r\n    ,pp.\"PhoneNumber\"\r\n\t,pnt.\"Name\" AS \"PhoneNumberType\"\r\n    ,ea.\"EmailAddress\"\r\n    ,p.\"EmailPromotion\"\r\nFROM \"Sales.Store\" s\r\n    INNER JOIN \"Person.BusinessEntityContact\" bec\r\n    ON bec.\"BusinessEntityID\" = s.\"BusinessEntityID\"\r\n\tINNER JOIN \"Person.ContactType\" ct\r\n\tON ct.\"ContactTypeID\" = bec.\"ContactTypeID\"\r\n\tINNER JOIN \"Person.Person\" p\r\n\tON p.\"BusinessEntityID\" = bec.\"PersonID\"\r\n\tLEFT OUTER JOIN \"Person.EmailAddress\" ea\r\n\tON ea.\"BusinessEntityID\" = p.\"BusinessEntityID\"\r\n\tLEFT OUTER JOIN \"Person.PersonPhone\" pp\r\n\tON pp.\"BusinessEntityID\" = p.\"BusinessEntityID\"\r\n\tLEFT OUTER JOIN \"Person.PhoneNumberType\" pnt\r\n\tON pnt.\"PhoneNumberTypeID\" = pp.\"PhoneNumberTypeID\""
+    }
+  ],
+  "status": "prepared-not-hosted"
+}

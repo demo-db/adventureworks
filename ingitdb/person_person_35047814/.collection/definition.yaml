@@ -1,0 +1,31 @@
+record_file:
+  name: records.json
+  format: json
+  type: "map[$record_id]map[$field_name]any"
+columns:
+  "BusinessEntityID":
+    type: any
+  "PersonType":
+    type: any
+  "NameStyle":
+    type: any
+  "Title":
+    type: any
+  "FirstName":
+    type: any
+  "MiddleName":
+    type: any
+  "LastName":
+    type: any
+  "Suffix":
+    type: any
+  "EmailPromotion":
+    type: any
+  "AdditionalContactInfo":
+    type: any
+  "Demographics":
+    type: any
+  "rowguid":
+    type: any
+  "ModifiedDate":
+    type: any

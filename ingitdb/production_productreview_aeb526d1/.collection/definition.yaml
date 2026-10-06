@@ -1,0 +1,21 @@
+record_file:
+  name: records.json
+  format: json
+  type: "map[$record_id]map[$field_name]any"
+columns:
+  "ProductReviewID":
+    type: any
+  "ProductID":
+    type: any
+  "ReviewerName":
+    type: any
+  "ReviewDate":
+    type: any
+  "EmailAddress":
+    type: any
+  "Rating":
+    type: any
+  "Comments":
+    type: any
+  "ModifiedDate":
+    type: any

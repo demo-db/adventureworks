@@ -1,0 +1,23 @@
+record_file:
+  name: records.json
+  format: json
+  type: "map[$record_id]map[$field_name]any"
+columns:
+  "AddressID":
+    type: any
+  "AddressLine1":
+    type: any
+  "AddressLine2":
+    type: any
+  "City":
+    type: any
+  "StateProvinceID":
+    type: any
+  "PostalCode":
+    type: any
+  "SpatialLocation":
+    type: any
+  "rowguid":
+    type: any
+  "ModifiedDate":
+    type: any

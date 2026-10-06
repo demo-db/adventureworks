@@ -1,0 +1,15 @@
+record_file:
+  name: records.json
+  format: json
+  type: "map[$record_id]map[$field_name]any"
+columns:
+  "ShiftID":
+    type: any
+  "Name":
+    type: any
+  "StartTime":
+    type: any
+  "EndTime":
+    type: any
+  "ModifiedDate":
+    type: any
