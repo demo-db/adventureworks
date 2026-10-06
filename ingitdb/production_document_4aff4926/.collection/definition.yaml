@@ -2,32 +2,44 @@ record_file:
   name: records.json
   format: json
   type: "map[$record_id]map[$field_name]any"
+primary_key: ["DocumentNode"]
 columns:
   "DocumentNode":
-    type: any
+    type: string
+    required: true
   "DocumentLevel":
-    type: any
+    type: int
   "Title":
-    type: any
+    type: string
+    required: true
   "Owner":
-    type: any
+    type: int
+    required: true
   "FolderFlag":
-    type: any
+    type: int
+    required: true
   "FileName":
-    type: any
+    type: string
+    required: true
   "FileExtension":
-    type: any
+    type: string
+    required: true
   "Revision":
-    type: any
+    type: string
+    required: true
   "ChangeNumber":
-    type: any
+    type: int
+    required: true
   "Status":
-    type: any
+    type: int
+    required: true
   "DocumentSummary":
-    type: any
+    type: string
   "Document":
-    type: any
+    type: string
   "rowguid":
-    type: any
+    type: string
+    required: true
   "ModifiedDate":
-    type: any
+    type: string
+    required: true

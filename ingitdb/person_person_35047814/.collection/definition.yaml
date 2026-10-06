@@ -2,30 +2,39 @@ record_file:
   name: records.json
   format: json
   type: "map[$record_id]map[$field_name]any"
+primary_key: ["BusinessEntityID"]
 columns:
   "BusinessEntityID":
-    type: any
+    type: int
+    required: true
   "PersonType":
-    type: any
+    type: string
+    required: true
   "NameStyle":
-    type: any
+    type: int
+    required: true
   "Title":
-    type: any
+    type: string
   "FirstName":
-    type: any
+    type: string
+    required: true
   "MiddleName":
-    type: any
+    type: string
   "LastName":
-    type: any
+    type: string
+    required: true
   "Suffix":
-    type: any
+    type: string
   "EmailPromotion":
-    type: any
+    type: int
+    required: true
   "AdditionalContactInfo":
-    type: any
+    type: string
   "Demographics":
-    type: any
+    type: string
   "rowguid":
-    type: any
+    type: string
+    required: true
   "ModifiedDate":
-    type: any
+    type: string
+    required: true

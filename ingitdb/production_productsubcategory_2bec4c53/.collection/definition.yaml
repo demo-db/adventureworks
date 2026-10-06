@@ -2,14 +2,20 @@ record_file:
   name: records.json
   format: json
   type: "map[$record_id]map[$field_name]any"
+primary_key: ["ProductSubcategoryID"]
 columns:
   "ProductSubcategoryID":
-    type: any
+    type: int
+    required: true
   "ProductCategoryID":
-    type: any
+    type: int
+    required: true
   "Name":
-    type: any
+    type: string
+    required: true
   "rowguid":
-    type: any
+    type: string
+    required: true
   "ModifiedDate":
-    type: any
+    type: string
+    required: true

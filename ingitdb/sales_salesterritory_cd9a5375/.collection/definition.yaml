@@ -2,24 +2,35 @@ record_file:
   name: records.json
   format: json
   type: "map[$record_id]map[$field_name]any"
+primary_key: ["TerritoryID"]
 columns:
   "TerritoryID":
-    type: any
+    type: int
+    required: true
   "Name":
-    type: any
+    type: string
+    required: true
   "CountryRegionCode":
-    type: any
+    type: string
+    required: true
   "Group":
-    type: any
+    type: string
+    required: true
   "SalesYTD":
-    type: any
+    type: string
+    required: true
   "SalesLastYear":
-    type: any
+    type: string
+    required: true
   "CostYTD":
-    type: any
+    type: string
+    required: true
   "CostLastYear":
-    type: any
+    type: string
+    required: true
   "rowguid":
-    type: any
+    type: string
+    required: true
   "ModifiedDate":
-    type: any
+    type: string
+    required: true

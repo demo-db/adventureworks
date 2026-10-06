@@ -2,18 +2,26 @@ record_file:
   name: records.json
   format: json
   type: "map[$record_id]map[$field_name]any"
+primary_key: ["CurrencyRateID"]
 columns:
   "CurrencyRateID":
-    type: any
+    type: int
+    required: true
   "CurrencyRateDate":
-    type: any
+    type: string
+    required: true
   "FromCurrencyCode":
-    type: any
+    type: string
+    required: true
   "ToCurrencyCode":
-    type: any
+    type: string
+    required: true
   "AverageRate":
-    type: any
+    type: string
+    required: true
   "EndOfDayRate":
-    type: any
+    type: string
+    required: true
   "ModifiedDate":
-    type: any
+    type: string
+    required: true

@@ -2,26 +2,37 @@ record_file:
   name: records.json
   format: json
   type: "map[$record_id]map[$field_name]any"
+primary_key: ["SpecialOfferID"]
 columns:
   "SpecialOfferID":
-    type: any
+    type: int
+    required: true
   "Description":
-    type: any
+    type: string
+    required: true
   "DiscountPct":
-    type: any
+    type: string
+    required: true
   "Type":
-    type: any
+    type: string
+    required: true
   "Category":
-    type: any
+    type: string
+    required: true
   "StartDate":
-    type: any
+    type: string
+    required: true
   "EndDate":
-    type: any
+    type: string
+    required: true
   "MinQty":
-    type: any
+    type: int
+    required: true
   "MaxQty":
-    type: any
+    type: int
   "rowguid":
-    type: any
+    type: string
+    required: true
   "ModifiedDate":
-    type: any
+    type: string
+    required: true

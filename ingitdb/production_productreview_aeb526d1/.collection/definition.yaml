@@ -2,20 +2,28 @@ record_file:
   name: records.json
   format: json
   type: "map[$record_id]map[$field_name]any"
+primary_key: ["ProductReviewID"]
 columns:
   "ProductReviewID":
-    type: any
+    type: int
+    required: true
   "ProductID":
-    type: any
+    type: int
+    required: true
   "ReviewerName":
-    type: any
+    type: string
+    required: true
   "ReviewDate":
-    type: any
+    type: string
+    required: true
   "EmailAddress":
-    type: any
+    type: string
+    required: true
   "Rating":
-    type: any
+    type: int
+    required: true
   "Comments":
-    type: any
+    type: string
   "ModifiedDate":
-    type: any
+    type: string
+    required: true

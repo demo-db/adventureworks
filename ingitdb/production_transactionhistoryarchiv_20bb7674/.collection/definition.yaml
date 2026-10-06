@@ -2,22 +2,32 @@ record_file:
   name: records.json
   format: json
   type: "map[$record_id]map[$field_name]any"
+primary_key: ["TransactionID"]
 columns:
   "TransactionID":
-    type: any
+    type: int
+    required: true
   "ProductID":
-    type: any
+    type: int
+    required: true
   "ReferenceOrderID":
-    type: any
+    type: int
+    required: true
   "ReferenceOrderLineID":
-    type: any
+    type: int
+    required: true
   "TransactionDate":
-    type: any
+    type: string
+    required: true
   "TransactionType":
-    type: any
+    type: string
+    required: true
   "Quantity":
-    type: any
+    type: int
+    required: true
   "ActualCost":
-    type: any
+    type: string
+    required: true
   "ModifiedDate":
-    type: any
+    type: string
+    required: true

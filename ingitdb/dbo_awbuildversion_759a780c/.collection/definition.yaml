@@ -2,12 +2,17 @@ record_file:
   name: records.json
   format: json
   type: "map[$record_id]map[$field_name]any"
+primary_key: ["SystemInformationID"]
 columns:
   "SystemInformationID":
-    type: any
+    type: int
+    required: true
   "Database Version":
-    type: any
+    type: string
+    required: true
   "VersionDate":
-    type: any
+    type: string
+    required: true
   "ModifiedDate":
-    type: any
+    type: string
+    required: true

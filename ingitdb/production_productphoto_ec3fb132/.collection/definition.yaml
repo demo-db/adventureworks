@@ -2,16 +2,19 @@ record_file:
   name: records.json
   format: json
   type: "map[$record_id]map[$field_name]any"
+primary_key: ["ProductPhotoID"]
 columns:
   "ProductPhotoID":
-    type: any
+    type: int
+    required: true
   "ThumbNailPhoto":
-    type: any
+    type: string
   "ThumbnailPhotoFileName":
-    type: any
+    type: string
   "LargePhoto":
-    type: any
+    type: string
   "LargePhotoFileName":
-    type: any
+    type: string
   "ModifiedDate":
-    type: any
+    type: string
+    required: true

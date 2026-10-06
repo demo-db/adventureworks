@@ -2,56 +2,72 @@ record_file:
   name: records.json
   format: json
   type: "map[$record_id]map[$field_name]any"
+primary_key: ["SalesOrderID"]
 columns:
   "SalesOrderID":
-    type: any
+    type: int
+    required: true
   "RevisionNumber":
-    type: any
+    type: int
+    required: true
   "OrderDate":
-    type: any
+    type: string
+    required: true
   "DueDate":
-    type: any
+    type: string
+    required: true
   "ShipDate":
-    type: any
+    type: string
   "Status":
-    type: any
+    type: int
+    required: true
   "OnlineOrderFlag":
-    type: any
+    type: int
+    required: true
   "SalesOrderNumber":
-    type: any
+    type: string
   "PurchaseOrderNumber":
-    type: any
+    type: string
   "AccountNumber":
-    type: any
+    type: string
   "CustomerID":
-    type: any
+    type: int
+    required: true
   "SalesPersonID":
-    type: any
+    type: int
   "TerritoryID":
-    type: any
+    type: int
   "BillToAddressID":
-    type: any
+    type: int
+    required: true
   "ShipToAddressID":
-    type: any
+    type: int
+    required: true
   "ShipMethodID":
-    type: any
+    type: int
+    required: true
   "CreditCardID":
-    type: any
+    type: int
   "CreditCardApprovalCode":
-    type: any
+    type: string
   "CurrencyRateID":
-    type: any
+    type: int
   "SubTotal":
-    type: any
+    type: string
+    required: true
   "TaxAmt":
-    type: any
+    type: string
+    required: true
   "Freight":
-    type: any
+    type: string
+    required: true
   "TotalDue":
-    type: any
+    type: string
   "Comment":
     type: any
   "rowguid":
-    type: any
+    type: string
+    required: true
   "ModifiedDate":
-    type: any
+    type: string
+    required: true
