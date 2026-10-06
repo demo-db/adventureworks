@@ -2,54 +2,68 @@ record_file:
   name: records.json
   format: json
   type: "map[$record_id]map[$field_name]any"
+primary_key: ["ProductID"]
 columns:
   "ProductID":
-    type: any
+    type: int
+    required: true
   "Name":
-    type: any
+    type: string
+    required: true
   "ProductNumber":
-    type: any
+    type: string
+    required: true
   "MakeFlag":
-    type: any
+    type: int
+    required: true
   "FinishedGoodsFlag":
-    type: any
+    type: int
+    required: true
   "Color":
-    type: any
+    type: string
   "SafetyStockLevel":
-    type: any
+    type: int
+    required: true
   "ReorderPoint":
-    type: any
+    type: int
+    required: true
   "StandardCost":
-    type: any
+    type: string
+    required: true
   "ListPrice":
-    type: any
+    type: string
+    required: true
   "Size":
-    type: any
+    type: string
   "SizeUnitMeasureCode":
-    type: any
+    type: string
   "WeightUnitMeasureCode":
-    type: any
+    type: string
   "Weight":
-    type: any
+    type: string
   "DaysToManufacture":
-    type: any
+    type: int
+    required: true
   "ProductLine":
-    type: any
+    type: string
   "Class":
-    type: any
+    type: string
   "Style":
-    type: any
+    type: string
   "ProductSubcategoryID":
-    type: any
+    type: int
   "ProductModelID":
-    type: any
+    type: int
   "SellStartDate":
-    type: any
+    type: string
+    required: true
   "SellEndDate":
-    type: any
+    type: string
   "DiscontinuedDate":
     type: any
   "rowguid":
-    type: any
+    type: string
+    required: true
   "ModifiedDate":
-    type: any
+    type: string
+    required: true

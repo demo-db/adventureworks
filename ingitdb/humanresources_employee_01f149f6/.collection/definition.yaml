@@ -2,36 +2,51 @@ record_file:
   name: records.json
   format: json
   type: "map[$record_id]map[$field_name]any"
+primary_key: ["BusinessEntityID"]
 columns:
   "BusinessEntityID":
-    type: any
+    type: int
+    required: true
   "NationalIDNumber":
-    type: any
+    type: string
+    required: true
   "LoginID":
-    type: any
+    type: string
+    required: true
   "OrganizationNode":
-    type: any
+    type: string
   "OrganizationLevel":
-    type: any
+    type: int
   "JobTitle":
-    type: any
+    type: string
+    required: true
   "BirthDate":
-    type: any
+    type: string
+    required: true
   "MaritalStatus":
-    type: any
+    type: string
+    required: true
   "Gender":
-    type: any
+    type: string
+    required: true
   "HireDate":
-    type: any
+    type: string
+    required: true
   "SalariedFlag":
-    type: any
+    type: int
+    required: true
   "VacationHours":
-    type: any
+    type: int
+    required: true
   "SickLeaveHours":
-    type: any
+    type: int
+    required: true
   "CurrentFlag":
-    type: any
+    type: int
+    required: true
   "rowguid":
-    type: any
+    type: string
+    required: true
   "ModifiedDate":
-    type: any
+    type: string
+    required: true

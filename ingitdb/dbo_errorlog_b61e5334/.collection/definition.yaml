@@ -2,15 +2,20 @@ record_file:
   name: records.json
   format: json
   type: "map[$record_id]map[$field_name]any"
+primary_key: ["ErrorLogID"]
 columns:
   "ErrorLogID":
     type: any
+    required: true
   "ErrorTime":
     type: any
+    required: true
   "UserName":
     type: any
+    required: true
   "ErrorNumber":
     type: any
+    required: true
   "ErrorSeverity":
     type: any
   "ErrorState":
@@ -21,3 +26,4 @@ columns:
     type: any
   "ErrorMessage":
     type: any
+    required: true

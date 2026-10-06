@@ -2,24 +2,32 @@ record_file:
   name: records.json
   format: json
   type: "map[$record_id]map[$field_name]any"
+primary_key: ["WorkOrderID"]
 columns:
   "WorkOrderID":
-    type: any
+    type: int
+    required: true
   "ProductID":
-    type: any
+    type: int
+    required: true
   "OrderQty":
-    type: any
+    type: int
+    required: true
   "StockedQty":
-    type: any
+    type: int
   "ScrappedQty":
-    type: any
+    type: int
+    required: true
   "StartDate":
-    type: any
+    type: string
+    required: true
   "EndDate":
-    type: any
+    type: string
   "DueDate":
-    type: any
+    type: string
+    required: true
   "ScrapReasonID":
-    type: any
+    type: int
   "ModifiedDate":
-    type: any
+    type: string
+    required: true

@@ -2,22 +2,30 @@ record_file:
   name: records.json
   format: json
   type: "map[$record_id]map[$field_name]any"
+primary_key: ["BillOfMaterialsID"]
 columns:
   "BillOfMaterialsID":
-    type: any
+    type: int
+    required: true
   "ProductAssemblyID":
-    type: any
+    type: int
   "ComponentID":
-    type: any
+    type: int
+    required: true
   "StartDate":
-    type: any
+    type: string
+    required: true
   "EndDate":
-    type: any
+    type: string
   "UnitMeasureCode":
-    type: any
+    type: string
+    required: true
   "BOMLevel":
-    type: any
+    type: int
+    required: true
   "PerAssemblyQty":
-    type: any
+    type: string
+    required: true
   "ModifiedDate":
-    type: any
+    type: string
+    required: true

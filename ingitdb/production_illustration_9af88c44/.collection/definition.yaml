@@ -2,10 +2,13 @@ record_file:
   name: records.json
   format: json
   type: "map[$record_id]map[$field_name]any"
+primary_key: ["IllustrationID"]
 columns:
   "IllustrationID":
-    type: any
+    type: int
+    required: true
   "Diagram":
-    type: any
+    type: string
   "ModifiedDate":
-    type: any
+    type: string
+    required: true

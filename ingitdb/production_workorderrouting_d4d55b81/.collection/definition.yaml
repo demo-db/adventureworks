@@ -2,28 +2,37 @@ record_file:
   name: records.json
   format: json
   type: "map[$record_id]map[$field_name]any"
+primary_key: ["WorkOrderID","ProductID","OperationSequence"]
 columns:
   "WorkOrderID":
-    type: any
+    type: int
+    required: true
   "ProductID":
-    type: any
+    type: int
+    required: true
   "OperationSequence":
-    type: any
+    type: int
+    required: true
   "LocationID":
-    type: any
+    type: int
+    required: true
   "ScheduledStartDate":
-    type: any
+    type: string
+    required: true
   "ScheduledEndDate":
-    type: any
+    type: string
+    required: true
   "ActualStartDate":
-    type: any
+    type: string
   "ActualEndDate":
-    type: any
+    type: string
   "ActualResourceHrs":
-    type: any
+    type: string
   "PlannedCost":
-    type: any
+    type: string
+    required: true
   "ActualCost":
-    type: any
+    type: string
   "ModifiedDate":
-    type: any
+    type: string
+    required: true

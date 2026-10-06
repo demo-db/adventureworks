@@ -2,12 +2,15 @@ record_file:
   name: records.json
   format: json
   type: "map[$record_id]map[$field_name]any"
+primary_key: ["JobCandidateID"]
 columns:
   "JobCandidateID":
-    type: any
+    type: int
+    required: true
   "BusinessEntityID":
-    type: any
+    type: int
   "Resume":
-    type: any
+    type: string
   "ModifiedDate":
-    type: any
+    type: string
+    required: true

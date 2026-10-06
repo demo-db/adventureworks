@@ -2,16 +2,23 @@ record_file:
   name: records.json
   format: json
   type: "map[$record_id]map[$field_name]any"
+primary_key: ["ShoppingCartItemID"]
 columns:
   "ShoppingCartItemID":
-    type: any
+    type: int
+    required: true
   "ShoppingCartID":
-    type: any
+    type: string
+    required: true
   "Quantity":
-    type: any
+    type: int
+    required: true
   "ProductID":
-    type: any
+    type: int
+    required: true
   "DateCreated":
-    type: any
+    type: string
+    required: true
   "ModifiedDate":
-    type: any
+    type: string
+    required: true

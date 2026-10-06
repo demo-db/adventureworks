@@ -2,20 +2,27 @@ record_file:
   name: records.json
   format: json
   type: "map[$record_id]map[$field_name]any"
+primary_key: ["DatabaseLogID"]
 columns:
   "DatabaseLogID":
     type: any
+    required: true
   "PostTime":
     type: any
+    required: true
   "DatabaseUser":
     type: any
+    required: true
   "Event":
     type: any
+    required: true
   "Schema":
     type: any
   "Object":
     type: any
   "TSQL":
     type: any
+    required: true
   "XmlEvent":
     type: any
+    required: true

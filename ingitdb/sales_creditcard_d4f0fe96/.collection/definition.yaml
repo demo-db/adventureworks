@@ -2,16 +2,23 @@ record_file:
   name: records.json
   format: json
   type: "map[$record_id]map[$field_name]any"
+primary_key: ["CreditCardID"]
 columns:
   "CreditCardID":
-    type: any
+    type: int
+    required: true
   "CardType":
-    type: any
+    type: string
+    required: true
   "CardNumber":
-    type: any
+    type: string
+    required: true
   "ExpMonth":
-    type: any
+    type: int
+    required: true
   "ExpYear":
-    type: any
+    type: int
+    required: true
   "ModifiedDate":
-    type: any
+    type: string
+    required: true
