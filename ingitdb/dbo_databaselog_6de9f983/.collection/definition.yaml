@@ -1,0 +1,21 @@
+record_file:
+  name: records.json
+  format: json
+  type: "map[$record_id]map[$field_name]any"
+columns:
+  "DatabaseLogID":
+    type: any
+  "PostTime":
+    type: any
+  "DatabaseUser":
+    type: any
+  "Event":
+    type: any
+  "Schema":
+    type: any
+  "Object":
+    type: any
+  "TSQL":
+    type: any
+  "XmlEvent":
+    type: any

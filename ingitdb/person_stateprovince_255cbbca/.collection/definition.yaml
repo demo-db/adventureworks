@@ -1,0 +1,21 @@
+record_file:
+  name: records.json
+  format: json
+  type: "map[$record_id]map[$field_name]any"
+columns:
+  "StateProvinceID":
+    type: any
+  "StateProvinceCode":
+    type: any
+  "CountryRegionCode":
+    type: any
+  "IsOnlyStateProvinceFlag":
+    type: any
+  "Name":
+    type: any
+  "TerritoryID":
+    type: any
+  "rowguid":
+    type: any
+  "ModifiedDate":
+    type: any

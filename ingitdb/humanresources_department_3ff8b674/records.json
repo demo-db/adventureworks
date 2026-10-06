@@ -1,0 +1,18 @@
+{
+  "pk-W1siaW50IiwxXV0": {"DepartmentID":1,"GroupName":"Research and Development","ModifiedDate":"2008-04-30 00:00:00.000","Name":"Engineering"},
+  "pk-W1siaW50IiwyXV0": {"DepartmentID":2,"GroupName":"Research and Development","ModifiedDate":"2008-04-30 00:00:00.000","Name":"Tool Design"},
+  "pk-W1siaW50IiwzXV0": {"DepartmentID":3,"GroupName":"Sales and Marketing","ModifiedDate":"2008-04-30 00:00:00.000","Name":"Sales"},
+  "pk-W1siaW50Iiw0XV0": {"DepartmentID":4,"GroupName":"Sales and Marketing","ModifiedDate":"2008-04-30 00:00:00.000","Name":"Marketing"},
+  "pk-W1siaW50Iiw1XV0": {"DepartmentID":5,"GroupName":"Inventory Management","ModifiedDate":"2008-04-30 00:00:00.000","Name":"Purchasing"},
+  "pk-W1siaW50Iiw2XV0": {"DepartmentID":6,"GroupName":"Research and Development","ModifiedDate":"2008-04-30 00:00:00.000","Name":"Research and Development"},
+  "pk-W1siaW50Iiw3XV0": {"DepartmentID":7,"GroupName":"Manufacturing","ModifiedDate":"2008-04-30 00:00:00.000","Name":"Production"},
+  "pk-W1siaW50Iiw4XV0": {"DepartmentID":8,"GroupName":"Manufacturing","ModifiedDate":"2008-04-30 00:00:00.000","Name":"Production Control"},
+  "pk-W1siaW50Iiw5XV0": {"DepartmentID":9,"GroupName":"Executive General and Administration","ModifiedDate":"2008-04-30 00:00:00.000","Name":"Human Resources"},
+  "pk-W1siaW50IiwxMF1d": {"DepartmentID":10,"GroupName":"Executive General and Administration","ModifiedDate":"2008-04-30 00:00:00.000","Name":"Finance"},
+  "pk-W1siaW50IiwxMV1d": {"DepartmentID":11,"GroupName":"Executive General and Administration","ModifiedDate":"2008-04-30 00:00:00.000","Name":"Information Services"},
+  "pk-W1siaW50IiwxMl1d": {"DepartmentID":12,"GroupName":"Quality Assurance","ModifiedDate":"2008-04-30 00:00:00.000","Name":"Document Control"},
+  "pk-W1siaW50IiwxM11d": {"DepartmentID":13,"GroupName":"Quality Assurance","ModifiedDate":"2008-04-30 00:00:00.000","Name":"Quality Assurance"},
+  "pk-W1siaW50IiwxNF1d": {"DepartmentID":14,"GroupName":"Executive General and Administration","ModifiedDate":"2008-04-30 00:00:00.000","Name":"Facilities and Maintenance"},
+  "pk-W1siaW50IiwxNV1d": {"DepartmentID":15,"GroupName":"Inventory Management","ModifiedDate":"2008-04-30 00:00:00.000","Name":"Shipping and Receiving"},
+  "pk-W1siaW50IiwxNl1d": {"DepartmentID":16,"GroupName":"Executive General and Administration","ModifiedDate":"2008-04-30 00:00:00.000","Name":"Executive"}
+}

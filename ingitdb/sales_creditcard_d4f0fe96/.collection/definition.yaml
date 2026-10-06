@@ -1,0 +1,17 @@
+record_file:
+  name: records.json
+  format: json
+  type: "map[$record_id]map[$field_name]any"
+columns:
+  "CreditCardID":
+    type: any
+  "CardType":
+    type: any
+  "CardNumber":
+    type: any
+  "ExpMonth":
+    type: any
+  "ExpYear":
+    type: any
+  "ModifiedDate":
+    type: any

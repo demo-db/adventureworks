@@ -1,0 +1,25 @@
+record_file:
+  name: records.json
+  format: json
+  type: "map[$record_id]map[$field_name]any"
+columns:
+  "WorkOrderID":
+    type: any
+  "ProductID":
+    type: any
+  "OrderQty":
+    type: any
+  "StockedQty":
+    type: any
+  "ScrappedQty":
+    type: any
+  "StartDate":
+    type: any
+  "EndDate":
+    type: any
+  "DueDate":
+    type: any
+  "ScrapReasonID":
+    type: any
+  "ModifiedDate":
+    type: any

@@ -1,0 +1,31 @@
+record_file:
+  name: records.json
+  format: json
+  type: "map[$record_id]map[$field_name]any"
+columns:
+  "PurchaseOrderID":
+    type: any
+  "RevisionNumber":
+    type: any
+  "Status":
+    type: any
+  "EmployeeID":
+    type: any
+  "VendorID":
+    type: any
+  "ShipMethodID":
+    type: any
+  "OrderDate":
+    type: any
+  "ShipDate":
+    type: any
+  "SubTotal":
+    type: any
+  "TaxAmt":
+    type: any
+  "Freight":
+    type: any
+  "TotalDue":
+    type: any
+  "ModifiedDate":
+    type: any

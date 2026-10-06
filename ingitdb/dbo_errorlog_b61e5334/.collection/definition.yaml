@@ -1,0 +1,23 @@
+record_file:
+  name: records.json
+  format: json
+  type: "map[$record_id]map[$field_name]any"
+columns:
+  "ErrorLogID":
+    type: any
+  "ErrorTime":
+    type: any
+  "UserName":
+    type: any
+  "ErrorNumber":
+    type: any
+  "ErrorSeverity":
+    type: any
+  "ErrorState":
+    type: any
+  "ErrorProcedure":
+    type: any
+  "ErrorLine":
+    type: any
+  "ErrorMessage":
+    type: any

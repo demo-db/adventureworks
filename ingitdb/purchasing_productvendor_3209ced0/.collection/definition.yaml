@@ -1,0 +1,27 @@
+record_file:
+  name: records.json
+  format: json
+  type: "map[$record_id]map[$field_name]any"
+columns:
+  "ProductID":
+    type: any
+  "BusinessEntityID":
+    type: any
+  "AverageLeadTime":
+    type: any
+  "StandardPrice":
+    type: any
+  "LastReceiptCost":
+    type: any
+  "LastReceiptDate":
+    type: any
+  "MinOrderQty":
+    type: any
+  "MaxOrderQty":
+    type: any
+  "OnOrderQty":
+    type: any
+  "UnitMeasureCode":
+    type: any
+  "ModifiedDate":
+    type: any

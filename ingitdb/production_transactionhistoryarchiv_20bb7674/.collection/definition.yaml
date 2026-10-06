@@ -1,0 +1,23 @@
+record_file:
+  name: records.json
+  format: json
+  type: "map[$record_id]map[$field_name]any"
+columns:
+  "TransactionID":
+    type: any
+  "ProductID":
+    type: any
+  "ReferenceOrderID":
+    type: any
+  "ReferenceOrderLineID":
+    type: any
+  "TransactionDate":
+    type: any
+  "TransactionType":
+    type: any
+  "Quantity":
+    type: any
+  "ActualCost":
+    type: any
+  "ModifiedDate":
+    type: any

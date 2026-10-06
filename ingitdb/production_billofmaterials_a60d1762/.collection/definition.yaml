@@ -1,0 +1,23 @@
+record_file:
+  name: records.json
+  format: json
+  type: "map[$record_id]map[$field_name]any"
+columns:
+  "BillOfMaterialsID":
+    type: any
+  "ProductAssemblyID":
+    type: any
+  "ComponentID":
+    type: any
+  "StartDate":
+    type: any
+  "EndDate":
+    type: any
+  "UnitMeasureCode":
+    type: any
+  "BOMLevel":
+    type: any
+  "PerAssemblyQty":
+    type: any
+  "ModifiedDate":
+    type: any

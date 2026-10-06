@@ -1,0 +1,33 @@
+record_file:
+  name: records.json
+  format: json
+  type: "map[$record_id]map[$field_name]any"
+columns:
+  "DocumentNode":
+    type: any
+  "DocumentLevel":
+    type: any
+  "Title":
+    type: any
+  "Owner":
+    type: any
+  "FolderFlag":
+    type: any
+  "FileName":
+    type: any
+  "FileExtension":
+    type: any
+  "Revision":
+    type: any
+  "ChangeNumber":
+    type: any
+  "Status":
+    type: any
+  "DocumentSummary":
+    type: any
+  "Document":
+    type: any
+  "rowguid":
+    type: any
+  "ModifiedDate":
+    type: any

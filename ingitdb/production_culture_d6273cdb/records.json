@@ -1,0 +1,10 @@
+{
+  "pk-W1sic3RyIiwiICAgICAgIl1d": {"CultureID":"      ","ModifiedDate":"2019-04-30 00:00:00.000","Name":"Invariant Language (Invariant Country)"},
+  "pk-W1sic3RyIiwiYXIgICAgIl1d": {"CultureID":"ar    ","ModifiedDate":"2019-04-30 00:00:00.000","Name":"Arabic"},
+  "pk-W1sic3RyIiwiZW4gICAgIl1d": {"CultureID":"en    ","ModifiedDate":"2019-04-30 00:00:00.000","Name":"English"},
+  "pk-W1sic3RyIiwiZXMgICAgIl1d": {"CultureID":"es    ","ModifiedDate":"2019-04-30 00:00:00.000","Name":"Spanish"},
+  "pk-W1sic3RyIiwiZnIgICAgIl1d": {"CultureID":"fr    ","ModifiedDate":"2019-04-30 00:00:00.000","Name":"French"},
+  "pk-W1sic3RyIiwiaGUgICAgIl1d": {"CultureID":"he    ","ModifiedDate":"2019-04-30 00:00:00.000","Name":"Hebrew"},
+  "pk-W1sic3RyIiwidGggICAgIl1d": {"CultureID":"th    ","ModifiedDate":"2019-04-30 00:00:00.000","Name":"Thai"},
+  "pk-W1sic3RyIiwiemgtY2h0Il1d": {"CultureID":"zh-cht","ModifiedDate":"2019-04-30 00:00:00.000","Name":"Chinese"}
+}

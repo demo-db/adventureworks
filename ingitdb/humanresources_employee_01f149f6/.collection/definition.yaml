@@ -1,0 +1,37 @@
+record_file:
+  name: records.json
+  format: json
+  type: "map[$record_id]map[$field_name]any"
+columns:
+  "BusinessEntityID":
+    type: any
+  "NationalIDNumber":
+    type: any
+  "LoginID":
+    type: any
+  "OrganizationNode":
+    type: any
+  "OrganizationLevel":
+    type: any
+  "JobTitle":
+    type: any
+  "BirthDate":
+    type: any
+  "MaritalStatus":
+    type: any
+  "Gender":
+    type: any
+  "HireDate":
+    type: any
+  "SalariedFlag":
+    type: any
+  "VacationHours":
+    type: any
+  "SickLeaveHours":
+    type: any
+  "CurrentFlag":
+    type: any
+  "rowguid":
+    type: any
+  "ModifiedDate":
+    type: any

@@ -1,0 +1,17 @@
+record_file:
+  name: records.json
+  format: json
+  type: "map[$record_id]map[$field_name]any"
+columns:
+  "BusinessEntityID":
+    type: any
+  "DepartmentID":
+    type: any
+  "ShiftID":
+    type: any
+  "StartDate":
+    type: any
+  "EndDate":
+    type: any
+  "ModifiedDate":
+    type: any

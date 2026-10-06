@@ -7,3 +7,14 @@ Eleven source views have compatible relational definitions that are translated t
 The source and conversion details are documented in [`data-source/README.md`](data-source/README.md). Microsoft's MIT license is included in [`LICENSE`](LICENSE). SQL Server `GETDATE()` defaults are frozen to the pinned build timestamp. Native `NEWID()` defaults remain documented in source metadata but are omitted from static SQLite DDL; source-seeded GUID values are preserved. The verified read-only OVDB mount provides record lookups and query access; writes remain disabled.
 
 The pinned installer and CSV inputs are kept byte-for-byte, and generated CSV exports retain source text values exactly. A few such files contain CRLF or trailing tabs/spaces, so `.gitattributes` scopes Git's diff-whitespace exceptions to only those source and generated data files; code, metadata, and documentation remain covered by the normal whitespace checks. Source hashes and logical rebuild checks protect those preserved bytes and values.
+
+## Native inGitDB snapshot
+
+The `ingitdb/` directory contains 759,240 source table rows across 71 collections. It is a Git-backed, queryable snapshot prepared from the pinned SQLite fixture. Verify and query it with the installed inGitDB CLI:
+
+```sh
+ingitdb validate --path ingitdb
+ingitdb select --path ingitdb --from humanresources_department_3ff8b674 --limit 1 --format json
+```
+
+[`ingitdb/export-manifest.json`](ingitdb/export-manifest.json) maps each native table to its collection, row count, original primary and foreign keys, column types, transport encodings, and SHA-256 of its record file. The source fixture SHA-256 is `6a105e1982becfe003fc7a307d7cad9d738390cedd79d166c2167fd817168109`. These bytes were exported against provider commit `5028a27189b487d6fd8025fafc1307aada707fd2`; the source fixture hash also matches this repository's pinned fixture. Record keys encode native primary keys where present; keyless tables use stable ordinal IDs, which are not native keys. Native key relationships are descriptive metadata, not enforced in this snapshot. Exact decimal values travel as strings and binary values as base64 where marked in column metadata. Source view definitions are retained as metadata only; they are not materialized in inGitDB. Source rights and original notices remain in [`data-source/`](data-source/) and [`LICENSE`](LICENSE).

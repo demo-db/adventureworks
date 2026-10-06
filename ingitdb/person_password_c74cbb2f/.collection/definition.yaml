@@ -1,0 +1,15 @@
+record_file:
+  name: records.json
+  format: json
+  type: "map[$record_id]map[$field_name]any"
+columns:
+  "BusinessEntityID":
+    type: any
+  "PasswordHash":
+    type: any
+  "PasswordSalt":
+    type: any
+  "rowguid":
+    type: any
+  "ModifiedDate":
+    type: any

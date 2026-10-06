@@ -1,0 +1,17 @@
+record_file:
+  name: records.json
+  format: json
+  type: "map[$record_id]map[$field_name]any"
+columns:
+  "ShoppingCartItemID":
+    type: any
+  "ShoppingCartID":
+    type: any
+  "Quantity":
+    type: any
+  "ProductID":
+    type: any
+  "DateCreated":
+    type: any
+  "ModifiedDate":
+    type: any
