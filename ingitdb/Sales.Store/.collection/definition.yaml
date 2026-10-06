@@ -1,0 +1,81 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    BusinessEntityID:
+        type: int
+        required: true
+    Name:
+        type: string
+        required: true
+    SalesPersonID:
+        type: int
+    Demographics:
+        type: string
+    rowguid:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - BusinessEntityID
+    - Name
+    - SalesPersonID
+    - Demographics
+    - rowguid
+    - ModifiedDate
+primary_key:
+    - BusinessEntityID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Sales.Store\" (\"BusinessEntityID\" INTEGER NOT NULL, \"Name\" TEXT NOT NULL, \"SalesPersonID\" INTEGER, \"Demographics\" TEXT, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_Store_BusinessEntityID\" PRIMARY KEY (\"BusinessEntityID\"), CONSTRAINT \"FK_Store_BusinessEntity_BusinessEntityID\" FOREIGN KEY (\"BusinessEntityID\") REFERENCES \"Person.BusinessEntity\" (\"BusinessEntityID\"), CONSTRAINT \"FK_Store_SalesPerson_SalesPersonID\" FOREIGN KEY (\"SalesPersonID\") REFERENCES \"Sales.SalesPerson\" (\"BusinessEntityID\"))","columns":[{"name":"BusinessEntityID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"Name","declaredType":"TEXT","notNull":true},{"name":"SalesPersonID","declaredType":"INTEGER","notNull":false},{"name":"Demographics","declaredType":"TEXT","notNull":false},{"name":"rowguid","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Sales_Store_IX_Store_SalesPersonID","unique":false,"origin":"c","createSql":"CREATE INDEX \"Sales_Store_IX_Store_SalesPersonID\" ON \"Sales.Store\" (\"SalesPersonID\")","columns":[{"position":0,"name":"SalesPersonID","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"Sales_Store_AK_Store_rowguid","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Sales_Store_AK_Store_rowguid\" ON \"Sales.Store\" (\"rowguid\")","columns":[{"position":0,"name":"rowguid","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: BusinessEntityID
+          type: int
+          nullable: false
+        - name: Name
+          type: string
+          nullable: false
+        - name: SalesPersonID
+          type: int
+          nullable: true
+        - name: Demographics
+          type: string
+          nullable: true
+        - name: rowguid
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Sales_Store_IX_Store_SalesPersonID
+          fields:
+            - SalesPersonID
+        - name: Sales_Store_AK_Store_rowguid
+          fields:
+            - rowguid
+          unique: true
+    foreign_keys:
+        - name: Sales.Store_fk_0
+          fields:
+            - SalesPersonID
+          referenced_collection: Sales.SalesPerson
+          referenced_fields:
+            - BusinessEntityID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Sales.Store_fk_1
+          fields:
+            - BusinessEntityID
+          referenced_collection: Person.BusinessEntity
+          referenced_fields:
+            - BusinessEntityID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

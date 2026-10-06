@@ -1,0 +1,59 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    CountryRegionCode:
+        type: string
+        required: true
+    CurrencyCode:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - CountryRegionCode
+    - CurrencyCode
+    - ModifiedDate
+primary_key:
+    - CountryRegionCode
+    - CurrencyCode
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Sales.CountryRegionCurrency\" (\"CountryRegionCode\" TEXT NOT NULL, \"CurrencyCode\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_CountryRegionCurrency_CountryRegionCode_CurrencyCode\" PRIMARY KEY (\"CountryRegionCode\", \"CurrencyCode\"), CONSTRAINT \"FK_CountryRegionCurrency_CountryRegion_CountryRegionCode\" FOREIGN KEY (\"CountryRegionCode\") REFERENCES \"Person.CountryRegion\" (\"CountryRegionCode\"), CONSTRAINT \"FK_CountryRegionCurrency_Currency_CurrencyCode\" FOREIGN KEY (\"CurrencyCode\") REFERENCES \"Sales.Currency\" (\"CurrencyCode\"))","columns":[{"name":"CountryRegionCode","declaredType":"TEXT","notNull":true,"primaryKeyPosition":1},{"name":"CurrencyCode","declaredType":"TEXT","notNull":true,"primaryKeyPosition":2},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Sales_CountryRegionCurrency_IX_CountryRegionCurrency_CurrencyCode","unique":false,"origin":"c","createSql":"CREATE INDEX \"Sales_CountryRegionCurrency_IX_CountryRegionCurrency_CurrencyCode\" ON \"Sales.CountryRegionCurrency\" (\"CurrencyCode\")","columns":[{"position":0,"name":"CurrencyCode","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"sqlite_autoindex_Sales.CountryRegionCurrency_1","unique":true,"origin":"pk","columns":[{"position":0,"name":"CountryRegionCode","key":true,"collation":"BINARY"},{"position":1,"name":"CurrencyCode","key":true,"collation":"BINARY"},{"position":2,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: CountryRegionCode
+          type: string
+          nullable: false
+        - name: CurrencyCode
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Sales_CountryRegionCurrency_IX_CountryRegionCurrency_CurrencyCode
+          fields:
+            - CurrencyCode
+    foreign_keys:
+        - name: Sales.CountryRegionCurrency_fk_0
+          fields:
+            - CurrencyCode
+          referenced_collection: Sales.Currency
+          referenced_fields:
+            - CurrencyCode
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Sales.CountryRegionCurrency_fk_1
+          fields:
+            - CountryRegionCode
+          referenced_collection: Person.CountryRegion
+          referenced_fields:
+            - CountryRegionCode
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

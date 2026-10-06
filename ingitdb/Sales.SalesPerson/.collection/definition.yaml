@@ -1,0 +1,99 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    BusinessEntityID:
+        type: int
+        required: true
+    TerritoryID:
+        type: int
+    SalesQuota:
+        type: string
+    Bonus:
+        type: string
+        required: true
+    CommissionPct:
+        type: string
+        required: true
+    SalesYTD:
+        type: string
+        required: true
+    SalesLastYear:
+        type: string
+        required: true
+    rowguid:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - BusinessEntityID
+    - TerritoryID
+    - SalesQuota
+    - Bonus
+    - CommissionPct
+    - SalesYTD
+    - SalesLastYear
+    - rowguid
+    - ModifiedDate
+primary_key:
+    - BusinessEntityID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Sales.SalesPerson\" (\"BusinessEntityID\" INTEGER NOT NULL, \"TerritoryID\" INTEGER, \"SalesQuota\" DECIMAL_TEXT(19,4), \"Bonus\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT ''0.00'', \"CommissionPct\" DECIMAL_TEXT(10,4) NOT NULL DEFAULT ''0.00'', \"SalesYTD\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT ''0.00'', \"SalesLastYear\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT ''0.00'', \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_SalesPerson_BusinessEntityID\" PRIMARY KEY (\"BusinessEntityID\"), CONSTRAINT \"FK_SalesPerson_Employee_BusinessEntityID\" FOREIGN KEY (\"BusinessEntityID\") REFERENCES \"HumanResources.Employee\" (\"BusinessEntityID\"), CONSTRAINT \"FK_SalesPerson_SalesTerritory_TerritoryID\" FOREIGN KEY (\"TerritoryID\") REFERENCES \"Sales.SalesTerritory\" (\"TerritoryID\"))","columns":[{"name":"BusinessEntityID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"TerritoryID","declaredType":"INTEGER","notNull":false},{"name":"SalesQuota","declaredType":"DECIMAL_TEXT(19,4)","notNull":false},{"name":"Bonus","declaredType":"DECIMAL_TEXT(19,4)","notNull":true,"defaultSql":"''0.00''"},{"name":"CommissionPct","declaredType":"DECIMAL_TEXT(10,4)","notNull":true,"defaultSql":"''0.00''"},{"name":"SalesYTD","declaredType":"DECIMAL_TEXT(19,4)","notNull":true,"defaultSql":"''0.00''"},{"name":"SalesLastYear","declaredType":"DECIMAL_TEXT(19,4)","notNull":true,"defaultSql":"''0.00''"},{"name":"rowguid","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Sales_SalesPerson_AK_SalesPerson_rowguid","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Sales_SalesPerson_AK_SalesPerson_rowguid\" ON \"Sales.SalesPerson\" (\"rowguid\")","columns":[{"position":0,"name":"rowguid","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: BusinessEntityID
+          type: int
+          nullable: false
+        - name: TerritoryID
+          type: int
+          nullable: true
+        - name: SalesQuota
+          type: string
+          nullable: true
+        - name: Bonus
+          type: string
+          nullable: false
+        - name: CommissionPct
+          type: string
+          nullable: false
+        - name: SalesYTD
+          type: string
+          nullable: false
+        - name: SalesLastYear
+          type: string
+          nullable: false
+        - name: rowguid
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Sales_SalesPerson_AK_SalesPerson_rowguid
+          fields:
+            - rowguid
+          unique: true
+    foreign_keys:
+        - name: Sales.SalesPerson_fk_0
+          fields:
+            - TerritoryID
+          referenced_collection: Sales.SalesTerritory
+          referenced_fields:
+            - TerritoryID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Sales.SalesPerson_fk_1
+          fields:
+            - BusinessEntityID
+          referenced_collection: HumanResources.Employee
+          referenced_fields:
+            - BusinessEntityID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

@@ -1,0 +1,51 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    ProductCategoryID:
+        type: int
+        required: true
+    Name:
+        type: string
+        required: true
+    rowguid:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - ProductCategoryID
+    - Name
+    - rowguid
+    - ModifiedDate
+primary_key:
+    - ProductCategoryID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Production.ProductCategory\" (\"ProductCategoryID\" INTEGER NOT NULL, \"Name\" TEXT NOT NULL, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_ProductCategory_ProductCategoryID\" PRIMARY KEY (\"ProductCategoryID\"))","columns":[{"name":"ProductCategoryID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"Name","declaredType":"TEXT","notNull":true},{"name":"rowguid","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Production_ProductCategory_AK_ProductCategory_rowguid","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Production_ProductCategory_AK_ProductCategory_rowguid\" ON \"Production.ProductCategory\" (\"rowguid\")","columns":[{"position":0,"name":"rowguid","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"Production_ProductCategory_AK_ProductCategory_Name","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Production_ProductCategory_AK_ProductCategory_Name\" ON \"Production.ProductCategory\" (\"Name\")","columns":[{"position":0,"name":"Name","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: ProductCategoryID
+          type: int
+          nullable: false
+        - name: Name
+          type: string
+          nullable: false
+        - name: rowguid
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Production_ProductCategory_AK_ProductCategory_rowguid
+          fields:
+            - rowguid
+          unique: true
+        - name: Production_ProductCategory_AK_ProductCategory_Name
+          fields:
+            - Name
+          unique: true

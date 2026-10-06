@@ -1,0 +1,55 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    BusinessEntityID:
+        type: int
+        required: true
+    CreditCardID:
+        type: int
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - BusinessEntityID
+    - CreditCardID
+    - ModifiedDate
+primary_key:
+    - BusinessEntityID
+    - CreditCardID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Sales.PersonCreditCard\" (\"BusinessEntityID\" INTEGER NOT NULL, \"CreditCardID\" INTEGER NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_PersonCreditCard_BusinessEntityID_CreditCardID\" PRIMARY KEY (\"BusinessEntityID\", \"CreditCardID\"), CONSTRAINT \"FK_PersonCreditCard_Person_BusinessEntityID\" FOREIGN KEY (\"BusinessEntityID\") REFERENCES \"Person.Person\" (\"BusinessEntityID\"), CONSTRAINT \"FK_PersonCreditCard_CreditCard_CreditCardID\" FOREIGN KEY (\"CreditCardID\") REFERENCES \"Sales.CreditCard\" (\"CreditCardID\"))","columns":[{"name":"BusinessEntityID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"CreditCardID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":2},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"sqlite_autoindex_Sales.PersonCreditCard_1","unique":true,"origin":"pk","columns":[{"position":0,"name":"BusinessEntityID","key":true,"collation":"BINARY"},{"position":1,"name":"CreditCardID","key":true,"collation":"BINARY"},{"position":2,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: BusinessEntityID
+          type: int
+          nullable: false
+        - name: CreditCardID
+          type: int
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    foreign_keys:
+        - name: Sales.PersonCreditCard_fk_0
+          fields:
+            - CreditCardID
+          referenced_collection: Sales.CreditCard
+          referenced_fields:
+            - CreditCardID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Sales.PersonCreditCard_fk_1
+          fields:
+            - BusinessEntityID
+          referenced_collection: Person.Person
+          referenced_fields:
+            - BusinessEntityID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

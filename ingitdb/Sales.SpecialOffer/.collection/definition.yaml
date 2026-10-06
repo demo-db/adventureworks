@@ -1,0 +1,95 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    SpecialOfferID:
+        type: int
+        required: true
+    Description:
+        type: string
+        required: true
+    DiscountPct:
+        type: string
+        required: true
+    Type:
+        type: string
+        required: true
+    Category:
+        type: string
+        required: true
+    StartDate:
+        type: string
+        required: true
+    EndDate:
+        type: string
+        required: true
+    MinQty:
+        type: int
+        required: true
+    MaxQty:
+        type: int
+    rowguid:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - SpecialOfferID
+    - Description
+    - DiscountPct
+    - Type
+    - Category
+    - StartDate
+    - EndDate
+    - MinQty
+    - MaxQty
+    - rowguid
+    - ModifiedDate
+primary_key:
+    - SpecialOfferID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Sales.SpecialOffer\" (\"SpecialOfferID\" INTEGER NOT NULL, \"Description\" TEXT NOT NULL, \"DiscountPct\" DECIMAL_TEXT(10,4) NOT NULL DEFAULT ''0.00'', \"Type\" TEXT NOT NULL, \"Category\" TEXT NOT NULL, \"StartDate\" TEXT NOT NULL, \"EndDate\" TEXT NOT NULL, \"MinQty\" INTEGER NOT NULL DEFAULT 0, \"MaxQty\" INTEGER, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CHECK (\"EndDate\" \u003e= \"StartDate\"), CHECK (\"MinQty\" \u003e= 0), CHECK (\"MaxQty\" \u003e= 0), CONSTRAINT \"PK_SpecialOffer_SpecialOfferID\" PRIMARY KEY (\"SpecialOfferID\"))","columns":[{"name":"SpecialOfferID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"Description","declaredType":"TEXT","notNull":true},{"name":"DiscountPct","declaredType":"DECIMAL_TEXT(10,4)","notNull":true,"defaultSql":"''0.00''"},{"name":"Type","declaredType":"TEXT","notNull":true},{"name":"Category","declaredType":"TEXT","notNull":true},{"name":"StartDate","declaredType":"TEXT","notNull":true},{"name":"EndDate","declaredType":"TEXT","notNull":true},{"name":"MinQty","declaredType":"INTEGER","notNull":true,"defaultSql":"0"},{"name":"MaxQty","declaredType":"INTEGER","notNull":false},{"name":"rowguid","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Sales_SpecialOffer_AK_SpecialOffer_rowguid","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Sales_SpecialOffer_AK_SpecialOffer_rowguid\" ON \"Sales.SpecialOffer\" (\"rowguid\")","columns":[{"position":0,"name":"rowguid","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: SpecialOfferID
+          type: int
+          nullable: false
+        - name: Description
+          type: string
+          nullable: false
+        - name: DiscountPct
+          type: string
+          nullable: false
+        - name: Type
+          type: string
+          nullable: false
+        - name: Category
+          type: string
+          nullable: false
+        - name: StartDate
+          type: string
+          nullable: false
+        - name: EndDate
+          type: string
+          nullable: false
+        - name: MinQty
+          type: int
+          nullable: false
+        - name: MaxQty
+          type: int
+          nullable: true
+        - name: rowguid
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Sales_SpecialOffer_AK_SpecialOffer_rowguid
+          fields:
+            - rowguid
+          unique: true

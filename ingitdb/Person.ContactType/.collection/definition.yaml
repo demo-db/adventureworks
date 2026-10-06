@@ -1,0 +1,40 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    ContactTypeID:
+        type: int
+        required: true
+    Name:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - ContactTypeID
+    - Name
+    - ModifiedDate
+primary_key:
+    - ContactTypeID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Person.ContactType\" (\"ContactTypeID\" INTEGER NOT NULL, \"Name\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_ContactType_ContactTypeID\" PRIMARY KEY (\"ContactTypeID\"))","columns":[{"name":"ContactTypeID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"Name","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Person_ContactType_AK_ContactType_Name","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Person_ContactType_AK_ContactType_Name\" ON \"Person.ContactType\" (\"Name\")","columns":[{"position":0,"name":"Name","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: ContactTypeID
+          type: int
+          nullable: false
+        - name: Name
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Person_ContactType_AK_ContactType_Name
+          fields:
+            - Name
+          unique: true

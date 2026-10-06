@@ -1,0 +1,68 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    DatabaseLogID:
+        type: int
+        required: true
+    PostTime:
+        type: string
+        required: true
+    DatabaseUser:
+        type: string
+        required: true
+    Event:
+        type: string
+        required: true
+    Schema:
+        type: string
+    Object:
+        type: string
+    TSQL:
+        type: string
+        required: true
+    XmlEvent:
+        type: string
+        required: true
+columns_order:
+    - DatabaseLogID
+    - PostTime
+    - DatabaseUser
+    - Event
+    - Schema
+    - Object
+    - TSQL
+    - XmlEvent
+primary_key:
+    - DatabaseLogID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"dbo.DatabaseLog\" (\"DatabaseLogID\" INTEGER NOT NULL, \"PostTime\" TEXT NOT NULL, \"DatabaseUser\" TEXT NOT NULL, \"Event\" TEXT NOT NULL, \"Schema\" TEXT, \"Object\" TEXT, \"TSQL\" TEXT NOT NULL, \"XmlEvent\" TEXT NOT NULL, CONSTRAINT \"PK_DatabaseLog_DatabaseLogID\" PRIMARY KEY (\"DatabaseLogID\"))","columns":[{"name":"DatabaseLogID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"PostTime","declaredType":"TEXT","notNull":true},{"name":"DatabaseUser","declaredType":"TEXT","notNull":true},{"name":"Event","declaredType":"TEXT","notNull":true},{"name":"Schema","declaredType":"TEXT","notNull":false},{"name":"Object","declaredType":"TEXT","notNull":false},{"name":"TSQL","declaredType":"TEXT","notNull":true},{"name":"XmlEvent","declaredType":"TEXT","notNull":true}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: DatabaseLogID
+          type: int
+          nullable: false
+        - name: PostTime
+          type: string
+          nullable: false
+        - name: DatabaseUser
+          type: string
+          nullable: false
+        - name: Event
+          type: string
+          nullable: false
+        - name: Schema
+          type: string
+          nullable: true
+        - name: Object
+          type: string
+          nullable: true
+        - name: TSQL
+          type: string
+          nullable: false
+        - name: XmlEvent
+          type: string
+          nullable: false

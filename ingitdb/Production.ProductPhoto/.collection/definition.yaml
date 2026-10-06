@@ -1,0 +1,54 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    ProductPhotoID:
+        type: int
+        required: true
+    ThumbNailPhoto:
+        type: string
+    ThumbnailPhotoFileName:
+        type: string
+    LargePhoto:
+        type: string
+    LargePhotoFileName:
+        type: string
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - ProductPhotoID
+    - ThumbNailPhoto
+    - ThumbnailPhotoFileName
+    - LargePhoto
+    - LargePhotoFileName
+    - ModifiedDate
+primary_key:
+    - ProductPhotoID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Production.ProductPhoto\" (\"ProductPhotoID\" INTEGER NOT NULL, \"ThumbNailPhoto\" BLOB, \"ThumbnailPhotoFileName\" TEXT, \"LargePhoto\" BLOB, \"LargePhotoFileName\" TEXT, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_ProductPhoto_ProductPhotoID\" PRIMARY KEY (\"ProductPhotoID\"))","columns":[{"name":"ProductPhotoID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"ThumbNailPhoto","declaredType":"BLOB","notNull":false},{"name":"ThumbnailPhotoFileName","declaredType":"TEXT","notNull":false},{"name":"LargePhoto","declaredType":"BLOB","notNull":false},{"name":"LargePhotoFileName","declaredType":"TEXT","notNull":false},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: ProductPhotoID
+          type: int
+          nullable: false
+        - name: ThumbNailPhoto
+          type: bytes
+          nullable: true
+          encoding: base64
+        - name: ThumbnailPhotoFileName
+          type: string
+          nullable: true
+        - name: LargePhoto
+          type: bytes
+          nullable: true
+          encoding: base64
+        - name: LargePhotoFileName
+          type: string
+          nullable: true
+        - name: ModifiedDate
+          type: string
+          nullable: false

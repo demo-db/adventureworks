@@ -1,0 +1,103 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    TerritoryID:
+        type: int
+        required: true
+    Name:
+        type: string
+        required: true
+    CountryRegionCode:
+        type: string
+        required: true
+    Group:
+        type: string
+        required: true
+    SalesYTD:
+        type: string
+        required: true
+    SalesLastYear:
+        type: string
+        required: true
+    CostYTD:
+        type: string
+        required: true
+    CostLastYear:
+        type: string
+        required: true
+    rowguid:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - TerritoryID
+    - Name
+    - CountryRegionCode
+    - Group
+    - SalesYTD
+    - SalesLastYear
+    - CostYTD
+    - CostLastYear
+    - rowguid
+    - ModifiedDate
+primary_key:
+    - TerritoryID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Sales.SalesTerritory\" (\"TerritoryID\" INTEGER NOT NULL, \"Name\" TEXT NOT NULL, \"CountryRegionCode\" TEXT NOT NULL, \"Group\" TEXT NOT NULL, \"SalesYTD\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT ''0.00'', \"SalesLastYear\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT ''0.00'', \"CostYTD\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT ''0.00'', \"CostLastYear\" DECIMAL_TEXT(19,4) NOT NULL DEFAULT ''0.00'', \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_SalesTerritory_TerritoryID\" PRIMARY KEY (\"TerritoryID\"), CONSTRAINT \"FK_SalesTerritory_CountryRegion_CountryRegionCode\" FOREIGN KEY (\"CountryRegionCode\") REFERENCES \"Person.CountryRegion\" (\"CountryRegionCode\"))","columns":[{"name":"TerritoryID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"Name","declaredType":"TEXT","notNull":true},{"name":"CountryRegionCode","declaredType":"TEXT","notNull":true},{"name":"Group","declaredType":"TEXT","notNull":true},{"name":"SalesYTD","declaredType":"DECIMAL_TEXT(19,4)","notNull":true,"defaultSql":"''0.00''"},{"name":"SalesLastYear","declaredType":"DECIMAL_TEXT(19,4)","notNull":true,"defaultSql":"''0.00''"},{"name":"CostYTD","declaredType":"DECIMAL_TEXT(19,4)","notNull":true,"defaultSql":"''0.00''"},{"name":"CostLastYear","declaredType":"DECIMAL_TEXT(19,4)","notNull":true,"defaultSql":"''0.00''"},{"name":"rowguid","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Sales_SalesTerritory_AK_SalesTerritory_rowguid","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Sales_SalesTerritory_AK_SalesTerritory_rowguid\" ON \"Sales.SalesTerritory\" (\"rowguid\")","columns":[{"position":0,"name":"rowguid","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"Sales_SalesTerritory_AK_SalesTerritory_Name","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Sales_SalesTerritory_AK_SalesTerritory_Name\" ON \"Sales.SalesTerritory\" (\"Name\")","columns":[{"position":0,"name":"Name","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: TerritoryID
+          type: int
+          nullable: false
+        - name: Name
+          type: string
+          nullable: false
+        - name: CountryRegionCode
+          type: string
+          nullable: false
+        - name: Group
+          type: string
+          nullable: false
+        - name: SalesYTD
+          type: string
+          nullable: false
+        - name: SalesLastYear
+          type: string
+          nullable: false
+        - name: CostYTD
+          type: string
+          nullable: false
+        - name: CostLastYear
+          type: string
+          nullable: false
+        - name: rowguid
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Sales_SalesTerritory_AK_SalesTerritory_rowguid
+          fields:
+            - rowguid
+          unique: true
+        - name: Sales_SalesTerritory_AK_SalesTerritory_Name
+          fields:
+            - Name
+          unique: true
+    foreign_keys:
+        - name: Sales.SalesTerritory_fk_0
+          fields:
+            - CountryRegionCode
+          referenced_collection: Person.CountryRegion
+          referenced_fields:
+            - CountryRegionCode
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

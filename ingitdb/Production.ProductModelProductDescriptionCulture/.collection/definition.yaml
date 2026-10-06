@@ -1,0 +1,72 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    ProductModelID:
+        type: int
+        required: true
+    ProductDescriptionID:
+        type: int
+        required: true
+    CultureID:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - ProductModelID
+    - ProductDescriptionID
+    - CultureID
+    - ModifiedDate
+primary_key:
+    - ProductModelID
+    - ProductDescriptionID
+    - CultureID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Production.ProductModelProductDescriptionCulture\" (\"ProductModelID\" INTEGER NOT NULL, \"ProductDescriptionID\" INTEGER NOT NULL, \"CultureID\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_ProductModelProductDescriptionCulture_ProductModelID_ProductDescriptionID_CultureID\" PRIMARY KEY (\"ProductModelID\", \"ProductDescriptionID\", \"CultureID\"), CONSTRAINT \"FK_ProductModelProductDescriptionCulture_ProductDescription_ProductDescriptionID\" FOREIGN KEY (\"ProductDescriptionID\") REFERENCES \"Production.ProductDescription\" (\"ProductDescriptionID\"), CONSTRAINT \"FK_ProductModelProductDescriptionCulture_Culture_CultureID\" FOREIGN KEY (\"CultureID\") REFERENCES \"Production.Culture\" (\"CultureID\"), CONSTRAINT \"FK_ProductModelProductDescriptionCulture_ProductModel_ProductModelID\" FOREIGN KEY (\"ProductModelID\") REFERENCES \"Production.ProductModel\" (\"ProductModelID\"))","columns":[{"name":"ProductModelID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"ProductDescriptionID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":2},{"name":"CultureID","declaredType":"TEXT","notNull":true,"primaryKeyPosition":3},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"sqlite_autoindex_Production.ProductModelProductDescriptionCulture_1","unique":true,"origin":"pk","columns":[{"position":0,"name":"ProductModelID","key":true,"collation":"BINARY"},{"position":1,"name":"ProductDescriptionID","key":true,"collation":"BINARY"},{"position":2,"name":"CultureID","key":true,"collation":"BINARY"},{"position":3,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: ProductModelID
+          type: int
+          nullable: false
+        - name: ProductDescriptionID
+          type: int
+          nullable: false
+        - name: CultureID
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    foreign_keys:
+        - name: Production.ProductModelProductDescriptionCulture_fk_0
+          fields:
+            - ProductModelID
+          referenced_collection: Production.ProductModel
+          referenced_fields:
+            - ProductModelID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Production.ProductModelProductDescriptionCulture_fk_1
+          fields:
+            - CultureID
+          referenced_collection: Production.Culture
+          referenced_fields:
+            - CultureID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Production.ProductModelProductDescriptionCulture_fk_2
+          fields:
+            - ProductDescriptionID
+          referenced_collection: Production.ProductDescription
+          referenced_fields:
+            - ProductDescriptionID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

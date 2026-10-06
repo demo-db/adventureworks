@@ -1,0 +1,18 @@
+{
+  "pk-W1siaW50NjQiLDFdXQ": {"ModifiedDate":"2019-04-30 00:00:00.000","Name":"Brake assembly not as ordered","ScrapReasonID":1},
+  "pk-W1siaW50NjQiLDJdXQ": {"ModifiedDate":"2019-04-30 00:00:00.000","Name":"Color incorrect","ScrapReasonID":2},
+  "pk-W1siaW50NjQiLDNdXQ": {"ModifiedDate":"2019-04-30 00:00:00.000","Name":"Gouge in metal","ScrapReasonID":3},
+  "pk-W1siaW50NjQiLDRdXQ": {"ModifiedDate":"2019-04-30 00:00:00.000","Name":"Drill pattern incorrect","ScrapReasonID":4},
+  "pk-W1siaW50NjQiLDVdXQ": {"ModifiedDate":"2019-04-30 00:00:00.000","Name":"Drill size too large","ScrapReasonID":5},
+  "pk-W1siaW50NjQiLDZdXQ": {"ModifiedDate":"2019-04-30 00:00:00.000","Name":"Drill size too small","ScrapReasonID":6},
+  "pk-W1siaW50NjQiLDddXQ": {"ModifiedDate":"2019-04-30 00:00:00.000","Name":"Handling damage","ScrapReasonID":7},
+  "pk-W1siaW50NjQiLDhdXQ": {"ModifiedDate":"2019-04-30 00:00:00.000","Name":"Paint process failed","ScrapReasonID":8},
+  "pk-W1siaW50NjQiLDldXQ": {"ModifiedDate":"2019-04-30 00:00:00.000","Name":"Primer process failed","ScrapReasonID":9},
+  "pk-W1siaW50NjQiLDEwXV0": {"ModifiedDate":"2019-04-30 00:00:00.000","Name":"Seat assembly not as ordered","ScrapReasonID":10},
+  "pk-W1siaW50NjQiLDExXV0": {"ModifiedDate":"2019-04-30 00:00:00.000","Name":"Stress test failed","ScrapReasonID":11},
+  "pk-W1siaW50NjQiLDEyXV0": {"ModifiedDate":"2019-04-30 00:00:00.000","Name":"Thermoform temperature too high","ScrapReasonID":12},
+  "pk-W1siaW50NjQiLDEzXV0": {"ModifiedDate":"2019-04-30 00:00:00.000","Name":"Thermoform temperature too low","ScrapReasonID":13},
+  "pk-W1siaW50NjQiLDE0XV0": {"ModifiedDate":"2019-04-30 00:00:00.000","Name":"Trim length too long","ScrapReasonID":14},
+  "pk-W1siaW50NjQiLDE1XV0": {"ModifiedDate":"2019-04-30 00:00:00.000","Name":"Trim length too short","ScrapReasonID":15},
+  "pk-W1siaW50NjQiLDE2XV0": {"ModifiedDate":"2019-04-30 00:00:00.000","Name":"Wheel misaligned","ScrapReasonID":16}
+}

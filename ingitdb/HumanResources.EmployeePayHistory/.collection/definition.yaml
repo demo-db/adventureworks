@@ -1,0 +1,60 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    BusinessEntityID:
+        type: int
+        required: true
+    RateChangeDate:
+        type: string
+        required: true
+    Rate:
+        type: string
+        required: true
+    PayFrequency:
+        type: int
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - BusinessEntityID
+    - RateChangeDate
+    - Rate
+    - PayFrequency
+    - ModifiedDate
+primary_key:
+    - BusinessEntityID
+    - RateChangeDate
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"HumanResources.EmployeePayHistory\" (\"BusinessEntityID\" INTEGER NOT NULL, \"RateChangeDate\" TEXT NOT NULL, \"Rate\" DECIMAL_TEXT(19,4) NOT NULL, \"PayFrequency\" INTEGER NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CHECK (\"PayFrequency\" IN (1, 2)), CONSTRAINT \"PK_EmployeePayHistory_BusinessEntityID_RateChangeDate\" PRIMARY KEY (\"BusinessEntityID\", \"RateChangeDate\"), CONSTRAINT \"FK_EmployeePayHistory_Employee_BusinessEntityID\" FOREIGN KEY (\"BusinessEntityID\") REFERENCES \"HumanResources.Employee\" (\"BusinessEntityID\"))","columns":[{"name":"BusinessEntityID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"RateChangeDate","declaredType":"TEXT","notNull":true,"primaryKeyPosition":2},{"name":"Rate","declaredType":"DECIMAL_TEXT(19,4)","notNull":true},{"name":"PayFrequency","declaredType":"INTEGER","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"sqlite_autoindex_HumanResources.EmployeePayHistory_1","unique":true,"origin":"pk","columns":[{"position":0,"name":"BusinessEntityID","key":true,"collation":"BINARY"},{"position":1,"name":"RateChangeDate","key":true,"collation":"BINARY"},{"position":2,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: BusinessEntityID
+          type: int
+          nullable: false
+        - name: RateChangeDate
+          type: string
+          nullable: false
+        - name: Rate
+          type: string
+          nullable: false
+        - name: PayFrequency
+          type: int
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    foreign_keys:
+        - name: HumanResources.EmployeePayHistory_fk_0
+          fields:
+            - BusinessEntityID
+          referenced_collection: HumanResources.Employee
+          referenced_fields:
+            - BusinessEntityID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

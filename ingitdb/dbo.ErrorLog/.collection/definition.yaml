@@ -1,0 +1,73 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    ErrorLogID:
+        type: int
+        required: true
+    ErrorTime:
+        type: string
+        required: true
+    UserName:
+        type: string
+        required: true
+    ErrorNumber:
+        type: int
+        required: true
+    ErrorSeverity:
+        type: int
+    ErrorState:
+        type: int
+    ErrorProcedure:
+        type: string
+    ErrorLine:
+        type: int
+    ErrorMessage:
+        type: string
+        required: true
+columns_order:
+    - ErrorLogID
+    - ErrorTime
+    - UserName
+    - ErrorNumber
+    - ErrorSeverity
+    - ErrorState
+    - ErrorProcedure
+    - ErrorLine
+    - ErrorMessage
+primary_key:
+    - ErrorLogID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"dbo.ErrorLog\" (\"ErrorLogID\" INTEGER NOT NULL, \"ErrorTime\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', \"UserName\" TEXT NOT NULL, \"ErrorNumber\" INTEGER NOT NULL, \"ErrorSeverity\" INTEGER, \"ErrorState\" INTEGER, \"ErrorProcedure\" TEXT, \"ErrorLine\" INTEGER, \"ErrorMessage\" TEXT NOT NULL, CONSTRAINT \"PK_ErrorLog_ErrorLogID\" PRIMARY KEY (\"ErrorLogID\"))","columns":[{"name":"ErrorLogID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"ErrorTime","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"},{"name":"UserName","declaredType":"TEXT","notNull":true},{"name":"ErrorNumber","declaredType":"INTEGER","notNull":true},{"name":"ErrorSeverity","declaredType":"INTEGER","notNull":false},{"name":"ErrorState","declaredType":"INTEGER","notNull":false},{"name":"ErrorProcedure","declaredType":"TEXT","notNull":false},{"name":"ErrorLine","declaredType":"INTEGER","notNull":false},{"name":"ErrorMessage","declaredType":"TEXT","notNull":true}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: ErrorLogID
+          type: int
+          nullable: false
+        - name: ErrorTime
+          type: string
+          nullable: false
+        - name: UserName
+          type: string
+          nullable: false
+        - name: ErrorNumber
+          type: int
+          nullable: false
+        - name: ErrorSeverity
+          type: int
+          nullable: true
+        - name: ErrorState
+          type: int
+          nullable: true
+        - name: ErrorProcedure
+          type: string
+          nullable: true
+        - name: ErrorLine
+          type: int
+          nullable: true
+        - name: ErrorMessage
+          type: string
+          nullable: false

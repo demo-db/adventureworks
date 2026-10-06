@@ -1,0 +1,81 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    BusinessEntityID:
+        type: int
+        required: true
+    TerritoryID:
+        type: int
+        required: true
+    StartDate:
+        type: string
+        required: true
+    EndDate:
+        type: string
+    rowguid:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - BusinessEntityID
+    - TerritoryID
+    - StartDate
+    - EndDate
+    - rowguid
+    - ModifiedDate
+primary_key:
+    - BusinessEntityID
+    - StartDate
+    - TerritoryID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Sales.SalesTerritoryHistory\" (\"BusinessEntityID\" INTEGER NOT NULL, \"TerritoryID\" INTEGER NOT NULL, \"StartDate\" TEXT NOT NULL, \"EndDate\" TEXT, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CHECK ((\"EndDate\" \u003e= \"StartDate\") OR (\"EndDate\" IS NULL)), CONSTRAINT \"PK_SalesTerritoryHistory_BusinessEntityID_StartDate_TerritoryID\" PRIMARY KEY (\"BusinessEntityID\", \"StartDate\", \"TerritoryID\"), CONSTRAINT \"FK_SalesTerritoryHistory_SalesPerson_BusinessEntityID\" FOREIGN KEY (\"BusinessEntityID\") REFERENCES \"Sales.SalesPerson\" (\"BusinessEntityID\"), CONSTRAINT \"FK_SalesTerritoryHistory_SalesTerritory_TerritoryID\" FOREIGN KEY (\"TerritoryID\") REFERENCES \"Sales.SalesTerritory\" (\"TerritoryID\"))","columns":[{"name":"BusinessEntityID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"TerritoryID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":3},{"name":"StartDate","declaredType":"TEXT","notNull":true,"primaryKeyPosition":2},{"name":"EndDate","declaredType":"TEXT","notNull":false},{"name":"rowguid","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Sales_SalesTerritoryHistory_AK_SalesTerritoryHistory_rowguid","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Sales_SalesTerritoryHistory_AK_SalesTerritoryHistory_rowguid\" ON \"Sales.SalesTerritoryHistory\" (\"rowguid\")","columns":[{"position":0,"name":"rowguid","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"sqlite_autoindex_Sales.SalesTerritoryHistory_1","unique":true,"origin":"pk","columns":[{"position":0,"name":"BusinessEntityID","key":true,"collation":"BINARY"},{"position":1,"name":"StartDate","key":true,"collation":"BINARY"},{"position":2,"name":"TerritoryID","key":true,"collation":"BINARY"},{"position":3,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: BusinessEntityID
+          type: int
+          nullable: false
+        - name: TerritoryID
+          type: int
+          nullable: false
+        - name: StartDate
+          type: string
+          nullable: false
+        - name: EndDate
+          type: string
+          nullable: true
+        - name: rowguid
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Sales_SalesTerritoryHistory_AK_SalesTerritoryHistory_rowguid
+          fields:
+            - rowguid
+          unique: true
+    foreign_keys:
+        - name: Sales.SalesTerritoryHistory_fk_0
+          fields:
+            - TerritoryID
+          referenced_collection: Sales.SalesTerritory
+          referenced_fields:
+            - TerritoryID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Sales.SalesTerritoryHistory_fk_1
+          fields:
+            - BusinessEntityID
+          referenced_collection: Sales.SalesPerson
+          referenced_fields:
+            - BusinessEntityID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

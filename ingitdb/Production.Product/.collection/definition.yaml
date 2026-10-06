@@ -1,0 +1,227 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    ProductID:
+        type: int
+        required: true
+    Name:
+        type: string
+        required: true
+    ProductNumber:
+        type: string
+        required: true
+    MakeFlag:
+        type: int
+        required: true
+    FinishedGoodsFlag:
+        type: int
+        required: true
+    Color:
+        type: string
+    SafetyStockLevel:
+        type: int
+        required: true
+    ReorderPoint:
+        type: int
+        required: true
+    StandardCost:
+        type: string
+        required: true
+    ListPrice:
+        type: string
+        required: true
+    Size:
+        type: string
+    SizeUnitMeasureCode:
+        type: string
+    WeightUnitMeasureCode:
+        type: string
+    Weight:
+        type: string
+    DaysToManufacture:
+        type: int
+        required: true
+    ProductLine:
+        type: string
+    Class:
+        type: string
+    Style:
+        type: string
+    ProductSubcategoryID:
+        type: int
+    ProductModelID:
+        type: int
+    SellStartDate:
+        type: string
+        required: true
+    SellEndDate:
+        type: string
+    DiscontinuedDate:
+        type: string
+    rowguid:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - ProductID
+    - Name
+    - ProductNumber
+    - MakeFlag
+    - FinishedGoodsFlag
+    - Color
+    - SafetyStockLevel
+    - ReorderPoint
+    - StandardCost
+    - ListPrice
+    - Size
+    - SizeUnitMeasureCode
+    - WeightUnitMeasureCode
+    - Weight
+    - DaysToManufacture
+    - ProductLine
+    - Class
+    - Style
+    - ProductSubcategoryID
+    - ProductModelID
+    - SellStartDate
+    - SellEndDate
+    - DiscontinuedDate
+    - rowguid
+    - ModifiedDate
+primary_key:
+    - ProductID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Production.Product\" (\"ProductID\" INTEGER NOT NULL, \"Name\" TEXT NOT NULL, \"ProductNumber\" TEXT NOT NULL, \"MakeFlag\" INTEGER NOT NULL DEFAULT 1, \"FinishedGoodsFlag\" INTEGER NOT NULL DEFAULT 1, \"Color\" TEXT, \"SafetyStockLevel\" INTEGER NOT NULL, \"ReorderPoint\" INTEGER NOT NULL, \"StandardCost\" DECIMAL_TEXT(19,4) NOT NULL, \"ListPrice\" DECIMAL_TEXT(19,4) NOT NULL, \"Size\" TEXT, \"SizeUnitMeasureCode\" TEXT, \"WeightUnitMeasureCode\" TEXT, \"Weight\" DECIMAL_TEXT(8,2), \"DaysToManufacture\" INTEGER NOT NULL, \"ProductLine\" TEXT, \"Class\" TEXT, \"Style\" TEXT, \"ProductSubcategoryID\" INTEGER, \"ProductModelID\" INTEGER, \"SellStartDate\" TEXT NOT NULL, \"SellEndDate\" TEXT, \"DiscontinuedDate\" TEXT, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CHECK (\"SafetyStockLevel\" \u003e 0), CHECK (\"ReorderPoint\" \u003e 0), CHECK (\"DaysToManufacture\" \u003e= 0), CHECK (UPPER(RTRIM(\"ProductLine\")) IN (''S'', ''T'', ''M'', ''R'') OR \"ProductLine\" IS NULL), CHECK (UPPER(RTRIM(\"Class\")) IN (''L'', ''M'', ''H'') OR \"Class\" IS NULL), CHECK (UPPER(RTRIM(\"Style\")) IN (''W'', ''M'', ''U'') OR \"Style\" IS NULL), CHECK ((\"SellEndDate\" \u003e= \"SellStartDate\") OR (\"SellEndDate\" IS NULL)), CONSTRAINT \"PK_Product_ProductID\" PRIMARY KEY (\"ProductID\"), CONSTRAINT \"FK_Product_UnitMeasure_SizeUnitMeasureCode\" FOREIGN KEY (\"SizeUnitMeasureCode\") REFERENCES \"Production.UnitMeasure\" (\"UnitMeasureCode\"), CONSTRAINT \"FK_Product_UnitMeasure_WeightUnitMeasureCode\" FOREIGN KEY (\"WeightUnitMeasureCode\") REFERENCES \"Production.UnitMeasure\" (\"UnitMeasureCode\"), CONSTRAINT \"FK_Product_ProductModel_ProductModelID\" FOREIGN KEY (\"ProductModelID\") REFERENCES \"Production.ProductModel\" (\"ProductModelID\"), CONSTRAINT \"FK_Product_ProductSubcategory_ProductSubcategoryID\" FOREIGN KEY (\"ProductSubcategoryID\") REFERENCES \"Production.ProductSubcategory\" (\"ProductSubcategoryID\"))","columns":[{"name":"ProductID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"Name","declaredType":"TEXT","notNull":true},{"name":"ProductNumber","declaredType":"TEXT","notNull":true},{"name":"MakeFlag","declaredType":"INTEGER","notNull":true,"defaultSql":"1"},{"name":"FinishedGoodsFlag","declaredType":"INTEGER","notNull":true,"defaultSql":"1"},{"name":"Color","declaredType":"TEXT","notNull":false},{"name":"SafetyStockLevel","declaredType":"INTEGER","notNull":true},{"name":"ReorderPoint","declaredType":"INTEGER","notNull":true},{"name":"StandardCost","declaredType":"DECIMAL_TEXT(19,4)","notNull":true},{"name":"ListPrice","declaredType":"DECIMAL_TEXT(19,4)","notNull":true},{"name":"Size","declaredType":"TEXT","notNull":false},{"name":"SizeUnitMeasureCode","declaredType":"TEXT","notNull":false},{"name":"WeightUnitMeasureCode","declaredType":"TEXT","notNull":false},{"name":"Weight","declaredType":"DECIMAL_TEXT(8,2)","notNull":false},{"name":"DaysToManufacture","declaredType":"INTEGER","notNull":true},{"name":"ProductLine","declaredType":"TEXT","notNull":false},{"name":"Class","declaredType":"TEXT","notNull":false},{"name":"Style","declaredType":"TEXT","notNull":false},{"name":"ProductSubcategoryID","declaredType":"INTEGER","notNull":false},{"name":"ProductModelID","declaredType":"INTEGER","notNull":false},{"name":"SellStartDate","declaredType":"TEXT","notNull":true},{"name":"SellEndDate","declaredType":"TEXT","notNull":false},{"name":"DiscontinuedDate","declaredType":"TEXT","notNull":false},{"name":"rowguid","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Production_Product_AK_Product_rowguid","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Production_Product_AK_Product_rowguid\" ON \"Production.Product\" (\"rowguid\")","columns":[{"position":0,"name":"rowguid","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"Production_Product_AK_Product_Name","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Production_Product_AK_Product_Name\" ON \"Production.Product\" (\"Name\")","columns":[{"position":0,"name":"Name","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"Production_Product_AK_Product_ProductNumber","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Production_Product_AK_Product_ProductNumber\" ON \"Production.Product\" (\"ProductNumber\")","columns":[{"position":0,"name":"ProductNumber","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: ProductID
+          type: int
+          nullable: false
+        - name: Name
+          type: string
+          nullable: false
+        - name: ProductNumber
+          type: string
+          nullable: false
+        - name: MakeFlag
+          type: int
+          nullable: false
+        - name: FinishedGoodsFlag
+          type: int
+          nullable: false
+        - name: Color
+          type: string
+          nullable: true
+        - name: SafetyStockLevel
+          type: int
+          nullable: false
+        - name: ReorderPoint
+          type: int
+          nullable: false
+        - name: StandardCost
+          type: string
+          nullable: false
+        - name: ListPrice
+          type: string
+          nullable: false
+        - name: Size
+          type: string
+          nullable: true
+        - name: SizeUnitMeasureCode
+          type: string
+          nullable: true
+        - name: WeightUnitMeasureCode
+          type: string
+          nullable: true
+        - name: Weight
+          type: string
+          nullable: true
+        - name: DaysToManufacture
+          type: int
+          nullable: false
+        - name: ProductLine
+          type: string
+          nullable: true
+        - name: Class
+          type: string
+          nullable: true
+        - name: Style
+          type: string
+          nullable: true
+        - name: ProductSubcategoryID
+          type: int
+          nullable: true
+        - name: ProductModelID
+          type: int
+          nullable: true
+        - name: SellStartDate
+          type: string
+          nullable: false
+        - name: SellEndDate
+          type: string
+          nullable: true
+        - name: DiscontinuedDate
+          type: string
+          nullable: true
+        - name: rowguid
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Production_Product_AK_Product_rowguid
+          fields:
+            - rowguid
+          unique: true
+        - name: Production_Product_AK_Product_Name
+          fields:
+            - Name
+          unique: true
+        - name: Production_Product_AK_Product_ProductNumber
+          fields:
+            - ProductNumber
+          unique: true
+    foreign_keys:
+        - name: Production.Product_fk_0
+          fields:
+            - ProductSubcategoryID
+          referenced_collection: Production.ProductSubcategory
+          referenced_fields:
+            - ProductSubcategoryID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Production.Product_fk_1
+          fields:
+            - ProductModelID
+          referenced_collection: Production.ProductModel
+          referenced_fields:
+            - ProductModelID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Production.Product_fk_2
+          fields:
+            - WeightUnitMeasureCode
+          referenced_collection: Production.UnitMeasure
+          referenced_fields:
+            - UnitMeasureCode
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Production.Product_fk_3
+          fields:
+            - SizeUnitMeasureCode
+          referenced_collection: Production.UnitMeasure
+          referenced_fields:
+            - UnitMeasureCode
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

@@ -1,0 +1,34 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    IllustrationID:
+        type: int
+        required: true
+    Diagram:
+        type: string
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - IllustrationID
+    - Diagram
+    - ModifiedDate
+primary_key:
+    - IllustrationID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Production.Illustration\" (\"IllustrationID\" INTEGER NOT NULL, \"Diagram\" TEXT, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_Illustration_IllustrationID\" PRIMARY KEY (\"IllustrationID\"))","columns":[{"name":"IllustrationID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"Diagram","declaredType":"TEXT","notNull":false},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: IllustrationID
+          type: int
+          nullable: false
+        - name: Diagram
+          type: string
+          nullable: true
+        - name: ModifiedDate
+          type: string
+          nullable: false

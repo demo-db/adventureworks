@@ -1,0 +1,47 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    ProductDescriptionID:
+        type: int
+        required: true
+    Description:
+        type: string
+        required: true
+    rowguid:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - ProductDescriptionID
+    - Description
+    - rowguid
+    - ModifiedDate
+primary_key:
+    - ProductDescriptionID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Production.ProductDescription\" (\"ProductDescriptionID\" INTEGER NOT NULL, \"Description\" TEXT NOT NULL, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_ProductDescription_ProductDescriptionID\" PRIMARY KEY (\"ProductDescriptionID\"))","columns":[{"name":"ProductDescriptionID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"Description","declaredType":"TEXT","notNull":true},{"name":"rowguid","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Production_ProductDescription_AK_ProductDescription_rowguid","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Production_ProductDescription_AK_ProductDescription_rowguid\" ON \"Production.ProductDescription\" (\"rowguid\")","columns":[{"position":0,"name":"rowguid","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: ProductDescriptionID
+          type: int
+          nullable: false
+        - name: Description
+          type: string
+          nullable: false
+        - name: rowguid
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Production_ProductDescription_AK_ProductDescription_rowguid
+          fields:
+            - rowguid
+          unique: true

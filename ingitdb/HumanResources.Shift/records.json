@@ -1,0 +1,5 @@
+{
+  "pk-W1siaW50NjQiLDFdXQ": {"EndTime":"15:00:00.0000000","ModifiedDate":"2008-04-30 00:00:00.000","Name":"Day","ShiftID":1,"StartTime":"07:00:00.0000000"},
+  "pk-W1siaW50NjQiLDJdXQ": {"EndTime":"23:00:00.0000000","ModifiedDate":"2008-04-30 00:00:00.000","Name":"Evening","ShiftID":2,"StartTime":"15:00:00.0000000"},
+  "pk-W1siaW50NjQiLDNdXQ": {"EndTime":"07:00:00.0000000","ModifiedDate":"2008-04-30 00:00:00.000","Name":"Night","ShiftID":3,"StartTime":"23:00:00.0000000"}
+}

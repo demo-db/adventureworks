@@ -1,0 +1,83 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    SalesTaxRateID:
+        type: int
+        required: true
+    StateProvinceID:
+        type: int
+        required: true
+    TaxType:
+        type: int
+        required: true
+    TaxRate:
+        type: string
+        required: true
+    Name:
+        type: string
+        required: true
+    rowguid:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - SalesTaxRateID
+    - StateProvinceID
+    - TaxType
+    - TaxRate
+    - Name
+    - rowguid
+    - ModifiedDate
+primary_key:
+    - SalesTaxRateID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Sales.SalesTaxRate\" (\"SalesTaxRateID\" INTEGER NOT NULL, \"StateProvinceID\" INTEGER NOT NULL, \"TaxType\" INTEGER NOT NULL, \"TaxRate\" DECIMAL_TEXT(10,4) NOT NULL DEFAULT ''0.00'', \"Name\" TEXT NOT NULL, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CHECK (\"TaxType\" BETWEEN 1 AND 3), CONSTRAINT \"PK_SalesTaxRate_SalesTaxRateID\" PRIMARY KEY (\"SalesTaxRateID\"), CONSTRAINT \"FK_SalesTaxRate_StateProvince_StateProvinceID\" FOREIGN KEY (\"StateProvinceID\") REFERENCES \"Person.StateProvince\" (\"StateProvinceID\"))","columns":[{"name":"SalesTaxRateID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"StateProvinceID","declaredType":"INTEGER","notNull":true},{"name":"TaxType","declaredType":"INTEGER","notNull":true},{"name":"TaxRate","declaredType":"DECIMAL_TEXT(10,4)","notNull":true,"defaultSql":"''0.00''"},{"name":"Name","declaredType":"TEXT","notNull":true},{"name":"rowguid","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Sales_SalesTaxRate_AK_SalesTaxRate_rowguid","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Sales_SalesTaxRate_AK_SalesTaxRate_rowguid\" ON \"Sales.SalesTaxRate\" (\"rowguid\")","columns":[{"position":0,"name":"rowguid","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"Sales_SalesTaxRate_AK_SalesTaxRate_StateProvinceID_TaxType","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Sales_SalesTaxRate_AK_SalesTaxRate_StateProvinceID_TaxType\" ON \"Sales.SalesTaxRate\" (\"StateProvinceID\", \"TaxType\")","columns":[{"position":0,"name":"StateProvinceID","key":true,"collation":"BINARY"},{"position":1,"name":"TaxType","key":true,"collation":"BINARY"},{"position":2,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: SalesTaxRateID
+          type: int
+          nullable: false
+        - name: StateProvinceID
+          type: int
+          nullable: false
+        - name: TaxType
+          type: int
+          nullable: false
+        - name: TaxRate
+          type: string
+          nullable: false
+        - name: Name
+          type: string
+          nullable: false
+        - name: rowguid
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Sales_SalesTaxRate_AK_SalesTaxRate_rowguid
+          fields:
+            - rowguid
+          unique: true
+        - name: Sales_SalesTaxRate_AK_SalesTaxRate_StateProvinceID_TaxType
+          fields:
+            - StateProvinceID
+            - TaxType
+          unique: true
+    foreign_keys:
+        - name: Sales.SalesTaxRate_fk_0
+          fields:
+            - StateProvinceID
+          referenced_collection: Person.StateProvince
+          referenced_fields:
+            - StateProvinceID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

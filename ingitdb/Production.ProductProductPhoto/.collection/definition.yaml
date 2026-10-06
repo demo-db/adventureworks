@@ -1,0 +1,62 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    ProductID:
+        type: int
+        required: true
+    ProductPhotoID:
+        type: int
+        required: true
+    Primary:
+        type: int
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - ProductID
+    - ProductPhotoID
+    - Primary
+    - ModifiedDate
+primary_key:
+    - ProductID
+    - ProductPhotoID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Production.ProductProductPhoto\" (\"ProductID\" INTEGER NOT NULL, \"ProductPhotoID\" INTEGER NOT NULL, \"Primary\" INTEGER NOT NULL DEFAULT 0, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_ProductProductPhoto_ProductID_ProductPhotoID\" PRIMARY KEY (\"ProductID\", \"ProductPhotoID\"), CONSTRAINT \"FK_ProductProductPhoto_Product_ProductID\" FOREIGN KEY (\"ProductID\") REFERENCES \"Production.Product\" (\"ProductID\"), CONSTRAINT \"FK_ProductProductPhoto_ProductPhoto_ProductPhotoID\" FOREIGN KEY (\"ProductPhotoID\") REFERENCES \"Production.ProductPhoto\" (\"ProductPhotoID\"))","columns":[{"name":"ProductID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"ProductPhotoID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":2},{"name":"Primary","declaredType":"INTEGER","notNull":true,"defaultSql":"0"},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"sqlite_autoindex_Production.ProductProductPhoto_1","unique":true,"origin":"pk","columns":[{"position":0,"name":"ProductID","key":true,"collation":"BINARY"},{"position":1,"name":"ProductPhotoID","key":true,"collation":"BINARY"},{"position":2,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: ProductID
+          type: int
+          nullable: false
+        - name: ProductPhotoID
+          type: int
+          nullable: false
+        - name: Primary
+          type: int
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    foreign_keys:
+        - name: Production.ProductProductPhoto_fk_0
+          fields:
+            - ProductPhotoID
+          referenced_collection: Production.ProductPhoto
+          referenced_fields:
+            - ProductPhotoID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Production.ProductProductPhoto_fk_1
+          fields:
+            - ProductID
+          referenced_collection: Production.Product
+          referenced_fields:
+            - ProductID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

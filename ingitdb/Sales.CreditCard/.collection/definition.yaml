@@ -1,0 +1,61 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    CreditCardID:
+        type: int
+        required: true
+    CardType:
+        type: string
+        required: true
+    CardNumber:
+        type: string
+        required: true
+    ExpMonth:
+        type: int
+        required: true
+    ExpYear:
+        type: int
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - CreditCardID
+    - CardType
+    - CardNumber
+    - ExpMonth
+    - ExpYear
+    - ModifiedDate
+primary_key:
+    - CreditCardID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Sales.CreditCard\" (\"CreditCardID\" INTEGER NOT NULL, \"CardType\" TEXT NOT NULL, \"CardNumber\" TEXT NOT NULL, \"ExpMonth\" INTEGER NOT NULL, \"ExpYear\" INTEGER NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_CreditCard_CreditCardID\" PRIMARY KEY (\"CreditCardID\"))","columns":[{"name":"CreditCardID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"CardType","declaredType":"TEXT","notNull":true},{"name":"CardNumber","declaredType":"TEXT","notNull":true},{"name":"ExpMonth","declaredType":"INTEGER","notNull":true},{"name":"ExpYear","declaredType":"INTEGER","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Sales_CreditCard_AK_CreditCard_CardNumber","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Sales_CreditCard_AK_CreditCard_CardNumber\" ON \"Sales.CreditCard\" (\"CardNumber\")","columns":[{"position":0,"name":"CardNumber","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: CreditCardID
+          type: int
+          nullable: false
+        - name: CardType
+          type: string
+          nullable: false
+        - name: CardNumber
+          type: string
+          nullable: false
+        - name: ExpMonth
+          type: int
+          nullable: false
+        - name: ExpYear
+          type: int
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Sales_CreditCard_AK_CreditCard_CardNumber
+          fields:
+            - CardNumber
+          unique: true

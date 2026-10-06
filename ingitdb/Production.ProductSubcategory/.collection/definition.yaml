@@ -1,0 +1,68 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    ProductSubcategoryID:
+        type: int
+        required: true
+    ProductCategoryID:
+        type: int
+        required: true
+    Name:
+        type: string
+        required: true
+    rowguid:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - ProductSubcategoryID
+    - ProductCategoryID
+    - Name
+    - rowguid
+    - ModifiedDate
+primary_key:
+    - ProductSubcategoryID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Production.ProductSubcategory\" (\"ProductSubcategoryID\" INTEGER NOT NULL, \"ProductCategoryID\" INTEGER NOT NULL, \"Name\" TEXT NOT NULL, \"rowguid\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_ProductSubcategory_ProductSubcategoryID\" PRIMARY KEY (\"ProductSubcategoryID\"), CONSTRAINT \"FK_ProductSubcategory_ProductCategory_ProductCategoryID\" FOREIGN KEY (\"ProductCategoryID\") REFERENCES \"Production.ProductCategory\" (\"ProductCategoryID\"))","columns":[{"name":"ProductSubcategoryID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"ProductCategoryID","declaredType":"INTEGER","notNull":true},{"name":"Name","declaredType":"TEXT","notNull":true},{"name":"rowguid","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Production_ProductSubcategory_AK_ProductSubcategory_rowguid","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Production_ProductSubcategory_AK_ProductSubcategory_rowguid\" ON \"Production.ProductSubcategory\" (\"rowguid\")","columns":[{"position":0,"name":"rowguid","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]},{"name":"Production_ProductSubcategory_AK_ProductSubcategory_Name","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Production_ProductSubcategory_AK_ProductSubcategory_Name\" ON \"Production.ProductSubcategory\" (\"Name\")","columns":[{"position":0,"name":"Name","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: ProductSubcategoryID
+          type: int
+          nullable: false
+        - name: ProductCategoryID
+          type: int
+          nullable: false
+        - name: Name
+          type: string
+          nullable: false
+        - name: rowguid
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Production_ProductSubcategory_AK_ProductSubcategory_rowguid
+          fields:
+            - rowguid
+          unique: true
+        - name: Production_ProductSubcategory_AK_ProductSubcategory_Name
+          fields:
+            - Name
+          unique: true
+    foreign_keys:
+        - name: Production.ProductSubcategory_fk_0
+          fields:
+            - ProductCategoryID
+          referenced_collection: Production.ProductCategory
+          referenced_fields:
+            - ProductCategoryID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

@@ -1,0 +1,166 @@
+- name: HumanResources.vEmployee
+  columns:
+    - BusinessEntityID
+    - Title
+    - FirstName
+    - MiddleName
+    - LastName
+    - Suffix
+    - JobTitle
+    - PhoneNumber
+    - PhoneNumberType
+    - EmailAddress
+    - EmailPromotion
+    - AddressLine1
+    - AddressLine2
+    - City
+    - StateProvinceName
+    - PostalCode
+    - CountryRegionName
+    - AdditionalContactInfo
+  createsql: "CREATE VIEW \"HumanResources.vEmployee\" AS\r\nSELECT\r\n    e.\"BusinessEntityID\"\r\n    ,p.\"Title\"\r\n    ,p.\"FirstName\"\r\n    ,p.\"MiddleName\"\r\n    ,p.\"LastName\"\r\n    ,p.\"Suffix\"\r\n    ,e.\"JobTitle\" \r\n    ,pp.\"PhoneNumber\"\r\n    ,pnt.\"Name\" AS \"PhoneNumberType\"\r\n    ,ea.\"EmailAddress\"\r\n    ,p.\"EmailPromotion\"\r\n    ,a.\"AddressLine1\"\r\n    ,a.\"AddressLine2\"\r\n    ,a.\"City\"\r\n    ,sp.\"Name\" AS \"StateProvinceName\"\r\n    ,a.\"PostalCode\"\r\n    ,cr.\"Name\" AS \"CountryRegionName\"\r\n    ,p.\"AdditionalContactInfo\"\r\nFROM \"HumanResources.Employee\" e\r\n\tINNER JOIN \"Person.Person\" p\r\n\tON p.\"BusinessEntityID\" = e.\"BusinessEntityID\"\r\n    INNER JOIN \"Person.BusinessEntityAddress\" bea\r\n    ON bea.\"BusinessEntityID\" = e.\"BusinessEntityID\"\r\n    INNER JOIN \"Person.Address\" a\r\n    ON a.\"AddressID\" = bea.\"AddressID\"\r\n    INNER JOIN \"Person.StateProvince\" sp\r\n    ON sp.\"StateProvinceID\" = a.\"StateProvinceID\"\r\n    INNER JOIN \"Person.CountryRegion\" cr\r\n    ON cr.\"CountryRegionCode\" = sp.\"CountryRegionCode\"\r\n    LEFT OUTER JOIN \"Person.PersonPhone\" pp\r\n    ON pp.BusinessEntityID = p.\"BusinessEntityID\"\r\n    LEFT OUTER JOIN \"Person.PhoneNumberType\" pnt\r\n    ON pp.\"PhoneNumberTypeID\" = pnt.\"PhoneNumberTypeID\"\r\n    LEFT OUTER JOIN \"Person.EmailAddress\" ea\r\n    ON p.\"BusinessEntityID\" = ea.\"BusinessEntityID\""
+- name: HumanResources.vEmployeeDepartment
+  columns:
+    - BusinessEntityID
+    - Title
+    - FirstName
+    - MiddleName
+    - LastName
+    - Suffix
+    - JobTitle
+    - Department
+    - GroupName
+    - StartDate
+  createsql: "CREATE VIEW \"HumanResources.vEmployeeDepartment\" AS\r\nSELECT\r\n    e.\"BusinessEntityID\"\r\n    ,p.\"Title\"\r\n    ,p.\"FirstName\"\r\n    ,p.\"MiddleName\"\r\n    ,p.\"LastName\"\r\n    ,p.\"Suffix\"\r\n    ,e.\"JobTitle\"\r\n    ,d.\"Name\" AS \"Department\"\r\n    ,d.\"GroupName\"\r\n    ,edh.\"StartDate\"\r\nFROM \"HumanResources.Employee\" e\r\n\tINNER JOIN \"Person.Person\" p\r\n\tON p.\"BusinessEntityID\" = e.\"BusinessEntityID\"\r\n    INNER JOIN \"HumanResources.EmployeeDepartmentHistory\" edh\r\n    ON e.\"BusinessEntityID\" = edh.\"BusinessEntityID\"\r\n    INNER JOIN \"HumanResources.Department\" d\r\n    ON edh.\"DepartmentID\" = d.\"DepartmentID\"\r\nWHERE edh.EndDate IS NULL"
+- name: HumanResources.vEmployeeDepartmentHistory
+  columns:
+    - BusinessEntityID
+    - Title
+    - FirstName
+    - MiddleName
+    - LastName
+    - Suffix
+    - Shift
+    - Department
+    - GroupName
+    - StartDate
+    - EndDate
+  createsql: "CREATE VIEW \"HumanResources.vEmployeeDepartmentHistory\" AS\r\nSELECT\r\n    e.\"BusinessEntityID\"\r\n    ,p.\"Title\"\r\n    ,p.\"FirstName\"\r\n    ,p.\"MiddleName\"\r\n    ,p.\"LastName\"\r\n    ,p.\"Suffix\"\r\n    ,s.\"Name\" AS \"Shift\"\r\n    ,d.\"Name\" AS \"Department\"\r\n    ,d.\"GroupName\"\r\n    ,edh.\"StartDate\"\r\n    ,edh.\"EndDate\"\r\nFROM \"HumanResources.Employee\" e\r\n\tINNER JOIN \"Person.Person\" p\r\n\tON p.\"BusinessEntityID\" = e.\"BusinessEntityID\"\r\n    INNER JOIN \"HumanResources.EmployeeDepartmentHistory\" edh\r\n    ON e.\"BusinessEntityID\" = edh.\"BusinessEntityID\"\r\n    INNER JOIN \"HumanResources.Department\" d\r\n    ON edh.\"DepartmentID\" = d.\"DepartmentID\"\r\n    INNER JOIN \"HumanResources.Shift\" s\r\n    ON s.\"ShiftID\" = edh.\"ShiftID\""
+- name: Person.vStateProvinceCountryRegion
+  columns:
+    - StateProvinceID
+    - StateProvinceCode
+    - IsOnlyStateProvinceFlag
+    - StateProvinceName
+    - TerritoryID
+    - CountryRegionCode
+    - CountryRegionName
+  createsql: "CREATE VIEW \"Person.vStateProvinceCountryRegion\" AS\r\nSELECT\r\n    sp.\"StateProvinceID\"\r\n    ,sp.\"StateProvinceCode\"\r\n    ,sp.\"IsOnlyStateProvinceFlag\"\r\n    ,sp.\"Name\" AS \"StateProvinceName\"\r\n    ,sp.\"TerritoryID\"\r\n    ,cr.\"CountryRegionCode\"\r\n    ,cr.\"Name\" AS \"CountryRegionName\"\r\nFROM \"Person.StateProvince\" sp\r\n    INNER JOIN \"Person.CountryRegion\" cr\r\n    ON sp.\"CountryRegionCode\" = cr.\"CountryRegionCode\""
+- name: Production.vProductAndDescription
+  columns:
+    - ProductID
+    - Name
+    - ProductModel
+    - CultureID
+    - Description
+  createsql: "CREATE VIEW \"Production.vProductAndDescription\" AS\r\n\nSELECT\r\n    p.\"ProductID\"\r\n    ,p.\"Name\"\r\n    ,pm.\"Name\" AS \"ProductModel\"\r\n    ,pmx.\"CultureID\"\r\n    ,pd.\"Description\"\r\nFROM \"Production.Product\" p\r\n    INNER JOIN \"Production.ProductModel\" pm\r\n    ON p.\"ProductModelID\" = pm.\"ProductModelID\"\r\n    INNER JOIN \"Production.ProductModelProductDescriptionCulture\" pmx\r\n    ON pm.\"ProductModelID\" = pmx.\"ProductModelID\"\r\n    INNER JOIN \"Production.ProductDescription\" pd\r\n    ON pmx.\"ProductDescriptionID\" = pd.\"ProductDescriptionID\""
+- name: Purchasing.vVendorWithAddresses
+  columns:
+    - BusinessEntityID
+    - Name
+    - AddressType
+    - AddressLine1
+    - AddressLine2
+    - City
+    - StateProvinceName
+    - PostalCode
+    - CountryRegionName
+  createsql: "CREATE VIEW \"Purchasing.vVendorWithAddresses\" AS\r\nSELECT\r\n    v.\"BusinessEntityID\"\r\n    ,v.\"Name\"\r\n    ,at.\"Name\" AS \"AddressType\"\r\n    ,a.\"AddressLine1\"\r\n    ,a.\"AddressLine2\"\r\n    ,a.\"City\"\r\n    ,sp.\"Name\" AS \"StateProvinceName\"\r\n    ,a.\"PostalCode\"\r\n    ,cr.\"Name\" AS \"CountryRegionName\"\r\nFROM \"Purchasing.Vendor\" v\r\n    INNER JOIN \"Person.BusinessEntityAddress\" bea\r\n    ON bea.\"BusinessEntityID\" = v.\"BusinessEntityID\"\r\n    INNER JOIN \"Person.Address\" a\r\n    ON a.\"AddressID\" = bea.\"AddressID\"\r\n    INNER JOIN \"Person.StateProvince\" sp\r\n    ON sp.\"StateProvinceID\" = a.\"StateProvinceID\"\r\n    INNER JOIN \"Person.CountryRegion\" cr\r\n    ON cr.\"CountryRegionCode\" = sp.\"CountryRegionCode\"\r\n    INNER JOIN \"Person.AddressType\" at\r\n    ON at.\"AddressTypeID\" = bea.\"AddressTypeID\""
+- name: Purchasing.vVendorWithContacts
+  columns:
+    - BusinessEntityID
+    - Name
+    - ContactType
+    - Title
+    - FirstName
+    - MiddleName
+    - LastName
+    - Suffix
+    - PhoneNumber
+    - PhoneNumberType
+    - EmailAddress
+    - EmailPromotion
+  createsql: "CREATE VIEW \"Purchasing.vVendorWithContacts\" AS\r\nSELECT\r\n    v.\"BusinessEntityID\"\r\n    ,v.\"Name\"\r\n    ,ct.\"Name\" AS \"ContactType\"\r\n    ,p.\"Title\"\r\n    ,p.\"FirstName\"\r\n    ,p.\"MiddleName\"\r\n    ,p.\"LastName\"\r\n    ,p.\"Suffix\"\r\n    ,pp.\"PhoneNumber\"\r\n\t,pnt.\"Name\" AS \"PhoneNumberType\"\r\n    ,ea.\"EmailAddress\"\r\n    ,p.\"EmailPromotion\"\r\nFROM \"Purchasing.Vendor\" v\r\n    INNER JOIN \"Person.BusinessEntityContact\" bec\r\n    ON bec.\"BusinessEntityID\" = v.\"BusinessEntityID\"\r\n\tINNER JOIN \"Person.ContactType\" ct\r\n\tON ct.\"ContactTypeID\" = bec.\"ContactTypeID\"\r\n\tINNER JOIN \"Person.Person\" p\r\n\tON p.\"BusinessEntityID\" = bec.\"PersonID\"\r\n\tLEFT OUTER JOIN \"Person.EmailAddress\" ea\r\n\tON ea.\"BusinessEntityID\" = p.\"BusinessEntityID\"\r\n\tLEFT OUTER JOIN \"Person.PersonPhone\" pp\r\n\tON pp.\"BusinessEntityID\" = p.\"BusinessEntityID\"\r\n\tLEFT OUTER JOIN \"Person.PhoneNumberType\" pnt\r\n\tON pnt.\"PhoneNumberTypeID\" = pp.\"PhoneNumberTypeID\""
+- name: Sales.vIndividualCustomer
+  columns:
+    - BusinessEntityID
+    - Title
+    - FirstName
+    - MiddleName
+    - LastName
+    - Suffix
+    - PhoneNumber
+    - PhoneNumberType
+    - EmailAddress
+    - EmailPromotion
+    - AddressType
+    - AddressLine1
+    - AddressLine2
+    - City
+    - StateProvinceName
+    - PostalCode
+    - CountryRegionName
+    - Demographics
+  createsql: "CREATE VIEW \"Sales.vIndividualCustomer\" AS\r\nSELECT\r\n    p.\"BusinessEntityID\"\r\n    ,p.\"Title\"\r\n    ,p.\"FirstName\"\r\n    ,p.\"MiddleName\"\r\n    ,p.\"LastName\"\r\n    ,p.\"Suffix\"\r\n    ,pp.\"PhoneNumber\"\r\n\t,pnt.\"Name\" AS \"PhoneNumberType\"\r\n    ,ea.\"EmailAddress\"\r\n    ,p.\"EmailPromotion\"\r\n    ,at.\"Name\" AS \"AddressType\"\r\n    ,a.\"AddressLine1\"\r\n    ,a.\"AddressLine2\"\r\n    ,a.\"City\"\r\n    , sp.\"Name\" AS \"StateProvinceName\"\r\n    ,a.\"PostalCode\"\r\n    , cr.\"Name\" AS \"CountryRegionName\"\r\n    ,p.\"Demographics\"\r\nFROM \"Person.Person\" p\r\n    INNER JOIN \"Person.BusinessEntityAddress\" bea\r\n    ON bea.\"BusinessEntityID\" = p.\"BusinessEntityID\"\r\n    INNER JOIN \"Person.Address\" a\r\n    ON a.\"AddressID\" = bea.\"AddressID\"\r\n    INNER JOIN \"Person.StateProvince\" sp\r\n    ON sp.\"StateProvinceID\" = a.\"StateProvinceID\"\r\n    INNER JOIN \"Person.CountryRegion\" cr\r\n    ON cr.\"CountryRegionCode\" = sp.\"CountryRegionCode\"\r\n    INNER JOIN \"Person.AddressType\" at\r\n    ON at.\"AddressTypeID\" = bea.\"AddressTypeID\"\r\n\tINNER JOIN \"Sales.Customer\" c\r\n\tON c.\"PersonID\" = p.\"BusinessEntityID\"\r\n\tLEFT OUTER JOIN \"Person.EmailAddress\" ea\r\n\tON ea.\"BusinessEntityID\" = p.\"BusinessEntityID\"\r\n\tLEFT OUTER JOIN \"Person.PersonPhone\" pp\r\n\tON pp.\"BusinessEntityID\" = p.\"BusinessEntityID\"\r\n\tLEFT OUTER JOIN \"Person.PhoneNumberType\" pnt\r\n\tON pnt.\"PhoneNumberTypeID\" = pp.\"PhoneNumberTypeID\"\r\nWHERE c.StoreID IS NULL"
+- name: Sales.vSalesPerson
+  columns:
+    - BusinessEntityID
+    - Title
+    - FirstName
+    - MiddleName
+    - LastName
+    - Suffix
+    - JobTitle
+    - PhoneNumber
+    - PhoneNumberType
+    - EmailAddress
+    - EmailPromotion
+    - AddressLine1
+    - AddressLine2
+    - City
+    - StateProvinceName
+    - PostalCode
+    - CountryRegionName
+    - TerritoryName
+    - TerritoryGroup
+    - SalesQuota
+    - SalesYTD
+    - SalesLastYear
+  createsql: "CREATE VIEW \"Sales.vSalesPerson\" AS\r\nSELECT\r\n    s.\"BusinessEntityID\"\r\n    ,p.\"Title\"\r\n    ,p.\"FirstName\"\r\n    ,p.\"MiddleName\"\r\n    ,p.\"LastName\"\r\n    ,p.\"Suffix\"\r\n    ,e.\"JobTitle\"\r\n    ,pp.\"PhoneNumber\"\r\n\t,pnt.\"Name\" AS \"PhoneNumberType\"\r\n    ,ea.\"EmailAddress\"\r\n    ,p.\"EmailPromotion\"\r\n    ,a.\"AddressLine1\"\r\n    ,a.\"AddressLine2\"\r\n    ,a.\"City\"\r\n    , sp.\"Name\" AS \"StateProvinceName\"\r\n    ,a.\"PostalCode\"\r\n    , cr.\"Name\" AS \"CountryRegionName\"\r\n    , st.\"Name\" AS \"TerritoryName\"\r\n    , st.\"Group\" AS \"TerritoryGroup\"\r\n    ,s.\"SalesQuota\"\r\n    ,s.\"SalesYTD\"\r\n    ,s.\"SalesLastYear\"\r\nFROM \"Sales.SalesPerson\" s\r\n    INNER JOIN \"HumanResources.Employee\" e\r\n    ON e.\"BusinessEntityID\" = s.\"BusinessEntityID\"\r\n\tINNER JOIN \"Person.Person\" p\r\n\tON p.\"BusinessEntityID\" = s.\"BusinessEntityID\"\r\n    INNER JOIN \"Person.BusinessEntityAddress\" bea\r\n    ON bea.\"BusinessEntityID\" = s.\"BusinessEntityID\"\r\n    INNER JOIN \"Person.Address\" a\r\n    ON a.\"AddressID\" = bea.\"AddressID\"\r\n    INNER JOIN \"Person.StateProvince\" sp\r\n    ON sp.\"StateProvinceID\" = a.\"StateProvinceID\"\r\n    INNER JOIN \"Person.CountryRegion\" cr\r\n    ON cr.\"CountryRegionCode\" = sp.\"CountryRegionCode\"\r\n    LEFT OUTER JOIN \"Sales.SalesTerritory\" st\r\n    ON st.\"TerritoryID\" = s.\"TerritoryID\"\r\n\tLEFT OUTER JOIN \"Person.EmailAddress\" ea\r\n\tON ea.\"BusinessEntityID\" = p.\"BusinessEntityID\"\r\n\tLEFT OUTER JOIN \"Person.PersonPhone\" pp\r\n\tON pp.\"BusinessEntityID\" = p.\"BusinessEntityID\"\r\n\tLEFT OUTER JOIN \"Person.PhoneNumberType\" pnt\r\n\tON pnt.\"PhoneNumberTypeID\" = pp.\"PhoneNumberTypeID\""
+- name: Sales.vStoreWithAddresses
+  columns:
+    - BusinessEntityID
+    - Name
+    - AddressType
+    - AddressLine1
+    - AddressLine2
+    - City
+    - StateProvinceName
+    - PostalCode
+    - CountryRegionName
+  createsql: "CREATE VIEW \"Sales.vStoreWithAddresses\" AS\r\nSELECT\r\n    s.\"BusinessEntityID\"\r\n    ,s.\"Name\"\r\n    ,at.\"Name\" AS \"AddressType\"\r\n    ,a.\"AddressLine1\"\r\n    ,a.\"AddressLine2\"\r\n    ,a.\"City\"\r\n    ,sp.\"Name\" AS \"StateProvinceName\"\r\n    ,a.\"PostalCode\"\r\n    ,cr.\"Name\" AS \"CountryRegionName\"\r\nFROM \"Sales.Store\" s\r\n    INNER JOIN \"Person.BusinessEntityAddress\" bea\r\n    ON bea.\"BusinessEntityID\" = s.\"BusinessEntityID\"\r\n    INNER JOIN \"Person.Address\" a\r\n    ON a.\"AddressID\" = bea.\"AddressID\"\r\n    INNER JOIN \"Person.StateProvince\" sp\r\n    ON sp.\"StateProvinceID\" = a.\"StateProvinceID\"\r\n    INNER JOIN \"Person.CountryRegion\" cr\r\n    ON cr.\"CountryRegionCode\" = sp.\"CountryRegionCode\"\r\n    INNER JOIN \"Person.AddressType\" at\r\n    ON at.\"AddressTypeID\" = bea.\"AddressTypeID\""
+- name: Sales.vStoreWithContacts
+  columns:
+    - BusinessEntityID
+    - Name
+    - ContactType
+    - Title
+    - FirstName
+    - MiddleName
+    - LastName
+    - Suffix
+    - PhoneNumber
+    - PhoneNumberType
+    - EmailAddress
+    - EmailPromotion
+  createsql: "CREATE VIEW \"Sales.vStoreWithContacts\" AS\r\nSELECT\r\n    s.\"BusinessEntityID\"\r\n    ,s.\"Name\"\r\n    ,ct.\"Name\" AS \"ContactType\"\r\n    ,p.\"Title\"\r\n    ,p.\"FirstName\"\r\n    ,p.\"MiddleName\"\r\n    ,p.\"LastName\"\r\n    ,p.\"Suffix\"\r\n    ,pp.\"PhoneNumber\"\r\n\t,pnt.\"Name\" AS \"PhoneNumberType\"\r\n    ,ea.\"EmailAddress\"\r\n    ,p.\"EmailPromotion\"\r\nFROM \"Sales.Store\" s\r\n    INNER JOIN \"Person.BusinessEntityContact\" bec\r\n    ON bec.\"BusinessEntityID\" = s.\"BusinessEntityID\"\r\n\tINNER JOIN \"Person.ContactType\" ct\r\n\tON ct.\"ContactTypeID\" = bec.\"ContactTypeID\"\r\n\tINNER JOIN \"Person.Person\" p\r\n\tON p.\"BusinessEntityID\" = bec.\"PersonID\"\r\n\tLEFT OUTER JOIN \"Person.EmailAddress\" ea\r\n\tON ea.\"BusinessEntityID\" = p.\"BusinessEntityID\"\r\n\tLEFT OUTER JOIN \"Person.PersonPhone\" pp\r\n\tON pp.\"BusinessEntityID\" = p.\"BusinessEntityID\"\r\n\tLEFT OUTER JOIN \"Person.PhoneNumberType\" pnt\r\n\tON pnt.\"PhoneNumberTypeID\" = pp.\"PhoneNumberTypeID\""

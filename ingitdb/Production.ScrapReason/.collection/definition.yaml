@@ -1,0 +1,40 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    ScrapReasonID:
+        type: int
+        required: true
+    Name:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - ScrapReasonID
+    - Name
+    - ModifiedDate
+primary_key:
+    - ScrapReasonID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Production.ScrapReason\" (\"ScrapReasonID\" INTEGER NOT NULL, \"Name\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_ScrapReason_ScrapReasonID\" PRIMARY KEY (\"ScrapReasonID\"))","columns":[{"name":"ScrapReasonID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"Name","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Production_ScrapReason_AK_ScrapReason_Name","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Production_ScrapReason_AK_ScrapReason_Name\" ON \"Production.ScrapReason\" (\"Name\")","columns":[{"position":0,"name":"Name","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: ScrapReasonID
+          type: int
+          nullable: false
+        - name: Name
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Production_ScrapReason_AK_ScrapReason_Name
+          fields:
+            - Name
+          unique: true

@@ -1,0 +1,113 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    BillOfMaterialsID:
+        type: int
+        required: true
+    ProductAssemblyID:
+        type: int
+    ComponentID:
+        type: int
+        required: true
+    StartDate:
+        type: string
+        required: true
+    EndDate:
+        type: string
+    UnitMeasureCode:
+        type: string
+        required: true
+    BOMLevel:
+        type: int
+        required: true
+    PerAssemblyQty:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - BillOfMaterialsID
+    - ProductAssemblyID
+    - ComponentID
+    - StartDate
+    - EndDate
+    - UnitMeasureCode
+    - BOMLevel
+    - PerAssemblyQty
+    - ModifiedDate
+primary_key:
+    - BillOfMaterialsID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Production.BillOfMaterials\" (\"BillOfMaterialsID\" INTEGER NOT NULL, \"ProductAssemblyID\" INTEGER, \"ComponentID\" INTEGER NOT NULL, \"StartDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', \"EndDate\" TEXT, \"UnitMeasureCode\" TEXT NOT NULL, \"BOMLevel\" INTEGER NOT NULL, \"PerAssemblyQty\" DECIMAL_TEXT(8,2) NOT NULL DEFAULT ''1.00'', \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CHECK ((\"EndDate\" \u003e \"StartDate\") OR (\"EndDate\" IS NULL)), CHECK (\"ProductAssemblyID\" \u003c\u003e \"ComponentID\"), CONSTRAINT \"PK_BillOfMaterials_BillOfMaterialsID\" PRIMARY KEY (\"BillOfMaterialsID\"), CONSTRAINT \"FK_BillOfMaterials_Product_ProductAssemblyID\" FOREIGN KEY (\"ProductAssemblyID\") REFERENCES \"Production.Product\" (\"ProductID\"), CONSTRAINT \"FK_BillOfMaterials_Product_ComponentID\" FOREIGN KEY (\"ComponentID\") REFERENCES \"Production.Product\" (\"ProductID\"), CONSTRAINT \"FK_BillOfMaterials_UnitMeasure_UnitMeasureCode\" FOREIGN KEY (\"UnitMeasureCode\") REFERENCES \"Production.UnitMeasure\" (\"UnitMeasureCode\"))","columns":[{"name":"BillOfMaterialsID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"ProductAssemblyID","declaredType":"INTEGER","notNull":false},{"name":"ComponentID","declaredType":"INTEGER","notNull":true},{"name":"StartDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"},{"name":"EndDate","declaredType":"TEXT","notNull":false},{"name":"UnitMeasureCode","declaredType":"TEXT","notNull":true},{"name":"BOMLevel","declaredType":"INTEGER","notNull":true},{"name":"PerAssemblyQty","declaredType":"DECIMAL_TEXT(8,2)","notNull":true,"defaultSql":"''1.00''"},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"Production_BillOfMaterials_AK_BillOfMaterials_ProductAssemblyID_ComponentID_StartDate","unique":true,"origin":"c","createSql":"CREATE UNIQUE INDEX \"Production_BillOfMaterials_AK_BillOfMaterials_ProductAssemblyID_ComponentID_StartDate\" ON \"Production.BillOfMaterials\" (\"ProductAssemblyID\", \"ComponentID\", \"StartDate\")","columns":[{"position":0,"name":"ProductAssemblyID","key":true,"collation":"BINARY"},{"position":1,"name":"ComponentID","key":true,"collation":"BINARY"},{"position":2,"name":"StartDate","key":true,"collation":"BINARY"},{"position":3,"key":false,"collation":"BINARY"}]},{"name":"Production_BillOfMaterials_IX_BillOfMaterials_UnitMeasureCode","unique":false,"origin":"c","createSql":"CREATE INDEX \"Production_BillOfMaterials_IX_BillOfMaterials_UnitMeasureCode\" ON \"Production.BillOfMaterials\" (\"UnitMeasureCode\")","columns":[{"position":0,"name":"UnitMeasureCode","key":true,"collation":"BINARY"},{"position":1,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: BillOfMaterialsID
+          type: int
+          nullable: false
+        - name: ProductAssemblyID
+          type: int
+          nullable: true
+        - name: ComponentID
+          type: int
+          nullable: false
+        - name: StartDate
+          type: string
+          nullable: false
+        - name: EndDate
+          type: string
+          nullable: true
+        - name: UnitMeasureCode
+          type: string
+          nullable: false
+        - name: BOMLevel
+          type: int
+          nullable: false
+        - name: PerAssemblyQty
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    indexes:
+        - name: Production_BillOfMaterials_AK_BillOfMaterials_ProductAssemblyID_ComponentID_StartDate
+          fields:
+            - ProductAssemblyID
+            - ComponentID
+            - StartDate
+          unique: true
+        - name: Production_BillOfMaterials_IX_BillOfMaterials_UnitMeasureCode
+          fields:
+            - UnitMeasureCode
+    foreign_keys:
+        - name: Production.BillOfMaterials_fk_0
+          fields:
+            - UnitMeasureCode
+          referenced_collection: Production.UnitMeasure
+          referenced_fields:
+            - UnitMeasureCode
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Production.BillOfMaterials_fk_1
+          fields:
+            - ComponentID
+          referenced_collection: Production.Product
+          referenced_fields:
+            - ProductID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION
+        - name: Production.BillOfMaterials_fk_2
+          fields:
+            - ProductAssemblyID
+          referenced_collection: Production.Product
+          referenced_fields:
+            - ProductID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

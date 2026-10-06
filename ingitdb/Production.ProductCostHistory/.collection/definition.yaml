@@ -1,0 +1,59 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    ProductID:
+        type: int
+        required: true
+    StartDate:
+        type: string
+        required: true
+    EndDate:
+        type: string
+    StandardCost:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - ProductID
+    - StartDate
+    - EndDate
+    - StandardCost
+    - ModifiedDate
+primary_key:
+    - ProductID
+    - StartDate
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"Production.ProductCostHistory\" (\"ProductID\" INTEGER NOT NULL, \"StartDate\" TEXT NOT NULL, \"EndDate\" TEXT, \"StandardCost\" DECIMAL_TEXT(19,4) NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CHECK ((\"EndDate\" \u003e= \"StartDate\") OR (\"EndDate\" IS NULL)), CONSTRAINT \"PK_ProductCostHistory_ProductID_StartDate\" PRIMARY KEY (\"ProductID\", \"StartDate\"), CONSTRAINT \"FK_ProductCostHistory_Product_ProductID\" FOREIGN KEY (\"ProductID\") REFERENCES \"Production.Product\" (\"ProductID\"))","columns":[{"name":"ProductID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"StartDate","declaredType":"TEXT","notNull":true,"primaryKeyPosition":2},{"name":"EndDate","declaredType":"TEXT","notNull":false},{"name":"StandardCost","declaredType":"DECIMAL_TEXT(19,4)","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}],"indexes":[{"name":"sqlite_autoindex_Production.ProductCostHistory_1","unique":true,"origin":"pk","columns":[{"position":0,"name":"ProductID","key":true,"collation":"BINARY"},{"position":1,"name":"StartDate","key":true,"collation":"BINARY"},{"position":2,"key":false,"collation":"BINARY"}]}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: ProductID
+          type: int
+          nullable: false
+        - name: StartDate
+          type: string
+          nullable: false
+        - name: EndDate
+          type: string
+          nullable: true
+        - name: StandardCost
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false
+    foreign_keys:
+        - name: Production.ProductCostHistory_fk_0
+          fields:
+            - ProductID
+          referenced_collection: Production.Product
+          referenced_fields:
+            - ProductID
+          source_enforcement: disabled
+          on_update: NO ACTION
+          on_delete: NO ACTION

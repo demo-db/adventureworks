@@ -1,0 +1,42 @@
+record_file:
+    name: records.json
+    format: json
+    type: map[$record_id]map[$field_name]any
+columns:
+    SystemInformationID:
+        type: int
+        required: true
+    Database Version:
+        type: string
+        required: true
+    VersionDate:
+        type: string
+        required: true
+    ModifiedDate:
+        type: string
+        required: true
+columns_order:
+    - SystemInformationID
+    - Database Version
+    - VersionDate
+    - ModifiedDate
+primary_key:
+    - SystemInformationID
+source_schema:
+    key_mode: source-primary-key
+    source_definition_json: '{"dialect":"sqlite","createSql":"CREATE TABLE \"dbo.AWBuildVersion\" (\"SystemInformationID\" INTEGER NOT NULL, \"Database Version\" TEXT NOT NULL, \"VersionDate\" TEXT NOT NULL, \"ModifiedDate\" TEXT NOT NULL DEFAULT ''2025-11-14 12:13:16.797'', CONSTRAINT \"PK_AWBuildVersion_SystemInformationID\" PRIMARY KEY (\"SystemInformationID\"))","columns":[{"name":"SystemInformationID","declaredType":"INTEGER","notNull":true,"primaryKeyPosition":1},{"name":"Database Version","declaredType":"TEXT","notNull":true},{"name":"VersionDate","declaredType":"TEXT","notNull":true},{"name":"ModifiedDate","declaredType":"TEXT","notNull":true,"defaultSql":"''2025-11-14 12:13:16.797''"}]}'
+    constraint_validation: provider-preflight-passed
+    relationship_comparison: provider-native
+    fields:
+        - name: SystemInformationID
+          type: int
+          nullable: false
+        - name: Database Version
+          type: string
+          nullable: false
+        - name: VersionDate
+          type: string
+          nullable: false
+        - name: ModifiedDate
+          type: string
+          nullable: false

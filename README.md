@@ -10,11 +10,31 @@ The pinned installer and CSV inputs are kept byte-for-byte, and generated CSV ex
 
 ## Native inGitDB snapshot
 
-The `ingitdb/` directory contains 759,240 source table rows across 71 collections. It is a Git-backed, queryable snapshot prepared from the pinned SQLite fixture. Verify and query it with the installed inGitDB CLI:
+The `ingitdb/` directory contains 759,240 source rows in 71 collections, exported from the pinned SQLite fixture by DataTug's generic DALgo → inGitDB exporter. The source fixture SHA-256 is `6a105e1982becfe003fc7a307d7cad9d738390cedd79d166c2167fd817168109`. This Git-backed edition is a queryable snapshot, not a live SQL database.
+
+Use DataTug CLI v0.61.1 or newer to reproduce this export, and inGitDB CLI v0.70.0 or newer to validate and query this edition.
 
 ```sh
 ingitdb validate --path ingitdb
-ingitdb select --path ingitdb --from humanresources_department_3ff8b674 --limit 1 --format json
+ingitdb select --path ingitdb --from 'HumanResources.Department' --limit 1 --format json
 ```
 
-[`ingitdb/export-manifest.json`](ingitdb/export-manifest.json) maps each native table to its collection, row count, original primary and foreign keys, column types, transport encodings, and SHA-256 of its record file. The source fixture SHA-256 is `6a105e1982becfe003fc7a307d7cad9d738390cedd79d166c2167fd817168109`. These bytes were exported against provider commit `5028a27189b487d6fd8025fafc1307aada707fd2`; the source fixture hash also matches this repository's pinned fixture. Record keys encode native primary keys where present; keyless tables use stable ordinal IDs, which are not native keys. Native `primary_key` names the source key columns while encoded record IDs remain the transport keys. inGitDB validates safe transported column types and required fields; `exportRequired` can be stricter than SQLite declaration for nullable primary keys. The export manifest preserves source SQL, ordered indexes and foreign-key groups with actions, defaults, and declared nullability. Foreign keys and SQL uniqueness, CHECK, collation, default, and action behavior are source metadata here, not constraints enforced by inGitDB. Exact decimal values travel as strings and binary values as base64 where marked in column metadata. Source view definitions are retained as metadata only; they are not materialized in inGitDB. Source rights and original notices remain in [`data-source/`](data-source/) and [`LICENSE`](LICENSE).
+Each source table has a `.collection/definition.yaml` with ordered fields, source primary-key columns, portable indexes and foreign-key groups/actions. `.ingitdb/source-collections.json` maps native collection IDs to exact SQLite table names; names outside inGitDB’s ID alphabet use a deterministic `dt_` UTF-8 hex ID. Its `source_schema.source_definition_json` retains the original SQLite DDL, declared column types, defaults and complete index details. The native record file is `records.json`, keyed by deterministic transport IDs derived from the ordered source primary key; keyless tables use source-row ordinals. These transport IDs are not new SQL columns. Exact decimals are stored as strings, BLOBs as base64, and `source-storage-*.jsonl` sidecars retain decimal SQLite storage classes where needed. The 11 source view definitions remain in `.ingitdb/source-views.yaml` as metadata; they are not materialized collections.
+
+The checked-in Git snapshot is the published inGitDB edition. [`ingitdb/export-manifest.json`](ingitdb/export-manifest.json) records the DataTug version, binary hash, pinned source and record checksums, plus the independent parity receipt at [`ingitdb/native-parity-report.json`](ingitdb/native-parity-report.json). Its `prepared-not-hosted` status describes the generated bundle before repository publication and also covers BigQuery load files; it does not imply a hosted BigQuery service.
+
+The published record format is DataTug's default JSON. To produce another edition from a verified, decoded copy of this pinned SQLite fixture, choose a **new** destination and pass `--records-format json` (default), `jsonl`, `ingr`, `csv`, or `yaml`:
+
+```sh
+datatug db export --from sqlite:///absolute/path/to/pinned-source.sqlite \
+  --to ingitdb:///absolute/path/to/new-output --records-format json
+```
+
+The independent checker in `demo-db/websites/scripts/hosting-tools/validate_datatug_exports.py` compares the native schema and every typed row at its transport ID with this repository's pinned source. Run it from a checkout containing both repositories:
+
+```sh
+python3 ../websites/scripts/hosting-tools/validate_datatug_exports.py . ingitdb \
+  --report /private/tmp/adventureworks-ingitdb-parity.json
+```
+
+The source primary keys, foreign keys, UNIQUE and CHECK constraints, defaults, collations and SQL actions are preserved as source metadata; inGitDB does not enforce their full SQL behavior on later record edits. Source rights and original notices remain in [`data-source/`](data-source/) and [`LICENSE`](LICENSE).
