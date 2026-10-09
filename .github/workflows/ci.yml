@@ -28,11 +28,11 @@ jobs:
           RUNNER_TEMP: ${{ runner.temp }}
         run: |
           set -eu
-          base="https://raw.githubusercontent.com/demo-db/websites/1121ffaaa9fae0b8f20ff2ad68bc43cb354efd1d"
+          base="https://raw.githubusercontent.com/demo-db/websites/a5126d30dfa00d2e8bc20560e75e205ddc334704"
           curl --fail --silent --show-error --location "$base/scripts/provider-tools/generate.py" -o "$RUNNER_TEMP/generate-provider.py"
-          printf '%s  %s\n' '6977d7af7b78673650d52a8a0380d215721c9c98e33c61fb54c1d33437df48e4' "$RUNNER_TEMP/generate-provider.py" | sha256sum --check
+          printf '%s  %s\n' 'cc010c7e15aea5c1e56c5068796e34b56cc5340766e4f6f1217f3be64dd31780' "$RUNNER_TEMP/generate-provider.py" | sha256sum --check
           curl --fail --silent --show-error --location "$base/schemas/ovdb-database-draft-1.schema.json" -o "$RUNNER_TEMP/ovdb-database-draft-1.schema.json"
-          printf '%s  %s\n' '5c3acdf1b858f45a78558555e92255f847fb54d8d1bcbef5567c89bdff77758d' "$RUNNER_TEMP/ovdb-database-draft-1.schema.json" | sha256sum --check
+          printf '%s  %s\n' '4af5dc5f48bce1bc2ba5cb6664dd2c28adcadd818c74da0e78fe428f6f6ec55b' "$RUNNER_TEMP/ovdb-database-draft-1.schema.json" | sha256sum --check
           mkdir -p "$RUNNER_TEMP/provider-generator/scripts/provider-tools" "$RUNNER_TEMP/provider-generator/schemas"
           cp "$RUNNER_TEMP/generate-provider.py" "$RUNNER_TEMP/provider-generator/scripts/provider-tools/generate.py"
           cp "$RUNNER_TEMP/ovdb-database-draft-1.schema.json" "$RUNNER_TEMP/provider-generator/schemas/ovdb-database-draft-1.schema.json"
@@ -76,11 +76,11 @@ jobs:
         run: |
           set -eu
           mkdir -p "$RUNNER_TEMP/adventureworks-tools"
-          curl --fail --silent --show-error --location 'https://github.com/modelspec-org/cli/releases/download/v0.1.2/modelspec_0.1.2_linux_amd64.tar.gz' -o "$RUNNER_TEMP/modelspec.tar.gz"
-          printf '%s  %s\n' '5682552df42cd8f25b78439e1ec52f1c53476e56815590203dd79583415f32c5' "$RUNNER_TEMP/modelspec.tar.gz" | sha256sum --check
+          curl --fail --silent --show-error --location 'https://github.com/modelspec-org/cli/releases/download/v0.2.0/modelspec_0.2.0_linux_amd64.tar.gz' -o "$RUNNER_TEMP/modelspec.tar.gz"
+          printf '%s  %s\n' '95b999570c633a4eba07014dccaf31dc71cfc9e9e7711c3cc254cb377bc2ddbc' "$RUNNER_TEMP/modelspec.tar.gz" | sha256sum --check
           tar -xzf "$RUNNER_TEMP/modelspec.tar.gz" -C "$RUNNER_TEMP/adventureworks-tools" modelspec
-          curl --fail --silent --show-error --location 'https://github.com/meaninggraph/cli/releases/download/v0.2.0/meaninggraph_0.2.0_linux_amd64.tar.gz' -o "$RUNNER_TEMP/meaninggraph.tar.gz"
-          printf '%s  %s\n' '582c109132d26db1b940e6af757185c821e318ba7aa0ad073e30daa788e15767' "$RUNNER_TEMP/meaninggraph.tar.gz" | sha256sum --check
+          curl --fail --silent --show-error --location 'https://github.com/meaninggraph/cli/releases/download/v0.3.0/meaninggraph_0.3.0_linux_amd64.tar.gz' -o "$RUNNER_TEMP/meaninggraph.tar.gz"
+          printf '%s  %s\n' 'f8073b9ab5547551e00d021fcd83c4ff52c4a49034f9ee5719512dfade9afdf8' "$RUNNER_TEMP/meaninggraph.tar.gz" | sha256sum --check
           tar -xzf "$RUNNER_TEMP/meaninggraph.tar.gz" -C "$RUNNER_TEMP/adventureworks-tools" meaninggraph
 
       - name: Validate the published ModelSpec and HCL export
