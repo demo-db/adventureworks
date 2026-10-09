@@ -611,12 +611,12 @@
       "bytes": 8182
     },
     "model/adventureworks.modelspec.hcl": {
-      "sha256": "f5492447a3749572d4c877a2b2afd8aa9b80cfdf2d0e3c53e4e5c7635abd47ee",
-      "bytes": 39730
+      "sha256": "e9490dcf640e659888ce6909fd7275bb97dd5d10659eaeda7dd8075bff273aaa",
+      "bytes": 38272
     },
     "model/adventureworks.modelspec.json": {
-      "sha256": "0ee66302e280572c5b1fe8598e2063755a5563504befe35b0d6ebfa34da25ca8",
-      "bytes": 52388
+      "sha256": "965100051c002b8078247a541c47a0fba154d2067ddfd009becb1daec477609c",
+      "bytes": 52105
     },
     "ovdb-database.json": {
       "sha256": "7885259b70241a932a6200b680ed667c97acfb35bf8d30f5395fe9a9ce22ccd6",
@@ -627,8 +627,8 @@
       "bytes": 7531
     },
     "schemas/ovdb-database-draft-1.schema.json": {
-      "sha256": "5c3acdf1b858f45a78558555e92255f847fb54d8d1bcbef5567c89bdff77758d",
-      "bytes": 5826
+      "sha256": "4af5dc5f48bce1bc2ba5cb6664dd2c28adcadd818c74da0e78fe428f6f6ec55b",
+      "bytes": 6001
     }
   }
 }

@@ -13,6 +13,7 @@
     "serverDbBaseUrl": { "$ref": "#/$defs/httpsUrl" },
     "title": { "type": "string", "minLength": 1 },
     "description": { "type": "string", "minLength": 1 },
+    "tags": { "type": "array", "maxItems": 16, "uniqueItems": true, "items": { "type": "string", "minLength": 1, "maxLength": 64, "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" } },
     "homepage": { "$ref": "#/$defs/httpsUrl" },
     "apiUrl": { "$ref": "#/$defs/httpsUrl" },
     "capabilities": {
