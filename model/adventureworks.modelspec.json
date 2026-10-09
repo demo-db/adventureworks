@@ -1,16 +1,16 @@
 {
-  "modelspec": "1.0-draft",
+  "modelspec": "1.0-draft-2",
   "module": {
     "id": "github.com/demo-db/adventureworks/adventureworks",
     "name": "adventureworks",
     "version": "0.1.0"
   },
-  "entities": {
+  "records": {
     "HumanResources_Department": {
       "key": [
         "DepartmentID"
       ],
-      "properties": {
+      "fields": {
         "DepartmentID": {
           "required": true,
           "type": "int"
@@ -33,10 +33,10 @@
       "key": [
         "BusinessEntityID"
       ],
-      "properties": {
+      "fields": {
         "BusinessEntityID": {
           "required": true,
-          "entity": "Person_Person"
+          "record": "Person_Person"
         },
         "NationalIDNumber": {
           "required": true,
@@ -105,18 +105,18 @@
         "DepartmentID",
         "ShiftID"
       ],
-      "properties": {
+      "fields": {
         "BusinessEntityID": {
           "required": true,
-          "entity": "HumanResources_Employee"
+          "record": "HumanResources_Employee"
         },
         "DepartmentID": {
           "required": true,
-          "entity": "HumanResources_Department"
+          "record": "HumanResources_Department"
         },
         "ShiftID": {
           "required": true,
-          "entity": "HumanResources_Shift"
+          "record": "HumanResources_Shift"
         },
         "StartDate": {
           "required": true,
@@ -136,10 +136,10 @@
         "BusinessEntityID",
         "RateChangeDate"
       ],
-      "properties": {
+      "fields": {
         "BusinessEntityID": {
           "required": true,
-          "entity": "HumanResources_Employee"
+          "record": "HumanResources_Employee"
         },
         "RateChangeDate": {
           "required": true,
@@ -163,13 +163,13 @@
       "key": [
         "JobCandidateID"
       ],
-      "properties": {
+      "fields": {
         "JobCandidateID": {
           "required": true,
           "type": "int"
         },
         "BusinessEntityID": {
-          "entity": "HumanResources_Employee"
+          "record": "HumanResources_Employee"
         },
         "Resume": {
           "type": "string"
@@ -184,7 +184,7 @@
       "key": [
         "ShiftID"
       ],
-      "properties": {
+      "fields": {
         "ShiftID": {
           "required": true,
           "type": "int"
@@ -211,7 +211,7 @@
       "key": [
         "AddressID"
       ],
-      "properties": {
+      "fields": {
         "AddressID": {
           "required": true,
           "type": "int"
@@ -229,7 +229,7 @@
         },
         "StateProvinceID": {
           "required": true,
-          "entity": "Person_StateProvince"
+          "record": "Person_StateProvince"
         },
         "PostalCode": {
           "required": true,
@@ -252,7 +252,7 @@
       "key": [
         "AddressTypeID"
       ],
-      "properties": {
+      "fields": {
         "AddressTypeID": {
           "required": true,
           "type": "int"
@@ -275,7 +275,7 @@
       "key": [
         "BusinessEntityID"
       ],
-      "properties": {
+      "fields": {
         "BusinessEntityID": {
           "required": true,
           "type": "int"
@@ -296,18 +296,18 @@
         "AddressID",
         "AddressTypeID"
       ],
-      "properties": {
+      "fields": {
         "BusinessEntityID": {
           "required": true,
-          "entity": "Person_BusinessEntity"
+          "record": "Person_BusinessEntity"
         },
         "AddressID": {
           "required": true,
-          "entity": "Person_Address"
+          "record": "Person_Address"
         },
         "AddressTypeID": {
           "required": true,
-          "entity": "Person_AddressType"
+          "record": "Person_AddressType"
         },
         "rowguid": {
           "required": true,
@@ -325,18 +325,18 @@
         "PersonID",
         "ContactTypeID"
       ],
-      "properties": {
+      "fields": {
         "BusinessEntityID": {
           "required": true,
-          "entity": "Person_BusinessEntity"
+          "record": "Person_BusinessEntity"
         },
         "PersonID": {
           "required": true,
-          "entity": "Person_Person"
+          "record": "Person_Person"
         },
         "ContactTypeID": {
           "required": true,
-          "entity": "Person_ContactType"
+          "record": "Person_ContactType"
         },
         "rowguid": {
           "required": true,
@@ -352,7 +352,7 @@
       "key": [
         "ContactTypeID"
       ],
-      "properties": {
+      "fields": {
         "ContactTypeID": {
           "required": true,
           "type": "int"
@@ -371,7 +371,7 @@
       "key": [
         "CountryRegionCode"
       ],
-      "properties": {
+      "fields": {
         "CountryRegionCode": {
           "required": true,
           "type": "string"
@@ -391,10 +391,10 @@
         "BusinessEntityID",
         "EmailAddressID"
       ],
-      "properties": {
+      "fields": {
         "BusinessEntityID": {
           "required": true,
-          "entity": "Person_Person"
+          "record": "Person_Person"
         },
         "EmailAddressID": {
           "required": true,
@@ -417,10 +417,10 @@
       "key": [
         "BusinessEntityID"
       ],
-      "properties": {
+      "fields": {
         "BusinessEntityID": {
           "required": true,
-          "entity": "Person_Person"
+          "record": "Person_Person"
         },
         "PasswordHash": {
           "required": true,
@@ -444,10 +444,10 @@
       "key": [
         "BusinessEntityID"
       ],
-      "properties": {
+      "fields": {
         "BusinessEntityID": {
           "required": true,
-          "entity": "Person_BusinessEntity"
+          "record": "Person_BusinessEntity"
         },
         "PersonType": {
           "required": true,
@@ -500,10 +500,10 @@
         "PhoneNumber",
         "PhoneNumberTypeID"
       ],
-      "properties": {
+      "fields": {
         "BusinessEntityID": {
           "required": true,
-          "entity": "Person_Person"
+          "record": "Person_Person"
         },
         "PhoneNumber": {
           "required": true,
@@ -511,7 +511,7 @@
         },
         "PhoneNumberTypeID": {
           "required": true,
-          "entity": "Person_PhoneNumberType"
+          "record": "Person_PhoneNumberType"
         },
         "ModifiedDate": {
           "required": true,
@@ -523,7 +523,7 @@
       "key": [
         "PhoneNumberTypeID"
       ],
-      "properties": {
+      "fields": {
         "PhoneNumberTypeID": {
           "required": true,
           "type": "int"
@@ -542,7 +542,7 @@
       "key": [
         "StateProvinceID"
       ],
-      "properties": {
+      "fields": {
         "StateProvinceID": {
           "required": true,
           "type": "int"
@@ -553,7 +553,7 @@
         },
         "CountryRegionCode": {
           "required": true,
-          "entity": "Person_CountryRegion"
+          "record": "Person_CountryRegion"
         },
         "IsOnlyStateProvinceFlag": {
           "required": true,
@@ -565,7 +565,7 @@
         },
         "TerritoryID": {
           "required": true,
-          "entity": "Sales_SalesTerritory"
+          "record": "Sales_SalesTerritory"
         },
         "rowguid": {
           "required": true,
@@ -581,17 +581,17 @@
       "key": [
         "BillOfMaterialsID"
       ],
-      "properties": {
+      "fields": {
         "BillOfMaterialsID": {
           "required": true,
           "type": "int"
         },
         "ProductAssemblyID": {
-          "entity": "Production_Product"
+          "record": "Production_Product"
         },
         "ComponentID": {
           "required": true,
-          "entity": "Production_Product"
+          "record": "Production_Product"
         },
         "StartDate": {
           "required": true,
@@ -602,7 +602,7 @@
         },
         "UnitMeasureCode": {
           "required": true,
-          "entity": "Production_UnitMeasure"
+          "record": "Production_UnitMeasure"
         },
         "BOMLevel": {
           "required": true,
@@ -622,7 +622,7 @@
       "key": [
         "CultureID"
       ],
-      "properties": {
+      "fields": {
         "CultureID": {
           "required": true,
           "type": "string"
@@ -641,7 +641,7 @@
       "key": [
         "DocumentNode"
       ],
-      "properties": {
+      "fields": {
         "DocumentNode": {
           "required": true,
           "type": "document"
@@ -655,7 +655,7 @@
         },
         "Owner": {
           "required": true,
-          "entity": "HumanResources_Employee"
+          "record": "HumanResources_Employee"
         },
         "FolderFlag": {
           "required": true,
@@ -701,7 +701,7 @@
       "key": [
         "IllustrationID"
       ],
-      "properties": {
+      "fields": {
         "IllustrationID": {
           "required": true,
           "type": "int"
@@ -719,7 +719,7 @@
       "key": [
         "LocationID"
       ],
-      "properties": {
+      "fields": {
         "LocationID": {
           "required": true,
           "type": "int"
@@ -746,7 +746,7 @@
       "key": [
         "ProductID"
       ],
-      "properties": {
+      "fields": {
         "ProductID": {
           "required": true,
           "type": "int"
@@ -790,10 +790,10 @@
           "type": "string"
         },
         "SizeUnitMeasureCode": {
-          "entity": "Production_UnitMeasure"
+          "record": "Production_UnitMeasure"
         },
         "WeightUnitMeasureCode": {
-          "entity": "Production_UnitMeasure"
+          "record": "Production_UnitMeasure"
         },
         "Weight": {
           "type": "decimal"
@@ -812,10 +812,10 @@
           "type": "string"
         },
         "ProductSubcategoryID": {
-          "entity": "Production_ProductSubcategory"
+          "record": "Production_ProductSubcategory"
         },
         "ProductModelID": {
-          "entity": "Production_ProductModel"
+          "record": "Production_ProductModel"
         },
         "SellStartDate": {
           "required": true,
@@ -841,7 +841,7 @@
       "key": [
         "ProductCategoryID"
       ],
-      "properties": {
+      "fields": {
         "ProductCategoryID": {
           "required": true,
           "type": "int"
@@ -865,10 +865,10 @@
         "ProductID",
         "StartDate"
       ],
-      "properties": {
+      "fields": {
         "ProductID": {
           "required": true,
-          "entity": "Production_Product"
+          "record": "Production_Product"
         },
         "StartDate": {
           "required": true,
@@ -891,7 +891,7 @@
       "key": [
         "ProductDescriptionID"
       ],
-      "properties": {
+      "fields": {
         "ProductDescriptionID": {
           "required": true,
           "type": "int"
@@ -915,14 +915,14 @@
         "ProductID",
         "DocumentNode"
       ],
-      "properties": {
+      "fields": {
         "ProductID": {
           "required": true,
-          "entity": "Production_Product"
+          "record": "Production_Product"
         },
         "DocumentNode": {
           "required": true,
-          "entity": "Production_Document"
+          "record": "Production_Document"
         },
         "ModifiedDate": {
           "required": true,
@@ -935,14 +935,14 @@
         "ProductID",
         "LocationID"
       ],
-      "properties": {
+      "fields": {
         "ProductID": {
           "required": true,
-          "entity": "Production_Product"
+          "record": "Production_Product"
         },
         "LocationID": {
           "required": true,
-          "entity": "Production_Location"
+          "record": "Production_Location"
         },
         "Shelf": {
           "required": true,
@@ -971,10 +971,10 @@
         "ProductID",
         "StartDate"
       ],
-      "properties": {
+      "fields": {
         "ProductID": {
           "required": true,
-          "entity": "Production_Product"
+          "record": "Production_Product"
         },
         "StartDate": {
           "required": true,
@@ -997,7 +997,7 @@
       "key": [
         "ProductModelID"
       ],
-      "properties": {
+      "fields": {
         "ProductModelID": {
           "required": true,
           "type": "int"
@@ -1027,14 +1027,14 @@
         "ProductModelID",
         "IllustrationID"
       ],
-      "properties": {
+      "fields": {
         "ProductModelID": {
           "required": true,
-          "entity": "Production_ProductModel"
+          "record": "Production_ProductModel"
         },
         "IllustrationID": {
           "required": true,
-          "entity": "Production_Illustration"
+          "record": "Production_Illustration"
         },
         "ModifiedDate": {
           "required": true,
@@ -1048,18 +1048,18 @@
         "ProductDescriptionID",
         "CultureID"
       ],
-      "properties": {
+      "fields": {
         "ProductModelID": {
           "required": true,
-          "entity": "Production_ProductModel"
+          "record": "Production_ProductModel"
         },
         "ProductDescriptionID": {
           "required": true,
-          "entity": "Production_ProductDescription"
+          "record": "Production_ProductDescription"
         },
         "CultureID": {
           "required": true,
-          "entity": "Production_Culture"
+          "record": "Production_Culture"
         },
         "ModifiedDate": {
           "required": true,
@@ -1071,7 +1071,7 @@
       "key": [
         "ProductPhotoID"
       ],
-      "properties": {
+      "fields": {
         "ProductPhotoID": {
           "required": true,
           "type": "int"
@@ -1099,14 +1099,14 @@
         "ProductID",
         "ProductPhotoID"
       ],
-      "properties": {
+      "fields": {
         "ProductID": {
           "required": true,
-          "entity": "Production_Product"
+          "record": "Production_Product"
         },
         "ProductPhotoID": {
           "required": true,
-          "entity": "Production_ProductPhoto"
+          "record": "Production_ProductPhoto"
         },
         "Primary": {
           "required": true,
@@ -1122,14 +1122,14 @@
       "key": [
         "ProductReviewID"
       ],
-      "properties": {
+      "fields": {
         "ProductReviewID": {
           "required": true,
           "type": "int"
         },
         "ProductID": {
           "required": true,
-          "entity": "Production_Product"
+          "record": "Production_Product"
         },
         "ReviewerName": {
           "required": true,
@@ -1160,14 +1160,14 @@
       "key": [
         "ProductSubcategoryID"
       ],
-      "properties": {
+      "fields": {
         "ProductSubcategoryID": {
           "required": true,
           "type": "int"
         },
         "ProductCategoryID": {
           "required": true,
-          "entity": "Production_ProductCategory"
+          "record": "Production_ProductCategory"
         },
         "Name": {
           "required": true,
@@ -1187,7 +1187,7 @@
       "key": [
         "ScrapReasonID"
       ],
-      "properties": {
+      "fields": {
         "ScrapReasonID": {
           "required": true,
           "type": "int"
@@ -1206,14 +1206,14 @@
       "key": [
         "TransactionID"
       ],
-      "properties": {
+      "fields": {
         "TransactionID": {
           "required": true,
           "type": "int"
         },
         "ProductID": {
           "required": true,
-          "entity": "Production_Product"
+          "record": "Production_Product"
         },
         "ReferenceOrderID": {
           "required": true,
@@ -1249,7 +1249,7 @@
       "key": [
         "TransactionID"
       ],
-      "properties": {
+      "fields": {
         "TransactionID": {
           "required": true,
           "type": "int"
@@ -1292,7 +1292,7 @@
       "key": [
         "UnitMeasureCode"
       ],
-      "properties": {
+      "fields": {
         "UnitMeasureCode": {
           "required": true,
           "type": "string"
@@ -1311,14 +1311,14 @@
       "key": [
         "WorkOrderID"
       ],
-      "properties": {
+      "fields": {
         "WorkOrderID": {
           "required": true,
           "type": "int"
         },
         "ProductID": {
           "required": true,
-          "entity": "Production_Product"
+          "record": "Production_Product"
         },
         "OrderQty": {
           "required": true,
@@ -1343,7 +1343,7 @@
           "type": "string"
         },
         "ScrapReasonID": {
-          "entity": "Production_ScrapReason"
+          "record": "Production_ScrapReason"
         },
         "ModifiedDate": {
           "required": true,
@@ -1357,10 +1357,10 @@
         "ProductID",
         "OperationSequence"
       ],
-      "properties": {
+      "fields": {
         "WorkOrderID": {
           "required": true,
-          "entity": "Production_WorkOrder"
+          "record": "Production_WorkOrder"
         },
         "ProductID": {
           "required": true,
@@ -1372,7 +1372,7 @@
         },
         "LocationID": {
           "required": true,
-          "entity": "Production_Location"
+          "record": "Production_Location"
         },
         "ScheduledStartDate": {
           "required": true,
@@ -1409,14 +1409,14 @@
         "ProductID",
         "BusinessEntityID"
       ],
-      "properties": {
+      "fields": {
         "ProductID": {
           "required": true,
-          "entity": "Production_Product"
+          "record": "Production_Product"
         },
         "BusinessEntityID": {
           "required": true,
-          "entity": "Purchasing_Vendor"
+          "record": "Purchasing_Vendor"
         },
         "AverageLeadTime": {
           "required": true,
@@ -1445,7 +1445,7 @@
         },
         "UnitMeasureCode": {
           "required": true,
-          "entity": "Production_UnitMeasure"
+          "record": "Production_UnitMeasure"
         },
         "ModifiedDate": {
           "required": true,
@@ -1458,10 +1458,10 @@
         "PurchaseOrderID",
         "PurchaseOrderDetailID"
       ],
-      "properties": {
+      "fields": {
         "PurchaseOrderID": {
           "required": true,
-          "entity": "Purchasing_PurchaseOrderHeader"
+          "record": "Purchasing_PurchaseOrderHeader"
         },
         "PurchaseOrderDetailID": {
           "required": true,
@@ -1477,7 +1477,7 @@
         },
         "ProductID": {
           "required": true,
-          "entity": "Production_Product"
+          "record": "Production_Product"
         },
         "UnitPrice": {
           "required": true,
@@ -1507,7 +1507,7 @@
       "key": [
         "PurchaseOrderID"
       ],
-      "properties": {
+      "fields": {
         "PurchaseOrderID": {
           "required": true,
           "type": "int"
@@ -1522,15 +1522,15 @@
         },
         "EmployeeID": {
           "required": true,
-          "entity": "HumanResources_Employee"
+          "record": "HumanResources_Employee"
         },
         "VendorID": {
           "required": true,
-          "entity": "Purchasing_Vendor"
+          "record": "Purchasing_Vendor"
         },
         "ShipMethodID": {
           "required": true,
-          "entity": "Purchasing_ShipMethod"
+          "record": "Purchasing_ShipMethod"
         },
         "OrderDate": {
           "required": true,
@@ -1565,7 +1565,7 @@
       "key": [
         "ShipMethodID"
       ],
-      "properties": {
+      "fields": {
         "ShipMethodID": {
           "required": true,
           "type": "int"
@@ -1596,10 +1596,10 @@
       "key": [
         "BusinessEntityID"
       ],
-      "properties": {
+      "fields": {
         "BusinessEntityID": {
           "required": true,
-          "entity": "Person_BusinessEntity"
+          "record": "Person_BusinessEntity"
         },
         "AccountNumber": {
           "required": true,
@@ -1635,14 +1635,14 @@
         "CountryRegionCode",
         "CurrencyCode"
       ],
-      "properties": {
+      "fields": {
         "CountryRegionCode": {
           "required": true,
-          "entity": "Person_CountryRegion"
+          "record": "Person_CountryRegion"
         },
         "CurrencyCode": {
           "required": true,
-          "entity": "Sales_Currency"
+          "record": "Sales_Currency"
         },
         "ModifiedDate": {
           "required": true,
@@ -1654,7 +1654,7 @@
       "key": [
         "CreditCardID"
       ],
-      "properties": {
+      "fields": {
         "CreditCardID": {
           "required": true,
           "type": "int"
@@ -1685,7 +1685,7 @@
       "key": [
         "CurrencyCode"
       ],
-      "properties": {
+      "fields": {
         "CurrencyCode": {
           "required": true,
           "type": "string"
@@ -1704,7 +1704,7 @@
       "key": [
         "CurrencyRateID"
       ],
-      "properties": {
+      "fields": {
         "CurrencyRateID": {
           "required": true,
           "type": "int"
@@ -1715,11 +1715,11 @@
         },
         "FromCurrencyCode": {
           "required": true,
-          "entity": "Sales_Currency"
+          "record": "Sales_Currency"
         },
         "ToCurrencyCode": {
           "required": true,
-          "entity": "Sales_Currency"
+          "record": "Sales_Currency"
         },
         "AverageRate": {
           "required": true,
@@ -1739,19 +1739,19 @@
       "key": [
         "CustomerID"
       ],
-      "properties": {
+      "fields": {
         "CustomerID": {
           "required": true,
           "type": "int"
         },
         "PersonID": {
-          "entity": "Person_Person"
+          "record": "Person_Person"
         },
         "StoreID": {
-          "entity": "Sales_Store"
+          "record": "Sales_Store"
         },
         "TerritoryID": {
-          "entity": "Sales_SalesTerritory"
+          "record": "Sales_SalesTerritory"
         },
         "AccountNumber": {
           "type": "string"
@@ -1771,14 +1771,14 @@
         "BusinessEntityID",
         "CreditCardID"
       ],
-      "properties": {
+      "fields": {
         "BusinessEntityID": {
           "required": true,
-          "entity": "Person_Person"
+          "record": "Person_Person"
         },
         "CreditCardID": {
           "required": true,
-          "entity": "Sales_CreditCard"
+          "record": "Sales_CreditCard"
         },
         "ModifiedDate": {
           "required": true,
@@ -1791,10 +1791,10 @@
         "SalesOrderID",
         "SalesOrderDetailID"
       ],
-      "properties": {
+      "fields": {
         "SalesOrderID": {
           "required": true,
-          "entity": "Sales_SalesOrderHeader"
+          "record": "Sales_SalesOrderHeader"
         },
         "SalesOrderDetailID": {
           "required": true,
@@ -1809,11 +1809,11 @@
         },
         "ProductID": {
           "required": true,
-          "entity": "Sales_SpecialOfferProduct"
+          "record": "Sales_SpecialOfferProduct"
         },
         "SpecialOfferID": {
           "required": true,
-          "entity": "Sales_SpecialOfferProduct"
+          "record": "Sales_SpecialOfferProduct"
         },
         "UnitPrice": {
           "required": true,
@@ -1840,7 +1840,7 @@
       "key": [
         "SalesOrderID"
       ],
-      "properties": {
+      "fields": {
         "SalesOrderID": {
           "required": true,
           "type": "int"
@@ -1879,34 +1879,34 @@
         },
         "CustomerID": {
           "required": true,
-          "entity": "Sales_Customer"
+          "record": "Sales_Customer"
         },
         "SalesPersonID": {
-          "entity": "Sales_SalesPerson"
+          "record": "Sales_SalesPerson"
         },
         "TerritoryID": {
-          "entity": "Sales_SalesTerritory"
+          "record": "Sales_SalesTerritory"
         },
         "BillToAddressID": {
           "required": true,
-          "entity": "Person_Address"
+          "record": "Person_Address"
         },
         "ShipToAddressID": {
           "required": true,
-          "entity": "Person_Address"
+          "record": "Person_Address"
         },
         "ShipMethodID": {
           "required": true,
-          "entity": "Purchasing_ShipMethod"
+          "record": "Purchasing_ShipMethod"
         },
         "CreditCardID": {
-          "entity": "Sales_CreditCard"
+          "record": "Sales_CreditCard"
         },
         "CreditCardApprovalCode": {
           "type": "string"
         },
         "CurrencyRateID": {
-          "entity": "Sales_CurrencyRate"
+          "record": "Sales_CurrencyRate"
         },
         "SubTotal": {
           "required": true,
@@ -1941,14 +1941,14 @@
         "SalesOrderID",
         "SalesReasonID"
       ],
-      "properties": {
+      "fields": {
         "SalesOrderID": {
           "required": true,
-          "entity": "Sales_SalesOrderHeader"
+          "record": "Sales_SalesOrderHeader"
         },
         "SalesReasonID": {
           "required": true,
-          "entity": "Sales_SalesReason"
+          "record": "Sales_SalesReason"
         },
         "ModifiedDate": {
           "required": true,
@@ -1960,13 +1960,13 @@
       "key": [
         "BusinessEntityID"
       ],
-      "properties": {
+      "fields": {
         "BusinessEntityID": {
           "required": true,
-          "entity": "HumanResources_Employee"
+          "record": "HumanResources_Employee"
         },
         "TerritoryID": {
-          "entity": "Sales_SalesTerritory"
+          "record": "Sales_SalesTerritory"
         },
         "SalesQuota": {
           "type": "decimal"
@@ -2002,10 +2002,10 @@
         "BusinessEntityID",
         "QuotaDate"
       ],
-      "properties": {
+      "fields": {
         "BusinessEntityID": {
           "required": true,
-          "entity": "Sales_SalesPerson"
+          "record": "Sales_SalesPerson"
         },
         "QuotaDate": {
           "required": true,
@@ -2029,7 +2029,7 @@
       "key": [
         "SalesReasonID"
       ],
-      "properties": {
+      "fields": {
         "SalesReasonID": {
           "required": true,
           "type": "int"
@@ -2052,14 +2052,14 @@
       "key": [
         "SalesTaxRateID"
       ],
-      "properties": {
+      "fields": {
         "SalesTaxRateID": {
           "required": true,
           "type": "int"
         },
         "StateProvinceID": {
           "required": true,
-          "entity": "Person_StateProvince"
+          "record": "Person_StateProvince"
         },
         "TaxType": {
           "required": true,
@@ -2087,7 +2087,7 @@
       "key": [
         "TerritoryID"
       ],
-      "properties": {
+      "fields": {
         "TerritoryID": {
           "required": true,
           "type": "int"
@@ -2098,7 +2098,7 @@
         },
         "CountryRegionCode": {
           "required": true,
-          "entity": "Person_CountryRegion"
+          "record": "Person_CountryRegion"
         },
         "Group": {
           "required": true,
@@ -2136,14 +2136,14 @@
         "StartDate",
         "TerritoryID"
       ],
-      "properties": {
+      "fields": {
         "BusinessEntityID": {
           "required": true,
-          "entity": "Sales_SalesPerson"
+          "record": "Sales_SalesPerson"
         },
         "TerritoryID": {
           "required": true,
-          "entity": "Sales_SalesTerritory"
+          "record": "Sales_SalesTerritory"
         },
         "StartDate": {
           "required": true,
@@ -2166,7 +2166,7 @@
       "key": [
         "ShoppingCartItemID"
       ],
-      "properties": {
+      "fields": {
         "ShoppingCartItemID": {
           "required": true,
           "type": "int"
@@ -2181,7 +2181,7 @@
         },
         "ProductID": {
           "required": true,
-          "entity": "Production_Product"
+          "record": "Production_Product"
         },
         "DateCreated": {
           "required": true,
@@ -2197,7 +2197,7 @@
       "key": [
         "SpecialOfferID"
       ],
-      "properties": {
+      "fields": {
         "SpecialOfferID": {
           "required": true,
           "type": "int"
@@ -2248,14 +2248,14 @@
         "SpecialOfferID",
         "ProductID"
       ],
-      "properties": {
+      "fields": {
         "SpecialOfferID": {
           "required": true,
-          "entity": "Sales_SpecialOffer"
+          "record": "Sales_SpecialOffer"
         },
         "ProductID": {
           "required": true,
-          "entity": "Production_Product"
+          "record": "Production_Product"
         },
         "rowguid": {
           "required": true,
@@ -2271,17 +2271,17 @@
       "key": [
         "BusinessEntityID"
       ],
-      "properties": {
+      "fields": {
         "BusinessEntityID": {
           "required": true,
-          "entity": "Person_BusinessEntity"
+          "record": "Person_BusinessEntity"
         },
         "Name": {
           "required": true,
           "type": "string"
         },
         "SalesPersonID": {
-          "entity": "Sales_SalesPerson"
+          "record": "Sales_SalesPerson"
         },
         "Demographics": {
           "type": "string"
@@ -2300,7 +2300,7 @@
       "key": [
         "SystemInformationID"
       ],
-      "properties": {
+      "fields": {
         "SystemInformationID": {
           "required": true,
           "type": "int"
@@ -2323,7 +2323,7 @@
       "key": [
         "DatabaseLogID"
       ],
-      "properties": {
+      "fields": {
         "DatabaseLogID": {
           "required": true,
           "type": "int"
@@ -2360,7 +2360,7 @@
       "key": [
         "ErrorLogID"
       ],
-      "properties": {
+      "fields": {
         "ErrorLogID": {
           "required": true,
           "type": "int"
