@@ -1,0 +1,66 @@
+{
+  "attribution": "AdventureWorks OLTP sample database, Copyright (c) Microsoft Corporation, MIT licence, https://github.com/microsoft/sql-server-samples at revision beaab06ef72831089ca80e5355d65e661fd19b26",
+  "format": "demodb-dialect-scripts/v1",
+  "id": "adventureworks",
+  "scripts": {
+    "mysql": {
+      "inputs": {
+        "attribution": "AdventureWorks OLTP sample database, Copyright (c) Microsoft Corporation, MIT licence, https://github.com/microsoft/sql-server-samples at revision beaab06ef72831089ca80e5355d65e661fd19b26",
+        "dialect": "mysql",
+        "edition": "DemoDB contract edition, identical to the SQLite/CSV/JSON",
+        "generator": {
+          "checksumsSha256": "c736ea434e107cdf0189c7f0b82b08e81c1475cb92e593d5aafc6c7b7b434f60",
+          "tag": "v0.97.1"
+        },
+        "license": "MIT",
+        "name": "adventureworks",
+        "sqliteSha256": "6a105e1982becfe003fc7a307d7cad9d738390cedd79d166c2167fd817168109"
+      },
+      "inputsSha256": "cfe628f80c0ec092177bf1e51b5bff1f061020dace7433a23b78734d3fe185c4",
+      "report": {
+        "bytes": 48447,
+        "path": "dialect-scripts/adventureworks.mysql.report.json",
+        "sha256": "a6a94fc09113ef0995439bb4e5ae529e84d8662ca3cb8d59f28d03f5d2d23e45",
+        "warnings": {
+          "collation-not-carried": 8,
+          "constraint-name-not-carried": 2,
+          "default-translated": 22,
+          "index-renamed": 14,
+          "key-type-bounded": 92,
+          "type-widened": 1,
+          "values-normalized": 25,
+          "view-not-carried": 11
+        }
+      },
+      "stored": {
+        "compression": "gzip",
+        "decodedBytes": 102991545,
+        "decodedSha256": "d7866ea26b6d07881a52118506ddaa102ad3d8e7b1f7a341e50c055ac92da75f",
+        "encodedBytes": 19074936,
+        "encodedSha256": "b8648828356ca4b7b35b39a7c3bd125d3adea91a9ff09e73cd096fc6ca59765a",
+        "files": [
+          {
+            "bytes": 19074936,
+            "path": "dialect-scripts/adventureworks.mysql.sql.gz",
+            "sha256": "b8648828356ca4b7b35b39a7c3bd125d3adea91a9ff09e73cd096fc6ca59765a"
+          }
+        ],
+        "mode": "gzip"
+      },
+      "verification": {
+        "date": "2026-10-16",
+        "differences": 0,
+        "engine": "MySQL 8.4.11 (official mysql:8.4 image)",
+        "image": "mysql:8.4@sha256:24989179f58856db763f418010c1169fecc944e3ec1ea7e921572d83eb070f70",
+        "loadedWith": "mysql client of the same image, --default-character-set=utf8mb4 --skip-commands --skip-system-command, stop at first error",
+        "rows": 759240,
+        "scriptSha256": "d7866ea26b6d07881a52118506ddaa102ad3d8e7b1f7a341e50c055ac92da75f",
+        "secondLoadRefusedAtMarkerTable": true,
+        "tables": 71,
+        "valuesCompared": 7110291,
+        "verifier": "datatug-cli internal/crossverify TestJourneyMySQL at v0.97.1, run locally over this exact script; reads source and target through Go drivers",
+        "verifierWarnings": 175
+      }
+    }
+  }
+}
