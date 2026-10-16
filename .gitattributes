@@ -6,3 +6,5 @@ data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/*.c
 data-source/microsoft-sql-server-samples/adventure-works/oltp-install-script/instawdb.sql whitespace=-blank-at-eol,-cr-at-eol,-space-before-tab
 artifacts/data/*.csv whitespace=-blank-at-eol,-cr-at-eol,-space-before-tab
 artifacts/adventureworks.sql whitespace=-blank-at-eol,-cr-at-eol,-space-before-tab
+# The generated scripts are LF text whose bytes are pinned by SHA-256: never convert line ends on checkout.
+dialect-scripts/** -text
