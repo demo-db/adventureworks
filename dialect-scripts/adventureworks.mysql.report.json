@@ -1,0 +1,1250 @@
+{
+  "dataset": "adventureworks",
+  "dialect": "mysql",
+  "format": "demodb-dialect-report/v1",
+  "generator": "v0.100.0",
+  "tables": [
+    {
+      "columns": 8,
+      "name": "dbo.DatabaseLog",
+      "rows": 0
+    },
+    {
+      "columns": 9,
+      "name": "dbo.ErrorLog",
+      "rows": 0
+    },
+    {
+      "columns": 9,
+      "name": "Person.Address",
+      "rows": 19614
+    },
+    {
+      "columns": 4,
+      "name": "Person.AddressType",
+      "rows": 6
+    },
+    {
+      "columns": 4,
+      "name": "dbo.AWBuildVersion",
+      "rows": 1
+    },
+    {
+      "columns": 9,
+      "name": "Production.BillOfMaterials",
+      "rows": 2679
+    },
+    {
+      "columns": 3,
+      "name": "Person.BusinessEntity",
+      "rows": 20777
+    },
+    {
+      "columns": 5,
+      "name": "Person.BusinessEntityAddress",
+      "rows": 19614
+    },
+    {
+      "columns": 5,
+      "name": "Person.BusinessEntityContact",
+      "rows": 909
+    },
+    {
+      "columns": 3,
+      "name": "Person.ContactType",
+      "rows": 20
+    },
+    {
+      "columns": 3,
+      "name": "Sales.CountryRegionCurrency",
+      "rows": 109
+    },
+    {
+      "columns": 3,
+      "name": "Person.CountryRegion",
+      "rows": 238
+    },
+    {
+      "columns": 6,
+      "name": "Sales.CreditCard",
+      "rows": 19118
+    },
+    {
+      "columns": 3,
+      "name": "Production.Culture",
+      "rows": 8
+    },
+    {
+      "columns": 3,
+      "name": "Sales.Currency",
+      "rows": 105
+    },
+    {
+      "columns": 7,
+      "name": "Sales.CurrencyRate",
+      "rows": 13532
+    },
+    {
+      "columns": 7,
+      "name": "Sales.Customer",
+      "rows": 19820
+    },
+    {
+      "columns": 4,
+      "name": "HumanResources.Department",
+      "rows": 16
+    },
+    {
+      "columns": 14,
+      "name": "Production.Document",
+      "rows": 12
+    },
+    {
+      "columns": 5,
+      "name": "Person.EmailAddress",
+      "rows": 19972
+    },
+    {
+      "columns": 16,
+      "name": "HumanResources.Employee",
+      "rows": 290
+    },
+    {
+      "columns": 6,
+      "name": "HumanResources.EmployeeDepartmentHistory",
+      "rows": 296
+    },
+    {
+      "columns": 5,
+      "name": "HumanResources.EmployeePayHistory",
+      "rows": 316
+    },
+    {
+      "columns": 3,
+      "name": "Production.Illustration",
+      "rows": 5
+    },
+    {
+      "columns": 4,
+      "name": "HumanResources.JobCandidate",
+      "rows": 13
+    },
+    {
+      "columns": 5,
+      "name": "Production.Location",
+      "rows": 14
+    },
+    {
+      "columns": 5,
+      "name": "Person.Password",
+      "rows": 19972
+    },
+    {
+      "columns": 13,
+      "name": "Person.Person",
+      "rows": 19972
+    },
+    {
+      "columns": 3,
+      "name": "Sales.PersonCreditCard",
+      "rows": 19118
+    },
+    {
+      "columns": 4,
+      "name": "Person.PersonPhone",
+      "rows": 19972
+    },
+    {
+      "columns": 3,
+      "name": "Person.PhoneNumberType",
+      "rows": 3
+    },
+    {
+      "columns": 25,
+      "name": "Production.Product",
+      "rows": 504
+    },
+    {
+      "columns": 4,
+      "name": "Production.ProductCategory",
+      "rows": 4
+    },
+    {
+      "columns": 5,
+      "name": "Production.ProductCostHistory",
+      "rows": 395
+    },
+    {
+      "columns": 4,
+      "name": "Production.ProductDescription",
+      "rows": 762
+    },
+    {
+      "columns": 3,
+      "name": "Production.ProductDocument",
+      "rows": 32
+    },
+    {
+      "columns": 7,
+      "name": "Production.ProductInventory",
+      "rows": 1069
+    },
+    {
+      "columns": 5,
+      "name": "Production.ProductListPriceHistory",
+      "rows": 395
+    },
+    {
+      "columns": 6,
+      "name": "Production.ProductModel",
+      "rows": 128
+    },
+    {
+      "columns": 3,
+      "name": "Production.ProductModelIllustration",
+      "rows": 7
+    },
+    {
+      "columns": 4,
+      "name": "Production.ProductModelProductDescriptionCulture",
+      "rows": 762
+    },
+    {
+      "columns": 6,
+      "name": "Production.ProductPhoto",
+      "rows": 101
+    },
+    {
+      "columns": 4,
+      "name": "Production.ProductProductPhoto",
+      "rows": 504
+    },
+    {
+      "columns": 8,
+      "name": "Production.ProductReview",
+      "rows": 4
+    },
+    {
+      "columns": 5,
+      "name": "Production.ProductSubcategory",
+      "rows": 37
+    },
+    {
+      "columns": 11,
+      "name": "Purchasing.ProductVendor",
+      "rows": 460
+    },
+    {
+      "columns": 11,
+      "name": "Purchasing.PurchaseOrderDetail",
+      "rows": 8845
+    },
+    {
+      "columns": 13,
+      "name": "Purchasing.PurchaseOrderHeader",
+      "rows": 4012
+    },
+    {
+      "columns": 11,
+      "name": "Sales.SalesOrderDetail",
+      "rows": 121317
+    },
+    {
+      "columns": 26,
+      "name": "Sales.SalesOrderHeader",
+      "rows": 31465
+    },
+    {
+      "columns": 3,
+      "name": "Sales.SalesOrderHeaderSalesReason",
+      "rows": 27647
+    },
+    {
+      "columns": 9,
+      "name": "Sales.SalesPerson",
+      "rows": 17
+    },
+    {
+      "columns": 5,
+      "name": "Sales.SalesPersonQuotaHistory",
+      "rows": 163
+    },
+    {
+      "columns": 4,
+      "name": "Sales.SalesReason",
+      "rows": 10
+    },
+    {
+      "columns": 7,
+      "name": "Sales.SalesTaxRate",
+      "rows": 29
+    },
+    {
+      "columns": 10,
+      "name": "Sales.SalesTerritory",
+      "rows": 10
+    },
+    {
+      "columns": 6,
+      "name": "Sales.SalesTerritoryHistory",
+      "rows": 17
+    },
+    {
+      "columns": 3,
+      "name": "Production.ScrapReason",
+      "rows": 16
+    },
+    {
+      "columns": 5,
+      "name": "HumanResources.Shift",
+      "rows": 3
+    },
+    {
+      "columns": 6,
+      "name": "Purchasing.ShipMethod",
+      "rows": 5
+    },
+    {
+      "columns": 6,
+      "name": "Sales.ShoppingCartItem",
+      "rows": 3
+    },
+    {
+      "columns": 11,
+      "name": "Sales.SpecialOffer",
+      "rows": 16
+    },
+    {
+      "columns": 4,
+      "name": "Sales.SpecialOfferProduct",
+      "rows": 538
+    },
+    {
+      "columns": 8,
+      "name": "Person.StateProvince",
+      "rows": 181
+    },
+    {
+      "columns": 6,
+      "name": "Sales.Store",
+      "rows": 701
+    },
+    {
+      "columns": 9,
+      "name": "Production.TransactionHistory",
+      "rows": 113443
+    },
+    {
+      "columns": 9,
+      "name": "Production.TransactionHistoryArchive",
+      "rows": 89253
+    },
+    {
+      "columns": 3,
+      "name": "Production.UnitMeasure",
+      "rows": 38
+    },
+    {
+      "columns": 8,
+      "name": "Purchasing.Vendor",
+      "rows": 104
+    },
+    {
+      "columns": 10,
+      "name": "Production.WorkOrder",
+      "rows": 72591
+    },
+    {
+      "columns": 12,
+      "name": "Production.WorkOrderRouting",
+      "rows": 67131
+    }
+  ],
+  "totals": {
+    "checkConstraints": 50,
+    "columns": 486,
+    "foreignKeys": 90,
+    "indexes": 94,
+    "primaryKeys": 71,
+    "rows": 759240,
+    "tables": 71,
+    "uniqueConstraints": 0
+  },
+  "warnings": [
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 26",
+      "object": "HumanResources.Department.Name"
+    },
+    {
+      "kind": "index-renamed",
+      "message": "index name cannot be used (the name is 70 characters and MySQL takes at most 64): created as \"HumanResources_Employee_IX_Employee_OrganizationLevel_O_02f31dac\"",
+      "object": "HumanResources.Employee.HumanResources_Employee_IX_Employee_OrganizationLevel_OrganizationNode"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 28",
+      "object": "HumanResources.Employee.LoginID"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 9",
+      "object": "HumanResources.Employee.NationalIDNumber"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARBINARY(4) (declared \"BLOB\"): MySQL cannot index an unbounded type; its longest value is 4",
+      "object": "HumanResources.Employee.OrganizationNode"
+    },
+    {
+      "kind": "collation-not-carried",
+      "message": "a comparison of text in this check ignores case and accents under MySQL's default collation, where SQLite compares exactly",
+      "object": "HumanResources.Employee.check #2"
+    },
+    {
+      "kind": "collation-not-carried",
+      "message": "a comparison of text in this check ignores case and accents under MySQL's default collation, where SQLite compares exactly",
+      "object": "HumanResources.Employee.check #4"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 36",
+      "object": "HumanResources.Employee.rowguid"
+    },
+    {
+      "kind": "index-renamed",
+      "message": "index name cannot be used (the name is 82 characters and MySQL takes at most 64): created as \"HumanResources_EmployeeDepartmentHistory_IX_EmployeeDep_4abbca7a\"",
+      "object": "HumanResources.EmployeeDepartmentHistory.HumanResources_EmployeeDepartmentHistory_IX_EmployeeDepartmentHistory_DepartmentID"
+    },
+    {
+      "kind": "index-renamed",
+      "message": "index name cannot be used (the name is 77 characters and MySQL takes at most 64): created as \"HumanResources_EmployeeDepartmentHistory_IX_EmployeeDep_7d2ba0b4\"",
+      "object": "HumanResources.EmployeeDepartmentHistory.HumanResources_EmployeeDepartmentHistory_IX_EmployeeDepartmentHistory_ShiftID"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 10",
+      "object": "HumanResources.EmployeeDepartmentHistory.StartDate"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 23",
+      "object": "HumanResources.EmployeePayHistory.RateChangeDate"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 16",
+      "object": "HumanResources.Shift.EndTime"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 7",
+      "object": "HumanResources.Shift.Name"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 16",
+      "object": "HumanResources.Shift.StartTime"
+    },
+    {
+      "kind": "view-not-carried",
+      "message": "views are written in the SQL dialect of their engine and are not translated across engines",
+      "object": "HumanResources.vEmployee"
+    },
+    {
+      "kind": "view-not-carried",
+      "message": "views are written in the SQL dialect of their engine and are not translated across engines",
+      "object": "HumanResources.vEmployeeDepartment"
+    },
+    {
+      "kind": "view-not-carried",
+      "message": "views are written in the SQL dialect of their engine and are not translated across engines",
+      "object": "HumanResources.vEmployeeDepartmentHistory"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(39) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 39",
+      "object": "Person.Address.AddressLine1"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(28) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 28",
+      "object": "Person.Address.AddressLine2"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(21) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 21",
+      "object": "Person.Address.City"
+    },
+    {
+      "kind": "index-renamed",
+      "message": "index name cannot be used (the name is 83 characters and MySQL takes at most 64): created as \"Person_Address_IX_Address_AddressLine1_AddressLine2_Cit_08c9571b\"",
+      "object": "Person.Address.Person_Address_IX_Address_AddressLine1_AddressLine2_City_StateProvinceID_PostalCode"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(10) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 10",
+      "object": "Person.Address.PostalCode"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 36",
+      "object": "Person.Address.rowguid"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 11",
+      "object": "Person.AddressType.Name"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 36",
+      "object": "Person.AddressType.rowguid"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 36",
+      "object": "Person.BusinessEntity.rowguid"
+    },
+    {
+      "kind": "index-renamed",
+      "message": "index name cannot be used (the name is 67 characters and MySQL takes at most 64): created as \"Person_BusinessEntityAddress_IX_BusinessEntityAddress_A_16d3ced5\"",
+      "object": "Person.BusinessEntityAddress.Person_BusinessEntityAddress_IX_BusinessEntityAddress_AddressTypeID"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 36",
+      "object": "Person.BusinessEntityAddress.rowguid"
+    },
+    {
+      "kind": "index-renamed",
+      "message": "index name cannot be used (the name is 67 characters and MySQL takes at most 64): created as \"Person_BusinessEntityContact_IX_BusinessEntityContact_C_2ce8596c\"",
+      "object": "Person.BusinessEntityContact.Person_BusinessEntityContact_IX_BusinessEntityContact_ContactTypeID"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 36",
+      "object": "Person.BusinessEntityContact.rowguid"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 31",
+      "object": "Person.ContactType.Name"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 2",
+      "object": "Person.CountryRegion.CountryRegionCode"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 44",
+      "object": "Person.CountryRegion.Name"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 43",
+      "object": "Person.EmailAddress.EmailAddress"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 24",
+      "object": "Person.Person.FirstName"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 22",
+      "object": "Person.Person.LastName"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 16",
+      "object": "Person.Person.MiddleName"
+    },
+    {
+      "kind": "collation-not-carried",
+      "message": "a comparison of text in this check ignores case and accents under MySQL's default collation, where SQLite compares exactly",
+      "object": "Person.Person.check #2"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 36",
+      "object": "Person.Person.rowguid"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 19",
+      "object": "Person.PersonPhone.PhoneNumber"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 2",
+      "object": "Person.StateProvince.CountryRegionCode"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 24",
+      "object": "Person.StateProvince.Name"
+    },
+    {
+      "kind": "index-renamed",
+      "message": "index name cannot be used (the name is 73 characters and MySQL takes at most 64): created as \"Person_StateProvince_AK_StateProvince_StateProvinceCode_a41d3f2d\"",
+      "object": "Person.StateProvince.Person_StateProvince_AK_StateProvince_StateProvinceCode_CountryRegionCode"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 3",
+      "object": "Person.StateProvince.StateProvinceCode"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 36",
+      "object": "Person.StateProvince.rowguid"
+    },
+    {
+      "kind": "view-not-carried",
+      "message": "views are written in the SQL dialect of their engine and are not translated across engines",
+      "object": "Person.vStateProvinceCountryRegion"
+    },
+    {
+      "kind": "default-translated",
+      "message": "text default '1.00' of a decimal text column became the numeric default 1.00",
+      "object": "Production.BillOfMaterials.PerAssemblyQty"
+    },
+    {
+      "kind": "index-renamed",
+      "message": "index name cannot be used (the name is 85 characters and MySQL takes at most 64): created as \"Production_BillOfMaterials_AK_BillOfMaterials_ProductAs_e9aa78e3\"",
+      "object": "Production.BillOfMaterials.Production_BillOfMaterials_AK_BillOfMaterials_ProductAssemblyID_ComponentID_StartDate"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 23",
+      "object": "Production.BillOfMaterials.StartDate"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 3",
+      "object": "Production.BillOfMaterials.UnitMeasureCode"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 6",
+      "object": "Production.Culture.CultureID"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 38",
+      "object": "Production.Culture.Name"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARBINARY(2) (declared \"BLOB\"): MySQL cannot index an unbounded type; its longest value is 2",
+      "object": "Production.Document.DocumentNode"
+    },
+    {
+      "kind": "type-widened",
+      "message": "declared \"TEXT\" but its values are not all of that type: carried as BLOB; a text with a NUL byte is carried as bytes, and a copy back returns BLOBs",
+      "object": "Production.Document.FileExtension"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 52",
+      "object": "Production.Document.FileName"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 5",
+      "object": "Production.Document.Revision"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 36",
+      "object": "Production.Document.rowguid"
+    },
+    {
+      "kind": "default-translated",
+      "message": "text default '0.00' of a decimal text column became the numeric default 0.00",
+      "object": "Production.Location.Availability"
+    },
+    {
+      "kind": "values-normalized",
+      "message": "7 text value(s) are written in the spelling of DECIMAL(8,2) (.00 -> 0.00)",
+      "object": "Production.Location.Availability"
+    },
+    {
+      "kind": "default-translated",
+      "message": "text default '0.00' of a decimal text column became the numeric default 0.00",
+      "object": "Production.Location.CostRate"
+    },
+    {
+      "kind": "values-normalized",
+      "message": "7 text value(s) are written in the spelling of DECIMAL(10,4) (.0000 -> 0.0000)",
+      "object": "Production.Location.CostRate"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 22",
+      "object": "Production.Location.Name"
+    },
+    {
+      "kind": "values-normalized",
+      "message": "200 text value(s) are written in the spelling of DECIMAL(19,4) (.0000 -> 0.0000)",
+      "object": "Production.Product.ListPrice"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 32",
+      "object": "Production.Product.Name"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 10",
+      "object": "Production.Product.ProductNumber"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 3",
+      "object": "Production.Product.SizeUnitMeasureCode"
+    },
+    {
+      "kind": "values-normalized",
+      "message": "201 text value(s) are written in the spelling of DECIMAL(19,4) (.0000 -> 0.0000)",
+      "object": "Production.Product.StandardCost"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 3",
+      "object": "Production.Product.WeightUnitMeasureCode"
+    },
+    {
+      "kind": "collation-not-carried",
+      "message": "a comparison of text in this check ignores case and accents under MySQL's default collation, where SQLite compares exactly",
+      "object": "Production.Product.check #4"
+    },
+    {
+      "kind": "collation-not-carried",
+      "message": "a comparison of text in this check ignores case and accents under MySQL's default collation, where SQLite compares exactly",
+      "object": "Production.Product.check #5"
+    },
+    {
+      "kind": "collation-not-carried",
+      "message": "a comparison of text in this check ignores case and accents under MySQL's default collation, where SQLite compares exactly",
+      "object": "Production.Product.check #6"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 36",
+      "object": "Production.Product.rowguid"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 11",
+      "object": "Production.ProductCategory.Name"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 36",
+      "object": "Production.ProductCategory.rowguid"
+    },
+    {
+      "kind": "values-normalized",
+      "message": "1 text value(s) are written in the spelling of DECIMAL(19,4) (.8565 -> 0.8565)",
+      "object": "Production.ProductCostHistory.StandardCost"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 23",
+      "object": "Production.ProductCostHistory.StartDate"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 36",
+      "object": "Production.ProductDescription.rowguid"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARBINARY(2) (declared \"BLOB\"): MySQL cannot index an unbounded type; its longest value is 2",
+      "object": "Production.ProductDocument.DocumentNode"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 23",
+      "object": "Production.ProductListPriceHistory.StartDate"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 27",
+      "object": "Production.ProductModel.Name"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 36",
+      "object": "Production.ProductModel.rowguid"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 6",
+      "object": "Production.ProductModelProductDescriptionCulture.CultureID"
+    },
+    {
+      "kind": "constraint-name-not-carried",
+      "message": "foreign key name is not carried (the name is 80 characters and MySQL takes at most 64): MySQL names the key itself",
+      "object": "Production.ProductModelProductDescriptionCulture.FK_ProductModelProductDescriptionCulture_ProductDescription_ProductDescriptionID"
+    },
+    {
+      "kind": "constraint-name-not-carried",
+      "message": "foreign key name is not carried (the name is 68 characters and MySQL takes at most 64): MySQL names the key itself",
+      "object": "Production.ProductModelProductDescriptionCulture.FK_ProductModelProductDescriptionCulture_ProductModel_ProductModelID"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 12",
+      "object": "Production.ProductReview.ReviewerName"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 17",
+      "object": "Production.ProductSubcategory.Name"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 36",
+      "object": "Production.ProductSubcategory.rowguid"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 31",
+      "object": "Production.ScrapReason.Name"
+    },
+    {
+      "kind": "values-normalized",
+      "message": "31092 text value(s) are written in the spelling of DECIMAL(19,4) (.0000 -> 0.0000)",
+      "object": "Production.TransactionHistory.ActualCost"
+    },
+    {
+      "kind": "index-renamed",
+      "message": "index name cannot be used (the name is 89 characters and MySQL takes at most 64): created as \"Production_TransactionHistory_IX_TransactionHistory_Ref_93d993aa\"",
+      "object": "Production.TransactionHistory.Production_TransactionHistory_IX_TransactionHistory_ReferenceOrderID_ReferenceOrderLineID"
+    },
+    {
+      "kind": "collation-not-carried",
+      "message": "a comparison of text in this check ignores case and accents under MySQL's default collation, where SQLite compares exactly",
+      "object": "Production.TransactionHistory.check #1"
+    },
+    {
+      "kind": "values-normalized",
+      "message": "41599 text value(s) are written in the spelling of DECIMAL(19,4) (.0000 -> 0.0000)",
+      "object": "Production.TransactionHistoryArchive.ActualCost"
+    },
+    {
+      "kind": "index-renamed",
+      "message": "index name cannot be used (the name is 75 characters and MySQL takes at most 64): created as \"Production_TransactionHistoryArchive_IX_TransactionHist_19363da4\"",
+      "object": "Production.TransactionHistoryArchive.Production_TransactionHistoryArchive_IX_TransactionHistoryArchive_ProductID"
+    },
+    {
+      "kind": "index-renamed",
+      "message": "index name cannot be used (the name is 103 characters and MySQL takes at most 64): created as \"Production_TransactionHistoryArchive_IX_TransactionHist_5f135e31\"",
+      "object": "Production.TransactionHistoryArchive.Production_TransactionHistoryArchive_IX_TransactionHistoryArchive_ReferenceOrderID_ReferenceOrderLineID"
+    },
+    {
+      "kind": "collation-not-carried",
+      "message": "a comparison of text in this check ignores case and accents under MySQL's default collation, where SQLite compares exactly",
+      "object": "Production.TransactionHistoryArchive.check #1"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 20",
+      "object": "Production.UnitMeasure.Name"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 3",
+      "object": "Production.UnitMeasure.UnitMeasureCode"
+    },
+    {
+      "kind": "view-not-carried",
+      "message": "views are written in the SQL dialect of their engine and are not translated across engines",
+      "object": "Production.vProductAndDescription"
+    },
+    {
+      "kind": "values-normalized",
+      "message": "3 text value(s) are written in the spelling of DECIMAL(19,4) (.2100 -> 0.2100)",
+      "object": "Purchasing.ProductVendor.LastReceiptCost"
+    },
+    {
+      "kind": "values-normalized",
+      "message": "3 text value(s) are written in the spelling of DECIMAL(19,4) (.2000 -> 0.2000)",
+      "object": "Purchasing.ProductVendor.StandardPrice"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 3",
+      "object": "Purchasing.ProductVendor.UnitMeasureCode"
+    },
+    {
+      "kind": "values-normalized",
+      "message": "8282 text value(s) are written in the spelling of DECIMAL(8,2) (.00 -> 0.00)",
+      "object": "Purchasing.PurchaseOrderDetail.RejectedQty"
+    },
+    {
+      "kind": "values-normalized",
+      "message": "141 text value(s) are written in the spelling of DECIMAL(38,2) (.00 -> 0.00)",
+      "object": "Purchasing.PurchaseOrderDetail.StockedQty"
+    },
+    {
+      "kind": "values-normalized",
+      "message": "101 text value(s) are written in the spelling of DECIMAL(19,4) (.2100 -> 0.2100)",
+      "object": "Purchasing.PurchaseOrderDetail.UnitPrice"
+    },
+    {
+      "kind": "default-translated",
+      "message": "text default '0.00' of a decimal text column became the numeric default 0.00",
+      "object": "Purchasing.PurchaseOrderHeader.Freight"
+    },
+    {
+      "kind": "values-normalized",
+      "message": "50 text value(s) are written in the spelling of DECIMAL(19,4) (.9269 -> 0.9269)",
+      "object": "Purchasing.PurchaseOrderHeader.Freight"
+    },
+    {
+      "kind": "default-translated",
+      "message": "text default '0.00' of a decimal text column became the numeric default 0.00",
+      "object": "Purchasing.PurchaseOrderHeader.SubTotal"
+    },
+    {
+      "kind": "default-translated",
+      "message": "text default '0.00' of a decimal text column became the numeric default 0.00",
+      "object": "Purchasing.PurchaseOrderHeader.TaxAmt"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 18",
+      "object": "Purchasing.ShipMethod.Name"
+    },
+    {
+      "kind": "default-translated",
+      "message": "text default '0.00' of a decimal text column became the numeric default 0.00",
+      "object": "Purchasing.ShipMethod.ShipBase"
+    },
+    {
+      "kind": "default-translated",
+      "message": "text default '0.00' of a decimal text column became the numeric default 0.00",
+      "object": "Purchasing.ShipMethod.ShipRate"
+    },
+    {
+      "kind": "values-normalized",
+      "message": "1 text value(s) are written in the spelling of DECIMAL(19,4) (.9900 -> 0.9900)",
+      "object": "Purchasing.ShipMethod.ShipRate"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 36",
+      "object": "Purchasing.ShipMethod.rowguid"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 12",
+      "object": "Purchasing.Vendor.AccountNumber"
+    },
+    {
+      "kind": "view-not-carried",
+      "message": "views are written in the SQL dialect of their engine and are not translated across engines",
+      "object": "Purchasing.vVendorWithAddresses"
+    },
+    {
+      "kind": "view-not-carried",
+      "message": "views are written in the SQL dialect of their engine and are not translated across engines",
+      "object": "Purchasing.vVendorWithContacts"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 2",
+      "object": "Sales.CountryRegionCurrency.CountryRegionCode"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 3",
+      "object": "Sales.CountryRegionCurrency.CurrencyCode"
+    },
+    {
+      "kind": "index-renamed",
+      "message": "index name cannot be used (the name is 65 characters and MySQL takes at most 64): created as \"Sales_CountryRegionCurrency_IX_CountryRegionCurrency_Cu_bf2edc2b\"",
+      "object": "Sales.CountryRegionCurrency.Sales_CountryRegionCurrency_IX_CountryRegionCurrency_CurrencyCode"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 14",
+      "object": "Sales.CreditCard.CardNumber"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 3",
+      "object": "Sales.Currency.CurrencyCode"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 29",
+      "object": "Sales.Currency.Name"
+    },
+    {
+      "kind": "values-normalized",
+      "message": "1939 text value(s) are written in the spelling of DECIMAL(19,4) (.9697 -> 0.9697)",
+      "object": "Sales.CurrencyRate.AverageRate"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 23",
+      "object": "Sales.CurrencyRate.CurrencyRateDate"
+    },
+    {
+      "kind": "values-normalized",
+      "message": "1726 text value(s) are written in the spelling of DECIMAL(19,4) (.9703 -> 0.9703)",
+      "object": "Sales.CurrencyRate.EndOfDayRate"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 3",
+      "object": "Sales.CurrencyRate.FromCurrencyCode"
+    },
+    {
+      "kind": "index-renamed",
+      "message": "index name cannot be used (the name is 83 characters and MySQL takes at most 64): created as \"Sales_CurrencyRate_AK_CurrencyRate_CurrencyRateDate_Fro_3afbfc19\"",
+      "object": "Sales.CurrencyRate.Sales_CurrencyRate_AK_CurrencyRate_CurrencyRateDate_FromCurrencyCode_ToCurrencyCode"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 3",
+      "object": "Sales.CurrencyRate.ToCurrencyCode"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 10",
+      "object": "Sales.Customer.AccountNumber"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 36",
+      "object": "Sales.Customer.rowguid"
+    },
+    {
+      "kind": "default-translated",
+      "message": "text default '0.0' of a decimal text column became the numeric default 0.0",
+      "object": "Sales.SalesOrderDetail.UnitPriceDiscount"
+    },
+    {
+      "kind": "values-normalized",
+      "message": "121317 text value(s) are written in the spelling of DECIMAL(19,4) (.0000 -> 0.0000)",
+      "object": "Sales.SalesOrderDetail.UnitPriceDiscount"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 36",
+      "object": "Sales.SalesOrderDetail.rowguid"
+    },
+    {
+      "kind": "default-translated",
+      "message": "text default '0.00' of a decimal text column became the numeric default 0.00",
+      "object": "Sales.SalesOrderHeader.Freight"
+    },
+    {
+      "kind": "values-normalized",
+      "message": "6637 text value(s) are written in the spelling of DECIMAL(19,4) (.5047 -> 0.5047)",
+      "object": "Sales.SalesOrderHeader.Freight"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 7",
+      "object": "Sales.SalesOrderHeader.SalesOrderNumber"
+    },
+    {
+      "kind": "default-translated",
+      "message": "text default '0.00' of a decimal text column became the numeric default 0.00",
+      "object": "Sales.SalesOrderHeader.SubTotal"
+    },
+    {
+      "kind": "default-translated",
+      "message": "text default '0.00' of a decimal text column became the numeric default 0.00",
+      "object": "Sales.SalesOrderHeader.TaxAmt"
+    },
+    {
+      "kind": "values-normalized",
+      "message": "1696 text value(s) are written in the spelling of DECIMAL(19,4) (.9880 -> 0.9880)",
+      "object": "Sales.SalesOrderHeader.TaxAmt"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 36",
+      "object": "Sales.SalesOrderHeader.rowguid"
+    },
+    {
+      "kind": "default-translated",
+      "message": "text default '0.00' of a decimal text column became the numeric default 0.00",
+      "object": "Sales.SalesPerson.Bonus"
+    },
+    {
+      "kind": "values-normalized",
+      "message": "3 text value(s) are written in the spelling of DECIMAL(19,4) (.0000 -> 0.0000)",
+      "object": "Sales.SalesPerson.Bonus"
+    },
+    {
+      "kind": "default-translated",
+      "message": "text default '0.00' of a decimal text column became the numeric default 0.00",
+      "object": "Sales.SalesPerson.CommissionPct"
+    },
+    {
+      "kind": "values-normalized",
+      "message": "17 text value(s) are written in the spelling of DECIMAL(10,4) (.0000 -> 0.0000)",
+      "object": "Sales.SalesPerson.CommissionPct"
+    },
+    {
+      "kind": "default-translated",
+      "message": "text default '0.00' of a decimal text column became the numeric default 0.00",
+      "object": "Sales.SalesPerson.SalesLastYear"
+    },
+    {
+      "kind": "values-normalized",
+      "message": "4 text value(s) are written in the spelling of DECIMAL(19,4) (.0000 -> 0.0000)",
+      "object": "Sales.SalesPerson.SalesLastYear"
+    },
+    {
+      "kind": "default-translated",
+      "message": "text default '0.00' of a decimal text column became the numeric default 0.00",
+      "object": "Sales.SalesPerson.SalesYTD"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 36",
+      "object": "Sales.SalesPerson.rowguid"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 23",
+      "object": "Sales.SalesPersonQuotaHistory.QuotaDate"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 36",
+      "object": "Sales.SalesPersonQuotaHistory.rowguid"
+    },
+    {
+      "kind": "default-translated",
+      "message": "text default '0.00' of a decimal text column became the numeric default 0.00",
+      "object": "Sales.SalesTaxRate.TaxRate"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 36",
+      "object": "Sales.SalesTaxRate.rowguid"
+    },
+    {
+      "kind": "default-translated",
+      "message": "text default '0.00' of a decimal text column became the numeric default 0.00",
+      "object": "Sales.SalesTerritory.CostLastYear"
+    },
+    {
+      "kind": "values-normalized",
+      "message": "10 text value(s) are written in the spelling of DECIMAL(19,4) (.0000 -> 0.0000)",
+      "object": "Sales.SalesTerritory.CostLastYear"
+    },
+    {
+      "kind": "default-translated",
+      "message": "text default '0.00' of a decimal text column became the numeric default 0.00",
+      "object": "Sales.SalesTerritory.CostYTD"
+    },
+    {
+      "kind": "values-normalized",
+      "message": "10 text value(s) are written in the spelling of DECIMAL(19,4) (.0000 -> 0.0000)",
+      "object": "Sales.SalesTerritory.CostYTD"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 2",
+      "object": "Sales.SalesTerritory.CountryRegionCode"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 14",
+      "object": "Sales.SalesTerritory.Name"
+    },
+    {
+      "kind": "default-translated",
+      "message": "text default '0.00' of a decimal text column became the numeric default 0.00",
+      "object": "Sales.SalesTerritory.SalesLastYear"
+    },
+    {
+      "kind": "default-translated",
+      "message": "text default '0.00' of a decimal text column became the numeric default 0.00",
+      "object": "Sales.SalesTerritory.SalesYTD"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 36",
+      "object": "Sales.SalesTerritory.rowguid"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 23",
+      "object": "Sales.SalesTerritoryHistory.StartDate"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 36",
+      "object": "Sales.SalesTerritoryHistory.rowguid"
+    },
+    {
+      "kind": "index-renamed",
+      "message": "index name cannot be used (the name is 67 characters and MySQL takes at most 64): created as \"Sales_ShoppingCartItem_IX_ShoppingCartItem_ShoppingCart_3836c717\"",
+      "object": "Sales.ShoppingCartItem.Sales_ShoppingCartItem_IX_ShoppingCartItem_ShoppingCartID_ProductID"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 5",
+      "object": "Sales.ShoppingCartItem.ShoppingCartID"
+    },
+    {
+      "kind": "default-translated",
+      "message": "text default '0.00' of a decimal text column became the numeric default 0.00",
+      "object": "Sales.SpecialOffer.DiscountPct"
+    },
+    {
+      "kind": "values-normalized",
+      "message": "16 text value(s) are written in the spelling of DECIMAL(10,4) (.0000 -> 0.0000)",
+      "object": "Sales.SpecialOffer.DiscountPct"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 36",
+      "object": "Sales.SpecialOffer.rowguid"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 36",
+      "object": "Sales.SpecialOfferProduct.rowguid"
+    },
+    {
+      "kind": "key-type-bounded",
+      "message": "a key column is carried as VARCHAR(255) (declared \"TEXT\"): MySQL cannot index an unbounded type; its longest value is 36",
+      "object": "Sales.Store.rowguid"
+    },
+    {
+      "kind": "view-not-carried",
+      "message": "views are written in the SQL dialect of their engine and are not translated across engines",
+      "object": "Sales.vIndividualCustomer"
+    },
+    {
+      "kind": "view-not-carried",
+      "message": "views are written in the SQL dialect of their engine and are not translated across engines",
+      "object": "Sales.vSalesPerson"
+    },
+    {
+      "kind": "view-not-carried",
+      "message": "views are written in the SQL dialect of their engine and are not translated across engines",
+      "object": "Sales.vStoreWithAddresses"
+    },
+    {
+      "kind": "view-not-carried",
+      "message": "views are written in the SQL dialect of their engine and are not translated across engines",
+      "object": "Sales.vStoreWithContacts"
+    }
+  ]
+}
