@@ -2,7 +2,7 @@
   "dataset": "adventureworks",
   "dialect": "mysql",
   "format": "demodb-dialect-report/v1",
-  "generator": "v0.100.0",
+  "generator": "v0.103.4",
   "tables": [
     {
       "columns": 8,
