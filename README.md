@@ -51,9 +51,11 @@ SQLite fixture, loaded into a real MySQL 8.4, SQL Server 2022 and Oracle Free 23
 decoded SHA-256, and the verification run (engine image digest and version, row counts, values compared, timings). Nothing else in this repository changes: the files are outside `artifacts/`, so the contract, the checksums and the model are untouched.
 
 ```sh
-mysql --default-character-set=utf8mb4 --skip-commands --skip-system-command --database <empty database> < dialect-scripts/adventureworks.mysql.sql (gunzip it first)
-sqlcmd -S <server> -d <empty database> -X -x -b -f 65001 -i dialect-scripts/adventureworks.sqlserver.sql (gunzip it first)   # -i, not a redirect: the file starts with a byte order mark
-NLS_LANG=.AL32UTF8 sqlplus -L -S <user>/<password>@<service> @dialect-scripts/adventureworks.oracle.sql (gunzip it first) < /dev/null
+mysql --default-character-set=utf8mb4 --skip-commands --skip-system-command --database <empty database> < <(gunzip -c dialect-scripts/adventureworks.mysql.sql.gz)
+gunzip -c dialect-scripts/adventureworks.sqlserver.sql.gz > adventureworks.sqlserver.sql
+sqlcmd -S <server> -d <empty database> -X -x -b -f 65001 -i adventureworks.sqlserver.sql   # -i, not a redirect: the file starts with a byte order mark
+gunzip -c dialect-scripts/adventureworks.oracle.sql.gz > adventureworks.oracle.sql
+NLS_LANG=.AL32UTF8 sqlplus -L -S <user>/<password>@<service> @adventureworks.oracle.sql < /dev/null
 node websites/scripts/dialect-scripts.mjs check --provider .   # no datatug binary and no Docker needed
 ```
 
